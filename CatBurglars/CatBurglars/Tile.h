@@ -3,6 +3,7 @@
 
 #include "Entity.h"
 #include "TextureHandler.h"
+#include "gridvector.h"
 
 class Tile : public Entity
 {
@@ -18,6 +19,8 @@ public:
 	int GetID();
 private:
 	int mID = 0;
+
+	gridvector gridPosition; // Position on grid
 
 	//Added
 	sf::Sprite mSprite;
