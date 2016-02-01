@@ -1,10 +1,14 @@
 #include "Game.h"
-
+#include <iostream>
+#include "Test1.h"
 
 static sf::RenderWindow *window;
 static TextureHandler textures;
 
 LevelManager levelM;
+Test1 *test1;
+Test1 *test2;
+GameObject *game;
 
 Game::Game() :
 mEntities(),
@@ -33,13 +37,24 @@ mController()
 	//Stores Entities/objects
 	mEntities.push_back(mCat);
 
+	test1 = new Test1();
+	test2 = new Test1();
+	test1 = dynamic_cast<Test1*>(test1);
+	test1->setInt(99);
+	test2->setInt(777);
+
+	mEntities.push_back(test1);
+	//mEntities.push_back(test2);
 
 
 }
 
 Game::~Game()
 {
-
+	while (!mEntities.empty()){
+		delete mEntities.back();
+		mEntities.pop_back();
+	}
 }
 
 void Game::Run(){
@@ -74,14 +89,15 @@ void Game::Run(){
 
 void Game::Update(){
 
-	for each (Cat *cat in mEntities)
+	for each (Test *abc in mEntities)
 	{
 		//cout << "X : " << cat->GetPosition().x << endl;
 		//cout << "Y : " << cat->GetPosition().y << endl << endl;;
 		//Enable keyboard for cat
-		mController.move(cat);
+		//mController.move(cat);
+		std::cout << abc->getInt() << std::endl;
 	}
-
+	//std::cout << test1->getInt() << std::endl;
 }
 
 void Game::Render()
