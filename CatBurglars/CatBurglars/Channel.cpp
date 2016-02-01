@@ -6,7 +6,8 @@
 Channel::Channel(int id) :
 	mID(id),
 	mActive(false),
-	mTimer(0){
+	mTimer(0),
+	mClock(){
 
 
 }
@@ -40,20 +41,18 @@ void Channel::setActive(bool toggle, float holdlength) {
 void Channel::mSetActiveTime(float holdlength) {
 
 	mTimer = holdlength;
-
+	mClock.restart();
 }
 
 
 void Channel::runTimer() {
+	mTime = mClock.getElapsedTime();
+	std::cout << mTime.asSeconds() << std::endl;
 
-
-	if (mTimer > 0) {
-		mTimer-= 0.0002;
-	}
-	if (mTimer > 0) {
+	if (mTime.asSeconds() <= mTimer){
 		mActive = true;
 	}
-	else if (!mToggled) {
+	else if (!mToggled){
 		mActive = false;
 	}
 }

@@ -1,6 +1,8 @@
 #ifndef INCLUDED_CHANNEL
 #define INCLUDED_CHANNEL
 
+#include <SFML\System\Clock.hpp>
+
 class Channel {
 public:
 	Channel(int channelID);
@@ -15,7 +17,8 @@ private:
 	int mID;
 	void mSetActiveTime(float holdlength);
 	float mTimer;
-
+	sf::Clock mClock;
+	sf::Time mTime;
 };
 
 
