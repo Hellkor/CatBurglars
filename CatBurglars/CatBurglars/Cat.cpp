@@ -6,7 +6,6 @@ mID(ID),
 mCoord(position){
 	mSprite.setTexture(*texture, true);
 	//Starting position
-	
 	mPosition = sf::Vector2i(mCoord.x * 64, mCoord.y * 64);
 }
 Cat::~Cat(){
@@ -14,7 +13,7 @@ Cat::~Cat(){
 }
 //Render sprite on screen
 void Cat::Render(sf::RenderWindow *mainWindow){
-	cout << mPosition.x << "  " << mPosition.y << endl;
+//	cout << mPosition.x << "  " << mPosition.y << endl;
 	mSprite.setPosition((sf::Vector2f)mPosition);
 	mainWindow->draw(mSprite);
 }
@@ -101,6 +100,10 @@ void Cat::moveRight() {
 		mCoord.x++;
 		mMoving = true;
 	}
+}
+
+bool Cat::interacting(){
+	return isInteracting;
 }
 
 //Move the sprite

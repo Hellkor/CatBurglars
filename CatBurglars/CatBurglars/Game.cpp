@@ -1,10 +1,12 @@
 #include "Game.h"
 #include "gridvector.h"
+#include "Crate.h"
 
 static sf::RenderWindow *window;
 static TextureHandler textures;
 
 LevelManager levelM;
+Crate *crate;
 
 Game::Game() :
 mEntities(),
@@ -33,7 +35,9 @@ mController()
 	//Stores Entities/objects
 	mEntities.push_back(mCat);
 
-
+	//Creates a crate
+	crate = new Crate(textures.GetTexture(4), gridvector(1, 1), 1);
+	mEntities.push_back(crate);
 
 }
 
@@ -66,7 +70,6 @@ void Game::Run(){
 		else {
 			cout << "deactive" << endl;
 		}
-
 		Update();
 		Render();
 	}
@@ -74,16 +77,13 @@ void Game::Run(){
 
 void Game::Update(){
 
-	for each (Cat *cat in mEntities)
+	for each (GameObject *gameObject in mEntities)
 	{
-		//cout << "X : " << cat->GetPosition().x << endl;
-		//cout << "Y : " << cat->GetPosition().y << endl << endl;;
-		//Enable keyboard for cat
-		mController.move(cat);
-		cat->Update();
+		if (Cat * cat = dynamic_cast<Cat*>(gameObject)){
+			mController.move(cat);
+			cat->Update();
+		}
 	}
-	
-
 }
 
 void Game::Render()

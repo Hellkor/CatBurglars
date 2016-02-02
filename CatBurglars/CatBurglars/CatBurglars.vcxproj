@@ -44,11 +44,11 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>\\hsnas6\StudentHome\2015\a15axeka\Downloads\SFML-2.3.2-windows-vc12-32-bit\SFML-2.3.2\include;\\hsnas6\studenthome\2015\b15jonni\Downloads\SFML-2.3.2\include;C:\Users\Hellkor\Downloads\SFML-2.3.2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>\\hsnas6\studenthome\2015\b15jonni\Downloads\SFML-2.3.2\include;C:\Users\Hellkor\Downloads\SFML-2.3.2\include;%(AdditionalIncludeDirectories);\\hsnas6\StudentHome\2015\b15jonni\Downloads\SFML-2.3.2\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>\\hsnas6\StudentHome\2015\a15axeka\Downloads\SFML-2.3.2-windows-vc12-32-bit\SFML-2.3.2\lib;\\hsnas6\studenthome\2015\b15jonni\Downloads\SFML-2.3.2\lib;C:\Users\Hellkor\Downloads\SFML-2.3.2\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>\\hsnas6\studenthome\2015\b15jonni\Downloads\SFML-2.3.2\lib;C:\Users\Hellkor\Downloads\SFML-2.3.2\lib;%(AdditionalLibraryDirectories);P:\Downloads\SFML-2.3.2\lib</AdditionalLibraryDirectories>
       <AdditionalDependencies>sfml-system-d.lib;sfml-window-d.lib;sfml-graphics-d.lib;sfml-network-d.lib;sfml-audio-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -59,13 +59,13 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>\\hsnas6\studenthome\2015\b15jonni\Downloads\SFML-2.3.2\include;C:\Users\Hellkor\Downloads\SFML-2.3.2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>\\hsnas6\studenthome\2015\b15jonni\Downloads\SFML-2.3.2\include;C:\Users\Hellkor\Downloads\SFML-2.3.2\include;%(AdditionalIncludeDirectories);\\hsnas6\StudentHome\2015\b15jonni\Downloads\SFML-2.3.2\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>\\hsnas6\studenthome\2015\b15jonni\Downloads\SFML-2.3.2\lib;C:\Users\Hellkor\Downloads\SFML-2.3.2\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>\\hsnas6\studenthome\2015\b15jonni\Downloads\SFML-2.3.2\lib;C:\Users\Hellkor\Downloads\SFML-2.3.2\lib;%(AdditionalLibraryDirectories);P:\Downloads\SFML-2.3.2\lib</AdditionalLibraryDirectories>
       <AdditionalDependencies>sfml-system.lib;sfml-window.lib;sfml-graphics.lib;sfml-network.lib;sfml-audio.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -75,6 +75,7 @@
     <ClCompile Include="Channel.cpp" />
     <ClCompile Include="Channels.cpp" />
     <ClCompile Include="Controller.cpp" />
+    <ClCompile Include="Crate.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
@@ -92,6 +93,7 @@
     <ClInclude Include="Channel.h" />
     <ClInclude Include="Channels.h" />
     <ClInclude Include="Controller.h" />
+    <ClInclude Include="Crate.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />

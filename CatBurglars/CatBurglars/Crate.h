@@ -1,17 +1,16 @@
-#ifndef INCLUDED_CAT
-#define INCLUDED_CAT
+#ifndef INCLUDED_CRATE
+#define INCLUDED_CRATE
 
-#include <SFML\Graphics.hpp>
 #include "GameObject.h"
+#include "Cat.h"
 
-class Cat : public GameObject
-{
+class Crate : public GameObject{
 public:
-	Cat(sf::Texture *texture, gridvector v, int ID);
-	~Cat();
+
+	Crate(sf::Texture *texture, gridvector v, int ID);
+	~Crate();
 	virtual void Render(sf::RenderWindow *mainWindow);
 	virtual void Update();
-	virtual void move(int x, int y);
 	virtual sf::Vector2i GetPosition();
 
 	void moveForward();
@@ -19,11 +18,10 @@ public:
 	void moveLeft();
 	void moveRight();
 
-	bool isInteracting = false;
-	bool interacting();
+	bool getInteraction(Cat *c);
+
 private:
 	sf::Sprite mSprite;
-	int mID;
 	sf::Vector2i mPosition;
 	gridvector mCoord;
 
@@ -35,12 +33,13 @@ private:
 	sf::Time animationInterval = sf::milliseconds(512);
 	sf::Time moveInterval = sf::milliseconds(8);
 
-	sf::Clock moveClock;
-	sf::Time moveTime;
+	int mID;
 
 	bool mMoving = false;
 
 	int direction = 0;
 };
+
+
 
 #endif
