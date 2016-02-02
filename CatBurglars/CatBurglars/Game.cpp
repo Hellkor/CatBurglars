@@ -1,11 +1,13 @@
 #include "Game.h"
 #include "gridvector.h"
+#include "Crate.h"
 
 
 static sf::RenderWindow *window;
 static TextureHandler textures;
 
 LevelManager levelM;
+
 // TIME
 // Timestep (Constant Game Speed independent of Variable FPS)
 sf::Clock miReloj;
@@ -19,6 +21,8 @@ float interpolacion;
 
 sf::Int32 proximo_tick = miReloj.getElapsedTime().asMilliseconds();
 ////////////////////////////////////////////////////////////
+
+Crate *crate;
 
 Game::Game() :
 mEntities(),
@@ -47,7 +51,13 @@ mController()
 	//Stores Entities/objects
 	mEntities.push_back(mCat);
 
+
 	window->setVerticalSyncEnabled(false);
+
+	//Creates a crate
+	crate = new Crate(textures.GetTexture(4), gridvector(1, 1), 1);
+	mEntities.push_back(crate);
+
 
 }
 
@@ -106,18 +116,21 @@ void Game::Run(){
 }
 
 void Game::Update(float dt){
+	//mController.move(mCat);
 
-	for each (Cat *cat in mEntities)
+	for each (GameObject *gameObject in mEntities)
 	{
 		//cout << "X : " << cat->GetPosition().x << endl;
 		//cout << "Y : " << cat->GetPosition().y << endl << endl;;
 		//Enable keyboard for cat
-		mController.move(cat);
-		cat->Update(dt);
+		
+		//cat->Update(dt); // Efter axels version
 
+		if (Cat * cat = dynamic_cast<Cat*>(gameObject)){
+			mController.move(cat);
+			cat->Update(dt);
+		}
 	}
-	
-
 }
 
 void Game::Render()

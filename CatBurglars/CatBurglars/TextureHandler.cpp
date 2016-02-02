@@ -18,6 +18,7 @@ void TextureHandler::Initialize()
 	mSelectorTexture.loadFromFile("Resources/Selector.png");
 	mSaveTexture.loadFromFile("Resources/Save.png");
 	mCat1Texture.loadFromFile("Resources/Cat.png");
+	mCrate.loadFromFile("Resources/Crate.png");
 }
 
 //Retrun a texture
@@ -31,6 +32,8 @@ sf::Texture* TextureHandler::GetTexture(int ID)
 		return &mSelectorTexture;
 	if (ID == 3)
 		return &mSaveTexture;
+	if (ID == 4)
+		return &mCrate;
 	if (ID == 10)
 		return &mCat1Texture;
 }

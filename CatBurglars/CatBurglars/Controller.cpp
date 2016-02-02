@@ -36,4 +36,11 @@ void Controller::move(Cat *cat){
 	{
 		cat->moveRight();
 	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+	{
+		cat->isInteracting = true;
+	}
+	else{
+		cat->isInteracting = false;
+	}
 }

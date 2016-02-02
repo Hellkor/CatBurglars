@@ -11,7 +11,6 @@ public:
 	~Cat();
 	virtual void Render(sf::RenderWindow *mainWindow);
 	virtual void Update(float dt);
-	virtual void move(int x, int y);
 	virtual sf::Vector2i GetPosition();
 
 	void moveForward();
@@ -19,6 +18,8 @@ public:
 	void moveLeft();
 	void moveRight();
 
+	bool isInteracting = false;
+	bool interacting();
 private:
 	sf::Sprite mSprite;
 	int mID;

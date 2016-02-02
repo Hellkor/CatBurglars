@@ -8,7 +8,6 @@ mID(ID),
 mCoord(position){
 	mSprite.setTexture(*texture, true);
 	//Starting position
-	
 	mPosition = sf::Vector2i(mCoord.x * 64, mCoord.y * 64);
 }
 Cat::~Cat(){
@@ -16,6 +15,7 @@ Cat::~Cat(){
 }
 //Render sprite on screen
 void Cat::Render(sf::RenderWindow *mainWindow){
+
 	mSprite.setPosition((sf::Vector2f)mPosition);
 	mainWindow->draw(mSprite);
 }
@@ -98,13 +98,11 @@ void Cat::moveRight() {
 	}
 }
 
-//Move the sprite
-void Cat::move(int x, int y){
-	//mSprite.move(x, y);
-	mPosition.x += x;
-	mPosition.y += y;
-	mSprite.setPosition(sf::Vector2f(mPosition));
+bool Cat::interacting(){
+	return isInteracting;
 }
+
+
 //Returns position of sprite
 sf::Vector2i Cat::GetPosition(){
 	return mPosition;
