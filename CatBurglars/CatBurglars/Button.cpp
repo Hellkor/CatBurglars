@@ -51,7 +51,7 @@ void Button::Render(sf::RenderWindow *window){
 
 	window->draw(mSprite);
 }
-void Button::Update(){
+void Button::Update(float dt){
 
 }
 

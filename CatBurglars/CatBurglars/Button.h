@@ -8,7 +8,7 @@ public:
 
 	Button(int ID, sf::Texture *texture, sf::Vector2i pos);
 	virtual void Render(sf::RenderWindow *mainWindow);
-	virtual void Update();
+	virtual void Update(float dt);
 	virtual sf::Vector2i GetPosition();
 
 	virtual bool getInteraction(Cat *c);

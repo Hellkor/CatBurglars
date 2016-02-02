@@ -11,7 +11,7 @@ public:
 	Tile(sf::Vector2i position, int ID, int textureID, TextureHandler *textures);
 	~Tile();
 	void Render(sf::RenderWindow *mainWindow);
-	void Update();
+	void Update(float dt);
 	//Added
 	sf::Vector2i GetPosition();
 	static sf::Vector2i GetSize();

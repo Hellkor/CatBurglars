@@ -22,7 +22,7 @@ public:
 	~Game();
 	void Run();
 private:
-	void Update();
+	void Update(float dt);
 	void Render();
 	EntityVector mEntities;
 	GameObject *mGameObjectives;

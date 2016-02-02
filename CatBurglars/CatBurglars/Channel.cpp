@@ -47,7 +47,6 @@ void Channel::mSetActiveTime(float holdlength) {
 
 void Channel::runTimer() {
 	mTime = mClock.getElapsedTime();
-	std::cout << mTime.asSeconds() << std::endl;
 
 	if (mTime.asSeconds() <= mTimer){
 		mActive = true;

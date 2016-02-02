@@ -1,6 +1,8 @@
 #include "Cat.h"
 #include <iostream>
 
+int TILESIZE = 64;
+
 Cat::Cat(sf::Texture *texture, gridvector position, int ID) : GameObject(),
 mID(ID),
 mCoord(position){
@@ -14,53 +16,50 @@ Cat::~Cat(){
 }
 //Render sprite on screen
 void Cat::Render(sf::RenderWindow *mainWindow){
-	cout << mPosition.x << "  " << mPosition.y << endl;
 	mSprite.setPosition((sf::Vector2f)mPosition);
 	mainWindow->draw(mSprite);
 }
 
-void Cat::Update(){
+void Cat::Update(float dt){
 
 	
 
-	if (c.getElapsedTime() < animationInterval && mMoving) {
+	if (mMoving){
+		if (direction == 4 && mPosition.y != newPos.y) {
+			mPosition.y -= 1 ;
+		}
+		else if (direction == 3 && mPosition.y != newPos.y) {
+			mPosition.y += 1 ;
+		}
+		else if (direction == 2 && mPosition.x != newPos.x) {
+			mPosition.x -= 1 ;
+			
+		}
+		else if (direction == 1 && mPosition.x != newPos.x) {
+			mPosition.x += 1 ;
+		}
+		else {
+			mMoving = false;
 
-		if (moveClock.getElapsedTime() >= moveInterval) {
-
-			moveClock.restart();
+			// säkrar att den håller rätt position
 			if (direction == 4) {
-				mPosition.y -= 1;
+				mPosition.y = newPos.y;
 			}
 			if (direction == 3) {
-				mPosition.y += 1;
+				mPosition.y = newPos.y;
 			}
 			if (direction == 2) {
-				mPosition.x -= 1;
+				mPosition.x = newPos.x;
 			}
 			if (direction == 1) {
-				mPosition.x += 1;
+				mPosition.x = newPos.x;
 			}
 		}
 
-	}
-	else {  // BUG FIX // slutgiltiga positionen hamnar inte alltid på önskad position. så den korrigeras
 		
-		if (direction == 4) {
-			mPosition.y = newPos.y;
-		}
-		if (direction == 3) {
-			mPosition.y = newPos.y;
-		}
-		if (direction == 2) {
-			mPosition.x = newPos.x;
-		}
-		if (direction == 1) {
-			mPosition.x = newPos.x;
-		}
-		
-		mMoving = false;
-	}
 
+	}
+	
 }
 
 void Cat::moveForward() {
@@ -69,7 +68,6 @@ void Cat::moveForward() {
 		// do....
 		newPos.y = mPosition.y - 64;
 		direction = 4;
-		c.restart();
 		mCoord.y --;
 		mMoving = true;
 	}
@@ -78,7 +76,6 @@ void Cat::moveBackWards() {
 	if (!mMoving) {
 		newPos.y = mPosition.y + 64;
 		direction = 3;
-		c.restart();
 		mCoord.y++;
 		mMoving = true;
 	}
@@ -88,7 +85,6 @@ void Cat::moveLeft() {
 
 		newPos.x = mPosition.x - 64;
 		direction = 2;
-		c.restart();
 		mCoord.x --;
 		mMoving = true;
 	}
@@ -97,7 +93,6 @@ void Cat::moveRight() {
 	if (!mMoving) {
 		newPos.x = mPosition.x + 64;
 		direction = 1;
-		c.restart();
 		mCoord.x++;
 		mMoving = true;
 	}

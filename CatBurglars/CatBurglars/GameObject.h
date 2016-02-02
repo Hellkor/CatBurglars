@@ -12,7 +12,7 @@ public:
 	GameObject();
 	~GameObject();
 	virtual void Render(sf::RenderWindow *mainWindow);
-	virtual void Update();
+	virtual void Update(float dt);
 	virtual sf::Vector2i GetPosition() = 0;
 private:
 

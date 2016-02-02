@@ -30,7 +30,7 @@ void Tile::Render(sf::RenderWindow *window)
 	mSprite.setPosition(mPosition.x, mPosition.y);
 	window->draw(mSprite);
 }
-void Tile::Update(){
+void Tile::Update(float dt){
 
 }
 //Added

@@ -47,4 +47,6 @@ void LevelManager::changeLevel(int i){
 void LevelManager::render(sf::RenderWindow *window){
 	mLevels[mCurrentLevel].render(window);
 	//mLevels[mCurrentLevel].update();
+
+	
 }

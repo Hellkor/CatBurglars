@@ -8,7 +8,7 @@ public:
 	Usable();
 	~Usable();
 	virtual void Render(sf::RenderWindow *mainWindow) = 0;
-	virtual void Update() = 0;
+	virtual void Update(float dt) = 0;
 	virtual sf::Vector2i GetPosition() = 0;
 
 	virtual bool getInteraction(Cat *c) = 0;

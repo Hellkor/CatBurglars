@@ -20,7 +20,7 @@ void Level::render(sf::RenderWindow *window){
 
 	window->clear();
 	
-
+	
 	for (TileLayer::size_type y = 0; y < mBottomTileLayer.size(); y++)
 	{
 		for (TileRow::size_type x = 0; x < mBottomTileLayer[y].size(); x++)

@@ -1,10 +1,24 @@
 #include "Game.h"
 #include "gridvector.h"
 
+
 static sf::RenderWindow *window;
 static TextureHandler textures;
 
 LevelManager levelM;
+// TIME
+// Timestep (Constant Game Speed independent of Variable FPS)
+sf::Clock miReloj;
+
+const int TICKS_POR_SEGUNDO = 60;
+const int SALTEO_TICKS = 1000 / TICKS_POR_SEGUNDO;
+const int MAX_SALTEO_FRAMES = 5;
+
+int loops;
+float interpolacion;
+
+sf::Int32 proximo_tick = miReloj.getElapsedTime().asMilliseconds();
+////////////////////////////////////////////////////////////
 
 Game::Game() :
 mEntities(),
@@ -25,7 +39,7 @@ mController()
 
 	//Creates the main window
 	window = new sf::RenderWindow(sf::VideoMode(1024, 720), "CatBurglars");
-	window->setVerticalSyncEnabled(true);
+	
 	textures.Initialize();
 
 	//Creates a cat(player)
@@ -33,7 +47,7 @@ mController()
 	//Stores Entities/objects
 	mEntities.push_back(mCat);
 
-
+	window->setVerticalSyncEnabled(false);
 
 }
 
@@ -53,6 +67,26 @@ void Game::Run(){
 				window->close();
 		}
 
+		// Update (the events are handled in the actualizar function)
+		loops = 0;
+
+		while (miReloj.getElapsedTime().asMilliseconds() > proximo_tick && loops < MAX_SALTEO_FRAMES) {
+
+			Update(interpolacion);
+			
+			proximo_tick += SALTEO_TICKS;
+			++loops;
+
+		}
+
+		
+		interpolacion = static_cast <float> (miReloj.getElapsedTime().asMilliseconds() + SALTEO_TICKS - proximo_tick) / static_cast <float> (SALTEO_TICKS);
+
+		
+
+		// Draw
+		//dibujar(window, interpolacion);
+		
 		//Test för Channel
 		// Uppdaterar timers för alla kanaler
 		Channels::update();
@@ -61,18 +95,17 @@ void Game::Run(){
 		if (Channels::isChannelActive(1)) {
 
 			// Gör saker sålänge den är aktiv
-			cout << "active" << endl;
+			//cout << "active" << endl;
 		}
 		else {
-			cout << "deactive" << endl;
+			//cout << "deactive" << endl;
 		}
 
-		Update();
 		Render();
 	}
 }
 
-void Game::Update(){
+void Game::Update(float dt){
 
 	for each (Cat *cat in mEntities)
 	{
@@ -80,7 +113,8 @@ void Game::Update(){
 		//cout << "Y : " << cat->GetPosition().y << endl << endl;;
 		//Enable keyboard for cat
 		mController.move(cat);
-		cat->Update();
+		cat->Update(dt);
+
 	}
 	
 
