@@ -22,18 +22,18 @@ void Controller::assignController(int player, Cat *cat){
 void Controller::move(Cat *cat){
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 	{
-		cat->move(0, -5);
+		cat->moveForward();
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 	{
-		cat->move(-5, 0);
+		cat->moveLeft();
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 	{
-		cat->move(0, 5);
+		cat->moveBackWards();
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 	{
-		cat->move(5, 0);
+		cat->moveRight();
 	}
 }

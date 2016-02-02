@@ -1,5 +1,5 @@
 #include "Game.h"
-
+#include "gridvector.h"
 
 static sf::RenderWindow *window;
 static TextureHandler textures;
@@ -29,7 +29,7 @@ mController()
 	textures.Initialize();
 
 	//Creates a cat(player)
-	mCat = new Cat(textures.GetTexture(10), 50, 50, 1);
+	mCat = new Cat(textures.GetTexture(10), gridvector(2,2), 1);
 	//Stores Entities/objects
 	mEntities.push_back(mCat);
 
@@ -80,7 +80,9 @@ void Game::Update(){
 		//cout << "Y : " << cat->GetPosition().y << endl << endl;;
 		//Enable keyboard for cat
 		mController.move(cat);
+		cat->Update();
 	}
+	
 
 }
 

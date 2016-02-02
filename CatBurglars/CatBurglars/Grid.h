@@ -7,6 +7,7 @@ class Grid{
 public:
 	Grid(int WIDTH, int HEIGHT);
 
+	/*
 	Tile getTile(gridvector position){
 		Tile *thisTile;
 		for each (Tile *t in tiles){
@@ -17,6 +18,7 @@ public:
 		}
 		
 	}
+	*/
 
 private:
 	vector<Tile*> tiles;

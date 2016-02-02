@@ -4,6 +4,7 @@
 #include <iostream>
 #include <vector>
 #include "Entity.h"
+#include "gridvector.h"
 
 class GameObject : public Entity
 {
