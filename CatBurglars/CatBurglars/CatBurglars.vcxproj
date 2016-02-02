@@ -80,6 +80,7 @@
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="LevelManager.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="Test.cpp" />
     <ClCompile Include="Test1.cpp" />
     <ClCompile Include="TextureHandler.cpp" />
@@ -95,6 +96,7 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="LevelManager.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="Test.h" />
     <ClInclude Include="Test1.h" />
     <ClInclude Include="TextureHandler.h" />

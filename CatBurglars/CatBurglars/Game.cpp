@@ -39,12 +39,11 @@ mController()
 
 	test1 = new Test1();
 	test2 = new Test1();
-	test1 = dynamic_cast<Test1*>(test1);
 	test1->setInt(99);
 	test2->setInt(777);
 
 	mEntities.push_back(test1);
-	//mEntities.push_back(test2);
+	mEntities.push_back(test2);
 
 
 }
@@ -95,7 +94,10 @@ void Game::Update(){
 		//cout << "Y : " << cat->GetPosition().y << endl << endl;;
 		//Enable keyboard for cat
 		//mController.move(cat);
-		std::cout << abc->getInt() << std::endl;
+		if (Test *test = dynamic_cast<Test1*>(abc)){
+			std::cout << abc->getInt() << std::endl;
+		}
+		
 	}
 	//std::cout << test1->getInt() << std::endl;
 }

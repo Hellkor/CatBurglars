@@ -2,9 +2,9 @@
 #define INCLUDED_CAT
 
 #include <SFML\Graphics.hpp>
-#include "GameObject.h"
+#include "Player.h"
 
-class Cat : public GameObject
+class Cat : public Player
 {
 public:
 	Cat(sf::Texture *texture, int x, int y, int ID);

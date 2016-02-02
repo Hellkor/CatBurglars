@@ -1,7 +1,7 @@
 #include "Cat.h"
 #include <iostream>
 
-Cat::Cat(sf::Texture *texture, int x, int y, int ID) : GameObject(),
+Cat::Cat(sf::Texture *texture, int x, int y, int ID) : Player(),
 mID(ID)
 {
 	mSprite.setTexture(*texture, true);
