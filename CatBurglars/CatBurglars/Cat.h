@@ -20,6 +20,13 @@ public:
 
 	bool isInteracting = false;
 	bool interacting();
+	bool isMoving();
+	bool isColliding();
+
+	int getDirection();
+
+	void Collide();
+	
 private:
 	sf::Sprite mSprite;
 	int mID;
@@ -28,9 +35,8 @@ private:
 
 	sf::Vector2i newPos;
 
-	
-
 	bool mMoving = false;
+	bool mColliding = false;
 
 	int direction = 0;
 };
