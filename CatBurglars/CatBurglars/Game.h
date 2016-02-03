@@ -24,10 +24,10 @@ public:
 private:
 	void Update(float dt);
 	void Render();
-	EntityVector mEntities;
 	GameObject *mGameObjectives;
 	Cat *mCat;
 	Controller mController;
+	LevelManager levelM;
 };
 
 #endif

@@ -21,6 +21,7 @@ public:
 	bool isInteracting = false;
 	bool interacting();
 private:
+	float mSpeed;
 	sf::Sprite mSprite;
 	int mID;
 	sf::Vector2i mPosition;

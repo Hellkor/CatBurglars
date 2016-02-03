@@ -3,15 +3,20 @@
 #include <fstream>
 #include <iostream>
 using namespace std;
-
+#include "Controller.h"
+Controller c;
 static TextureHandler textures;
 
 
 // Skapar en level från en textfil
-Level::Level(string filename):
-	mFile(filename){
-	generateLevel(mFile);
-	//Initialize again??
+Level::Level(string filename, Cat *cat1, Cat *cat2) :
+	mFile(filename),
+	mPlayer1(cat1),
+	mPlayer2(cat2){
+
+	
+
+	//Initialize textures
 	textures.Initialize();
 }
 
@@ -19,7 +24,8 @@ Level::Level(string filename):
 void Level::render(sf::RenderWindow *window){
 
 	window->clear();
-	
+
+
 	
 	for (TileLayer::size_type y = 0; y < mBottomTileLayer.size(); y++)
 	{
@@ -28,7 +34,34 @@ void Level::render(sf::RenderWindow *window){
 			mBottomTileLayer[y][x]->Render(window);
 		}
 	}
+	for each (Entity *e in mEntities){
+		e->Render(window);
+	}
 		
+}
+
+void Level::addPlayer(Cat *cat , int player){
+	
+
+
+}
+void Level::update(float dt){
+
+	c.move(mPlayer1);
+
+	for each (Entity *e in mEntities){
+
+		e->Update(dt);
+
+	}
+
+}
+
+void Level::load(){
+	mEntities.clear();
+	generateLevel(mFile);
+	mEntities.push_back(mPlayer1);
+	mEntities.push_back(mPlayer2);
 }
 
 // Laddar in leveln från sparfilen

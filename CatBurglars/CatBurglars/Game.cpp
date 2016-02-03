@@ -6,7 +6,7 @@
 static sf::RenderWindow *window;
 static TextureHandler textures;
 
-LevelManager levelM;
+
 
 // TIME
 // Timestep (Constant Game Speed independent of Variable FPS)
@@ -25,13 +25,13 @@ sf::Int32 proximo_tick = miReloj.getElapsedTime().asMilliseconds();
 Crate *crate;
 
 Game::Game() :
-mEntities(),
 mCat(),
-mController()
-{
-	//Test for loading in maps
-	Level testLevel = Level("test");
-	levelM.addLevel(testLevel);
+mController(),
+levelM(){
+	
+
+
+	
 
 	//Test för channel
 	Channel c1 = Channel(1);
@@ -49,14 +49,19 @@ mController()
 	//Creates a cat(player)
 	mCat = new Cat(textures.GetTexture(10), gridvector(2,2), 1);
 	//Stores Entities/objects
-	mEntities.push_back(mCat);
+	//Test for loading in maps
+	Level *testLevel = new Level("test", mCat, mCat);
 
+	levelM.addLevel(testLevel);
+	
 
 	window->setVerticalSyncEnabled(false);
 
 	//Creates a crate
 	crate = new Crate(textures.GetTexture(4), gridvector(1, 1), 1);
-	mEntities.push_back(crate);
+
+	levelM.loadLevel(0);
+	
 
 
 }
@@ -117,7 +122,9 @@ void Game::Run(){
 
 void Game::Update(float dt){
 	//mController.move(mCat);
+	levelM.update(dt);
 
+	/*
 	for each (GameObject *gameObject in mEntities)
 	{
 		//cout << "X : " << cat->GetPosition().x << endl;
@@ -131,6 +138,7 @@ void Game::Update(float dt){
 			cat->Update(dt);
 		}
 	}
+	*/
 }
 
 void Game::Render()
@@ -140,10 +148,12 @@ void Game::Render()
 
 	window->clear();
 	levelM.render(window);
-	//Render all entities into the window
+	//Render all entities into the window 
+	/*
 	for each(Entity *entity in mEntities)
 	{
 		entity->Render(window);
 	}
+	*/
 	window->display();
 }
