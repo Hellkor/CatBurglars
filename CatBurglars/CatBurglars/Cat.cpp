@@ -26,7 +26,6 @@ void Cat::Update(float dt){
 
 	if (mMoving){
 		if (direction == 4 && mPosition.y != newPos.y) {
-<<<<<<< HEAD
 			mPosition.y -= 1 *mSpeed;
 		}
 		else if (direction == 3 && mPosition.y != newPos.y) {
@@ -38,19 +37,6 @@ void Cat::Update(float dt){
 		}
 		else if (direction == 1 && mPosition.x != newPos.x) {
 			mPosition.x += 1 * mSpeed;
-=======
-			mPosition.y -= 1;
-		}
-		else if (direction == 3 && mPosition.y != newPos.y) {
-			mPosition.y += 1;
-		}
-		else if (direction == 2 && mPosition.x != newPos.x) {
-			mPosition.x -= 1;
-
-		}
-		else if (direction == 1 && mPosition.x != newPos.x) {
-			mPosition.x += 1;
->>>>>>> origin/master
 		}
 		else {
 			mMoving = false;

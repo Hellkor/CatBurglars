@@ -48,29 +48,23 @@ levelM(){
 
 	//Creates a cat(player)
 	mCat = new Cat(textures.GetTexture(10), gridvector(2,2), 1);
-<<<<<<< HEAD
+
 	//Stores Entities/objects
 	//Test for loading in maps
 	Level *testLevel = new Level("test", mCat, mCat);
 
 	levelM.addLevel(testLevel);
-	
-=======
->>>>>>> origin/master
 
 	window->setVerticalSyncEnabled(false);
 
 	//Creates a crate
 	crate = new Crate(textures.GetTexture(4), gridvector(1, 1), 1);
-<<<<<<< HEAD
 
 	levelM.loadLevel(0);
 	
 
-=======
 	mEntities.push_back(crate);
 	mEntities.push_back(mCat);
->>>>>>> origin/master
 
 }
 
