@@ -23,10 +23,10 @@ void Cat::Render(sf::RenderWindow *mainWindow){
 
 void Cat::Update(float dt){
 
-	
 
 	if (mMoving){
 		if (direction == 4 && mPosition.y != newPos.y) {
+<<<<<<< HEAD
 			mPosition.y -= 1 *mSpeed;
 		}
 		else if (direction == 3 && mPosition.y != newPos.y) {
@@ -38,6 +38,19 @@ void Cat::Update(float dt){
 		}
 		else if (direction == 1 && mPosition.x != newPos.x) {
 			mPosition.x += 1 * mSpeed;
+=======
+			mPosition.y -= 1;
+		}
+		else if (direction == 3 && mPosition.y != newPos.y) {
+			mPosition.y += 1;
+		}
+		else if (direction == 2 && mPosition.x != newPos.x) {
+			mPosition.x -= 1;
+
+		}
+		else if (direction == 1 && mPosition.x != newPos.x) {
+			mPosition.x += 1;
+>>>>>>> origin/master
 		}
 		else {
 			mMoving = false;
@@ -60,11 +73,7 @@ void Cat::Update(float dt){
 				mPosition.x = newPos.x;
 			}
 		}
-
-		
-
 	}
-	
 }
 
 void Cat::moveForward() {
@@ -111,4 +120,20 @@ bool Cat::interacting(){
 //Returns position of sprite
 sf::Vector2i Cat::GetPosition(){
 	return mPosition;
+}
+
+int Cat::getDirection(){
+	return direction;
+}
+
+bool Cat::isMoving(){
+	return mMoving;
+}
+
+bool Cat::isColliding(){
+	return mColliding;
+}
+
+void Cat::Collide(){
+	mColliding = true;
 }

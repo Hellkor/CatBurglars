@@ -19,7 +19,42 @@ void Crate::Render(sf::RenderWindow *mainWindow){
 	mainWindow->draw(mSprite);
 }
 
-void Crate::Update(){
+void Crate::Update(float dt){
+	if (mMoving){
+		if (direction == 4 && mPosition.y != newPos.y) {
+			mPosition.y -= 1;
+		}
+		else if (direction == 3 && mPosition.y != newPos.y) {
+			mPosition.y += 1;
+		}
+		else if (direction == 2 && mPosition.x != newPos.x) {
+			mPosition.x -= 1;
+
+		}
+		else if (direction == 1 && mPosition.x != newPos.x) {
+			mPosition.x += 1;
+		}
+		else {
+			mMoving = false;
+
+			// säkrar att den håller rätt position
+			if (direction == 4) {
+				mPosition.y = newPos.y;
+			}
+			if (direction == 3) {
+				mPosition.y = newPos.y;
+			}
+			if (direction == 2) {
+				mPosition.x = newPos.x;
+			}
+			if (direction == 1) {
+				mPosition.x = newPos.x;
+			}
+		}
+
+
+
+	}
 
 }
 
@@ -78,9 +113,26 @@ int lengthCrate(sf::Vector2i v1, sf::Vector2i v2){
 
 bool Crate::getInteraction(Cat *cat){
 
-	if (lengthCrate(mPosition, cat->GetPosition()) < INTERACTION_RADIUSS_CRATE){
-		//if (cat->interacting()){
 
+
+	if (lengthCrate(mPosition, cat->GetPosition()) < INTERACTION_RADIUSS_CRATE){
+		if (cat->interacting()){
+			//std::cout << "I am being interacted interacting" << std::endl;
+			if (cat->isMoving() && (cat->getDirection() == 1)){
+				moveRight();
+			}
+			if (cat->isMoving() && (cat->getDirection() == 2)){
+				moveLeft();
+			}
+			if (cat->isMoving() && (cat->getDirection() == 3)){
+				moveBackWards();
+			}
+			if (cat->isMoving() && (cat->getDirection() == 4)){
+				moveForward();
+			}
+		}
+		else
+			cat->Collide();
 		// play sound
 		return true;
 		}
