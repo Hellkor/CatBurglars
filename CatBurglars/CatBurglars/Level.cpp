@@ -91,13 +91,16 @@ void Level::load(){
 	Channel c = Channel(1);
 	Channels::addChannel(c);
 
-	Button *b = new Button(1, textures.GetTexture(12), gridvector(3,3));
+	Button *butt = new Button(1, textures.GetTexture(12), gridvector(3,3));
+	Button *b = new Button(1, textures.GetTexture(12), gridvector(7, 9));
 	Door *d = new Door(1, gridvector(9, 4), textures.GetTexture(10));
 
 	mEntities.push_back(d);
 	mEntities.push_back(b);
+	mEntities.push_back(butt);
 
-	mEntities.push_back(new Crate(textures.GetTexture(4), gridvector(3, 3), 1));
+	mEntities.push_back(new Crate(textures.GetTexture(4), gridvector(2, 2), 1));
+	mEntities.push_back(new Crate(textures.GetTexture(4), gridvector(4, 4), 1));
 	mEntities.push_back(new Cat(textures.GetTexture(10), gridvector(1, 1), 2));
 }
 

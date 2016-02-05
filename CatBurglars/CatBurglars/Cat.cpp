@@ -17,6 +17,7 @@ Cat::~Cat(){
 //Render sprite on screen
 void Cat::Render(sf::RenderWindow *mainWindow){
 	
+	
 	mSprite.setPosition((sf::Vector2f)mPosition);
 	mainWindow->draw(mSprite);
 }
