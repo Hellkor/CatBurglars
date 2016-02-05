@@ -28,6 +28,8 @@ private:
 	Cat *mCat;
 	Controller mController;
 	LevelManager levelM;
+
+	EntityVector mEntities;
 };
 
 #endif

@@ -2,6 +2,11 @@
 #include "Level.h"
 #include <fstream>
 #include <iostream>
+#include "Channel.h"
+#include "Channels.h"
+#include "Button.h"
+#include "Door.h"
+#include "Crate.h"
 using namespace std;
 #include "Controller.h"
 Controller c;
@@ -9,12 +14,8 @@ static TextureHandler textures;
 
 
 // Skapar en level från en textfil
-Level::Level(string filename, Cat *cat1, Cat *cat2) :
-	mFile(filename),
-	mPlayer1(cat1),
-	mPlayer2(cat2){
-
-	
+Level::Level(string filename) :
+	mFile(filename){
 
 	//Initialize textures
 	textures.Initialize();
@@ -47,11 +48,35 @@ void Level::addPlayer(Cat *cat , int player){
 }
 void Level::update(float dt){
 
-	c.move(mPlayer1);
+	Channels::update();
+
+	if (Channels::isChannelActive(1)){
+		cout << "Channel 1 is activated!" << endl;
+	}
 
 	for each (Entity *e in mEntities){
 
 		e->Update(dt);
+		
+		
+		if (Cat *cat = dynamic_cast<Cat*>(e)){
+
+			c.move(cat, &mBottomTileLayer, &mEntities);
+			
+			for each (Entity *b in mEntities){
+				
+				if (Usable *u = dynamic_cast<Usable*>(b)){
+					u->getInteraction(cat);
+				}
+
+				if (Crate *object = dynamic_cast<Crate*>(b)){
+					//object->getInteraction(cat);
+				}
+			}
+			
+
+		}
+		
 
 	}
 
@@ -60,15 +85,27 @@ void Level::update(float dt){
 void Level::load(){
 	mEntities.clear();
 	generateLevel(mFile);
-	mEntities.push_back(mPlayer1);
-	mEntities.push_back(mPlayer2);
+	//mEntities.push_back(new Cat(textures.GetTexture(10),gridvector(0,0),1));
+	
+
+	Channel c = Channel(1);
+	Channels::addChannel(c);
+
+	Button *b = new Button(1, textures.GetTexture(12), gridvector(3,3));
+	Door *d = new Door(1, gridvector(9, 4), textures.GetTexture(10));
+
+	mEntities.push_back(d);
+	mEntities.push_back(b);
+
+	mEntities.push_back(new Crate(textures.GetTexture(4), gridvector(3, 3), 1));
+	mEntities.push_back(new Cat(textures.GetTexture(10), gridvector(1, 1), 2));
 }
 
 // Laddar in leveln från sparfilen
 void Level::generateLevel(string name){
 
+
 	ifstream inputFile("Maps/" + name + ".txt");
-	
 	string input;
 	inputFile >> input;
 	mMapSizeX = stoi(input);
@@ -89,7 +126,7 @@ void Level::generateLevel(string name){
 			else
 				cout << ID;
 			cout << " ";
-			Tile *tile = new Tile(sf::Vector2i( x * Tile::GetSize().x, y * Tile::GetSize().y), ID, 0, &textures);
+			Tile *tile = new Tile(gridvector( x , y ), ID, 0, &textures);
 			mTileRow.push_back(tile);
 		}
 		mBottomTileLayer.push_back(mTileRow);

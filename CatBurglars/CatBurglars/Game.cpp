@@ -31,15 +31,6 @@ levelM(){
 	
 
 
-	
-
-	//Test för channel
-	Channel c1 = Channel(1);
-	Channel c2 = Channel(2);
-	Channels::addChannel(c1);
-	Channels::addChannel(c2);
-
-	Channels::setActive(1, false, 10);
 
 	//Creates the main window
 	window = new sf::RenderWindow(sf::VideoMode(1024, 720), "CatBurglars");
@@ -47,24 +38,20 @@ levelM(){
 	textures.Initialize();
 
 	//Creates a cat(player)
-	mCat = new Cat(textures.GetTexture(10), gridvector(2,2), 1);
 
 	//Stores Entities/objects
 	//Test for loading in maps
-	Level *testLevel = new Level("test", mCat, mCat);
+	Level *testLevel = new Level("snowshadow1");
+	Level *level2 = new Level("axel");
 
 	levelM.addLevel(testLevel);
+	levelM.addLevel(level2);
 
 	window->setVerticalSyncEnabled(false);
 
-	//Creates a crate
-	crate = new Crate(textures.GetTexture(4), gridvector(1, 1), 1);
 
 	levelM.loadLevel(0);
 	
-
-	mEntities.push_back(crate);
-	mEntities.push_back(mCat);
 
 }
 
@@ -106,17 +93,7 @@ void Game::Run(){
 		
 		//Test för Channel
 		// Uppdaterar timers för alla kanaler
-		Channels::update();
-
-		// Kollar om en kanal är aktiv.
-		if (Channels::isChannelActive(1)) {
-
-			// Gör saker sålänge den är aktiv
-			//cout << "active" << endl;
-		}
-		else {
-			//cout << "deactive" << endl;
-		}
+		
 
 		Render();
 	}

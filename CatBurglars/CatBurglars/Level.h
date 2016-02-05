@@ -13,7 +13,7 @@ typedef vector<TileRow> TileLayer;
 
 class Level{
 public:
-	Level(string filename, Cat *cat1, Cat *cat2);
+	Level(string filename);
 	void update(float dt);
 	void render(sf::RenderWindow *window);
 
@@ -30,8 +30,6 @@ private:
 
 	int  mMapSizeX, mMapSizeY;
 
-	Cat *mPlayer1;
-	Cat *mPlayer2;
 
 	std::vector<Entity*> mEntities;
 

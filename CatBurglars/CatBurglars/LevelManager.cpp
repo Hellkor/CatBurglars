@@ -33,6 +33,7 @@ void LevelManager::update(float dt){
 
 void LevelManager::loadLevel(int i){
 
+	mCurrentLevel = i;
 	mLevels[mCurrentLevel]->load();
 
 }
@@ -41,29 +42,14 @@ void LevelManager::loadLevel(int i){
 void LevelManager::nextLevel(){
 	if (mCurrentLevel != mLevels.size()-1){
 		std::cout << "Changing to next level" << std::endl;
-		loadLevel(mCurrentLevel += 1);
-		mCurrentLevel += 1;
+		mCurrentLevel++;
+		loadLevel(mCurrentLevel);
+		
 		
 	}
-	else {
-		std::cout << "Can't change to next level because there is none." << std::endl;
-	}
 }
-// Byter level till given position i listan.
-void LevelManager::changeLevel(int i){
-	if (i < mLevels.size()){
-		std::cout << "Changing to level " << i << std::endl;
-		loadLevel(i);
-		mCurrentLevel = i;
-	}
-	else {
-		std::cout << "That level does not exist!" << std::endl;
-	}
-}
+
 
 void LevelManager::render(sf::RenderWindow *window){
 	mLevels[mCurrentLevel]->render(window);
-	//mLevels[mCurrentLevel].update();
-
-	
 }

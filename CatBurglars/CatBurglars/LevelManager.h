@@ -7,13 +7,13 @@ class LevelManager{
 public:
 	LevelManager();
 	void addLevel(Level *level);
-	void nextLevel();
-	void changeLevel(int stage);
+	
 	Level getLevel();
 
 	void clearLevels();
 
 	void loadLevel(int level);
+	void nextLevel();
 
 	void update(float dt);
 	void render(sf::RenderWindow *window);
@@ -22,7 +22,6 @@ private:
 	
 
 	std::vector<Level*> mLevels;
-	Level *mCurrentL;
 	int mCurrentLevel;
 };
 #endif

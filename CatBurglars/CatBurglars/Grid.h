@@ -1,26 +1,19 @@
-#pragma once
+#ifndef INCLUDED_GRID
+#define INCLUDED_GRID
 
 #include "Tile.h"
 #include "gridvector.h"
+typedef vector<Tile*> TileRow;
+typedef vector<TileRow> TileLayer;
 
 class Grid{
 public:
-	Grid(int WIDTH, int HEIGHT);
-
-	/*
-	Tile getTile(gridvector position){
-		Tile *thisTile;
-		for each (Tile *t in tiles){
-			if (t->getGridCoord() == position){
-				thisTile = t;
-				return *thisTile;
-			}
-		}
-		
-	}
-	*/
+	Grid();
+	bool isTilePassable(gridvector originalpos,gridvector position, TileLayer *Tiles,std::vector<Entity*> *Entities);
+	bool canCrateMove(gridvector position, TileLayer *Tiles, std::vector<Entity*> *Entities);
 
 private:
-	vector<Tile*> tiles;
 
 };
+
+#endif

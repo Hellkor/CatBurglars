@@ -22,32 +22,36 @@ void Crate::Render(sf::RenderWindow *mainWindow){
 void Crate::Update(float dt){
 	if (mMoving){
 		if (direction == 4 && mPosition.y != newPos.y) {
-			mPosition.y -= 1;
+			mPosition.y -= 2;
 		}
 		else if (direction == 3 && mPosition.y != newPos.y) {
-			mPosition.y += 1;
+			mPosition.y += 2;
 		}
 		else if (direction == 2 && mPosition.x != newPos.x) {
-			mPosition.x -= 1;
+			mPosition.x -= 2;
 
 		}
 		else if (direction == 1 && mPosition.x != newPos.x) {
-			mPosition.x += 1;
+			mPosition.x += 2;
 		}
 		else {
 			mMoving = false;
-
+			mSolid = true;
 			// säkrar att den håller rätt position
 			if (direction == 4) {
+				mCoord.y--;
 				mPosition.y = newPos.y;
 			}
 			if (direction == 3) {
+				mCoord.y++;
 				mPosition.y = newPos.y;
 			}
 			if (direction == 2) {
+				mCoord.x--;
 				mPosition.x = newPos.x;
 			}
 			if (direction == 1) {
+				mCoord.x++;
 				mPosition.x = newPos.x;
 			}
 		}
@@ -56,49 +60,61 @@ void Crate::Update(float dt){
 
 	}
 
+}
+bool Crate::isSolid(){
+	return mSolid;
 }
 
 sf::Vector2i Crate::GetPosition(){
 	return mPosition;
 }
 
-void Crate::moveForward() {
+void Crate::moveForward(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 	if (!mMoving) {
-		// if (!Grid.getTile(mCoords.x -1,mCoords.y)->isSolid())
-		// do....
-		newPos.y = mPosition.y - 64;
-		direction = 4;
-		c.restart();
-		mCoord.y--;
-		mMoving = true;
+		if (mGrid.canCrateMove(gridvector(mCoord.x, mCoord.y - 1), tileLayer, Entities)){
+			newPos.y = mPosition.y - 64;
+			direction = 4;
+			c.restart();
+			
+			mMoving = true;
+			mSolid = false;
+		}
 	}
 }
-void Crate::moveBackWards() {
+void Crate::moveBackWards(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 	if (!mMoving) {
-		newPos.y = mPosition.y + 64;
-		direction = 3;
-		c.restart();
-		mCoord.y++;
-		mMoving = true;
+		if (mGrid.canCrateMove(gridvector(mCoord.x, mCoord.y + 1), tileLayer, Entities)){
+			newPos.y = mPosition.y + 64;
+			direction = 3;
+			c.restart();
+			
+			mMoving = true;
+			mSolid = false;
+		}
 	}
 }
-void Crate::moveLeft() {
+void Crate::moveLeft(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 	if (!mMoving) {
-
-		newPos.x = mPosition.x - 64;
-		direction = 2;
-		c.restart();
-		mCoord.x--;
-		mMoving = true;
+		if (mGrid.canCrateMove(gridvector(mCoord.x - 1, mCoord.y), tileLayer, Entities)){
+			newPos.x = mPosition.x - 64;
+			direction = 2;
+			c.restart();
+			
+			mMoving = true;
+			mSolid = false;
+		}
 	}
 }
-void Crate::moveRight() {
+void Crate::moveRight(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 	if (!mMoving) {
-		newPos.x = mPosition.x + 64;
-		direction = 1;
-		c.restart();
-		mCoord.x++;
-		mMoving = true;
+		if (mGrid.canCrateMove(gridvector(mCoord.x + 1, mCoord.y), tileLayer, Entities)){
+			newPos.x = mPosition.x + 64;
+			direction = 1;
+			c.restart();
+			
+			mMoving = true;
+			mSolid = false;
+		}
 	}
 }
 
@@ -113,28 +129,40 @@ int lengthCrate(sf::Vector2i v1, sf::Vector2i v2){
 
 bool Crate::getInteraction(Cat *cat){
 
+	return true;
 
-
-	if (lengthCrate(mPosition, cat->GetPosition()) < INTERACTION_RADIUSS_CRATE){
+	//if (lengthCrate(mPosition, cat->GetPosition()) < INTERACTION_RADIUSS_CRATE){
+	/*
 		if (cat->interacting()){
-			//std::cout << "I am being interacted interacting" << std::endl;
-			if (cat->isMoving() && (cat->getDirection() == 1)){
+			std::cout << "I am being interacted interacting" << std::endl;
+			if ((cat->getDirection() == 1)){
+				
 				moveRight();
 			}
-			if (cat->isMoving() && (cat->getDirection() == 2)){
+			if ((cat->getDirection() == 2)){
+				
 				moveLeft();
 			}
-			if (cat->isMoving() && (cat->getDirection() == 3)){
+			if ((cat->getDirection() == 3)){
+				
 				moveBackWards();
 			}
-			if (cat->isMoving() && (cat->getDirection() == 4)){
+			if ((cat->getDirection() == 4)){
+				
 				moveForward();
 			}
+			return true;
 		}
-		else
-			cat->Collide();
-		// play sound
-		return true;
-		}
+		*/
+		
+		//else
+			//cat->Collide();
+		//return true;
+		
+		//}
 
+}
+
+gridvector Crate::getCoords(){
+	return mCoord;
 }

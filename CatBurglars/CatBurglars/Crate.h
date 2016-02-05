@@ -12,19 +12,22 @@ public:
 	virtual void Render(sf::RenderWindow *mainWindow);
 	virtual void Update(float dt);
 	virtual sf::Vector2i GetPosition();
-
-	void moveForward();
-	void moveBackWards();
-	void moveLeft();
-	void moveRight();
-
+	virtual bool isSolid();
+	void moveForward(TileLayer *tileLayer, std::vector<Entity*> *Entities);
+	void moveBackWards(TileLayer *tileLayer, std::vector<Entity*> *Entities);
+	void moveLeft(TileLayer *tileLayer, std::vector<Entity*> *Entities);
+	void moveRight(TileLayer *tileLayer, std::vector<Entity*> *Entities);
+	
 	bool getInteraction(Cat *c);
+
+	gridvector getCoords();
 
 private:
 	sf::Sprite mSprite;
 	sf::Vector2i mPosition;
 	gridvector mCoord;
 
+	bool mSolid;
 	sf::Vector2i newPos;
 
 	sf::Clock c;
@@ -32,7 +35,7 @@ private:
 	// KORREKT ANVÄNDNING = animationtime / moveInterval måste vara samma som TILESTORLEK
 	sf::Time animationInterval = sf::milliseconds(512);
 	sf::Time moveInterval = sf::milliseconds(8);
-
+	Grid mGrid;
 	int mID;
 
 	bool mMoving = false;

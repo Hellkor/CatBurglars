@@ -6,16 +6,17 @@ static bool changeAllowed = true;
 static sf::Texture *texture;
 static TextureHandler *textureHandler;
 
-Tile::Tile(sf::Vector2i position, int ID, int textureID, TextureHandler *textures)
-: Entity(), mID(ID)
-{
+Tile::Tile(gridvector coords, int ID, int textureID, TextureHandler *textures)
+: Entity(), mID(ID){
+
+	mPosition.x = coords.x * width;
+	mPosition.y = coords.y * height;
+	mCoords = gridvector(mCoords.x, mCoords.y);
+
 	textureHandler = textures;
 	texture = textureHandler->GetTexture(textureID);
 	mSprite.setTexture(*texture, true);
 	mSprite.setTextureRect(sf::IntRect((ID % 3) * width, floor(ID / 3) * height, width, height));
-	//Added so it works, is needed?
-	mPosition.x = position.x;
-	mPosition.y = position.y;
 }
 
 Tile::~Tile()
@@ -23,7 +24,9 @@ Tile::~Tile()
 
 }
 
-
+gridvector Tile::getCoords(){
+	return mCoords;
+}
 
 void Tile::Render(sf::RenderWindow *window)
 {

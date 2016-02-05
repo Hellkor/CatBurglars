@@ -13,6 +13,8 @@ public:
 
 	virtual bool getInteraction(Cat *c) = 0;
 	virtual int getChannelID() = 0;
+
+	virtual bool isSolid() = 0;
 };
 
 #endif

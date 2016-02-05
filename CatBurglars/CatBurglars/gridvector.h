@@ -19,4 +19,10 @@ public:
 	}
 	int x;
 	int y;
+	bool operator ==(gridvector pos){
+		if (pos.x == x && pos.y == y){
+			return true;
+		}
+		else return false;
+	}
 };

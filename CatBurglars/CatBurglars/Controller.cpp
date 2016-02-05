@@ -19,22 +19,22 @@ void Controller::assignController(int player, Cat *cat){
 }
 
 //Change position of cat with keyboard
-void Controller::move(Cat *cat){
+void Controller::move(Cat *cat, TileLayer *tileLayer, std::vector<Entity*> *Entities){
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 	{
-		cat->moveForward();
+		cat->moveForward(tileLayer,Entities);
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 	{
-		cat->moveLeft();
+		cat->moveLeft(tileLayer, Entities);
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 	{
-		cat->moveBackWards();
+		cat->moveBackWards(tileLayer, Entities);
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 	{
-		cat->moveRight();
+		cat->moveRight(tileLayer, Entities);
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 	{

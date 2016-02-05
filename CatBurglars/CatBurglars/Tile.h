@@ -8,7 +8,7 @@
 class Tile : public Entity
 {
 public:
-	Tile(sf::Vector2i position, int ID, int textureID, TextureHandler *textures);
+	Tile(gridvector coords, int ID, int textureID, TextureHandler *textures);
 	~Tile();
 	void Render(sf::RenderWindow *mainWindow);
 	void Update(float dt);
@@ -17,11 +17,11 @@ public:
 	static sf::Vector2i GetSize();
 	static void IDChangeInfo(int ID, bool allowed);
 	int GetID();
+	gridvector getCoords();
+	
 private:
 	int mID = 0;
-
-	gridvector gridPosition; // Position on grid
-
+	gridvector mCoords;
 	//Added
 	sf::Sprite mSprite;
 	sf::Vector2i mPosition;
