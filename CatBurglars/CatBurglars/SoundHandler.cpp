@@ -28,5 +28,4 @@ SoundHandler::~SoundHandler(){
 void SoundHandler::startMusic(){
 	mMusic.openFromFile("Resources/sound.ogg");
 	mMusic.play();
-	std::cout << "saddsa" << std::endl;
 }

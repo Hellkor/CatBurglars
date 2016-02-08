@@ -20,6 +20,8 @@ public:
 	void moveLeft(TileLayer *tileLayer, std::vector<Entity*> *Entities);
 	void moveRight(TileLayer *tileLayer, std::vector<Entity*> *Entities);
 
+	void Cat::useAbility(TileLayer *tileLayer, std::vector<Entity*> *Entities);
+
 	bool mInteracting = false;
 	virtual bool isInteracting();
 	bool isMoving();
@@ -31,6 +33,8 @@ public:
 
 	virtual bool isSolid();
 	
+	void shadowDash(TileLayer *tileLayer, std::vector<Entity*> *Entities);
+
 private:
 	float mSpeed;
 	sf::Sprite mSprite;
@@ -47,6 +51,10 @@ private:
 
 
 	int direction = 0;
+
+	sf::Clock mAbilityClock;
+	sf::Time mAbilityTime;
+
 };
 
 #endif

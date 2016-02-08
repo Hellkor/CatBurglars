@@ -6,7 +6,8 @@ int TILESIZE = 64;
 Cat::Cat(sf::Texture *texture, gridvector position, int ID) : GameObject(),
 mID(ID),
 mCoord(position),
-mSpeed(2){
+mSpeed(2),
+mAbilityTime(sf::seconds(5)){
 	mSprite.setTexture(*texture, true);
 	//Starting position
 	mPosition = sf::Vector2i(mCoord.x * 64, mCoord.y * 64);
@@ -65,6 +66,8 @@ void Cat::Update(float dt){
 			}
 		}
 	}
+	//Do if dash
+	mSpeed = 2;
 }
 
 void Cat::moveForward(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
@@ -113,6 +116,12 @@ void Cat::moveRight(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 	}
 }
 
+void Cat::useAbility(TileLayer *tileLayer, std::vector<Entity*> *Entities){
+	if (mID == 2){
+		shadowDash(tileLayer,Entities);
+	}
+}
+
 bool Cat::isInteracting(){
 	return mInteracting;
 }
@@ -139,4 +148,35 @@ bool Cat::isColliding(){
 
 void Cat::Collide(){
 	mColliding = true;
+}
+
+// SHADOW \\
+
+void Cat::shadowDash(TileLayer *tileLayer, std::vector<Entity*> *Entities){
+	std::cout << "DASH!" << std::endl;
+	if (mAbilityClock.getElapsedTime()>=mAbilityTime){
+		mSpeed = mSpeed * 8;
+		if (direction == 1 && (mGrid.isTilePassable(mCoord, gridvector(mCoord.x + 1, mCoord.y), tileLayer, Entities)) && (mGrid.isTilePassable(mCoord, gridvector(mCoord.x + 2, mCoord.y), tileLayer, Entities))){
+			newPos.x = mPosition.x + 128;
+			mCoord.x++;
+			mMoving = true;
+		}
+		if (direction == 2 && (mGrid.isTilePassable(mCoord, gridvector(mCoord.x - 1, mCoord.y), tileLayer, Entities)) && (mGrid.isTilePassable(mCoord, gridvector(mCoord.x - 2, mCoord.y), tileLayer, Entities))){
+			newPos.x = mPosition.x - 128;
+			mCoord.x--;
+			mMoving = true;
+		}
+		if (direction == 3 && (mGrid.isTilePassable(mCoord, gridvector(mCoord.x, mCoord.y + 1), tileLayer, Entities)) && (mGrid.isTilePassable(mCoord, gridvector(mCoord.x, mCoord.y + 2), tileLayer, Entities))){
+			newPos.y = mPosition.y + 128;
+			mCoord.y++;
+			mMoving = true;
+		}
+		if (direction == 4 && (mGrid.isTilePassable(mCoord, gridvector(mCoord.x, mCoord.y - 1), tileLayer, Entities)) && (mGrid.isTilePassable(mCoord, gridvector(mCoord.x, mCoord.y - 2), tileLayer, Entities))){
+			newPos.y = mPosition.y - 128;
+			mCoord.y--;
+			mMoving = true;
+		}
+		mAbilityClock.restart();
+	}
+	
 }
