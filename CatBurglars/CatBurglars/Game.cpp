@@ -45,7 +45,7 @@ levelM(){
 
 	//Stores Entities/objects
 	//Test for loading in maps
-	Level *testLevel = new Level("test");
+	Level *testLevel = new Level("mapofdoom");
 	Level *level2 = new Level("axel");
 
 	levelM.addLevel(testLevel);

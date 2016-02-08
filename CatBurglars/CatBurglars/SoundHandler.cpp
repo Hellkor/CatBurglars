@@ -26,6 +26,6 @@ SoundHandler::~SoundHandler(){
 }
 
 void SoundHandler::startMusic(){
-	mMusic.openFromFile("Resources/sound.ogg");
+	mMusic.openFromFile("Resources/Sounds/sound.ogg");
 	mMusic.play();
 }

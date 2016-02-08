@@ -7,6 +7,7 @@
 #include "Button.h"
 #include "Door.h"
 #include "Crate.h"
+#include "Guard.h"
 using namespace std;
 #include "Controller.h"
 Controller c;
@@ -60,6 +61,10 @@ void Level::update(float dt){
 		
 		if (GameObject *obj = dynamic_cast<GameObject*>(e)){
 
+			if (Guard *guard = dynamic_cast<Guard*>(obj)){
+
+				guard->AImovement(&mBottomTileLayer, &mEntities);
+			}
 				for each (Entity *ent in mEntities){
 
 					if (Usable *u = dynamic_cast<Usable*>(ent)){
@@ -72,19 +77,7 @@ void Level::update(float dt){
 		if (Cat *cat = dynamic_cast<Cat*>(e)){
 
 			c.move(cat, &mBottomTileLayer, &mEntities);
-			
-			for each (Entity *b in mEntities){
 				
-				if (Usable *u = dynamic_cast<Usable*>(b)){
-					u->getInteraction(cat);
-				}
-
-				if (Crate *object = dynamic_cast<Crate*>(b)){
-					//object->getInteraction(cat);
-				}
-			}
-			
-
 		}
 		
 
@@ -93,25 +86,17 @@ void Level::update(float dt){
 }
 
 void Level::load(){
+
 	mEntities.clear();
 	generateLevel(mFile);
-	//mEntities.push_back(new Cat(textures.GetTexture(10),gridvector(0,0),1));
-	
 
 	Channel c = Channel(1);
 	Channels::addChannel(c);
+	Channels::addChannel(Channel(2));
+	Channels::addChannel(Channel(3));
+	Channels::addChannel(Channel(5));
 
-	Button *butt = new Button(1, textures.GetTexture(12), gridvector(3,3));
-	Button *b = new Button(1, textures.GetTexture(12), gridvector(7, 9));
-	Door *d = new Door(1, gridvector(9, 4), textures.GetTexture(10));
-
-	mEntities.push_back(d);
-	mEntities.push_back(b);
-	mEntities.push_back(butt);
-
-	mEntities.push_back(new Crate(textures.GetTexture(4), gridvector(2, 2), 1));
-	mEntities.push_back(new Crate(textures.GetTexture(4), gridvector(4, 4), 1));
-	mEntities.push_back(new Cat(textures.GetTexture(10), gridvector(1, 1), 2));
+	mEntities.push_back(new Guard(textures.GetTexture(10), gridvector(10, 10), 1,"testAI"));
 }
 
 // Laddar in leveln från sparfilen
@@ -145,6 +130,42 @@ void Level::generateLevel(string name){
 		mBottomTileLayer.push_back(mTileRow);
 
 		cout << endl;
+	}
+	inputFile >> input;
+	int objectNumber;
+	objectNumber = stoi(input);
+	for (int i = 0; i < objectNumber; i++){
+		int objectID, xPos, yPos, channel, layer;
+
+		inputFile >> input;
+		objectID = stoi(input);
+
+		inputFile >> input;
+		xPos = stoi(input);
+
+		inputFile >> input;
+		yPos = stoi(input);
+
+		inputFile >> input;
+		channel = stoi(input);
+
+		inputFile >> input;
+		layer = stoi(input);
+
+		if (objectID == 0){
+			mEntities.push_back(new Cat(textures.GetTexture(10), gridvector(xPos, yPos), 1));
+		}
+		if (objectID == 1){
+			mEntities.push_back(new Button(channel, textures.GetTexture(12), gridvector(xPos, yPos)));
+		}
+		if (objectID == 2){
+			mEntities.push_back(new Crate(textures.GetTexture(4), gridvector(xPos, yPos),1));
+			
+		}
+		if (objectID == 3){
+
+		}
+
 	}
 
 

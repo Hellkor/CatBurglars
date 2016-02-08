@@ -14,8 +14,6 @@ bool Grid::canCrateMove(gridvector position, TileLayer *Tiles, std::vector<Entit
 		
 		if (GameObject *object = dynamic_cast<GameObject*>(e)){
 
-
-
 			if (object->GetPosition() == sf::Vector2i(position.x * 64, position.y * 64)){
 				if (object->isSolid()){
 					return false;
@@ -34,7 +32,7 @@ bool Grid::canCrateMove(gridvector position, TileLayer *Tiles, std::vector<Entit
 		else return true;
 
 	}
-	else return false; // TYDLIGEN SKAPAR DETTA PROBLEM
+	else return false;
 
 	
 }
@@ -43,22 +41,8 @@ bool Grid::isTilePassable(gridvector originalpos, gridvector position, TileLayer
 	TileLayer mTiles = *Tiles;
 	std::vector<Entity*> mEntities = *Entities;
 	
-	cout << originalpos.x << " " << originalpos.y << endl;
-	cout << position.x << " " << position.y << endl;
 
-	/*if (originalpos.x + 1 == position.x  && originalpos.y == position.y){
-		direction = 3;
-	}
-	else if (originalpos.x - 1 == position.x && originalpos.y == position.y){
-		direction = 4;
-	}
-	else if (originalpos.x == position.x  && originalpos.y + 1  == position.y){
-		direction = 1;
-	}
-	else if (originalpos.x == position.x + 1 && originalpos.y - 1 == position.y){
-		direction = 2;
-	}*/
-	
+	//////////////////// ÄNDRA SÅ ALLA KATTER EJ KAN PUTTA
 	
 
 	for each (Entity *e in mEntities){
@@ -102,7 +86,7 @@ bool Grid::isTilePassable(gridvector originalpos, gridvector position, TileLayer
 		else return true;
 
 	}
-	else return false; // TYDLIGEN SKAPAR DETTA PROBLEM
+	else return false; 
 	
 
 	
