@@ -12,9 +12,11 @@ public:
 	virtual void Update(float dt);
 	virtual sf::Vector2i GetPosition();
 
-	virtual bool getInteraction(Cat *c);
+	virtual bool getInteraction(GameObject *g);
 	virtual int getChannelID();
 	virtual bool isSolid();
+
+	virtual bool isInteracting();
 
 private:
 	sf::Sprite mSprite;

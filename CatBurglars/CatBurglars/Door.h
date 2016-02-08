@@ -9,6 +9,7 @@ public:
 	virtual void Render(sf::RenderWindow *window);
 	virtual sf::Vector2i GetPosition();
 	virtual bool isSolid();
+	virtual bool isInteracting();
 private:
 	int mChannel;
 	bool mSolid;

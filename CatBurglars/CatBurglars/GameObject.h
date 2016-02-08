@@ -15,6 +15,8 @@ public:
 	virtual void Update(float dt);
 	virtual sf::Vector2i GetPosition() = 0;
 
+	virtual bool isInteracting() = 0;
+
 	virtual bool isSolid() = 0;
 
 private:

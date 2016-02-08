@@ -113,8 +113,8 @@ void Cat::moveRight(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 	}
 }
 
-bool Cat::interacting(){
-	return isInteracting;
+bool Cat::isInteracting(){
+	return mInteracting;
 }
 bool Cat::isSolid(){
 	return false;

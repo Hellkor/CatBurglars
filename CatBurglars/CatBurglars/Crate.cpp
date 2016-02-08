@@ -166,3 +166,6 @@ bool Crate::getInteraction(Cat *cat){
 gridvector Crate::getCoords(){
 	return mCoord;
 }
+bool Crate::isInteracting(){
+	return true;
+}

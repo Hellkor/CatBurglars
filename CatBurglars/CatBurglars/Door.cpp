@@ -36,3 +36,6 @@ void Door::Render(sf::RenderWindow *window){
 		window->draw(mSprite);
 	}
 }
+bool Door::isInteracting(){
+	return false;
+}

@@ -17,7 +17,7 @@ public:
 	void moveBackWards(TileLayer *tileLayer, std::vector<Entity*> *Entities);
 	void moveLeft(TileLayer *tileLayer, std::vector<Entity*> *Entities);
 	void moveRight(TileLayer *tileLayer, std::vector<Entity*> *Entities);
-	
+	virtual bool isInteracting();
 	bool getInteraction(Cat *c);
 
 	gridvector getCoords();

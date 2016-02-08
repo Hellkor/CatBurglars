@@ -58,7 +58,17 @@ void Level::update(float dt){
 
 		e->Update(dt);
 		
-		
+		if (GameObject *obj = dynamic_cast<GameObject*>(e)){
+
+				for each (Entity *ent in mEntities){
+
+					if (Usable *u = dynamic_cast<Usable*>(ent)){
+						u->getInteraction(obj);
+					}
+				}
+			
+
+		}
 		if (Cat *cat = dynamic_cast<Cat*>(e)){
 
 			c.move(cat, &mBottomTileLayer, &mEntities);

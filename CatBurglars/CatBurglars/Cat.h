@@ -20,8 +20,8 @@ public:
 	void moveLeft(TileLayer *tileLayer, std::vector<Entity*> *Entities);
 	void moveRight(TileLayer *tileLayer, std::vector<Entity*> *Entities);
 
-	bool isInteracting = false;
-	bool interacting();
+	bool mInteracting = false;
+	virtual bool isInteracting();
 	bool isMoving();
 	bool isColliding();
 

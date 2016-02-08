@@ -38,9 +38,9 @@ void Controller::move(Cat *cat, TileLayer *tileLayer, std::vector<Entity*> *Enti
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 	{
-		cat->isInteracting = true;
+		cat->mInteracting = true;
 	}
 	else{
-		cat->isInteracting = false;
+		cat->mInteracting = false;
 	}
 }
