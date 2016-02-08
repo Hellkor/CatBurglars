@@ -1,7 +1,8 @@
 #include "Game.h"
 #include "gridvector.h"
 #include "Crate.h"
-
+#include <SFML\Audio.hpp>
+#include "Soundhandler.h"
 
 static sf::RenderWindow *window;
 static TextureHandler textures;
@@ -24,14 +25,13 @@ sf::Int32 proximo_tick = miReloj.getElapsedTime().asMilliseconds();
 
 Crate *crate;
 
+SoundHandler soundhandler;
+
 Game::Game() :
 mCat(),
 mController(),
 levelM(){
 	
-
-
-
 	//Creates the main window
 	window = new sf::RenderWindow(sf::VideoMode(1024, 720), "CatBurglars");
 	
@@ -41,7 +41,7 @@ levelM(){
 
 	//Stores Entities/objects
 	//Test for loading in maps
-	Level *testLevel = new Level("snowshadow1");
+	Level *testLevel = new Level("test");
 	Level *level2 = new Level("axel");
 
 	levelM.addLevel(testLevel);
@@ -52,6 +52,7 @@ levelM(){
 
 	levelM.loadLevel(0);
 	
+	soundhandler.startMusic();
 
 }
 

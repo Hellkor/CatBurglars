@@ -9,8 +9,10 @@ public:
 
 	~SoundHandler();
 
+	void startMusic();
+
 private:
 	sf::Sound mSound;
-
+	sf::Music mMusic;
 };
 
