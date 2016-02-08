@@ -1,20 +1,28 @@
 #pragma once
+
 #include "Recievers.h"
 #include "Channels.h"
-class Door : public Recievers{
+
+class secuCam :public Recievers{
+
 public:
-	Door(int channel, gridvector coords, sf::Texture *texture);
+
+	secuCam(int channel, gridvector coords, sf::Texture *texture);
+	//~secuCam();
 	virtual void connectToChannel(int channelID);
 	virtual void Update(float dt);
 	virtual void Render(sf::RenderWindow *window);
 	virtual sf::Vector2i GetPosition();
-	virtual bool isSolid();
+	//virtual bool isSolid(); //kanske ska va solid, kanske inte, hör med design imorgon
 	virtual bool isInteracting();
+	 bool isOn;
+
 private:
 	int mChannel;
-	bool mSolid;
+	bool mOn;
+	//bool mSolid; //samma som med isSolid();
 	sf::Vector2i mPosition;
 	gridvector mCoords;
 	sf::Sprite mSprite;
+
 };
-//måste ha två sprites, båda innehåller cameran, den andra innehåller en genomskinlig zon som är däri man blir hittad, den andra innehåller bara cameran och är fortfarande "på"

@@ -26,6 +26,7 @@ void Door::connectToChannel(int channel){
 bool Door::isSolid(){
 	return mSolid;
 }
+
 sf::Vector2i Door::GetPosition(){
 	return mPosition;
 }
