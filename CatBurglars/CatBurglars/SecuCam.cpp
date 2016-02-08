@@ -33,6 +33,24 @@ bool secuCam::isInteracting(){
 	return false;
 }
 
+/*void Entity::updateCollision(Entity* collision){
+	if (mOn!= collision -> isOn(); && getBoundingBox().intersects(collision->getBoundingBox())){
+		if(<Cat*> !secuCam (collision)) //den här måste kollas in, se hur katten är uppbyggd
+		collision->PoundTheAlarm(DaMinaje);
+		}}}
+{
+
+}
+
+}
+*/
+FloatRect secuCam::getBoundingBox(){
+	return camShape.getGlobalBounds(); //detta bör funka. 
+}
+
+
+
+
 /*
 bool secuCam::isOn(){
 	if (mChannel.isActive){
