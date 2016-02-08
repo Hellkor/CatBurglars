@@ -23,7 +23,11 @@ float interpolacion;
 sf::Int32 proximo_tick = miReloj.getElapsedTime().asMilliseconds();
 ////////////////////////////////////////////////////////////
 
-Crate *crate;
+sf::View view1(sf::FloatRect(0, 0, 1024, 720));
+
+
+
+
 
 SoundHandler soundhandler;
 
@@ -31,7 +35,7 @@ Game::Game() :
 mCat(),
 mController(),
 levelM(){
-	
+
 	//Creates the main window
 	window = new sf::RenderWindow(sf::VideoMode(1024, 720), "CatBurglars");
 	
@@ -52,7 +56,11 @@ levelM(){
 
 	levelM.loadLevel(0);
 	
+
 	soundhandler.startMusic();
+
+	view1.setCenter(sf::Vector2f(512, 360));
+	view1.setViewport(sf::FloatRect(0, 0, 1, 1));
 
 }
 
@@ -79,6 +87,7 @@ void Game::Run(){
 
 			Update(interpolacion);
 			
+			
 			proximo_tick += SALTEO_TICKS;
 			++loops;
 
@@ -104,6 +113,13 @@ void Game::Update(float dt){
 	//mController.move(mCat);
 	levelM.update(dt);
 
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
+		view1.move(0, 2);
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)){
+		view1.move(0, -2);
+	}
+	
 	/*
 	for each (GameObject *gameObject in mEntities)
 	{
@@ -131,7 +147,9 @@ void Game::Render()
 {
 	/* Make background green for testing
 	window->clear(sf::Color(0, 200, 0, 255));*/
-
+	
+	window->setView(view1);
+	
 	window->clear();
 	levelM.render(window);
 	//Render all entities into the window 
