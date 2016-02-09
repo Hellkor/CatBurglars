@@ -64,10 +64,12 @@ void Cat::Update(float dt){
 				if (mPosition.x != newPos.x)
 				mPosition.x = newPos.x;
 			}
+			if (mDashing){
+				mSpeed = 2;
+				mDashing = false;
+			}
 		}
 	}
-	//Do if dash
-	mSpeed = 2;
 }
 
 void Cat::moveForward(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
@@ -154,29 +156,38 @@ void Cat::Collide(){
 
 void Cat::shadowDash(TileLayer *tileLayer, std::vector<Entity*> *Entities){
 	std::cout << "DASH!" << std::endl;
-	if (mAbilityClock.getElapsedTime()>=mAbilityTime){
-		mSpeed = mSpeed * 8;
+	if (mAbilityClock.getElapsedTime()>=mAbilityTime && !mMoving){
+		mDashing = true;
+
 		if (direction == 1 && (mGrid.isTilePassable(mCoord, gridvector(mCoord.x + 1, mCoord.y), tileLayer, Entities)) && (mGrid.isTilePassable(mCoord, gridvector(mCoord.x + 2, mCoord.y), tileLayer, Entities))){
+			mSpeed = mSpeed * 8;
 			newPos.x = mPosition.x + 128;
 			mCoord.x++;
 			mMoving = true;
+			mAbilityClock.restart();
 		}
 		if (direction == 2 && (mGrid.isTilePassable(mCoord, gridvector(mCoord.x - 1, mCoord.y), tileLayer, Entities)) && (mGrid.isTilePassable(mCoord, gridvector(mCoord.x - 2, mCoord.y), tileLayer, Entities))){
+			mSpeed = mSpeed * 8;
 			newPos.x = mPosition.x - 128;
 			mCoord.x--;
 			mMoving = true;
+			mAbilityClock.restart();
 		}
 		if (direction == 3 && (mGrid.isTilePassable(mCoord, gridvector(mCoord.x, mCoord.y + 1), tileLayer, Entities)) && (mGrid.isTilePassable(mCoord, gridvector(mCoord.x, mCoord.y + 2), tileLayer, Entities))){
+			mSpeed = mSpeed * 8;
 			newPos.y = mPosition.y + 128;
 			mCoord.y++;
 			mMoving = true;
+			mAbilityClock.restart();
 		}
 		if (direction == 4 && (mGrid.isTilePassable(mCoord, gridvector(mCoord.x, mCoord.y - 1), tileLayer, Entities)) && (mGrid.isTilePassable(mCoord, gridvector(mCoord.x, mCoord.y - 2), tileLayer, Entities))){
+			mSpeed = mSpeed * 8;
 			newPos.y = mPosition.y - 128;
 			mCoord.y--;
 			mMoving = true;
+			mAbilityClock.restart();
 		}
-		mAbilityClock.restart();
+		
 	}
 	
 }
