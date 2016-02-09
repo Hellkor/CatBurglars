@@ -46,6 +46,7 @@ private:
 
 	bool mMoving = false;
 	bool mColliding = false;
+	bool mDashing = false;
 
 	Grid mGrid;
 
