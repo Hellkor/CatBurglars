@@ -45,14 +45,13 @@ levelM(){
 
 	//Stores Entities/objects
 	//Test for loading in maps
-	Level *testLevel = new Level("mapofdoom");
+	Level *testLevel = new Level("testmap");
 	Level *level2 = new Level("axel");
 
 	levelM.addLevel(testLevel);
 	levelM.addLevel(level2);
 
-	window->setVerticalSyncEnabled(false);
-
+	window->setVerticalSyncEnabled(true);
 
 	levelM.loadLevel(0);
 	
@@ -119,7 +118,12 @@ void Game::Update(float dt){
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)){
 		view1.move(0, -2);
 	}
-	
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)){
+		view1.move(-2, 0);
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)){
+		view1.move(2, 0);
+	}
 	/*
 	for each (GameObject *gameObject in mEntities)
 	{

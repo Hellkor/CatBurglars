@@ -21,7 +21,7 @@ void TextureHandler::Initialize()
 	mCrate.loadFromFile("Resources/Crate.png");
 
 	mButton.loadFromFile("Resources/Button.png");
-	//mDoor.loadFromFile("Resources/Door.png");
+	mDoor.loadFromFile("Resources/Door.png");
 	
 }
 
@@ -40,8 +40,8 @@ sf::Texture* TextureHandler::GetTexture(int ID)
 		return &mCrate;
 	if (ID == 10)
 		return &mCat1Texture;
-	//if (ID == 11)
-	//	return &mDoor;
+	if (ID == 11)
+		return &mDoor;
 	if (ID == 12)
 		return &mButton;
 }
