@@ -1,13 +1,18 @@
 #include "secuCam.h"
 
-secuCam::secuCam(int channel, gridvector coords, sf::Texture *texture) :
+
+
+secuCam::secuCam(int channel, gridvector coords, sf::CircleShape shape) :
 mChannel(channel),
 mCoords(coords){
+
+	sf::CircleShape triangle(60, 5);
 
 	mPosition.x = mCoords.x * 64;
 	mPosition.y = mCoords.y * 64;
 
-	mSprite.setTexture(*texture);
+	//mSprite.setTexture(*texture);
+
 	mSprite.setPosition((sf::Vector2f)mPosition);
 }
 
@@ -25,13 +30,16 @@ sf::Vector2i secuCam::GetPosition(){
 	return mPosition;
 }
 
-void secuCam::Render(sf::RenderWindow *window){
-
+void secuCam::Render(sf::RenderWindow *mainWindow){
+	mainWindow->draw(camShape);
 }
 
 bool secuCam::isInteracting(){
 	return false;
 }
+
+
+
 
 /*void Entity::updateCollision(Entity* collision){
 	if (mOn!= collision -> isOn(); && getBoundingBox().intersects(collision->getBoundingBox())){
@@ -44,11 +52,12 @@ bool secuCam::isInteracting(){
 
 }
 */
+/*
 FloatRect secuCam::getBoundingBox(){
 	return camShape.getGlobalBounds(); //detta bör funka. 
 }
 
-
+*/
 
 
 /*
