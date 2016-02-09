@@ -1,4 +1,5 @@
-#pragma once
+#ifndef INCLUDED_SOUNDHANDLER
+#define INCLUDED_SOUNDHANDLER
 
 #include <SFML/Audio.hpp>
 
@@ -9,10 +10,13 @@ public:
 
 	~SoundHandler();
 
-	void startMusic();
+	void Initialize();
+	sf::SoundBuffer *GetSound(int ID);
+	void startMusic(int ID);
 
 private:
-	sf::Sound mSound;
+	sf::SoundBuffer mBuffer;
 	sf::Music mMusic;
 };
 
+#endif

@@ -27,7 +27,7 @@ sf::View view1(sf::FloatRect(0, 0, 1024, 720));
 
 
 
-
+sf::Sound mSound;
 
 SoundHandler soundhandler;
 
@@ -38,12 +38,7 @@ levelM(){
 
 	//Creates the main window
 	window = new sf::RenderWindow(sf::VideoMode(1024, 720), "CatBurglars");
-	
-	textures.Initialize();
 
-	//Creates a cat(player)
-
-	//Stores Entities/objects
 	//Test for loading in maps
 	Level *testLevel = new Level("testmap");
 	Level *level2 = new Level("axel");
@@ -55,9 +50,9 @@ levelM(){
 
 	levelM.loadLevel(0);
 	
-
-	soundhandler.startMusic();
-
+	soundhandler.Initialize();
+	//soundhandler.startMusic(1);
+	mSound.setBuffer(*soundhandler.GetSound(1));
 	view1.setCenter(sf::Vector2f(512, 360));
 	view1.setViewport(sf::FloatRect(0, 0, 1, 1));
 
@@ -69,7 +64,7 @@ Game::~Game()
 }
 
 void Game::Run(){
-
+	
 	while (window->isOpen())
 	{
 		sf::Event event;
@@ -124,44 +119,17 @@ void Game::Update(float dt){
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)){
 		view1.move(2, 0);
 	}
-	/*
-	for each (GameObject *gameObject in mEntities)
-	{
-		//cout << "X : " << cat->GetPosition().x << endl;
-		//cout << "Y : " << cat->GetPosition().y << endl << endl;;
-		//Enable keyboard for cat
-		
-		//cat->Update(dt); // Efter axels version
-		if (Crate *crate = dynamic_cast<Crate*>(gameObject)){
-			crate->getInteraction(mCat);
-		}
-		for each(Entity *entity in mEntities)
-		{
-			entity->Update(dt);
-		}
-		if (Cat * cat = dynamic_cast<Cat*>(gameObject)){
-			mController.move(cat);
-			//cat->Update(dt);
-		}
-	}
-	*/
+
 }
 
 void Game::Render()
 {
-	/* Make background green for testing
-	window->clear(sf::Color(0, 200, 0, 255));*/
 	
 	window->setView(view1);
 	
 	window->clear();
+
 	levelM.render(window);
-	//Render all entities into the window 
-	/*
-	for each(Entity *entity in mEntities)
-	{
-		entity->Render(window);
-	}
-	*/
+
 	window->display();
 }
