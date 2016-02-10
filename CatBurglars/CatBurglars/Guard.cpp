@@ -33,7 +33,6 @@ void Guard::loadAI(string filename){
 
 	while (!inputFile.eof()){
 		inputFile >> input;
-		cout << input << endl;
 		mCommandQueue.push_back(input);
 	}
 	

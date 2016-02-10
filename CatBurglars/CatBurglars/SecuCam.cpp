@@ -44,9 +44,9 @@ bool secuCam::isInteracting(){
 
 }
 */
-FloatRect secuCam::getBoundingBox(){
-	return camShape.getGlobalBounds(); //detta bör funka. 
-}
+//FloatRect secuCam::getBoundingBox(){
+//	return camShape.getGlobalBounds(); //detta bör funka. 
+//}
 
 
 

@@ -17,7 +17,7 @@ public:
 	//virtual bool isSolid(); //kanske ska va solid, kanske inte, hör med design 
 	virtual bool isInteracting();
 	 bool isOn;
-	 virtual sf::FloatRect getBoundingBox();
+	// virtual sf::FloatRect getBoundingBox();
 
 private:
 
@@ -27,7 +27,7 @@ private:
 	sf::Vector2i mPosition;
 	gridvector mCoords;
 	sf::Sprite mSprite;
-	sf::TriangleShape camShape;
+	sf::CircleShape camShape;
 	
 
 };

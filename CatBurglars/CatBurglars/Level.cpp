@@ -96,6 +96,9 @@ void Level::update(float dt){
 void Level::load(){
 
 	mEntities.clear();
+	mBottomTileLayer.clear();
+	mTopTileLayer.clear();
+
 	generateLevel(mFile);
 
 	Channel c = Channel(1);
@@ -104,8 +107,6 @@ void Level::load(){
 	Channels::addChannel(Channel(3));
 	Channels::addChannel(Channel(5));
 
-	mEntities.push_back(new Cat(textures.GetTexture(10), gridvector(1, 1), 2));
-	//mEntities.push_back(new Guard(textures.GetTexture(10), gridvector(10, 10), 1,"testAI"));
 }
 
 // Laddar in leveln från sparfilen
@@ -212,7 +213,7 @@ void Level::generateLevel(string name){
 
 
 		if (objectID == 0){
-			//mEntities.push_back(new Cat(textures.GetTexture(10), gridvector(xPos, yPos), 1));
+			mEntities.push_back(new Cat(textures.GetTexture(10), gridvector(xPos, yPos), 1));
 		}
 		if (objectID == 2){
 			mEntities.push_back(new Crate(textures.GetTexture(4), gridvector(xPos, yPos), 1));

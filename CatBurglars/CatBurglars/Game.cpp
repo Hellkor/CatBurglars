@@ -3,6 +3,7 @@
 #include "Crate.h"
 #include <SFML\Audio.hpp>
 #include "Soundhandler.h"
+#include "GameController.h"
 
 static sf::RenderWindow *window;
 static TextureHandler textures;
@@ -35,12 +36,11 @@ Game::Game() :
 mCat(),
 mController(),
 levelM(){
-
 	//Creates the main window
 	window = new sf::RenderWindow(sf::VideoMode(1024, 720), "CatBurglars");
 
 	//Test for loading in maps
-	Level *testLevel = new Level("testmap");
+	Level *testLevel = new Level("coolmap");
 	Level *level2 = new Level("axel");
 
 	levelM.addLevel(testLevel);
@@ -50,6 +50,10 @@ levelM(){
 
 	levelM.loadLevel(0);
 	
+	GameController::load();
+	GameController::addCollectible();
+	GameController::save();
+
 	soundhandler.Initialize();
 	//soundhandler.startMusic(1);
 	mSound.setBuffer(*soundhandler.GetSound(1));
