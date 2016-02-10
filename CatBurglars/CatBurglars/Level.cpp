@@ -12,7 +12,7 @@ using namespace std;
 #include "Controller.h"
 Controller controller;
 static TextureHandler textures;
-
+static SoundHandler soundhandler;
 
 // Skapar en level från en textfil
 Level::Level(string filename) :
@@ -20,6 +20,7 @@ Level::Level(string filename) :
 
 	//Initialize textures
 	textures.Initialize();
+	soundhandler.Initialize();
 }
 
 // Renderar level
@@ -104,7 +105,7 @@ void Level::load(){
 	Channels::addChannel(Channel(3));
 	Channels::addChannel(Channel(5));
 
-	mEntities.push_back(new Cat(textures.GetTexture(10), gridvector(1, 1), 2));
+	mEntities.push_back(new Cat(textures.GetTexture(10), gridvector(1, 1), 2, &soundhandler));
 	//mEntities.push_back(new Guard(textures.GetTexture(10), gridvector(10, 10), 1,"testAI"));
 }
 

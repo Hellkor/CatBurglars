@@ -1,13 +1,16 @@
 #include "Cat.h"
 #include <iostream>
 
+
+
 int TILESIZE = 64;
 
-Cat::Cat(sf::Texture *texture, gridvector position, int ID) : GameObject(),
+Cat::Cat(sf::Texture *texture, gridvector position, int ID, SoundHandler *soundhandler) : GameObject(),
 mID(ID),
 mCoord(position),
 mSpeed(2),
-mAbilityTime(sf::seconds(5)){
+mAbilityTime(sf::seconds(5)),
+mSoundHandler(soundhandler){
 	mSprite.setTexture(*texture, true);
 	//Starting position
 	mPosition = sf::Vector2i(mCoord.x * 64, mCoord.y * 64);
@@ -77,8 +80,9 @@ void Cat::moveForward(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 		direction = 4;
 		if (mGrid.isTilePassable(mCoord, gridvector(mCoord.x, mCoord.y - 1), tileLayer, Entities)){
 			newPos.y = mPosition.y - 64;
-			
-			
+			mSound.setBuffer(*mSoundHandler->GetSound(1));
+			mSound.play();
+
 			mMoving = true;
 		}
 	}

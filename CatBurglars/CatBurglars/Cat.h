@@ -9,7 +9,7 @@ class Cat : public GameObject
 	typedef vector<Tile*> TileRow;
 	typedef vector<TileRow> TileLayer;
 public:
-	Cat(sf::Texture *texture, gridvector v, int ID);
+	Cat(sf::Texture *texture, gridvector v, int ID, SoundHandler *soundhandler);
 	~Cat();
 	virtual void Render(sf::RenderWindow *mainWindow);
 	virtual void Update(float dt);
@@ -42,6 +42,9 @@ private:
 	sf::Vector2i mPosition;
 	gridvector mCoord;
 	
+	sf::Sound mSound;
+	SoundHandler* mSoundHandler;
+
 	sf::Vector2i newPos;
 
 	bool mMoving = false;

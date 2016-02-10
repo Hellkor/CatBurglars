@@ -29,8 +29,6 @@ sf::View view1(sf::FloatRect(0, 0, 1024, 720));
 
 sf::Sound mSound;
 
-SoundHandler soundhandler;
-
 Game::Game() :
 mCat(),
 mController(),
@@ -50,9 +48,9 @@ levelM(){
 
 	levelM.loadLevel(0);
 	
-	soundhandler.Initialize();
+	//soundhandler.Initialize();
 	//soundhandler.startMusic(1);
-	mSound.setBuffer(*soundhandler.GetSound(1));
+	//mSound.setBuffer(*soundhandler.GetSound(1));
 	view1.setCenter(sf::Vector2f(512, 360));
 	view1.setViewport(sf::FloatRect(0, 0, 1, 1));
 

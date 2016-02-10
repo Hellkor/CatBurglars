@@ -5,6 +5,7 @@
 #include <vector>
 #include "Entity.h"
 #include "gridvector.h"
+#include "Soundhandler.h"
 
 class GameObject : public Entity
 {
