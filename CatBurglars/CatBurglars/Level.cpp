@@ -12,7 +12,7 @@ using namespace std;
 #include "Controller.h"
 Controller controller;
 static TextureHandler textures;
-
+static SoundHandler soundhandler;
 
 // Skapar en level från en textfil
 Level::Level(string filename) :
@@ -20,6 +20,7 @@ Level::Level(string filename) :
 
 	//Initialize textures
 	textures.Initialize();
+	soundhandler.Initialize();
 }
 
 // Renderar level
