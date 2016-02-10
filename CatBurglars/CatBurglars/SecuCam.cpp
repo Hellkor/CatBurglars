@@ -29,9 +29,13 @@ void secuCam::connectToChannel(int channel){
 sf::Vector2i secuCam::GetPosition(){
 	return mPosition;
 }
+sf::CircleShape triangle(50, 3);
+
+
 
 void secuCam::Render(sf::RenderWindow *mainWindow){
 	mainWindow->draw(camShape);
+	
 }
 
 bool secuCam::isInteracting(){
@@ -54,7 +58,7 @@ bool secuCam::isInteracting(){
 */
 /*
 FloatRect secuCam::getBoundingBox(){
-	return camShape.getGlobalBounds(); //detta bör funka. 
+	return camShape.getLocalBounds(); //detta bör funka. 
 }
 
 */
