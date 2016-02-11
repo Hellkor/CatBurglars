@@ -17,7 +17,7 @@ void TextureHandler::Initialize()
 	mSidebarTexture.loadFromFile("Resources/SideBar.png");
 	mSelectorTexture.loadFromFile("Resources/Selector.png");
 	mSaveTexture.loadFromFile("Resources/Save.png");
-	mCat1Texture.loadFromFile("Resources/Cat.png");
+	mCat1Texture.loadFromFile("Resources/shadow_spritesheet.png");
 	mCrate.loadFromFile("Resources/Crate.png");
 
 	mButton.loadFromFile("Resources/Button.png");

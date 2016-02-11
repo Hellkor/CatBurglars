@@ -38,7 +38,7 @@ levelM(){
 	window = new sf::RenderWindow(sf::VideoMode(1024, 720), "CatBurglars");
 
 	//Test for loading in maps
-	Level *testLevel = new Level("coolmap");
+	Level *testLevel = new Level("testmap");
 	Level *level2 = new Level("axel");
 
 	levelM.addLevel(testLevel);

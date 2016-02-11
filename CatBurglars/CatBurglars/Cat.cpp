@@ -2,16 +2,18 @@
 #include <iostream>
 
 
-
 int TILESIZE = 64;
+
 
 Cat::Cat(sf::Texture *texture, gridvector position, int ID, SoundHandler *soundhandler) : GameObject(),
 mID(ID),
 mCoord(position),
 mSpeed(2),
 mAbilityTime(sf::seconds(5)),
-mSoundHandler(soundhandler){
+mSoundHandler(soundhandler),
+mAnimationhandler(64, 64, &mSprite){
 	mSprite.setTexture(*texture, true);
+	mSprite.setTextureRect(sf::IntRect(1, 1, 64, 64));
 	//Starting position
 	mPosition = sf::Vector2i(mCoord.x * 64, mCoord.y * 64);
 }
@@ -32,20 +34,24 @@ void Cat::Update(float dt){
 	if (mMoving){
 		if (direction == 4 && mPosition.y != newPos.y) {
 			mPosition.y -= (1 * mSpeed);
+			mAnimationhandler.animation(1,6);
 		}
 		else if (direction == 3 && mPosition.y != newPos.y) {
 			mPosition.y += (1 * mSpeed);
+			mAnimationhandler.animation(0, 6);
 		}
 		else if (direction == 2 && mPosition.x != newPos.x) {
 			mPosition.x -= (1 * mSpeed);
+			mAnimationhandler.animation(3, 6);
 			
 		}
 		else if (direction == 1 && mPosition.x != newPos.x) {
 			mPosition.x += (1 * mSpeed);
+			mAnimationhandler.animation(2, 6);
 		}
 		else {
 			mMoving = false;
-
+			mAnimationhandler.reset(direction);
 			// säkrar att den håller rätt position
 			if (direction == 4) {
 				mCoord.y--;
@@ -82,7 +88,6 @@ void Cat::moveForward(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 			newPos.y = mPosition.y - 64;
 			mSound.setBuffer(*mSoundHandler->GetSound(1));
 			mSound.play();
-
 			mMoving = true;
 		}
 	}
@@ -92,7 +97,6 @@ void Cat::moveBackWards(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 		direction = 3;
 		if (mGrid.isTilePassable(mCoord, gridvector(mCoord.x, mCoord.y + 1), tileLayer, Entities)){
 			newPos.y = mPosition.y + 64;
-			
 			
 			mMoving = true;
 		}
@@ -104,7 +108,6 @@ void Cat::moveLeft(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 		if (mGrid.isTilePassable(mCoord, gridvector(mCoord.x - 1, mCoord.y), tileLayer, Entities)){
 			newPos.x = mPosition.x - 64;
 			
-			
 			mMoving = true;
 		}
 	}
@@ -115,7 +118,6 @@ void Cat::moveRight(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 		if (mGrid.isTilePassable(mCoord, gridvector(mCoord.x + 1, mCoord.y), tileLayer, Entities)){
 			newPos.x = mPosition.x + 64;
 
-			
 			mMoving = true;
 			
 		}
@@ -123,7 +125,7 @@ void Cat::moveRight(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 }
 
 void Cat::useAbility(TileLayer *tileLayer, std::vector<Entity*> *Entities){
-	if (mID == 2){
+	if (mID == 1){
 		shadowDash(tileLayer,Entities);
 	}
 }
