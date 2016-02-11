@@ -34,19 +34,35 @@ void Cat::Update(float dt){
 	if (mMoving){
 		if (direction == 4 && mPosition.y != newPos.y) {
 			mPosition.y -= (1 * mSpeed);
+			if (mDashing == true){
+			mAnimationhandler.animation(4, 6);
+			}
+			else
 			mAnimationhandler.animation(1,6);
 		}
 		else if (direction == 3 && mPosition.y != newPos.y) {
 			mPosition.y += (1 * mSpeed);
+			if (mDashing == true){
+				mAnimationhandler.animation(5, 6);
+			}
+			else
 			mAnimationhandler.animation(0, 6);
 		}
 		else if (direction == 2 && mPosition.x != newPos.x) {
 			mPosition.x -= (1 * mSpeed);
+			if (mDashing == true){
+				mAnimationhandler.animation(7, 6);
+			}
+			else
 			mAnimationhandler.animation(3, 6);
 			
 		}
 		else if (direction == 1 && mPosition.x != newPos.x) {
 			mPosition.x += (1 * mSpeed);
+			if (mDashing == true){
+				mAnimationhandler.animation(6, 6);
+			}
+			else
 			mAnimationhandler.animation(2, 6);
 		}
 		else {
@@ -165,12 +181,12 @@ void Cat::Collide(){
 void Cat::shadowDash(TileLayer *tileLayer, std::vector<Entity*> *Entities){
 	std::cout << "DASH!" << std::endl;
 	if (mAbilityClock.getElapsedTime()>=mAbilityTime && !mMoving){
-		mDashing = true;
 
 		if (direction == 1 && (mGrid.isTilePassable(mCoord, gridvector(mCoord.x + 1, mCoord.y), tileLayer, Entities)) && (mGrid.isTilePassable(mCoord, gridvector(mCoord.x + 2, mCoord.y), tileLayer, Entities))){
-			mSpeed = mSpeed * 8;
+			mSpeed = mSpeed * 4;
 			newPos.x = mPosition.x + 128;
 			mCoord.x++;
+			mDashing = true;
 			mMoving = true;
 			mAbilityClock.restart();
 		}
@@ -178,6 +194,7 @@ void Cat::shadowDash(TileLayer *tileLayer, std::vector<Entity*> *Entities){
 			mSpeed = mSpeed * 8;
 			newPos.x = mPosition.x - 128;
 			mCoord.x--;
+			mDashing = true;
 			mMoving = true;
 			mAbilityClock.restart();
 		}
@@ -185,6 +202,7 @@ void Cat::shadowDash(TileLayer *tileLayer, std::vector<Entity*> *Entities){
 			mSpeed = mSpeed * 8;
 			newPos.y = mPosition.y + 128;
 			mCoord.y++;
+			mDashing = true;
 			mMoving = true;
 			mAbilityClock.restart();
 		}
@@ -192,6 +210,7 @@ void Cat::shadowDash(TileLayer *tileLayer, std::vector<Entity*> *Entities){
 			mSpeed = mSpeed * 8;
 			newPos.y = mPosition.y - 128;
 			mCoord.y--;
+			mDashing = true;
 			mMoving = true;
 			mAbilityClock.restart();
 		}
