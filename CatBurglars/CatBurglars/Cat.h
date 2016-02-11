@@ -4,6 +4,8 @@
 #include <SFML\Graphics.hpp>
 #include "GameObject.h"
 #include "Grid.h"
+#include "AnimationHandler.h"
+
 class Cat : public GameObject
 {
 	typedef vector<Tile*> TileRow;
@@ -59,6 +61,8 @@ private:
 
 	sf::Clock mAbilityClock;
 	sf::Time mAbilityTime;
+
+	AnimationHandler mAnimationhandler;
 
 };
 

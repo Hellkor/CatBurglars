@@ -211,7 +211,9 @@ void Level::generateLevel(string name){
 
 
 		if (objectID == 0){
-			mEntities.push_back(new Cat(textures.GetTexture(10), gridvector(xPos, yPos), 1,&soundhandler));
+
+			mEntities.push_back(new Cat(textures.GetTexture(10), gridvector(xPos, yPos), 1, &soundhandler));
+
 		}
 		if (objectID == 2){
 			mEntities.push_back(new Crate(textures.GetTexture(4), gridvector(xPos, yPos), 1));

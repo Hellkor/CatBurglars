@@ -38,10 +38,14 @@ levelM(){
 	window = new sf::RenderWindow(sf::VideoMode(1024, 720), "CatBurglars");
 
 	//Test for loading in maps
-	Level *testLevel = new Level("mapmapmap");
+
+	Level *testLevel = new Level("testmap");
 	Level *level2 = new Level("level2");
 	Level *level3 = new Level("level2");
 	Level *level4 = new Level("level2");
+
+	
+
 
 	levelM.addLevel(testLevel);
 	levelM.addLevel(level2);
