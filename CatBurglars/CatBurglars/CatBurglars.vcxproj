@@ -78,8 +78,8 @@
     <ClCompile Include="Crate.cpp" />
     <ClCompile Include="Door.cpp" />
     <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="EventPad.cpp" />
     <ClCompile Include="Game.cpp" />
-    <ClCompile Include="GameController.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Grid.cpp" />
     <ClCompile Include="Guard.cpp" />
@@ -102,8 +102,8 @@
     <ClInclude Include="Crate.h" />
     <ClInclude Include="Door.h" />
     <ClInclude Include="Entity.h" />
+    <ClInclude Include="EventPad.h" />
     <ClInclude Include="Game.h" />
-    <ClInclude Include="GameController.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Grid.h" />
     <ClInclude Include="gridvector.h" />

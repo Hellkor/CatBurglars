@@ -10,6 +10,7 @@ public:
 	virtual void Render(sf::RenderWindow *mainWindow) = 0;
 	virtual void Update(float dt) = 0;
 	virtual sf::Vector2i GetPosition() = 0;
+	virtual gridvector getCoords() = 0;
 	virtual bool isInteracting() = 0;
 	virtual bool getInteraction(GameObject *c) = 0;
 	virtual int getChannelID() = 0;

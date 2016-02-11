@@ -6,12 +6,12 @@ string DIRECTORY = "Resources/AI/";
 
 Guard::Guard(sf::Texture *texture, gridvector position, int ID,string AIscript) : GameObject(),
 mID(ID),
-mCoord(position),
+mCoords(position),
 mSpeed(1),
 mAIfile(AIscript){
 	mSprite.setTexture(*texture, true);
 	//Starting position
-	mPosition = sf::Vector2i(mCoord.x * 64, mCoord.y * 64);
+	mPosition = sf::Vector2i(mCoords.x * 64, mCoords.y * 64);
 
 	loadAI(mAIfile);
 }
@@ -97,22 +97,22 @@ void Guard::Update(float dt){
 
 			// säkrar att den håller rätt position
 			if (direction == 4) {
-				mCoord.y--;
+				mCoords.y--;
 				if (mPosition.y != newPos.y)
 					mPosition.y = newPos.y;
 			}
 			if (direction == 3) {
-				mCoord.y++;
+				mCoords.y++;
 				if (mPosition.y != newPos.y)
 					mPosition.y = newPos.y;
 			}
 			if (direction == 2) {
-				mCoord.x--;
+				mCoords.x--;
 				if (mPosition.x != newPos.x)
 					mPosition.x = newPos.x;
 			}
 			if (direction == 1) {
-				mCoord.x++;
+				mCoords.x++;
 				if (mPosition.x != newPos.x)
 					mPosition.x = newPos.x;
 			}
@@ -123,7 +123,7 @@ void Guard::Update(float dt){
 void Guard::moveForward(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 	if (!mMoving) {
 		direction = 4;
-		if (mGrid.isTilePassable(mCoord, gridvector(mCoord.x, mCoord.y - 1), tileLayer, Entities)){
+		if (mGrid.isTilePassable(mCoords, gridvector(mCoords.x, mCoords.y - 1), tileLayer, Entities)){
 			newPos.y = mPosition.y - 64;
 
 
@@ -134,7 +134,7 @@ void Guard::moveForward(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 void Guard::moveBackWards(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 	if (!mMoving) {
 		direction = 3;
-		if (mGrid.isTilePassable(mCoord, gridvector(mCoord.x, mCoord.y + 1), tileLayer, Entities)){
+		if (mGrid.isTilePassable(mCoords, gridvector(mCoords.x, mCoords.y + 1), tileLayer, Entities)){
 			newPos.y = mPosition.y + 64;
 
 
@@ -145,7 +145,7 @@ void Guard::moveBackWards(TileLayer *tileLayer, std::vector<Entity*> *Entities) 
 void Guard::moveLeft(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 	if (!mMoving) {
 		direction = 2;
-		if (mGrid.isTilePassable(mCoord, gridvector(mCoord.x - 1, mCoord.y), tileLayer, Entities)){
+		if (mGrid.isTilePassable(mCoords, gridvector(mCoords.x - 1, mCoords.y), tileLayer, Entities)){
 			newPos.x = mPosition.x - 64;
 
 
@@ -156,7 +156,7 @@ void Guard::moveLeft(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 void Guard::moveRight(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 	if (!mMoving) {
 		direction = 1;
-		if (mGrid.isTilePassable(mCoord, gridvector(mCoord.x + 1, mCoord.y), tileLayer, Entities)){
+		if (mGrid.isTilePassable(mCoords, gridvector(mCoords.x + 1, mCoords.y), tileLayer, Entities)){
 			newPos.x = mPosition.x + 64;
 
 
@@ -176,6 +176,9 @@ bool Guard::isSolid(){
 //Returns position of sprite
 sf::Vector2i Guard::GetPosition(){
 	return mPosition;
+}
+gridvector Guard::getCoords(){
+	return mCoords;
 }
 
 int Guard::getDirection(){

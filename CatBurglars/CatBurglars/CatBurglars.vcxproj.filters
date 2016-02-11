@@ -78,7 +78,7 @@
     <ClCompile Include="SecuCam.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GameController.cpp">
+    <ClCompile Include="EventPad.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -146,7 +146,7 @@
     <ClInclude Include="SecuCam.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GameController.h">
+    <ClInclude Include="EventPad.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

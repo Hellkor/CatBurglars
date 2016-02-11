@@ -14,6 +14,7 @@ public:
 	virtual void Render(sf::RenderWindow *mainWindow);
 	virtual void Update(float dt);
 	virtual sf::Vector2i GetPosition();
+	virtual gridvector getCoords();
 
 	void moveForward(TileLayer *tileLayer, std::vector<Entity*> *Entities);
 	void moveBackWards(TileLayer *tileLayer, std::vector<Entity*> *Entities);

@@ -12,6 +12,7 @@ public:
 	virtual void Render(sf::RenderWindow *mainWindow);
 	virtual void Update(float dt);
 	virtual sf::Vector2i GetPosition();
+	virtual gridvector getCoords();
 	virtual bool isSolid();
 	void moveForward(TileLayer *tileLayer, std::vector<Entity*> *Entities);
 	void moveBackWards(TileLayer *tileLayer, std::vector<Entity*> *Entities);
@@ -20,7 +21,6 @@ public:
 	virtual bool isInteracting();
 	bool getInteraction(Cat *c);
 
-	gridvector getCoords();
 
 private:
 	sf::Sprite mSprite;

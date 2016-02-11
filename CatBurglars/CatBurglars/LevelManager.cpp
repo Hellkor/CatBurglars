@@ -1,6 +1,18 @@
 #include "LevelManager.h"
 #include <iostream>
 
+#include <fstream>
+
+static string FILENAME = "save.txt";
+static string LEVEL = "Level:";
+static string COLLECT = "Collectibles:";
+
+
+static int mLevelProgression;
+static int mCollectibles;
+static int loadedLevel;
+static int loadedCollectibles;
+
 // När en manager skapas startar currentlevel på 0. Alltså första banan i listan.
 LevelManager::LevelManager() :
 	mCurrentLevel(0){
@@ -52,4 +64,99 @@ void LevelManager::nextLevel(){
 
 void LevelManager::render(sf::RenderWindow *window){
 	mLevels[mCurrentLevel]->render(window);
+}
+
+
+
+void LevelManager::load(){
+	loadGame();
+}
+void LevelManager::save(){
+	saveGame();
+}
+void LevelManager::loadGame(){
+
+	ifstream fileInput(FILENAME);
+	string input;
+
+
+
+	while (!fileInput.eof()){
+		fileInput >> input;
+
+		if (input == LEVEL){
+			fileInput >> input;
+			loadedLevel = stoi(input);
+			if (loadedLevel > mLevelProgression){
+				mLevelProgression = loadedLevel;
+			}
+		}
+		if (input == COLLECT){
+			fileInput >> input;
+			loadedCollectibles = stoi(input);
+			if (loadedCollectibles > mLevelProgression){
+				mCollectibles = loadedCollectibles;
+			}
+		}
+	}
+
+
+
+	cout << mCollectibles << endl;
+	cout << mLevelProgression << endl;
+
+
+
+}
+void readFile(){
+	ifstream fileInput(FILENAME);
+	string input;
+
+
+
+	while (!fileInput.eof()){
+		fileInput >> input;
+
+		if (input == LEVEL){
+			fileInput >> input;
+			loadedLevel = stoi(input);
+		}
+		if (input == COLLECT){
+			fileInput >> input;
+			loadedCollectibles = stoi(input);
+		}
+	}
+}
+void LevelManager::saveGame(){
+	readFile();
+	ofstream fileStream(FILENAME);
+
+	if (loadedCollectibles < mCollectibles){
+		fileStream << COLLECT;
+		fileStream << " ";
+		fileStream << mCollectibles;
+		fileStream << endl;
+	}
+	else {
+		fileStream << COLLECT;
+		fileStream << " ";
+		fileStream << loadedCollectibles;
+		fileStream << endl;
+	}
+	if (loadedLevel < mLevelProgression){
+		fileStream << LEVEL;
+		fileStream << " ";
+		fileStream << mLevelProgression;
+		fileStream << endl;
+	}
+	else{
+		fileStream << LEVEL;
+		fileStream << " ";
+		fileStream << loadedLevel;
+		fileStream << endl;
+	}
+
+}
+void LevelManager::addCollectible(){
+	mCollectibles += 1;
 }

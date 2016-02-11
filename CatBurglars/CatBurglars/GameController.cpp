@@ -1,5 +1,6 @@
 #include "GameController.h"
 #include <fstream>
+
 static string FILENAME = "save.txt";
 static string LEVEL = "Level:";
 static string COLLECT = "Collectibles:";

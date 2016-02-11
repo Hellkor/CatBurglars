@@ -139,7 +139,9 @@ bool Cat::isSolid(){
 sf::Vector2i Cat::GetPosition(){
 	return mPosition;
 }
-
+gridvector Cat::getCoords(){
+	return mCoord;
+}
 int Cat::getDirection(){
 	return direction;
 }

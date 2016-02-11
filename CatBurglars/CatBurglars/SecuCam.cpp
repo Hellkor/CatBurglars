@@ -24,6 +24,9 @@ void secuCam::connectToChannel(int channel){
 sf::Vector2i secuCam::GetPosition(){
 	return mPosition;
 }
+gridvector secuCam::getCoords(){
+	return mCoords;
+}
 
 void secuCam::Render(sf::RenderWindow *window){
 

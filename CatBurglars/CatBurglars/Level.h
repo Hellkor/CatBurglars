@@ -21,6 +21,7 @@ public:
 	void load();
 
 private:
+	bool mLoaded;
 
 	void generateLevel(string filename);
 	string mFile;

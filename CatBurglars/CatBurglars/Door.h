@@ -8,6 +8,7 @@ public:
 	virtual void Update(float dt);
 	virtual void Render(sf::RenderWindow *window);
 	virtual sf::Vector2i GetPosition();
+	virtual gridvector getCoords();
 	virtual bool isSolid();
 	virtual bool isInteracting();
 private:
