@@ -61,6 +61,7 @@ void Level::addPlayer(Cat *cat , int player){
 
 }
 void Level::update(float dt){
+	bool test = false;
 	if (mLoaded){
 		Channels::update();
 
@@ -84,13 +85,28 @@ void Level::update(float dt){
 
 			}
 			if (Cat *cat = dynamic_cast<Cat*>(e)){
-
+				
 				controller.move(cat, &mTopTileLayer, &mEntities);
+				for each (Entity *entity in mEntities){
+
+					if (secuCam *cam = dynamic_cast<secuCam*>(entity)){
+						if (cam->getIntersection(cat)&& !(cat->getDashing())){
+							
+							test = true;
+						}
+					}
+
+				}
 
 			}
 
 
 		}
+	}
+
+
+	if (test){
+		load();
 	}
 
 }
@@ -103,13 +119,18 @@ void Level::load(){
 	mBottomTileLayer.clear();
 	mTopTileLayer.clear();
 
+
+	
 	Channel c = Channel(1);
 	Channels::addChannel(c);
 	Channels::addChannel(Channel(2));
 	Channels::addChannel(Channel(3));
 	Channels::addChannel(Channel(5));
 
-	mEntities.push_back(new secuCam(1,gridvector(1,1),textures.GetTexture(4), 3));
+	soundhandler.startMusic(1);
+
+	mEntities.push_back(new secuCam(1,gridvector(27,3),textures.GetTexture(13), 3));
+
 	generateLevel(mFile);
 
 	
@@ -230,7 +251,7 @@ void Level::generateLevel(string name){
 
 
 	}
-
+	
 	mLoaded = true;
 
 }

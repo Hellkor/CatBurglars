@@ -31,7 +31,7 @@ public:
 	bool isColliding();
 
 	int getDirection();
-
+	bool getDashing();
 	void Collide();
 
 	virtual bool isSolid();

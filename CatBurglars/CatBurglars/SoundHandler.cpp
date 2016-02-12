@@ -26,6 +26,7 @@ sf::SoundBuffer* SoundHandler::GetSound(int ID)
 void SoundHandler::startMusic(int ID){
 	if (ID == 1){
 		mMusic.openFromFile("Resources/Sounds/sound.ogg");
+		mMusic.setLoop(true);
 		mMusic.play();
 	}
 }

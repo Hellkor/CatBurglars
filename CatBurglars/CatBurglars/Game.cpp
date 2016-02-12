@@ -39,7 +39,7 @@ levelM(){
 
 	//Test for loading in maps
 
-	Level *testLevel = new Level("testmap");
+	Level *testLevel = new Level("intro");
 	Level *level2 = new Level("level2");
 	Level *level3 = new Level("level2");
 	Level *level4 = new Level("level2");

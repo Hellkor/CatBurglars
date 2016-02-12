@@ -25,4 +25,10 @@ public:
 		}
 		else return false;
 	}
+	bool operator ==(gridvector *pos){
+		if (pos->x == x && pos->y == y){
+			return true;
+		}
+		else return false;
+	}
 };

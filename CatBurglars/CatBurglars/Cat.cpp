@@ -214,3 +214,7 @@ void Cat::shadowDash(TileLayer *tileLayer, std::vector<Entity*> *Entities){
 	}
 	
 }
+
+bool Cat::getDashing(){
+	return mDashing;
+}
