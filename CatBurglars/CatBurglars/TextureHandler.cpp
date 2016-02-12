@@ -19,9 +19,9 @@ void TextureHandler::Initialize()
 	mSaveTexture.loadFromFile("Resources/Save.png");
 	mCat1Texture.loadFromFile("Resources/shadow_spritesheet.png");
 	mCrate.loadFromFile("Resources/Crate.png");
-
 	mButton.loadFromFile("Resources/Button.png");
 	mDoor.loadFromFile("Resources/Door.png");
+	mGuard.loadFromFile("Resources/vakt_walk_spritesheet.png");
 	
 }
 
@@ -38,6 +38,8 @@ sf::Texture* TextureHandler::GetTexture(int ID)
 		return &mSaveTexture;
 	if (ID == 4)
 		return &mCrate;
+	if (ID == 5)
+		return &mGuard;
 	if (ID == 10)
 		return &mCat1Texture;
 	if (ID == 11)

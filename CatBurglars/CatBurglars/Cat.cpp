@@ -13,7 +13,7 @@ mAbilityTime(sf::seconds(5)),
 mSoundHandler(soundhandler),
 mAnimationhandler(64, 64, &mSprite){
 	mSprite.setTexture(*texture, true);
-	mSprite.setTextureRect(sf::IntRect(1, 1, 64, 64));
+	mSprite.setTextureRect(sf::IntRect(1*64, 1*64, 64, 64));
 	//Starting position
 	mPosition = sf::Vector2i(mCoord.x * 64, mCoord.y * 64);
 }

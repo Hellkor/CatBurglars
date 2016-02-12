@@ -223,7 +223,7 @@ void Level::generateLevel(string name){
 			mEntities.push_back(new Door(channel, gridvector(xPos, yPos), textures.GetTexture(11)));
 		}
 		if (objectID == 4){
-			mEntities.push_back(new Guard(textures.GetTexture(10), gridvector(xPos, yPos), 1, "testAI"));
+			mEntities.push_back(new Guard(textures.GetTexture(5), gridvector(xPos, yPos), 1, "testAI"));
 		}
 
 

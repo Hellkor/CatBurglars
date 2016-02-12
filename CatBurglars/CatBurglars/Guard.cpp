@@ -9,8 +9,9 @@ mID(ID),
 mCoords(position),
 mSpeed(1),
 mAIfile(AIscript),
-mAnimationhandler(128, 128, &mSprite){
+mAnimationhandler(64, 128, &mSprite){
 	mSprite.setTexture(*texture, true);
+	mSprite.setTextureRect(sf::IntRect(1*64, 3*128, 64, 128));
 	//Starting position
 	mPosition = sf::Vector2i(mCoords.x * 64, mCoords.y * 64);
 
@@ -23,7 +24,7 @@ Guard::~Guard(){
 void Guard::Render(sf::RenderWindow *mainWindow){
 
 
-	mSprite.setPosition((sf::Vector2f)mPosition);
+	mSprite.setPosition(sf::Vector2f(mPosition.x,mPosition.y-64));
 	mainWindow->draw(mSprite);
 }
 void Guard::loadAI(string filename){
@@ -82,19 +83,19 @@ void Guard::Update(float dt){
 	if (mMoving){
 		if (direction == 4 && mPosition.y != newPos.y) {
 			mPosition.y -= (1 * mSpeed);
-			mAnimationhandler.animation(1, 5, sf::milliseconds(50));
+			mAnimationhandler.animation(3, 5, sf::milliseconds(100));
 		}
 		else if (direction == 3 && mPosition.y != newPos.y) {
 			mPosition.y += (1 * mSpeed);
-			mAnimationhandler.animation(0, 5, sf::milliseconds(50));
+			mAnimationhandler.animation(2, 5, sf::milliseconds(100));
 		}
 		else if (direction == 2 && mPosition.x != newPos.x) {
 			mPosition.x -= (1 * mSpeed);
-			mAnimationhandler.animation(3, 5, sf::milliseconds(50));
+			mAnimationhandler.animation(1, 5, sf::milliseconds(100));
 		}
 		else if (direction == 1 && mPosition.x != newPos.x) {
 			mPosition.x += (1 * mSpeed);
-			mAnimationhandler.animation(2, 5, sf::milliseconds(50));
+			mAnimationhandler.animation(0, 5, sf::milliseconds(100));
 		}
 		else {
 			mMoving = false;
@@ -120,7 +121,7 @@ void Guard::Update(float dt){
 				if (mPosition.x != newPos.x)
 					mPosition.x = newPos.x;
 			}
-			mAnimationhandler.reset(direction);
+			//mAnimationhandler.reset(direction);
 		}
 	}
 }
