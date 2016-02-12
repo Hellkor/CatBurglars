@@ -8,6 +8,7 @@
 #include "Door.h"
 #include "Crate.h"
 #include "Guard.h"
+#include "SecuCam.h"
 using namespace std;
 #include "Controller.h"
 Controller controller;
@@ -108,6 +109,7 @@ void Level::load(){
 	Channels::addChannel(Channel(3));
 	Channels::addChannel(Channel(5));
 
+	mEntities.push_back(new secuCam(1,gridvector(1,1),textures.GetTexture(4), 3));
 	generateLevel(mFile);
 
 	
