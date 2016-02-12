@@ -4,6 +4,7 @@
 #include <SFML\Graphics.hpp>
 #include "GameObject.h"
 #include "Grid.h"
+#include "AnimationHandler.h"
 class Guard : public GameObject
 {
 	typedef vector<Tile*> TileRow;
@@ -55,7 +56,7 @@ private:
 	void moveLeft(TileLayer *tileLayer, std::vector<Entity*> *Entities);
 	void moveRight(TileLayer *tileLayer, std::vector<Entity*> *Entities);
 
-
+	AnimationHandler mAnimationhandler;
 };
 
 #endif

@@ -22,8 +22,6 @@ Cat::~Cat(){
 }
 //Render sprite on screen
 void Cat::Render(sf::RenderWindow *mainWindow){
-	
-	
 	mSprite.setPosition((sf::Vector2f)mPosition);
 	mainWindow->draw(mSprite);
 }
@@ -114,7 +112,6 @@ void Cat::moveBackWards(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 		direction = 3;
 		if (mGrid.isTilePassable(mCoord, gridvector(mCoord.x, mCoord.y + 1), tileLayer, Entities)){
 			newPos.y = mPosition.y + 64;
-			
 			mMoving = true;
 		}
 	}
@@ -124,7 +121,6 @@ void Cat::moveLeft(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 		direction = 2;
 		if (mGrid.isTilePassable(mCoord, gridvector(mCoord.x - 1, mCoord.y), tileLayer, Entities)){
 			newPos.x = mPosition.x - 64;
-			
 			mMoving = true;
 		}
 	}
@@ -134,7 +130,6 @@ void Cat::moveRight(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 		direction = 1;
 		if (mGrid.isTilePassable(mCoord, gridvector(mCoord.x + 1, mCoord.y), tileLayer, Entities)){
 			newPos.x = mPosition.x + 64;
-
 			mMoving = true;
 			
 		}

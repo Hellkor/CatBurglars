@@ -8,7 +8,8 @@ Guard::Guard(sf::Texture *texture, gridvector position, int ID,string AIscript) 
 mID(ID),
 mCoords(position),
 mSpeed(1),
-mAIfile(AIscript){
+mAIfile(AIscript),
+mAnimationhandler(128, 128, &mSprite){
 	mSprite.setTexture(*texture, true);
 	//Starting position
 	mPosition = sf::Vector2i(mCoords.x * 64, mCoords.y * 64);
@@ -81,16 +82,19 @@ void Guard::Update(float dt){
 	if (mMoving){
 		if (direction == 4 && mPosition.y != newPos.y) {
 			mPosition.y -= (1 * mSpeed);
+			mAnimationhandler.animation(1, 5, sf::milliseconds(50));
 		}
 		else if (direction == 3 && mPosition.y != newPos.y) {
 			mPosition.y += (1 * mSpeed);
+			mAnimationhandler.animation(0, 5, sf::milliseconds(50));
 		}
 		else if (direction == 2 && mPosition.x != newPos.x) {
 			mPosition.x -= (1 * mSpeed);
-
+			mAnimationhandler.animation(3, 5, sf::milliseconds(50));
 		}
 		else if (direction == 1 && mPosition.x != newPos.x) {
 			mPosition.x += (1 * mSpeed);
+			mAnimationhandler.animation(2, 5, sf::milliseconds(50));
 		}
 		else {
 			mMoving = false;
@@ -116,6 +120,7 @@ void Guard::Update(float dt){
 				if (mPosition.x != newPos.x)
 					mPosition.x = newPos.x;
 			}
+			mAnimationhandler.reset(direction);
 		}
 	}
 }
