@@ -15,6 +15,7 @@ public:
 	virtual void Render(sf::RenderWindow *mainWindow);
 	virtual void Update(float dt);
 	virtual sf::Vector2i GetPosition();
+	virtual gridvector getCoords();
 
 	void AImovement(TileLayer *tiles, std::vector<Entity*> *entities);
 
@@ -35,7 +36,7 @@ private:
 	sf::Sprite mSprite;
 	int mID;
 	sf::Vector2i mPosition;
-	gridvector mCoord;
+	gridvector mCoords;
 	sf::Vector2i newPos;
 	bool mMoving = false;
 	Grid mGrid;

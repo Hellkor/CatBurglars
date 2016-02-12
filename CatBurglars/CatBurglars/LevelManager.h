@@ -18,8 +18,14 @@ public:
 	void update(float dt);
 	void render(sf::RenderWindow *window);
 
-private:
+	void addCollectible();
 	
+	void load();
+	void save();
+
+private:
+	static void loadGame();
+	static void saveGame();
 
 	std::vector<Level*> mLevels;
 	int mCurrentLevel;

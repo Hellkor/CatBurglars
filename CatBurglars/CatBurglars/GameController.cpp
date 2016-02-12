@@ -1,6 +1,4 @@
-#include "LevelManager.h"
-#include <iostream>
-
+#include "GameController.h"
 #include <fstream>
 
 static string FILENAME = "save.txt";
@@ -13,73 +11,18 @@ static int mCollectibles;
 static int loadedLevel;
 static int loadedCollectibles;
 
-// När en manager skapas startar currentlevel på 0. Alltså första banan i listan.
-LevelManager::LevelManager() :
-	mCurrentLevel(0){
-
-	
-
-}
-// Lägger till ny level i hanterarens lista
-void LevelManager::addLevel(Level *level){
-	mLevels.push_back(level);
-}
-// Rensar bort alla inlagda levels 
-void LevelManager::clearLevels(){
-	mLevels.clear();
-}
-
-
-/*     SKALL RETURNERA PEKARE TILL DEN AKTUELLA LEVELN // ÅTKOMST ÅT ANDRA KLASSER
-Level LevelManager::getLevel(){
-	Level *level = mLevels[mCurrentLevel];
-	return level;
-}
-*/
-
-void LevelManager::update(float dt){
-
-	mLevels[mCurrentLevel]->update(dt);
-
-}
-
-void LevelManager::loadLevel(int i){
-
-	mCurrentLevel = i;
-	mLevels[mCurrentLevel]->load();
-
-}
-
-// Byter level till nästa i listan. 
-void LevelManager::nextLevel(){
-	if (mCurrentLevel != mLevels.size()-1){
-		std::cout << "Changing to next level" << std::endl;
-		mCurrentLevel++;
-		loadLevel(mCurrentLevel);
-		
-		
-	}
-}
-
-
-void LevelManager::render(sf::RenderWindow *window){
-	mLevels[mCurrentLevel]->render(window);
-}
-
-
-
-void LevelManager::load(){
+void GameController::load(){
 	loadGame();
 }
-void LevelManager::save(){
+void GameController::save(){
 	saveGame();
 }
-void LevelManager::loadGame(){
+void GameController::loadGame(){
 
 	ifstream fileInput(FILENAME);
 	string input;
 
-
+	
 
 	while (!fileInput.eof()){
 		fileInput >> input;
@@ -100,12 +43,12 @@ void LevelManager::loadGame(){
 		}
 	}
 
-
-
+	
+	
 	cout << mCollectibles << endl;
 	cout << mLevelProgression << endl;
 
-
+	
 
 }
 void readFile(){
@@ -127,7 +70,7 @@ void readFile(){
 		}
 	}
 }
-void LevelManager::saveGame(){
+void GameController::saveGame(){
 	readFile();
 	ofstream fileStream(FILENAME);
 
@@ -155,8 +98,12 @@ void LevelManager::saveGame(){
 		fileStream << loadedLevel;
 		fileStream << endl;
 	}
-
+	
 }
-void LevelManager::addCollectible(){
+void GameController::addCollectible(){
 	mCollectibles += 1;
+}
+void GameController::nextLevel(){
+
+	//LEVELMANAGER
 }

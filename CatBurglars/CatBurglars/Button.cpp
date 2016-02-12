@@ -58,4 +58,6 @@ void Button::Update(float dt){
 bool Button::isInteracting(){
 	return false;
 }
-
+gridvector Button::getCoords(){
+	return mCoords;
+}

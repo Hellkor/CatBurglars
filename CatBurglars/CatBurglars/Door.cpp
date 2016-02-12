@@ -30,6 +30,9 @@ bool Door::isSolid(){
 sf::Vector2i Door::GetPosition(){
 	return mPosition;
 }
+gridvector Door::getCoords(){
+	return mCoords;
+}
 
 void Door::Render(sf::RenderWindow *window){
 

@@ -29,7 +29,10 @@ void secuCam::connectToChannel(int channel){
 sf::Vector2i secuCam::GetPosition(){
 	return mPosition;
 }
-sf::CircleShape triangle(50, 3);
+
+gridvector secuCam::getCoords(){
+	return mCoords;
+}
 
 
 
@@ -45,28 +48,5 @@ bool secuCam::isInteracting(){
 
 
 
-/*void Entity::updateCollision(Entity* collision){
-	if (mOn!= collision -> isOn(); && getBoundingBox().intersects(collision->getBoundingBox())){
-		if(<Cat*> !secuCam (collision)) //den här måste kollas in, se hur katten är uppbyggd
-		collision->PoundTheAlarm(DaMinaje);
-		}}}
-{
-
-}
-
-}
-*/
-/*
-FloatRect secuCam::getBoundingBox(){
-	return camShape.getLocalBounds(); //detta bör funka. 
-}
-
-*/
 
 
-/*
-bool secuCam::isOn(){
-	if (mChannel.isActive){
-	mOn != isOn
-}
-*/ //växlar mellan två texturer

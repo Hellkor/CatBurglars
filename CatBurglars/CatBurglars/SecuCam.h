@@ -15,11 +15,14 @@ public:
 	virtual void Update(float dt);
 	virtual void Render(sf::RenderWindow *window);
 	virtual sf::Vector2i GetPosition();
+	virtual gridvector getCoords();
 	//virtual bool isSolid(); //kanske ska va solid, kanske inte, hör med design 
 	virtual bool isInteracting();
 	 bool isOn;
+
 	 //virtual sf::FloatRect getBoundingBox();
 	sf::CircleShape camShape;
+
 
 private:
 
@@ -30,7 +33,6 @@ private:
 	sf::Vector2i mPosition;
 	gridvector mCoords;
 	sf::Sprite mSprite;
-	
-	
+
 
 };

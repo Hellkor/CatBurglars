@@ -1,31 +1,31 @@
 #include <iostream>
 #include "SoundHandler.h"
 
-using namespace std;
+SoundHandler::SoundHandler()
+{
 
-SoundHandler::SoundHandler(){
-	/*sf::SoundBuffer buffer;
-	if (!buffer.loadFromFile("Resources/sound.ogg"))
-	sf::SoundBuffer buffer;
+}
 
-	if (!buffer.loadFromFile("Resources/Sounds/CB MT 2.0.wav"))
-	{
-		
-		
+SoundHandler::~SoundHandler()
+{
+
+}
+
+void SoundHandler::Initialize()
+{
+	//mBuffer.loadFromFile("Resources/Sounds/ahem.wav");
+}
+
+sf::SoundBuffer* SoundHandler::GetSound(int ID)
+{
+	if (ID = 1){
+		return &mBuffer;
 	}
-	else{
-		mSound.setBuffer(buffer);
-		mSound.play();
-		mSound.setLoop(true);
-		
-	}*/
 }
 
-SoundHandler::~SoundHandler(){
-
-}
-
-void SoundHandler::startMusic(){
-	mMusic.openFromFile("Resources/Sounds/sound.ogg");
-	mMusic.play();
+void SoundHandler::startMusic(int ID){
+	if (ID == 1){
+		mMusic.openFromFile("Resources/Sounds/sound.ogg");
+		mMusic.play();
+	}
 }

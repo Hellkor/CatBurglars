@@ -44,11 +44,11 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>\\hsnas6\StudentHome\2015\a15axeka\Downloads\SFML-2.3.2-windows-vc12-32-bit\SFML-2.3.2\include;\\hsnas6\studenthome\2015\b15jonni\Downloads\SFML-2.3.2\include;C:\Users\Hellkor\Downloads\SFML-2.3.2\include;%(AdditionalIncludeDirectories);\\hsnas6\StudentHome\2015\b15jonni\Downloads\SFML-2.3.2\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);\\hsnas6\StudentHome\2015\b15jonni\Downloads\SFML-2.3.2\include;C:\Users\Hellkor\Downloads\SFML-2.3.2\include;\\hsnas6\studenthome\2015\b15jonni\Downloads\SFML-2.3.2\include;\\hsnas6\StudentHome\2014\a14rasli\Documents\SFML-2.3.2-windows-vc12-32-bit\SFML-2.3.2\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>\\hsnas6\StudentHome\2015\a15axeka\Downloads\SFML-2.3.2-windows-vc12-32-bit\SFML-2.3.2\lib;\\hsnas6\studenthome\2015\b15jonni\Downloads\SFML-2.3.2\lib;C:\Users\Hellkor\Downloads\SFML-2.3.2\lib;%(AdditionalLibraryDirectories);P:\Downloads\SFML-2.3.2\lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);P:\Downloads\SFML-2.3.2\lib;\\hsnas6\StudentHome\2014\a14rasli\Documents\SFML-2.3.2-windows-vc12-32-bit\SFML-2.3.2\lib;\\hsnas6\studenthome\2015\b15jonni\Downloads\SFML-2.3.2\lib;C:\Users\Hellkor\Downloads\SFML-2.3.2\lib</AdditionalLibraryDirectories>
       <AdditionalDependencies>sfml-system-d.lib;sfml-window-d.lib;sfml-graphics-d.lib;sfml-network-d.lib;sfml-audio-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -70,6 +70,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AnimationHandler.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Cat.cpp" />
     <ClCompile Include="Channel.cpp" />
@@ -78,6 +79,7 @@
     <ClCompile Include="Crate.cpp" />
     <ClCompile Include="Door.cpp" />
     <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="EventPad.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Grid.cpp" />
@@ -86,12 +88,14 @@
     <ClCompile Include="LevelManager.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Recievers.cpp" />
+    <ClCompile Include="SecuCam.cpp" />
     <ClCompile Include="SoundHandler.cpp" />
     <ClCompile Include="TextureHandler.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="Usable.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AnimationHandler.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="Cat.h" />
     <ClInclude Include="Channel.h" />
@@ -100,6 +104,7 @@
     <ClInclude Include="Crate.h" />
     <ClInclude Include="Door.h" />
     <ClInclude Include="Entity.h" />
+    <ClInclude Include="EventPad.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Grid.h" />
@@ -108,6 +113,7 @@
     <ClInclude Include="Level.h" />
     <ClInclude Include="LevelManager.h" />
     <ClInclude Include="Recievers.h" />
+    <ClInclude Include="SecuCam.h" />
     <ClInclude Include="Soundhandler.h" />
     <ClInclude Include="TextureHandler.h" />
     <ClInclude Include="Tile.h" />

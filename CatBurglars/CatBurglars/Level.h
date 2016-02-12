@@ -21,12 +21,15 @@ public:
 	void load();
 
 private:
+	bool mLoaded;
 
 	void generateLevel(string filename);
 	string mFile;
 
 	TileRow mTileRow;
+	TileRow mTileTopRow;
 	TileLayer mBottomTileLayer;
+	TileLayer mTopTileLayer;
 
 	int  mMapSizeX, mMapSizeY;
 

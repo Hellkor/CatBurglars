@@ -5,6 +5,7 @@
 #include <vector>
 #include "Entity.h"
 #include "gridvector.h"
+#include "Soundhandler.h"
 
 class GameObject : public Entity
 {
@@ -14,6 +15,7 @@ public:
 	virtual void Render(sf::RenderWindow *mainWindow);
 	virtual void Update(float dt);
 	virtual sf::Vector2i GetPosition() = 0;
+	virtual gridvector getCoords() = 0;
 
 	virtual bool isInteracting() = 0;
 

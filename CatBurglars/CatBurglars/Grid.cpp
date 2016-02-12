@@ -44,7 +44,7 @@ bool Grid::isTilePassable(gridvector originalpos, gridvector position, TileLayer
 
 	//////////////////// ÄNDRA SÅ ALLA KATTER EJ KAN PUTTA
 	
-
+	
 	for each (Entity *e in mEntities){
 
 		if (Crate *crate = dynamic_cast<Crate*>(e)){
@@ -77,7 +77,7 @@ bool Grid::isTilePassable(gridvector originalpos, gridvector position, TileLayer
 
 		}
 	}
-
+	
 	
 	if (position.x > -1 && position.y > -1 && position.x < mTiles[1].size() && position.y < mTiles.size()){
 		if (mTiles[position.y][position.x]->GetID() > 0){

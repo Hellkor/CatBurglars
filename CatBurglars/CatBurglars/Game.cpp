@@ -25,39 +25,43 @@ sf::Int32 proximo_tick = miReloj.getElapsedTime().asMilliseconds();
 
 sf::View view1(sf::FloatRect(0, 0, 1024, 720));
 
+sf::Sound mSound;
 
-
-
-
-SoundHandler soundhandler;
+enum GameState_  { Menu, RunGame, Pause };
+GameState_ GameState = RunGame;
 
 Game::Game() :
 mCat(),
 mController(),
 levelM(){
-
 	//Creates the main window
 	window = new sf::RenderWindow(sf::VideoMode(1024, 720), "CatBurglars");
-	
-	textures.Initialize();
 
-	//Creates a cat(player)
-
-	//Stores Entities/objects
 	//Test for loading in maps
-	Level *testLevel = new Level("mapofdoom");
-	Level *level2 = new Level("axel");
+
+	Level *testLevel = new Level("testmap");
+	Level *level2 = new Level("level2");
+	Level *level3 = new Level("level2");
+	Level *level4 = new Level("level2");
+
+	
+
 
 	levelM.addLevel(testLevel);
 	levelM.addLevel(level2);
+	levelM.addLevel(level3);
+	levelM.addLevel(level4);
 
-	window->setVerticalSyncEnabled(false);
+	window->setVerticalSyncEnabled(true);
 
+
+	levelM.load();
+	levelM.addCollectible();
+	levelM.save();
 
 	levelM.loadLevel(0);
 	
 
-	soundhandler.startMusic();
 
 	view1.setCenter(sf::Vector2f(512, 360));
 	view1.setViewport(sf::FloatRect(0, 0, 1, 1));
@@ -70,7 +74,7 @@ Game::~Game()
 }
 
 void Game::Run(){
-
+	
 	while (window->isOpen())
 	{
 		sf::Event event;
@@ -98,66 +102,75 @@ void Game::Run(){
 
 		
 
-		// Draw
-		//dibujar(window, interpolacion);
-		
-		//Test för Channel
-		// Uppdaterar timers för alla kanaler
-		
-
 		Render();
 	}
 }
 
 void Game::Update(float dt){
-	//mController.move(mCat);
-	levelM.update(dt);
+	
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
-		view1.move(0, 2);
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)){
-		view1.move(0, -2);
+	switch (GameState){
+		case Menu:
+			break;
+
+
+		case RunGame:
+			levelM.update(dt);
+
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
+				view1.move(0, 2);
+			}
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)){
+				view1.move(0, -2);
+			}
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)){
+				view1.move(-2, 0);
+			}
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)){
+				view1.move(2, 0);
+			}
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::N)){
+				levelM.nextLevel();
+			}
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::M)){
+				levelM.loadLevel(0);
+			}
+			break;
+
+
+		case Pause:
+			break;
+
+
+
 	}
 	
-	/*
-	for each (GameObject *gameObject in mEntities)
-	{
-		//cout << "X : " << cat->GetPosition().x << endl;
-		//cout << "Y : " << cat->GetPosition().y << endl << endl;;
-		//Enable keyboard for cat
-		
-		//cat->Update(dt); // Efter axels version
-		if (Crate *crate = dynamic_cast<Crate*>(gameObject)){
-			crate->getInteraction(mCat);
-		}
-		for each(Entity *entity in mEntities)
-		{
-			entity->Update(dt);
-		}
-		if (Cat * cat = dynamic_cast<Cat*>(gameObject)){
-			mController.move(cat);
-			//cat->Update(dt);
-		}
-	}
-	*/
+
+
+
+
 }
 
 void Game::Render()
 {
-	/* Make background green for testing
-	window->clear(sf::Color(0, 200, 0, 255));*/
-	
 	window->setView(view1);
-	
+
 	window->clear();
-	levelM.render(window);
-	//Render all entities into the window 
-	/*
-	for each(Entity *entity in mEntities)
-	{
-		entity->Render(window);
+	switch (GameState){
+	case Menu:
+		break;
+		// Main Game Case
+	case RunGame:
+		levelM.render(window);
+		break;
+	case Pause:
+		break;
+
+
 	}
-	*/
+	
+
+	
+
 	window->display();
 }
