@@ -13,7 +13,7 @@ AnimationHandler::~AnimationHandler(){
 
 }
 
-void AnimationHandler::forwardAnimation(){
+/*void AnimationHandler::forwardAnimation(){
 	mSprite->setTextureRect(sf::IntRect(mX * mSpriteSizeX, 2 * mSpriteSizeY, mSpriteSizeX, mSpriteSizeY));
 	if (mClock.getElapsedTime() >= mTime)
 	{
@@ -69,7 +69,7 @@ void AnimationHandler::rightAnimation(){
 		
 
 }
-
+*/
 void AnimationHandler::abilityAnimation(){
 
 }
@@ -85,9 +85,9 @@ void AnimationHandler::reset(int direction){
 		mSprite->setTextureRect(sf::IntRect(0 * mSpriteSizeX, 1 * mSpriteSizeY, mSpriteSizeX, mSpriteSizeY));
 }
 
-void AnimationHandler::animation(int y, int frames){
+void AnimationHandler::animation(int y, int frames, sf::Time time){
 	mSprite->setTextureRect(sf::IntRect(mX * mSpriteSizeX, y * mSpriteSizeY, mSpriteSizeX, mSpriteSizeY));
-	if (mClock.getElapsedTime() >= mTime)
+	if (mClock.getElapsedTime() >= time)
 	{
 		mX++;
 		mClock.restart();
@@ -96,5 +96,14 @@ void AnimationHandler::animation(int y, int frames){
 	if (mX >= frames)
 	{
 		mX = 0;
+	}
+}
+
+void AnimationHandler::playAnimation(int y, int frames, sf::Time time){
+	mSprite->setTextureRect(sf::IntRect(mX * mSpriteSizeX, y * mSpriteSizeY, mSpriteSizeX, mSpriteSizeY));
+	if (mClock.getElapsedTime() >= time && mX < frames)
+	{
+		mX++;
+		mClock.restart();
 	}
 }

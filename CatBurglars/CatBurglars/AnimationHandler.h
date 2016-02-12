@@ -7,14 +7,16 @@ class AnimationHandler {
 public:
 	AnimationHandler(int x, int y, sf::Sprite *sprite);
 	~AnimationHandler();
-	void forwardAnimation();
+	/*void forwardAnimation();
 	void backwardsAnimation();
 	void leftAnimation();
-	void rightAnimation();
+	void rightAnimation();*/
 	void abilityAnimation();
 	void reset(int direction);
 
-	void animation(int y, int frames);
+	void animation(int y, int frames, sf::Time time);
+
+	void playAnimation(int y, int frames, sf::Time time);
 
 private:
 	sf::Sprite *mSprite;

@@ -35,39 +35,39 @@ void Cat::Update(float dt){
 		if (direction == 4 && mPosition.y != newPos.y) {
 			mPosition.y -= (1 * mSpeed);
 			if (mDashing == true){
-			mAnimationhandler.animation(4, 6);
+				mAnimationhandler.animation(4, 5, sf::milliseconds(250));
 			}
 			else
-			mAnimationhandler.animation(1,6);
+				mAnimationhandler.animation(1, 5, sf::milliseconds(50));
 		}
 		else if (direction == 3 && mPosition.y != newPos.y) {
 			mPosition.y += (1 * mSpeed);
 			if (mDashing == true){
-				mAnimationhandler.animation(5, 6);
+				mAnimationhandler.animation(5, 5, sf::milliseconds(250));
 			}
 			else
-			mAnimationhandler.animation(0, 6);
+				mAnimationhandler.animation(0, 5, sf::milliseconds(50));
 		}
 		else if (direction == 2 && mPosition.x != newPos.x) {
 			mPosition.x -= (1 * mSpeed);
 			if (mDashing == true){
-				mAnimationhandler.animation(7, 6);
+				mAnimationhandler.animation(7, 5, sf::milliseconds(250));
 			}
 			else
-			mAnimationhandler.animation(3, 6);
+				mAnimationhandler.animation(3, 5, sf::milliseconds(50));
 			
 		}
 		else if (direction == 1 && mPosition.x != newPos.x) {
 			mPosition.x += (1 * mSpeed);
 			if (mDashing == true){
-				mAnimationhandler.animation(6, 6);
+				mAnimationhandler.animation(6, 5, sf::milliseconds(250));
 			}
 			else
-			mAnimationhandler.animation(2, 6);
+				mAnimationhandler.animation(2, 5, sf::milliseconds(50));
 		}
 		else {
 			mMoving = false;
-			mAnimationhandler.reset(direction);
+			
 			// säkrar att den håller rätt position
 			if (direction == 4) {
 				mCoord.y--;
@@ -93,6 +93,7 @@ void Cat::Update(float dt){
 				mSpeed = 2;
 				mDashing = false;
 			}
+			mAnimationhandler.reset(direction);
 		}
 	}
 }
@@ -191,7 +192,7 @@ void Cat::shadowDash(TileLayer *tileLayer, std::vector<Entity*> *Entities){
 			mAbilityClock.restart();
 		}
 		if (direction == 2 && (mGrid.isTilePassable(mCoord, gridvector(mCoord.x - 1, mCoord.y), tileLayer, Entities)) && (mGrid.isTilePassable(mCoord, gridvector(mCoord.x - 2, mCoord.y), tileLayer, Entities))){
-			mSpeed = mSpeed * 8;
+			mSpeed = mSpeed * 4;
 			newPos.x = mPosition.x - 128;
 			mCoord.x--;
 			mDashing = true;
@@ -199,7 +200,7 @@ void Cat::shadowDash(TileLayer *tileLayer, std::vector<Entity*> *Entities){
 			mAbilityClock.restart();
 		}
 		if (direction == 3 && (mGrid.isTilePassable(mCoord, gridvector(mCoord.x, mCoord.y + 1), tileLayer, Entities)) && (mGrid.isTilePassable(mCoord, gridvector(mCoord.x, mCoord.y + 2), tileLayer, Entities))){
-			mSpeed = mSpeed * 8;
+			mSpeed = mSpeed * 4;
 			newPos.y = mPosition.y + 128;
 			mCoord.y++;
 			mDashing = true;
@@ -207,7 +208,7 @@ void Cat::shadowDash(TileLayer *tileLayer, std::vector<Entity*> *Entities){
 			mAbilityClock.restart();
 		}
 		if (direction == 4 && (mGrid.isTilePassable(mCoord, gridvector(mCoord.x, mCoord.y - 1), tileLayer, Entities)) && (mGrid.isTilePassable(mCoord, gridvector(mCoord.x, mCoord.y - 2), tileLayer, Entities))){
-			mSpeed = mSpeed * 8;
+			mSpeed = mSpeed * 4;
 			newPos.y = mPosition.y - 128;
 			mCoord.y--;
 			mDashing = true;
