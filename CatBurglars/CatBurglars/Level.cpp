@@ -9,6 +9,8 @@
 #include "Crate.h"
 #include "Guard.h"
 #include "SecuCam.h"
+#include "EventPad.h"
+#include "MultiDoor.h"
 using namespace std;
 #include "Controller.h"
 Controller controller;
@@ -125,11 +127,21 @@ void Level::load(){
 	Channels::addChannel(c);
 	Channels::addChannel(Channel(2));
 	Channels::addChannel(Channel(3));
+	Channels::addChannel(Channel(4));
 	Channels::addChannel(Channel(5));
 
 	soundhandler.startMusic(1);
 
-	mEntities.push_back(new secuCam(1,gridvector(27,3),textures.GetTexture(13), 3));
+	mEntities.push_back(new secuCam(1,gridvector(27,3),textures.GetTexture(13), 3,4));
+	mEntities.push_back(new EventPad(WIN, gridvector(4, 4)));
+
+	mEntities.push_back(new MultiDoor(1, 3, gridvector(10, 4), textures.GetTexture(11)));
+
+	mEntities.push_back(new Button(1, textures.GetTexture(12), gridvector(2, 2), false, 10));
+	mEntities.push_back(new Button(2, textures.GetTexture(12), gridvector(3, 2), false, 10));
+	mEntities.push_back(new Button(3, textures.GetTexture(12), gridvector(4, 2), false, 10));
+	mEntities.push_back(new Button(4, textures.GetTexture(12), gridvector(5, 2), false, 10));
+	mEntities.push_back(new Button(5, textures.GetTexture(12), gridvector(6, 2), false, 10));
 
 	generateLevel(mFile);
 
@@ -206,7 +218,7 @@ void Level::generateLevel(string name){
 
 
 		if (objectID == 1){
-			mEntities.push_back(new Button(channel, textures.GetTexture(12), gridvector(xPos, yPos)));
+			mEntities.push_back(new Button(channel, textures.GetTexture(12), gridvector(xPos, yPos),true,10));
 		}
 
 	}
@@ -244,6 +256,7 @@ void Level::generateLevel(string name){
 		}
 		if (objectID == 3){
 			mEntities.push_back(new Door(channel, gridvector(xPos, yPos), textures.GetTexture(11)));
+
 		}
 		if (objectID == 4){
 			mEntities.push_back(new Guard(textures.GetTexture(5), gridvector(xPos, yPos), 1, "testAI"));
@@ -251,6 +264,8 @@ void Level::generateLevel(string name){
 
 
 	}
+	
+
 	
 	mLoaded = true;
 

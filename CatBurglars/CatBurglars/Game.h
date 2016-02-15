@@ -27,7 +27,7 @@ private:
 	GameObject *mGameObjectives;
 	Cat *mCat;
 	Controller mController;
-	LevelManager levelM;
+	
 
 	EntityVector mEntities;
 };

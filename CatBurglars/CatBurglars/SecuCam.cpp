@@ -1,36 +1,80 @@
 #include "secuCam.h"
 #include "TextureHandler.h"
-
 TextureHandler textures;
-secuCam::secuCam(int channel, gridvector coords, sf::Texture *texture,int range) :
+
+secuCam::secuCam(int channel, gridvector coords, sf::Texture *texture, int range, int direction) :
 mChannel(channel),
 mCoords(coords){
+	
 
 	mPosition.x = mCoords.x * 64;
 	mPosition.y = mCoords.y * 64;
 
 	mSprite.setTexture(*texture);
 	mSprite.setPosition((sf::Vector2f)mPosition);
-
 	textures.Initialize();
 
 	knark.setTexture(*textures.GetTexture(99));
-
+	
 
 	int width = 0;
+	int height = 0;
 
-	for (int i = 0; i <= range ; i++){
-
-		mVision.push_back(new gridvector(mCoords.x,mCoords.y - i));
+	if (direction == 1){
 		
-		for (int j = 0; j < width; j++){
-			cout << "asofd" << endl;
-			mVision.push_back(new gridvector(mCoords.x + j, mCoords.y - i));
-			mVision.push_back(new gridvector(mCoords.x + -j, mCoords.y - i));
-		}
+		
+		for (int i = 0; i <= range; i++){
+			mVision.push_back(new gridvector(mCoords.x, mCoords.y - i));
+
+			for (int j = 1; j < width; j++){
+				mVision.push_back(new gridvector(mCoords.x + j, mCoords.y - i));
+				mVision.push_back(new gridvector(mCoords.x + -j, mCoords.y - i));
+			}
 
 			width++;
+		}
 	}
+	if (direction == 2){
+		for (int i = 0; i <= range; i++){
+
+			mVision.push_back(new gridvector(mCoords.x, mCoords.y + i));
+
+			for (int j = 1; j < width; j++){
+				mVision.push_back(new gridvector(mCoords.x + j, mCoords.y + i));
+				mVision.push_back(new gridvector(mCoords.x + -j, mCoords.y + i));
+			}
+
+			width++;
+		}
+	}
+	if (direction == 3){
+		for (int i = 0; i <= range; i++){
+
+			mVision.push_back(new gridvector(mCoords.x + i, mCoords.y ));
+
+			for (int j = 1; j < width; j++){
+				mVision.push_back(new gridvector(mCoords.x + i, mCoords.y + j));
+				mVision.push_back(new gridvector(mCoords.x + i, mCoords.y - j));
+			}
+
+			width++;
+		}
+	}
+	if (direction == 4){
+		for (int i = 0; i <= range; i++){
+
+			mVision.push_back(new gridvector(mCoords.x - i, mCoords.y));
+
+			for (int j = 1; j < width; j++){
+				mVision.push_back(new gridvector(mCoords.x - i, mCoords.y + j));
+				mVision.push_back(new gridvector(mCoords.x - i, mCoords.y - j));
+			}
+
+			width++;
+		}
+	}
+
+	
 
 
 }

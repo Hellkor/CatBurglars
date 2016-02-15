@@ -32,8 +32,7 @@ GameState_ GameState = RunGame;
 
 Game::Game() :
 mCat(),
-mController(),
-levelM(){
+mController(){
 	//Creates the main window
 	window = new sf::RenderWindow(sf::VideoMode(1024, 720), "CatBurglars");
 
@@ -47,19 +46,19 @@ levelM(){
 	
 
 
-	levelM.addLevel(testLevel);
-	levelM.addLevel(level2);
-	levelM.addLevel(level3);
-	levelM.addLevel(level4);
+	LevelManager::addLevel(testLevel);
+	LevelManager::addLevel(level2);
+	LevelManager::addLevel(level3);
+	LevelManager::addLevel(level4);
 
 	window->setVerticalSyncEnabled(true);
 
 
-	levelM.load();
-	levelM.addCollectible();
-	levelM.save();
+	LevelManager::load();
+	LevelManager::addCollectible();
+	LevelManager::save();
 
-	levelM.loadLevel(0);
+	LevelManager::loadLevel(0);
 	
 
 
@@ -115,7 +114,7 @@ void Game::Update(float dt){
 
 
 		case RunGame:
-			levelM.update(dt);
+			LevelManager::update(dt);
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
 				view1.move(0, 2);
@@ -130,10 +129,10 @@ void Game::Update(float dt){
 				view1.move(2, 0);
 			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::N)){
-				levelM.nextLevel();
+				LevelManager::nextLevel();
 			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::M)){
-				levelM.loadLevel(0);
+				LevelManager::loadLevel(0);
 			}
 			break;
 
@@ -161,7 +160,7 @@ void Game::Render()
 		break;
 		// Main Game Case
 	case RunGame:
-		levelM.render(window);
+		LevelManager::render(window);
 		break;
 	case Pause:
 		break;

@@ -87,6 +87,7 @@
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="LevelManager.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="MultiDoor.cpp" />
     <ClCompile Include="Recievers.cpp" />
     <ClCompile Include="SecuCam.cpp" />
     <ClCompile Include="SoundHandler.cpp" />
@@ -112,6 +113,7 @@
     <ClInclude Include="Guard.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="LevelManager.h" />
+    <ClInclude Include="MultiDoor.h" />
     <ClInclude Include="Recievers.h" />
     <ClInclude Include="SecuCam.h" />
     <ClInclude Include="Soundhandler.h" />

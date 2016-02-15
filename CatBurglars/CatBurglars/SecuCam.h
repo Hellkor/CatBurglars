@@ -10,7 +10,7 @@ class secuCam : public Recievers{
 
 public:
 
-	secuCam(int channel, gridvector coords, sf::Texture *texture,int range);
+	secuCam(int channel, gridvector coords, sf::Texture *texture,int range,int direction);
 	~secuCam();
 	virtual void connectToChannel(int channelID);
 	virtual void Update(float dt);
