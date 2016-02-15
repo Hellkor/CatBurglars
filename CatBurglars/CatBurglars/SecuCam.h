@@ -18,9 +18,8 @@ public:
 	virtual sf::Vector2i GetPosition();
 	virtual sf::Vector2i getDirection();
 	virtual gridvector getCoords();
-	//virtual bool isSolid(); //kanske ska va solid, kanske inte, hör med design 
 	virtual bool isInteracting();
-	//bool isOn;
+	bool isOn;
 
 	bool getIntersection(GameObject *obj);
 

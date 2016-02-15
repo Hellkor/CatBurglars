@@ -24,7 +24,7 @@ Guard::~Guard(){
 void Guard::Render(sf::RenderWindow *mainWindow){
 
 
-	mSprite.setPosition(sf::Vector2f(mPosition.x,mPosition.y-64));
+	mSprite.setPosition(sf::Vector2f(mPosition.x,mPosition.y-80));
 	mainWindow->draw(mSprite);
 }
 void Guard::loadAI(string filename){

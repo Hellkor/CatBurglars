@@ -39,7 +39,7 @@ secuCam::~secuCam(){
 }
 
 void secuCam::Update(float dt){
-	//	if (Channels::isChannelActive(mChannel)){ 	isOn = false;	}
+	if (Channels::isChannelActive(mChannel)){ 	isOn = false;	}
 }
 
 void secuCam::connectToChannel(int channel){
@@ -98,4 +98,4 @@ bool secuCam::isOn(){
 if (mChannel.isActive){
 mOn != isOn
 }
-*/ //växlar mellan två texturer
+*/ //växlar mellan av/på

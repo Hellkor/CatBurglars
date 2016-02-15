@@ -129,6 +129,7 @@ void Game::Update(float dt){
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)){
 				view1.move(2, 0);
 			}
+
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::N)){
 				levelM.nextLevel();
 			}
