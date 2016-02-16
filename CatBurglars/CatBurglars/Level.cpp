@@ -45,13 +45,6 @@ void Level::render(sf::RenderWindow *window){
 			mTopTileLayer[y][x]->Render(window);
 		}
 	}
-	/*for (TileLayer::size_type y = 0; y < mTopTileLayer.size(); y++)
-	{
-		for (TileRow::size_type x = 0; x < mTopTileLayer[y].size(); x++)
-		{
-			mTopTileLayer[y][x]->Render(window);
-		}
-	}*/
 	for each (Entity *e in mEntities){
 		e->Render(window);
 	}
@@ -133,7 +126,8 @@ void Level::load(){
 	Channels::addChannel(Channel(10));
 	soundhandler.startMusic(1);
 
-	mEntities.push_back(new secuCam(1,gridvector(27,3),textures.GetTexture(13), 3,4));
+	mEntities.push_back(new Button(1, textures.GetTexture(12), gridvector(25, 3), false, 10));
+	mEntities.push_back(new secuCam(1,gridvector(27,3),textures.GetTexture(13), 2,1));
 	mEntities.push_back(new EventPad(WIN, gridvector(4, 4)));
 
 	mEntities.push_back(new MultiDoor(1, 3, gridvector(10, 4), textures.GetTexture(11)));

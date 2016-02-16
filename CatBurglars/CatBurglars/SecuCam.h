@@ -28,7 +28,7 @@ public:
 
 
 private:
-
+	sf::ConvexShape mConvex;
 	std::vector<gridvector*> mVision;
 	int mChannel;
 	bool mOn;
