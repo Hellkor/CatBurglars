@@ -9,8 +9,10 @@
 #include "Crate.h"
 #include "Guard.h"
 #include "SecuCam.h"
-using namespace std;
 #include "Controller.h"
+using namespace std;
+
+
 Controller controller;
 static TextureHandler textures;
 static SoundHandler soundhandler;
@@ -21,15 +23,35 @@ float LOAD_PROGRESS = 0;
 Level::Level(string filename) :
 	mFile(filename),
 	mLoaded(false){
+	mView = sf::View(sf::Vector2f(0,0), sf::Vector2f(1024, 720));
+
+	mView.setViewport(sf::FloatRect(0.1f, 0.1f, 0.8f, 0.8f));
+
+	mView.setCenter(sf::Vector2f(512, 360));
+	
+	mSprite.setScale(sf::Vector2f(0.5f, 2.f)); // absolute scale factor
+	mSprite.scale(sf::Vector2f(1.5f, 3.f)); // factor relative to the current scale
+	
+	mTexture.setSmooth(true);
+
+	
+	
+//mView.setCenter(setPosition()); //fixa ffs så kameran följer spelaren
+
 
 	//Initialize textures
 	textures.Initialize();
+
 	soundhandler.Initialize();
 }
 
 // Renderar level
 void Level::render(sf::RenderWindow *window){
 
+
+	
+
+	window->setView(mView);
 	window->clear();
 
 
@@ -103,8 +125,6 @@ void Level::update(float dt){
 
 		}
 	}
-
-
 	if (test){
 		load();
 	}

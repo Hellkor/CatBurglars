@@ -39,6 +39,7 @@ public:
 	void shadowDash(TileLayer *tileLayer, std::vector<Entity*> *Entities);
 
 private:
+
 	float mSpeed;
 	sf::Sprite mSprite;
 	int mID;

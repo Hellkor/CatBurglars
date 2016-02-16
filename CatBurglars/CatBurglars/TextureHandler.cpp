@@ -25,6 +25,7 @@ void TextureHandler::Initialize()
 	mArea.loadFromFile("Resources/area.png");
 	mCamera.loadFromFile("Resources/camera.png");
 	
+	mCrate.setSmooth(true);
 }
 
 //Retrun a texture
@@ -52,4 +53,5 @@ sf::Texture* TextureHandler::GetTexture(int ID)
 		return &mCamera;
 	if (ID == 99)
 		return &mArea;
+
 }

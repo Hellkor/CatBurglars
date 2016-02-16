@@ -2,6 +2,7 @@
 #define INCLUDED_LEVEL
 #include <string>
 #include <vector>
+#include "SFML\Window.hpp"
 using namespace std;
 
 #include "Tile.h"
@@ -20,9 +21,15 @@ public:
 	void addPlayer(Cat *cat, int player);
 	void load();
 
-private:
-	bool mLoaded;
 
+private:
+
+	sf::View followPlayer;
+
+	bool mLoaded;
+	sf::Sprite mSprite;
+	sf::View mView;
+	sf::Texture mTexture;
 	void generateLevel(string filename);
 	string mFile;
 
