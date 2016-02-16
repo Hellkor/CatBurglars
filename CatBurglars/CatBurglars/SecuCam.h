@@ -20,7 +20,7 @@ public:
 	virtual gridvector getCoords();
 	//virtual bool isSolid(); //kanske ska va solid, kanske inte, hör med design 
 	virtual bool isInteracting();
-	//bool isOn;
+	bool isOn;
 
 	bool getIntersection(GameObject *obj);
 
@@ -37,7 +37,7 @@ private:
 	sf::Vector2i mDirection;
 	gridvector mCoords;
 	sf::Sprite mSprite;
-	sf::Sprite knark;
+	sf::Sprite mHitboxSprite;
 
 
 

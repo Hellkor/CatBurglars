@@ -4,7 +4,8 @@ TextureHandler textures;
 
 secuCam::secuCam(int channel, gridvector coords, sf::Texture *texture, int range, int direction) :
 mChannel(channel),
-mCoords(coords){
+mCoords(coords),
+isOn(true){
 	
 
 	mPosition.x = mCoords.x * 64;
@@ -14,15 +15,13 @@ mCoords(coords){
 	mSprite.setPosition((sf::Vector2f)mPosition);
 	textures.Initialize();
 
-	knark.setTexture(*textures.GetTexture(99));
+	mHitboxSprite.setTexture(*textures.GetTexture(99));
 	
 
 	int width = 0;
 	int height = 0;
 
 	if (direction == 1){
-		
-		
 		for (int i = 0; i <= range; i++){
 			mVision.push_back(new gridvector(mCoords.x, mCoords.y - i));
 
@@ -83,17 +82,19 @@ secuCam::~secuCam(){
 }
 
 void secuCam::Update(float dt){
-	//	if (Channels::isChannelActive(mChannel)){ 	isOn = false;	}
+	if (Channels::isChannelActive(mChannel)){ isOn = false; }
+	else isOn = true;
 }
 
 void secuCam::connectToChannel(int channel){
 	mChannel = channel;
 }
 bool secuCam::getIntersection(GameObject *obj){
-
-	for each (gridvector *v in mVision){
-		if (obj->getCoords() == v){
-			return true;
+	if (isOn){
+		for each (gridvector *v in mVision){
+			if (obj->getCoords() == v){
+				return true;
+			}
 		}
 	}
 
@@ -122,9 +123,11 @@ sf::Vector2i secuCam::getDirection(){
 
 void secuCam::Render(sf::RenderWindow *window){
 	window->draw(mSprite);
-	for each (gridvector *v in mVision){
-		knark.setPosition(v->x * 64, v->y * 64);
-		window->draw(knark);
+	if (isOn){
+		for each (gridvector *v in mVision){
+			mHitboxSprite.setPosition(v->x * 64, v->y * 64);
+			window->draw(mHitboxSprite);
+		}
 	}
 }
 
