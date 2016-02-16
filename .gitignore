@@ -5,6 +5,11 @@ Release/
 Resources/
 Maps/
 
+#Zip files
+
+*.zip
+*.7z
+
 #Visual Studio files
 
 *.sdf
