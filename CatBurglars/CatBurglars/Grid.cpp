@@ -23,6 +23,13 @@ bool Grid::canCrateMove(gridvector position, TileLayer *Tiles, std::vector<Entit
 
 
 		}
+		//Check if a type of cat can move the crate
+		if (Cat *cat = dynamic_cast<Cat*>(e)){
+			if (!(cat->canPushCrate)){
+				return false;
+			}
+			
+		}
 	}
 
 	if (position.x > -1 && position.y > -1 && position.x < mTiles[1].size() && position.y < mTiles.size()){

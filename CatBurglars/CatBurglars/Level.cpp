@@ -11,6 +11,7 @@
 #include "SecuCam.h"
 #include "EventPad.h"
 #include "MultiDoor.h"
+#include "Computer.h"
 using namespace std;
 #include "Controller.h"
 Controller controller;
@@ -129,7 +130,7 @@ void Level::load(){
 	Channels::addChannel(Channel(3));
 	Channels::addChannel(Channel(4));
 	Channels::addChannel(Channel(5));
-
+	Channels::addChannel(Channel(10));
 	soundhandler.startMusic(1);
 
 	mEntities.push_back(new secuCam(1,gridvector(27,3),textures.GetTexture(13), 3,4));
@@ -142,7 +143,7 @@ void Level::load(){
 	mEntities.push_back(new Button(3, textures.GetTexture(12), gridvector(4, 2), false, 10));
 	mEntities.push_back(new Button(4, textures.GetTexture(12), gridvector(5, 2), false, 10));
 	mEntities.push_back(new Button(5, textures.GetTexture(12), gridvector(6, 2), false, 10));
-
+	mEntities.push_back(new Computer(10, textures.GetTexture(13), gridvector(1, 1), false, 5));
 	generateLevel(mFile);
 
 	

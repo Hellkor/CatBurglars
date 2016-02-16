@@ -8,10 +8,24 @@ int TILESIZE = 64;
 Cat::Cat(sf::Texture *texture, gridvector position, int ID, SoundHandler *soundhandler) : GameObject(),
 mID(ID),
 mCoord(position),
-mSpeed(2),
+mSpeed(),
 mAbilityTime(sf::seconds(5)),
 mSoundHandler(soundhandler),
 mAnimationhandler(64, 64, &mSprite){
+
+	if (mID == 1){
+		mSpeed = 2;
+	}
+	if (mID == 2){
+		mSpeed = 1;
+		canPushCrate = false;
+	}
+	if (mID == 3){
+
+	}
+	if (mID == 4){
+
+	}
 	mSprite.setTexture(*texture, true);
 	mSprite.setTextureRect(sf::IntRect(1*64, 1*64, 64, 64));
 	//Starting position
@@ -137,7 +151,9 @@ void Cat::moveRight(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 }
 
 void Cat::useAbility(TileLayer *tileLayer, std::vector<Entity*> *Entities){
-	if (mID == 1){
+	//Shadow
+	if (mID == 1)
+	{
 		shadowDash(tileLayer,Entities);
 	}
 }
@@ -217,4 +233,14 @@ void Cat::shadowDash(TileLayer *tileLayer, std::vector<Entity*> *Entities){
 
 bool Cat::getDashing(){
 	return mDashing;
+}
+
+// SNOW \\
+
+bool Cat::snowHax(){
+	if (mID == 2){
+		return true;
+	}
+	else
+		return false;
 }

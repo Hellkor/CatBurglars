@@ -36,7 +36,11 @@ public:
 
 	virtual bool isSolid();
 	
+	bool canPushCrate = true;
+
 	void shadowDash(TileLayer *tileLayer, std::vector<Entity*> *Entities);
+
+	bool snowHax();
 
 private:
 	float mSpeed;
@@ -53,7 +57,6 @@ private:
 	bool mMoving = false;
 	bool mColliding = false;
 	bool mDashing = false;
-
 	Grid mGrid;
 
 
