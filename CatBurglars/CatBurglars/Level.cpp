@@ -12,6 +12,7 @@
 #include "EventPad.h"
 #include "MultiDoor.h"
 #include "Computer.h"
+#include <SFML\Graphics\BlendMode.hpp>;
 using namespace std;
 #include "Controller.h"
 
@@ -20,6 +21,30 @@ static SoundHandler soundhandler;
 
 float LOAD_PROGRESS = 0;
 
+
+sf::Texture lightTexture;
+sf::Sprite light;
+
+sf::RenderTexture lightMapTexture;
+sf::Sprite lightmap;
+
+
+
+struct Light
+{
+	sf::Vector2f position;
+	sf::Vector2f scale;
+	sf::Color color;
+	Light(sf::Vector2f nposition, sf::Vector2f nscale, sf::Color ncolor) :
+		position(nposition),
+		scale(nscale),
+		color(ncolor)
+	{
+	}
+};
+Light *l1 = new Light(sf::Vector2f(0, 0), sf::Vector2f(0.8f, 0.8f), sf::Color(255, 180, 130, 255));
+
+std::vector<Light*> lights; // Contains all the lights
 // Skapar en level från en textfil
 Level::Level(string filename) :
 	mFile(filename),
@@ -30,6 +55,22 @@ Level::Level(string filename) :
 	//Initialize textures
 	textures.Initialize();
 	soundhandler.Initialize();
+
+
+	// LIGHT ------------------------------------------------------------------------------------------------------------------------------------
+	lightMapTexture.create(5000, 5000); // Make a lightmap that can cover our screen
+	lightmap.setTexture(lightMapTexture.getTexture()); // Make our lightmap sprite use the correct texture
+	
+
+	lightTexture.loadFromFile("Resources/biglight.png"); // Load in our light 
+	lightTexture.setSmooth(true); // (Optional) It just smoothes the light out a bit
+
+	light.setTexture(lightTexture); // Make our lightsprite use our loaded image
+	light.setTextureRect(sf::IntRect(0, 0, 300, 300)); // Set where on the image we will take the sprite (X position, Y position, Width, Height)
+	light.setOrigin(150.f, 150.f); // This will offset where we draw our ligts so the center of the light is right over where we want our light to be
+
+	lights.push_back(l1);
+	//--------------------------------------------------------------------------------------------------------------------------------------------
 }
 
 // Renderar level
@@ -65,7 +106,30 @@ void Level::render(sf::RenderWindow *window){
 			e->Render(window);
 		}
 	}
-		
+
+	// ------------------------------------------------- Render Light ---------------------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------------------------------------------------------------------------
+
+	// Clear the buffer where we draw the lights, this color could be changed depending on the time of day in the game to show a night/daytime cycle
+	lightMapTexture.clear(sf::Color(50, 50, 70 , 255));
+
+	// Loop over the lights in the vector
+	for (std::size_t i = 0; i < lights.size(); ++i)
+	{
+		// Set the attributes of the light sprite to those of the current light
+		light.setScale(lights[i]->scale);
+		light.setColor(lights[i]->color);
+		light.setPosition(lights[i]->position);
+
+		//Draw it to the lightmap
+		lightMapTexture.draw(light, sf::BlendAdd); // This blendmode is used so the black in our lightimage won't be drawn to the lightmap
+	}
+	lightMapTexture.display(); // Need to make sure the rendertexture is displayed
+	lightmap.setTextureRect(sf::IntRect(0, 0, 5000 , 5000)); // What from the lightmap we will draw
+	lightmap.setPosition(0, 0); // Where on the backbuffer we will draw
+	window->draw(lightmap, sf::BlendMultiply); // This blendmode is used to add the darkness from the 	
+    // ------------------------------------------------- ----------- ---------------------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------------------------------------------------------------------------
 }
 
 void Level::addPlayer(Cat *cat , int player){
@@ -100,6 +164,8 @@ void Level::update(float dt){
 			if (Cat *cat = dynamic_cast<Cat*>(e)){
 				
 				if (cat->getPlayerIndex() == 1){
+					l1->position.x = cat->GetPosition().x +32;
+					l1->position.y = cat->GetPosition().y +32;
 					p1Controller.move(cat, &mTopTileLayer, &mEntities);
 					mPlayer1View.setCenter((sf::Vector2f)cat->GetPosition());
 				}
