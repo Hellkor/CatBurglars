@@ -5,13 +5,14 @@
 int TILESIZE = 64;
 
 
-Cat::Cat(sf::Texture *texture, gridvector position, int ID, SoundHandler *soundhandler) : GameObject(),
+Cat::Cat(sf::Texture *texture, gridvector position, int ID, SoundHandler *soundhandler,int player) : GameObject(),
 mID(ID),
 mCoord(position),
 mSpeed(),
 mAbilityTime(sf::seconds(5)),
 mSoundHandler(soundhandler),
-mAnimationhandler(64, 64, &mSprite){
+mAnimationhandler(64, 64, &mSprite),
+mPlayerIndex(player){
 
 	if (mID == 1){
 		mSpeed = 2;
@@ -39,7 +40,9 @@ void Cat::Render(sf::RenderWindow *mainWindow){
 	mSprite.setPosition((sf::Vector2f)mPosition);
 	mainWindow->draw(mSprite);
 }
-
+int Cat::getPlayerIndex(){
+	return mPlayerIndex;
+}
 void Cat::Update(float dt){
 	
 
@@ -162,7 +165,7 @@ bool Cat::isInteracting(){
 	return mInteracting;
 }
 bool Cat::isSolid(){
-	return false;
+	return true;
 }
 
 //Returns position of sprite

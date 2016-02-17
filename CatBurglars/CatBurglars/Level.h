@@ -7,6 +7,7 @@ using namespace std;
 #include "Tile.h"
 #include "Cat.h"
 #include "TextureHandler.h"
+#include "Controller.h"
 
 typedef vector<Tile*> TileRow;
 typedef vector<TileRow> TileLayer;
@@ -35,6 +36,17 @@ private:
 
 
 	std::vector<Entity*> mEntities;
+
+	sf::View mPlayer1View;
+	sf::View mPlayer2View;
+	
+	Controller p1Controller;
+	Controller p2Controller;
+
+	int mPlayers;
+
+	void generateView();
+	void updateViews();
 
 };
 

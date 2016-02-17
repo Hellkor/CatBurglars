@@ -7,7 +7,7 @@ mChannel(channel),
 mCoords(coords),
 isOn(true){
 
-	// resize it to 3 points
+	// mConvex for visionrange visual effect
 	mConvex.setPointCount(3);
 
 	
@@ -171,10 +171,3 @@ bool secuCam::isSolid(){
 	return true;
 }
 
-
-/*
-bool secuCam::isOn(){
-if (mChannel.isActive){
-mOn != isOn
-}
-*/ //växlar mellan två texturer

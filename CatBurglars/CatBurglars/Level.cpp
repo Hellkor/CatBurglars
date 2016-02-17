@@ -14,7 +14,7 @@
 #include "Computer.h"
 using namespace std;
 #include "Controller.h"
-Controller controller;
+
 static TextureHandler textures;
 static SoundHandler soundhandler;
 
@@ -23,7 +23,9 @@ float LOAD_PROGRESS = 0;
 // Skapar en level från en textfil
 Level::Level(string filename) :
 	mFile(filename),
-	mLoaded(false){
+	mLoaded(false),
+	p1Controller( Controller(KeyboardOne)),
+	p2Controller( Controller(KeyboardTwo)){
 
 	//Initialize textures
 	textures.Initialize();
@@ -32,11 +34,11 @@ Level::Level(string filename) :
 
 // Renderar level
 void Level::render(sf::RenderWindow *window){
-
-	window->clear();
-
-
 	
+	window->clear();
+	window->setView(mPlayer1View);
+	
+
 	for (TileLayer::size_type y = 0; y < mBottomTileLayer.size(); y++)
 	{
 		for (TileRow::size_type x = 0; x < mBottomTileLayer[y].size(); x++)
@@ -47,6 +49,21 @@ void Level::render(sf::RenderWindow *window){
 	}
 	for each (Entity *e in mEntities){
 		e->Render(window);
+	}
+	
+	if (mPlayers == 2){
+		window->setView(mPlayer2View);
+		for (TileLayer::size_type y = 0; y < mBottomTileLayer.size(); y++)
+		{
+			for (TileRow::size_type x = 0; x < mBottomTileLayer[y].size(); x++)
+			{
+				mBottomTileLayer[y][x]->Render(window);
+				mTopTileLayer[y][x]->Render(window);
+			}
+		}
+		for each (Entity *e in mEntities){
+			e->Render(window);
+		}
 	}
 		
 }
@@ -82,7 +99,16 @@ void Level::update(float dt){
 			}
 			if (Cat *cat = dynamic_cast<Cat*>(e)){
 				
-				controller.move(cat, &mTopTileLayer, &mEntities);
+				if (cat->getPlayerIndex() == 1){
+					p1Controller.move(cat, &mTopTileLayer, &mEntities);
+					mPlayer1View.setCenter((sf::Vector2f)cat->GetPosition());
+				}
+				if (cat->getPlayerIndex() == 2){
+					p2Controller.move(cat, &mTopTileLayer, &mEntities);
+					mPlayer2View.setCenter((sf::Vector2f)cat->GetPosition());
+				}
+				
+
 				for each (Entity *entity in mEntities){
 
 					if (secuCam *cam = dynamic_cast<secuCam*>(entity)){
@@ -109,13 +135,12 @@ void Level::update(float dt){
 
 void Level::load(){
 
+	
 	mLoaded = false;
 
 	mEntities.clear();
 	mBottomTileLayer.clear();
 	mTopTileLayer.clear();
-
-
 	
 	Channel c = Channel(1);
 	Channels::addChannel(c);
@@ -143,10 +168,30 @@ void Level::load(){
 	
 
 }
+void Level::generateView(){
 
+	if (mPlayers == 1){
+		mPlayer1View.setSize(1024, 720);
+		mPlayer1View.setViewport(sf::FloatRect(0, 0, 1, 1));
+	}
+	else if (mPlayers == 2){
+		mPlayer1View.setSize(256, 360);
+		mPlayer1View.setViewport(sf::FloatRect(0, 0, 0.5f, 1));
+		mPlayer2View.setSize(256, 360);
+		mPlayer2View.setViewport(sf::FloatRect(0.5, 0, 0.5f, 1));
+	}
+	
+
+
+	
+
+}
+void Level::updateViews(){
+	
+}
 // Laddar in leveln från sparfilen
 void Level::generateLevel(string name){
-
+	mPlayers = 0;
 	
 	ifstream inputFile("Maps/" + name + ".txt");
 	
@@ -220,6 +265,9 @@ void Level::generateLevel(string name){
 
 	inputFile >> input;
 	objectNumber = stoi(input);
+
+	int playernum = 0;
+
 	//Top layer objects
 	for (int i = 0; i < objectNumber; i++){
 		int objectID, xPos, yPos, channel, layer;
@@ -241,8 +289,17 @@ void Level::generateLevel(string name){
 
 
 		if (objectID == 0){
-
-			mEntities.push_back(new Cat(textures.GetTexture(10), gridvector(xPos, yPos), 1, &soundhandler));
+			playernum++;
+			//mEntities.push_back(new Cat(textures.GetTexture(10), gridvector(xPos, yPos), 1, &soundhandler));
+			if (playernum == 2){
+				mEntities.push_back(new Cat(textures.GetTexture(10), gridvector(xPos, yPos), 1, &soundhandler, 2));
+			}
+			if (playernum == 1){
+				mEntities.push_back(new Cat(textures.GetTexture(10), gridvector(xPos, yPos), 1, &soundhandler,1));
+				
+			}
+			
+			
 
 		}
 		if (objectID == 2){
@@ -261,7 +318,8 @@ void Level::generateLevel(string name){
 	}
 	
 
-	
+	mPlayers = playernum;
+	generateView();
 	mLoaded = true;
 
 }

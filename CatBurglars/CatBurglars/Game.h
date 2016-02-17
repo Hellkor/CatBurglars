@@ -25,8 +25,7 @@ private:
 	void Update(float dt);
 	void Render();
 	GameObject *mGameObjectives;
-	Cat *mCat;
-	Controller mController;
+	
 	
 
 	EntityVector mEntities;

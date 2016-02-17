@@ -20,7 +20,7 @@ public:
 	virtual gridvector getCoords();
 	//virtual bool isSolid(); //kanske ska va solid, kanske inte, hör med design 
 	virtual bool isInteracting();
-	bool isOn;
+	
 
 	bool getIntersection(GameObject *obj);
 
@@ -31,7 +31,8 @@ private:
 	sf::ConvexShape mConvex;
 	std::vector<gridvector*> mVision;
 	int mChannel;
-	bool mOn;
+	
+	bool isOn;
 	//bool mSolid; //samma som med isSolid();
 	sf::Vector2i mPosition;
 	sf::Vector2i mDirection;

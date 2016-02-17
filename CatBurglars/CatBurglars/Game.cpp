@@ -23,16 +23,14 @@ float interpolacion;
 sf::Int32 proximo_tick = miReloj.getElapsedTime().asMilliseconds();
 ////////////////////////////////////////////////////////////
 
-sf::View view1(sf::FloatRect(0, 0, 1024, 720));
+//sf::View view1(sf::FloatRect(0, 0, 1024, 720));
 
 sf::Sound mSound;
 
 enum GameState_  { Menu, RunGame, Pause };
 GameState_ GameState = RunGame;
 
-Game::Game() :
-mCat(),
-mController(){
+Game::Game() {
 	//Creates the main window
 	window = new sf::RenderWindow(sf::VideoMode(1024, 720), "CatBurglars");
 
@@ -62,8 +60,8 @@ mController(){
 	
 
 
-	view1.setCenter(sf::Vector2f(512, 360));
-	view1.setViewport(sf::FloatRect(0, 0, 1, 1));
+	//view1.setCenter(sf::Vector2f(512, 360));
+	//view1.setViewport(sf::FloatRect(0, 0, 1, 1));
 
 }
 
@@ -117,16 +115,16 @@ void Game::Update(float dt){
 			LevelManager::update(dt);
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
-				view1.move(0, 2);
+				//view1.move(0, 2);
 			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)){
-				view1.move(0, -2);
+				//view1.move(0, -2);
 			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)){
-				view1.move(-2, 0);
+				//view1.move(-2, 0);
 			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)){
-				view1.move(2, 0);
+				//view1.move(2, 0);
 			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::N)){
 				LevelManager::nextLevel();
@@ -152,7 +150,7 @@ void Game::Update(float dt){
 
 void Game::Render()
 {
-	window->setView(view1);
+	//window->setView(view1);
 
 	window->clear();
 	switch (GameState){

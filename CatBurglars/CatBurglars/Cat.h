@@ -11,7 +11,7 @@ class Cat : public GameObject
 	typedef vector<Tile*> TileRow;
 	typedef vector<TileRow> TileLayer;
 public:
-	Cat(sf::Texture *texture, gridvector v, int ID, SoundHandler *soundhandler);
+	Cat(sf::Texture *texture, gridvector v, int ID, SoundHandler *soundhandler,int player);
 	~Cat();
 	virtual void Render(sf::RenderWindow *mainWindow);
 	virtual void Update(float dt);
@@ -42,6 +42,9 @@ public:
 
 	bool snowHax();
 
+	int getPlayerIndex();
+	
+
 private:
 	float mSpeed;
 	sf::Sprite mSprite;
@@ -49,6 +52,8 @@ private:
 	sf::Vector2i mPosition;
 	gridvector mCoord;
 	
+	int mPlayerIndex;
+
 	sf::Sound mSound;
 	SoundHandler* mSoundHandler;
 
