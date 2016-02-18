@@ -111,6 +111,21 @@ void Cat::Update(float dt){
 			mAnimationhandler.reset(direction);
 		}
 	}
+	else
+	{
+		if (direction == 4) {
+			mAnimationhandler.setFrame(1, 4);
+		}
+		if (direction == 3) {
+			mAnimationhandler.setFrame(0, 0);
+		}
+		if (direction == 2) {
+			mAnimationhandler.setFrame(3, 0);
+		}
+		if (direction == 1) {
+			mAnimationhandler.setFrame(2, 0);
+		}
+	}
 }
 
 void Cat::moveForward(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
