@@ -23,6 +23,9 @@ public:
 
 private:
 	bool mLoaded;
+	void renderLight(sf::RenderWindow *window);
+
+	void renderPlayerFOV(sf::RenderWindow *window, int player);
 
 	void generateLevel(string filename);
 	string mFile;
@@ -39,6 +42,7 @@ private:
 
 	sf::View mPlayer1View;
 	sf::View mPlayer2View;
+	sf::View guiView;
 	
 	Controller p1Controller;
 	Controller p2Controller;

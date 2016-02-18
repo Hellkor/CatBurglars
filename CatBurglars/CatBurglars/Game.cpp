@@ -23,7 +23,6 @@ float interpolacion;
 sf::Int32 proximo_tick = miReloj.getElapsedTime().asMilliseconds();
 ////////////////////////////////////////////////////////////
 
-//sf::View view1(sf::FloatRect(0, 0, 1024, 720));
 
 sf::Sound mSound;
 
@@ -59,9 +58,6 @@ Game::Game() {
 	LevelManager::loadLevel(0);
 	
 
-
-	//view1.setCenter(sf::Vector2f(512, 360));
-	//view1.setViewport(sf::FloatRect(0, 0, 1, 1));
 
 }
 

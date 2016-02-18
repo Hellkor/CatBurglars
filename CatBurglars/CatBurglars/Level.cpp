@@ -16,20 +16,28 @@
 using namespace std;
 #include "Controller.h"
 
-static TextureHandler textures;
-static SoundHandler soundhandler;
+static TextureHandler	textures;
+static SoundHandler		soundhandler;
 
-float LOAD_PROGRESS = 0;
+// SPLIT SCREEN BORDER
+sf::Texture				DIVIDER_TEXTURE;
+sf::Sprite				DIVIDER_SPRITE;
+// LOAD PROGRESS
+float					LOAD_PROGRESS			=	0;
+// FOV LIGHT VARIABLES
+sf::Texture				FOV_lightTexture;
+sf::Sprite				FOV_light;
+sf::RenderTexture		FOV_lightMapTexture;
+sf::Sprite				FOV_lightmap;
+
+// LIGHT ENGINE VARIABLES
+sf::Texture				lightTexture;
+sf::Sprite				light;
+sf::RenderTexture		lightMapTexture;
+sf::Sprite				lightmap;
 
 
-sf::Texture lightTexture;
-sf::Sprite light;
-
-sf::RenderTexture lightMapTexture;
-sf::Sprite lightmap;
-
-
-
+// LIGHT STRUCTURE FOR BOTH LIGHT AND FOV LIGHT
 struct Light
 {
 	sf::Vector2f position;
@@ -42,35 +50,67 @@ struct Light
 	{
 	}
 };
-Light *l1 = new Light(sf::Vector2f(0, 0), sf::Vector2f(0.8f, 0.8f), sf::Color(255, 180, 130, 255));
+
+// FOV LIGHTS
+Light				*l1		= new Light(sf::Vector2f(0, 0), sf::Vector2f(1.2f, 1.2f), sf::Color(255, 180, 130, 255));
+Light				*l2		= new Light(sf::Vector2f(0, 0), sf::Vector2f(1.2f, 1.2f), sf::Color(255, 180, 130, 255));
 
 std::vector<Light*> lights; // Contains all the lights
+
+
+
 // Skapar en level från en textfil
 Level::Level(string filename) :
 	mFile(filename),
 	mLoaded(false),
-	p1Controller( Controller(KeyboardOne)),
-	p2Controller( Controller(KeyboardTwo)){
+	p1Controller(Controller(KeyboardOne)),
+	p2Controller(Controller(KeyboardTwo)){
+
+
+	// Initialize GUI View
+	guiView.setSize(1024, 720);
+	guiView.setViewport(sf::FloatRect(0, 0, 1, 1));
 
 	//Initialize textures
 	textures.Initialize();
 	soundhandler.Initialize();
 
+	
 
+
+	// FOV LIGHT ------------------------------------------------------------------------------------------------------------------------------------
+	FOV_lightMapTexture.create(5000, 5000); // Make a lightmap that can cover our screen
+	FOV_lightmap.setTexture(FOV_lightMapTexture.getTexture()); // Make our lightmap sprite use the correct texture
+
+
+	FOV_lightTexture.loadFromFile("Resources/fovlight.png"); // Load in our light 
+	FOV_lightTexture.setSmooth(true); // (Optional) It just smoothes the light out a bit
+
+	FOV_light.setTexture(FOV_lightTexture); // Make our lightsprite use our loaded image
+	FOV_light.setTextureRect(sf::IntRect(0, 0, 1024, 1024)); // Set where on the image we will take the sprite (X position, Y position, Width, Height)
+	FOV_light.setOrigin(512.f, 512.f); // This will offset where we draw our ligts so the center of the light is right over where we want our light to be
+
+	//--------------------------------------------------------------------------------------------------------------------------------------------
 	// LIGHT ------------------------------------------------------------------------------------------------------------------------------------
 	lightMapTexture.create(5000, 5000); // Make a lightmap that can cover our screen
 	lightmap.setTexture(lightMapTexture.getTexture()); // Make our lightmap sprite use the correct texture
-	
 
-	lightTexture.loadFromFile("Resources/biglight.png"); // Load in our light 
+
+	lightTexture.loadFromFile("Resources/light.png"); // Load in our light 
 	lightTexture.setSmooth(true); // (Optional) It just smoothes the light out a bit
 
 	light.setTexture(lightTexture); // Make our lightsprite use our loaded image
-	light.setTextureRect(sf::IntRect(0, 0, 300, 300)); // Set where on the image we will take the sprite (X position, Y position, Width, Height)
-	light.setOrigin(150.f, 150.f); // This will offset where we draw our ligts so the center of the light is right over where we want our light to be
+	light.setTextureRect(sf::IntRect(0, 0, 1024, 1024)); // Set where on the image we will take the sprite (X position, Y position, Width, Height)
+	light.setOrigin(512.f, 512.f); // This will offset where we draw our ligts so the center of the light is right over where we want our light to be
 
-	lights.push_back(l1);
+	lights.push_back(new Light(sf::Vector2f(200, 200), sf::Vector2f(0.6f, 0.6f), sf::Color(255, 180, 130, 255)));
 	//--------------------------------------------------------------------------------------------------------------------------------------------
+
+
+	// DIVIDER
+	DIVIDER_TEXTURE.loadFromFile("Resources/split_divider.png");
+	DIVIDER_SPRITE.setTexture(DIVIDER_TEXTURE);
+	DIVIDER_SPRITE.setOrigin(DIVIDER_TEXTURE.getSize().x / 2, DIVIDER_TEXTURE.getSize().y / 2);
 }
 
 // Renderar level
@@ -92,8 +132,12 @@ void Level::render(sf::RenderWindow *window){
 		e->Render(window);
 	}
 	
+	renderLight(window);
+	renderPlayerFOV(window, 1);
+	
+	
 	if (mPlayers == 2){
-		window->setView(mPlayer2View);
+		window->setView(mPlayer2View); 
 		for (TileLayer::size_type y = 0; y < mBottomTileLayer.size(); y++)
 		{
 			for (TileRow::size_type x = 0; x < mBottomTileLayer[y].size(); x++)
@@ -105,31 +149,21 @@ void Level::render(sf::RenderWindow *window){
 		for each (Entity *e in mEntities){
 			e->Render(window);
 		}
+		
+		renderLight(window);
+		renderPlayerFOV(window, 2);
+
+		
+		
 	}
 
-	// ------------------------------------------------- Render Light ---------------------------------------------------------------------------------------
-	// -----------------------------------------------------------------------------------------------------------------------------------------------------
-
-	// Clear the buffer where we draw the lights, this color could be changed depending on the time of day in the game to show a night/daytime cycle
-	lightMapTexture.clear(sf::Color(50, 50, 70 , 255));
-
-	// Loop over the lights in the vector
-	for (std::size_t i = 0; i < lights.size(); ++i)
-	{
-		// Set the attributes of the light sprite to those of the current light
-		light.setScale(lights[i]->scale);
-		light.setColor(lights[i]->color);
-		light.setPosition(lights[i]->position);
-
-		//Draw it to the lightmap
-		lightMapTexture.draw(light, sf::BlendAdd); // This blendmode is used so the black in our lightimage won't be drawn to the lightmap
+	// Draw gui objects
+	window->setView(guiView);
+	if (mPlayers == 2) {
+		DIVIDER_SPRITE.setPosition(guiView.getCenter());
+		window->draw(DIVIDER_SPRITE);
 	}
-	lightMapTexture.display(); // Need to make sure the rendertexture is displayed
-	lightmap.setTextureRect(sf::IntRect(0, 0, 5000 , 5000)); // What from the lightmap we will draw
-	lightmap.setPosition(0, 0); // Where on the backbuffer we will draw
-	window->draw(lightmap, sf::BlendMultiply); // This blendmode is used to add the darkness from the 	
-    // ------------------------------------------------- ----------- ---------------------------------------------------------------------------------------
-	// -----------------------------------------------------------------------------------------------------------------------------------------------------
+	
 }
 
 void Level::addPlayer(Cat *cat , int player){
@@ -170,6 +204,8 @@ void Level::update(float dt){
 					mPlayer1View.setCenter((sf::Vector2f)cat->GetPosition());
 				}
 				if (cat->getPlayerIndex() == 2){
+					l2->position.x = cat->GetPosition().x + 32;
+					l2->position.y = cat->GetPosition().y + 32;
 					p2Controller.move(cat, &mTopTileLayer, &mEntities);
 					mPlayer2View.setCenter((sf::Vector2f)cat->GetPosition());
 				}
@@ -197,6 +233,57 @@ void Level::update(float dt){
 		load();
 	}
 
+}
+void Level::renderLight(sf::RenderWindow *window) {
+	// ------------------------------------------------- Render Light ---------------------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------------------------------------------------------------------------
+
+	// Clear the buffer where we draw the lights, this color could be changed depending on the time of day in the game to show a night/daytime cycle
+	lightMapTexture.clear(sf::Color(150, 150, 150, 0));
+
+	// Loop over the lights in the vector
+	for (std::size_t i = 0; i < lights.size(); ++i)
+	{
+		// Set the attributes of the light sprite to those of the current light
+		light.setScale(lights[i]->scale);
+		light.setColor(lights[i]->color);
+		light.setPosition(lights[i]->position);
+
+		//Draw it to the lightmap
+		lightMapTexture.draw(light, sf::BlendAdd); // This blendmode is used so the black in our lightimage won't be drawn to the lightmap
+	}
+	lightMapTexture.display(); // Need to make sure the rendertexture is displayed
+	lightmap.setTextureRect(sf::IntRect(0, 0, 5000, 5000)); // What from the lightmap we will draw
+	lightmap.setPosition(0, 0); // Where on the backbuffer we will draw
+	window->draw(lightmap, sf::BlendMultiply); // This blendmode is used to add the darkness from the 	
+	// ------------------------------------------------- ----------- ---------------------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------------------------------------------------------------------------
+}
+
+void Level::renderPlayerFOV(sf::RenderWindow *window, int player) {
+	// Clear the buffer where we draw the lights, this color could be changed depending on the time of day in the game to show a night/daytime cycle
+	FOV_lightMapTexture.clear(sf::Color(0, 0, 0, 0));
+
+	
+	// Set the attributes of the light sprite to those of the current light
+	if (player == 1) {
+		FOV_light.setScale(l1->scale);
+		FOV_light.setColor(l1->color);
+		FOV_light.setPosition(l1->position);
+	}
+	if (player == 2) {
+		FOV_light.setScale(l2->scale);
+		FOV_light.setColor(l2->color);
+		FOV_light.setPosition(l2->position);
+	}
+
+	//Draw it to the lightmap
+	FOV_lightMapTexture.draw(FOV_light, sf::BlendAdd); // This blendmode is used so the black in our lightimage won't be drawn to the lightmap
+	
+	FOV_lightMapTexture.display(); // Need to make sure the rendertexture is displayed
+	FOV_lightmap.setTextureRect(sf::IntRect(0, 0, 5000, 5000)); // What from the lightmap we will draw
+	FOV_lightmap.setPosition(0, 0); // Where on the backbuffer we will draw
+	window->draw(FOV_lightmap, sf::BlendMultiply); // This blendmode is used to add the darkness from the 	
 }
 
 void Level::load(){
@@ -241,9 +328,9 @@ void Level::generateView(){
 		mPlayer1View.setViewport(sf::FloatRect(0, 0, 1, 1));
 	}
 	else if (mPlayers == 2){
-		mPlayer1View.setSize(256, 360);
+		mPlayer1View.setSize(512, 720);
 		mPlayer1View.setViewport(sf::FloatRect(0, 0, 0.5f, 1));
-		mPlayer2View.setSize(256, 360);
+		mPlayer2View.setSize(512, 720);
 		mPlayer2View.setViewport(sf::FloatRect(0.5, 0, 0.5f, 1));
 	}
 	
