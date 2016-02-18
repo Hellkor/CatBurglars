@@ -11,7 +11,7 @@ public:
 	Grid();
 	bool isTilePassable(gridvector originalpos,gridvector position, TileLayer *Tiles,std::vector<Entity*> *Entities);
 	bool canCrateMove(gridvector position, TileLayer *Tiles, std::vector<Entity*> *Entities);
-
+	bool canCatDash(gridvector originalpos, gridvector position, TileLayer *Tiles, std::vector<Entity*> *Entities);
 private:
 
 };

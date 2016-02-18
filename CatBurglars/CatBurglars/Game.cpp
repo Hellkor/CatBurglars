@@ -48,8 +48,8 @@ Game::Game() {
 	LevelManager::addLevel(level3);
 	LevelManager::addLevel(level4);
 
-	window->setVerticalSyncEnabled(true);
-
+	//window->setVerticalSyncEnabled(true);
+	window->setFramerateLimit(60);
 
 	LevelManager::load();
 	LevelManager::addCollectible();

@@ -107,3 +107,8 @@ void AnimationHandler::playAnimation(int y, int frames, sf::Time time){
 		mClock.restart();
 	}
 }
+
+void AnimationHandler::setFrame(int y, int x)
+{
+	mSprite->setTextureRect(sf::IntRect(x * mSpriteSizeX, y * mSpriteSizeY, mSpriteSizeX, mSpriteSizeY));
+}

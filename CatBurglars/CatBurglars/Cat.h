@@ -38,7 +38,7 @@ public:
 	
 	bool canPushCrate = true;
 
-	void shadowDash(TileLayer *tileLayer, std::vector<Entity*> *Entities);
+	void shadowDash(TileLayer *tileLayer, std::vector<Entity*> *Entities, int direc);
 
 	bool snowHax();
 
