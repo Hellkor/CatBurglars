@@ -12,6 +12,7 @@
 #include "EventPad.h"
 #include "MultiDoor.h"
 #include "Computer.h"
+#include "Collectible.h"
 #include <SFML\Graphics\BlendMode.hpp>;
 using namespace std;
 #include "Controller.h"
@@ -176,7 +177,12 @@ void Level::update(float dt){
 				
 
 				for each (Entity *entity in mEntities){
+					//Pick up Collectible
+					if (Collectible *collectible = dynamic_cast<Collectible*>(entity)) {
+						if (collectible->getInteraction(cat)) {
 
+						}
+					}
 					if (secuCam *cam = dynamic_cast<secuCam*>(entity)){
 						if (cam->getIntersection(cat)&& !(cat->getDashing())){
 							
@@ -229,6 +235,7 @@ void Level::load(){
 	mEntities.push_back(new Button(4, textures.GetTexture(12), gridvector(5, 2), false, 10));
 	mEntities.push_back(new Button(5, textures.GetTexture(12), gridvector(6, 2), false, 10));
 	mEntities.push_back(new Computer(10, textures.GetTexture(13), gridvector(1, 1), false, 5));
+	mEntities.push_back(new Collectible(textures.GetTexture(12), gridvector(1, 1), false));
 	generateLevel(mFile);
 
 	
