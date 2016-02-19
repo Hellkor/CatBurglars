@@ -6,6 +6,7 @@
 #include "Cat.h"
 #include "TextureHandler.h"
 #include "Controller.h"
+
 #include "SFML\Window.hpp"
 using namespace std;
 

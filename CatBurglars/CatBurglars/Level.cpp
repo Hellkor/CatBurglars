@@ -1,4 +1,4 @@
-#include <vector>
+
 #include "Level.h"
 #include <fstream>
 #include <iostream>
@@ -13,9 +13,11 @@
 #include "MultiDoor.h"
 #include "Computer.h"
 #include "Collectible.h"
-#include <SFML\Graphics\BlendMode.hpp>;
-using namespace std;
+#include <SFML\Graphics\BlendMode.hpp>
 #include "Controller.h"
+using namespace std;
+
+
 
 static TextureHandler	textures;
 static SoundHandler		soundhandler;
