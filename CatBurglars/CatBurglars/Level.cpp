@@ -1,4 +1,4 @@
-#include <vector>
+
 #include "Level.h"
 #include <fstream>
 #include <iostream>
@@ -13,9 +13,11 @@
 #include "MultiDoor.h"
 #include "Computer.h"
 #include "Collectible.h"
-#include <SFML\Graphics\BlendMode.hpp>;
-using namespace std;
+#include <SFML\Graphics\BlendMode.hpp>
 #include "Controller.h"
+using namespace std;
+
+
 
 static TextureHandler	textures;
 static SoundHandler		soundhandler;
@@ -24,7 +26,7 @@ static SoundHandler		soundhandler;
 sf::Texture				DIVIDER_TEXTURE;
 sf::Sprite				DIVIDER_SPRITE;
 // LOAD PROGRESS
-float					LOAD_PROGRESS			=	0;
+float					LOAD_PROGRESS = 0;
 // FOV LIGHT VARIABLES
 sf::Texture				FOV_lightTexture;
 sf::Sprite				FOV_light;
@@ -53,19 +55,19 @@ struct Light
 };
 
 // FOV LIGHTS
-Light				*l1		= new Light(sf::Vector2f(0, 0), sf::Vector2f(1.2f, 1.2f), sf::Color(255, 180, 130, 255));
-Light				*l2		= new Light(sf::Vector2f(0, 0), sf::Vector2f(1.2f, 1.2f), sf::Color(255, 180, 130, 255));
+Light				*l1 = new Light(sf::Vector2f(0, 0), sf::Vector2f(1.2f, 1.2f), sf::Color(255, 180, 130, 255));
+Light				*l2 = new Light(sf::Vector2f(0, 0), sf::Vector2f(1.2f, 1.2f), sf::Color(255, 180, 130, 255));
 
 std::vector<Light*> lights; // Contains all the lights
 
 
 
-// Skapar en level från en textfil
+							// Skapar en level från en textfil
 Level::Level(string filename) :
 	mFile(filename),
 	mLoaded(false),
 	p1Controller(Controller(KeyboardOne)),
-	p2Controller(Controller(KeyboardTwo)){
+	p2Controller(Controller(KeyboardTwo)) {
 
 
 	// Initialize GUI View
@@ -76,7 +78,6 @@ Level::Level(string filename) :
 	textures.Initialize();
 	soundhandler.Initialize();
 
-	
 
 
 	// FOV LIGHT ------------------------------------------------------------------------------------------------------------------------------------
@@ -116,7 +117,15 @@ Level::Level(string filename) :
 
 // Renderar level
 void Level::render(sf::RenderWindow *window){
+
+
+
 	
+
+	window->setView(mView);
+
+	
+
 	window->clear();
 	window->setView(mPlayer1View);
 	
@@ -233,8 +242,6 @@ void Level::update(float dt){
 
 		}
 	}
-
-
 	if (test){
 		load();
 	}

@@ -103,18 +103,22 @@ isOn(true){
 	
 	mConvex.setTexture(textures.GetTexture(99));
 }
+
 secuCam::~secuCam(){
 	mVision.clear();
 }
 
 void secuCam::Update(float dt){
+
 	if (Channels::isChannelActive(mChannel)){ isOn = false; }
 	else isOn = true;
+
 }
 
 void secuCam::connectToChannel(int channel){
 	mChannel = channel;
 }
+
 bool secuCam::getIntersection(GameObject *obj){
 	if (isOn){
 		for each (gridvector *v in mVision){
@@ -170,4 +174,13 @@ bool secuCam::isInteracting(){
 bool secuCam::isSolid(){
 	return true;
 }
+
+
+
+/*
+bool secuCam::isOn(){
+if (mChannel.isActive){
+mOn != isOn
+}
+*/ //växlar mellan av/på
 

@@ -26,7 +26,7 @@ sf::Int32 proximo_tick = miReloj.getElapsedTime().asMilliseconds();
 
 sf::Sound mSound;
 
-enum GameState_  { Menu, RunGame, Pause };
+enum GameState_ { Menu, RunGame, Pause };
 GameState_ GameState = RunGame;
 
 Game::Game() {
@@ -40,7 +40,7 @@ Game::Game() {
 	Level *level3 = new Level("level2");
 	Level *level4 = new Level("level2");
 
-	
+
 
 
 	LevelManager::addLevel(testLevel);
@@ -56,7 +56,7 @@ Game::Game() {
 	LevelManager::save();
 
 	LevelManager::loadLevel(0);
-	
+
 
 
 }
@@ -66,8 +66,8 @@ Game::~Game()
 
 }
 
-void Game::Run(){
-	
+void Game::Run() {
+
 	while (window->isOpen())
 	{
 		sf::Event event;
@@ -83,61 +83,61 @@ void Game::Run(){
 		while (miReloj.getElapsedTime().asMilliseconds() > proximo_tick && loops < MAX_SALTEO_FRAMES) {
 
 			Update(interpolacion);
-			
-			
+
+
 			proximo_tick += SALTEO_TICKS;
 			++loops;
 
 		}
 
-		
+
 		interpolacion = static_cast <float> (miReloj.getElapsedTime().asMilliseconds() + SALTEO_TICKS - proximo_tick) / static_cast <float> (SALTEO_TICKS);
 
-		
+
 
 		Render();
 	}
 }
 
-void Game::Update(float dt){
-	
-
-	switch (GameState){
-		case Menu:
-			break;
+void Game::Update(float dt) {
 
 
-		case RunGame:
-			LevelManager::update(dt);
-
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
-				//view1.move(0, 2);
-			}
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)){
-				//view1.move(0, -2);
-			}
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)){
-				//view1.move(-2, 0);
-			}
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)){
-				//view1.move(2, 0);
-			}
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::N)){
-				LevelManager::nextLevel();
-			}
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::M)){
-				LevelManager::loadLevel(0);
-			}
-			break;
+	switch (GameState) {
+	case Menu:
+		break;
 
 
-		case Pause:
-			break;
+	case RunGame:
+		LevelManager::update(dt);
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+			//view1.move(0, 2);
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
+			//view1.move(0, -2);
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+			//view1.move(-2, 0);
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+			//view1.move(2, 0);
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::N)) {
+			LevelManager::nextLevel();
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::M)) {
+			LevelManager::loadLevel(0);
+		}
+		break;
+
+
+	case Pause:
+		break;
 
 
 
 	}
-	
+
 
 
 
@@ -149,7 +149,7 @@ void Game::Render()
 	//window->setView(view1);
 
 	window->clear();
-	switch (GameState){
+	switch (GameState) {
 	case Menu:
 		break;
 		// Main Game Case
@@ -161,9 +161,9 @@ void Game::Render()
 
 
 	}
-	
 
-	
+
+
 
 	window->display();
 }

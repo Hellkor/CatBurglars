@@ -46,6 +46,7 @@ public:
 	
 
 private:
+
 	float mSpeed;
 	sf::Sprite mSprite;
 	int mID;

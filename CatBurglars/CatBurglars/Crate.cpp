@@ -6,7 +6,7 @@ Crate::Crate(sf::Texture *texture, gridvector position, int ID): GameObject(),
 mID(ID),
 mCoord(position){
 	mSprite.setTexture(*texture, true);
-
+	
 	mPosition = sf::Vector2i(mCoord.x * 64, mCoord.y * 64);
 }
 

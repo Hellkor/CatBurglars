@@ -1,4 +1,3 @@
-
 #pragma once
 
 #include "Recievers.h"
@@ -18,9 +17,12 @@ public:
 	virtual sf::Vector2i GetPosition();
 	virtual sf::Vector2i getDirection();
 	virtual gridvector getCoords();
-	//virtual bool isSolid(); //kanske ska va solid, kanske inte, hör med design 
 	virtual bool isInteracting();
+
+
+
 	
+
 
 	bool getIntersection(GameObject *obj);
 
