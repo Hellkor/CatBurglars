@@ -35,18 +35,9 @@ Game::Game() {
 
 	//Test for loading in maps
 
-	Level *testLevel = new Level("intro");
-	Level *level2 = new Level("level2");
-	Level *level3 = new Level("level2");
-	Level *level4 = new Level("level2");
-
-	
-
+	Level *testLevel = new Level("11");
 
 	LevelManager::addLevel(testLevel);
-	LevelManager::addLevel(level2);
-	LevelManager::addLevel(level3);
-	LevelManager::addLevel(level4);
 
 	//window->setVerticalSyncEnabled(true);
 	window->setFramerateLimit(60);

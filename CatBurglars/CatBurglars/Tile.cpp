@@ -48,6 +48,8 @@ void Tile::IDChangeInfo(int ID, bool allowed)
 	selectedID = ID;
 	changeAllowed = !allowed;
 }
-
+Layer Tile::getLayer() {
+	return FRONT;
+}
 
 int Tile::GetID(){ return mID; }

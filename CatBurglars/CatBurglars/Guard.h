@@ -27,7 +27,7 @@ public:
 	bool isMoving();
 
 	int getDirection();
-
+	virtual Layer getLayer();
 
 
 	virtual bool isSolid();

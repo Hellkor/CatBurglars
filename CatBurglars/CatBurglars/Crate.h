@@ -20,7 +20,7 @@ public:
 	void moveRight(TileLayer *tileLayer, std::vector<Entity*> *Entities);
 	virtual bool isInteracting();
 	bool getInteraction(Cat *c);
-
+	virtual Layer getLayer();
 
 private:
 	sf::Sprite mSprite;

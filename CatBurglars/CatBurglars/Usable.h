@@ -14,7 +14,7 @@ public:
 	virtual bool isInteracting() = 0;
 	virtual bool getInteraction(GameObject *c) = 0;
 	virtual int getChannelID() = 0;
-
+	virtual Layer getLayer() = 0;
 	virtual bool isSolid() = 0;
 };
 

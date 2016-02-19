@@ -63,3 +63,6 @@ bool Button::isInteracting(){
 gridvector Button::getCoords(){
 	return mCoords;
 }
+Layer Button::getLayer() {
+	return BACK;
+}

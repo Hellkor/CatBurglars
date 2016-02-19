@@ -52,3 +52,6 @@ gridvector EventPad::getCoords(){
 sf::Vector2i EventPad::GetPosition(){
 	return mPosition;
 }
+Layer EventPad::getLayer() {
+	return FRONT;
+}

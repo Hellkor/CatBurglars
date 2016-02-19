@@ -18,6 +18,7 @@ public:
 	virtual bool isSolid();
 
 	bool getInteraction(Cat *cat);
+	virtual Layer getlayer();
 
 private:
 	sf::Sprite mSprite;

@@ -11,6 +11,7 @@ public:
 	virtual gridvector getCoords();
 	virtual bool isSolid();
 	virtual bool isInteracting();
+	virtual Layer getLayer();
 private:
 	int mChannel;
 	bool mSolid;

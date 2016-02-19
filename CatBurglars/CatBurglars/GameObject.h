@@ -21,6 +21,8 @@ public:
 
 	virtual bool isSolid() = 0;
 
+	virtual Layer getLayer() = 0;
+
 private:
 
 };

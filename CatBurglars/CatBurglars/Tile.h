@@ -18,6 +18,7 @@ public:
 	static void IDChangeInfo(int ID, bool allowed);
 	int GetID();
 	gridvector getCoords();
+	virtual Layer getLayer();
 	
 private:
 	int mID = 0;

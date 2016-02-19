@@ -10,7 +10,7 @@ mSolid(true){
 	mPosition.y = mCoords.y * 64;
 
 	mSprite.setTexture(*texture);
-	mSprite.setPosition((sf::Vector2f)mPosition);
+	mSprite.setPosition(sf::Vector2f(mPosition.x, mPosition.y - 64));
 
 	for (int i = 0; i < numberofchannels; i++){
 		mChannels.push_back(mChannel + i);
@@ -61,4 +61,8 @@ void MultiDoor::Render(sf::RenderWindow *window){
 }
 bool MultiDoor::isInteracting(){
 	return false;
+}
+
+Layer MultiDoor::getLayer() {
+	return FRONT;
 }

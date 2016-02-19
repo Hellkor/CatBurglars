@@ -12,7 +12,8 @@ mSpeed(),
 mAbilityTime(sf::seconds(5)),
 mSoundHandler(soundhandler),
 mAnimationhandler(64, 64, &mSprite),
-mPlayerIndex(player){
+mPlayerIndex(player),
+canPushCrate(true){
 
 	if (mID == 1){
 		mSpeed = 2;
@@ -365,4 +366,7 @@ bool Cat::snowHax(){
 	}
 	else
 		return false;
+}
+Layer Cat::getLayer() {
+	return BACK;
 }

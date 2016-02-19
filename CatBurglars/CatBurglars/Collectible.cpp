@@ -30,7 +30,9 @@ bool Collectible::isInteracting(){
 	return false;
 }
 
-
+Layer Collectible::getlayer() {
+	return BACK;
+}
 bool Collectible::isSolid(){
 	return false;
 }
@@ -51,3 +53,5 @@ bool Collectible::getInteraction(Cat *cat) {
 	else
 		return false;
 }
+
+

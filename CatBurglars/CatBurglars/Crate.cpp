@@ -18,7 +18,9 @@ void Crate::Render(sf::RenderWindow *mainWindow){
 	mSprite.setPosition((sf::Vector2f)mPosition);
 	mainWindow->draw(mSprite);
 }
-
+Layer Crate::getLayer() {
+	return FRONT;
+}
 void Crate::Update(float dt){
 	if (mMoving){
 		if (direction == 4 && mPosition.y != newPos.y) {
