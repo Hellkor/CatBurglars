@@ -54,7 +54,6 @@ private:
 	
 	int mPlayerIndex;
 
-	sf::Sound mSound;
 	SoundHandler* mSoundHandler;
 
 	sf::Vector2i newPos;

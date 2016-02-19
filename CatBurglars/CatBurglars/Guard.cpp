@@ -4,12 +4,13 @@
 
 string DIRECTORY = "Resources/AI/";
 
-Guard::Guard(sf::Texture *texture, gridvector position, int ID,string AIscript) : GameObject(),
+Guard::Guard(sf::Texture *texture, gridvector position, int ID,string AIscript, SoundHandler *soundhandler) : GameObject(),
 mID(ID),
 mCoords(position),
 mSpeed(1),
 mAIfile(AIscript),
-mAnimationhandler(64, 128, &mSprite){
+mAnimationhandler(64, 128, &mSprite),
+mSoundHandler(soundhandler){
 	mSprite.setTexture(*texture, true);
 	mSprite.setTextureRect(sf::IntRect(1*64, 3*128, 64, 128));
 	//Starting position
@@ -85,19 +86,23 @@ void Guard::Update(float dt){
 	if (mMoving){
 		if (direction == 4 && mPosition.y != newPos.y) {
 			mPosition.y -= (1 * mSpeed);
-			mAnimationhandler.animation(3, 5, sf::milliseconds(100));
+			mAnimationhandler.animation(3, 5, sf::milliseconds(150));
+			mSoundHandler->PlaySound(1);
 		}
 		else if (direction == 3 && mPosition.y != newPos.y) {
 			mPosition.y += (1 * mSpeed);
-			mAnimationhandler.animation(2, 5, sf::milliseconds(100));
+			mAnimationhandler.animation(2, 5, sf::milliseconds(150));
+			mSoundHandler->PlaySound(1);
 		}
 		else if (direction == 2 && mPosition.x != newPos.x) {
 			mPosition.x -= (1 * mSpeed);
-			mAnimationhandler.animation(1, 5, sf::milliseconds(100));
+			mAnimationhandler.animation(1, 5, sf::milliseconds(200));
+			mSoundHandler->PlaySound(1);
 		}
 		else if (direction == 1 && mPosition.x != newPos.x) {
 			mPosition.x += (1 * mSpeed);
-			mAnimationhandler.animation(0, 5, sf::milliseconds(100));
+			mAnimationhandler.animation(0, 5, sf::milliseconds(200));
+			mSoundHandler->PlaySound(1);
 		}
 		else {
 			mMoving = false;
@@ -134,7 +139,6 @@ void Guard::moveForward(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 		if (mGrid.isTilePassable(mCoords, gridvector(mCoords.x, mCoords.y - 1), tileLayer, Entities)){
 			newPos.y = mPosition.y - 64;
 
-
 			mMoving = true;
 		}
 	}
@@ -144,7 +148,6 @@ void Guard::moveBackWards(TileLayer *tileLayer, std::vector<Entity*> *Entities) 
 		direction = 3;
 		if (mGrid.isTilePassable(mCoords, gridvector(mCoords.x, mCoords.y + 1), tileLayer, Entities)){
 			newPos.y = mPosition.y + 64;
-
 
 			mMoving = true;
 		}
@@ -156,7 +159,6 @@ void Guard::moveLeft(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 		if (mGrid.isTilePassable(mCoords, gridvector(mCoords.x - 1, mCoords.y), tileLayer, Entities)){
 			newPos.x = mPosition.x - 64;
 
-
 			mMoving = true;
 		}
 	}
@@ -166,7 +168,6 @@ void Guard::moveRight(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 		direction = 1;
 		if (mGrid.isTilePassable(mCoords, gridvector(mCoords.x + 1, mCoords.y), tileLayer, Entities)){
 			newPos.x = mPosition.x + 64;
-
 
 			mMoving = true;
 

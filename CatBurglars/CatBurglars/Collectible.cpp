@@ -1,8 +1,9 @@
 #include "Collectible.h"
 
-Collectible::Collectible(sf::Texture *texture, gridvector position, bool collected) : GameObject(),
+Collectible::Collectible(sf::Texture *texture, gridvector position, bool collected, SoundHandler *soundhandler) : GameObject(),
 mCoords(position),
-mCollected(collected){
+mCollected(collected),
+mSoundHandler(soundhandler){
 	mSprite.setTexture(*texture, true);
 	//Starting position
 	mPosition = sf::Vector2i(mCoords.x*64, mCoords.y*64);

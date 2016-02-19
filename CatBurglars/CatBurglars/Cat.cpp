@@ -31,6 +31,7 @@ mPlayerIndex(player){
 	mSprite.setTextureRect(sf::IntRect(1*64, 1*64, 64, 64));
 	//Starting position
 	mPosition = sf::Vector2i(mCoord.x * 64, mCoord.y * 64);
+	mSoundHandler->stopMusic();
 }
 Cat::~Cat(){
 
@@ -133,8 +134,7 @@ void Cat::moveForward(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 		direction = 4;
 		if (mGrid.isTilePassable(mCoord, gridvector(mCoord.x, mCoord.y - 1), tileLayer, Entities)){
 			newPos.y = mPosition.y - 64;
-			mSound.setBuffer(*mSoundHandler->GetSound(1));
-			mSound.play();
+			mSoundHandler->PlaySound(1);
 			mMoving = true;
 		}
 	}
@@ -271,6 +271,7 @@ void Cat::shadowDash(TileLayer *tileLayer, std::vector<Entity*> *Entities, int d
 			mDashing = true;
 			mMoving = true;
 			mAbilityClock.restart();
+			mSoundHandler->PlaySound(2);
 		}
 		else if ((mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX), mCoord.y + (positionY)), tileLayer, Entities)) && (mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX*2), mCoord.y + (positionY*2)), tileLayer, Entities)) && (mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX*3), mCoord.y + (positionY*3)), tileLayer, Entities))) {
 			std::cout << "3 Tile dash" << std::endl;

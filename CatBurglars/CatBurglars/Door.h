@@ -3,7 +3,7 @@
 #include "Channels.h"
 class Door : public Recievers{
 public:
-	Door(int channel, gridvector coords, sf::Texture *texture);
+	Door(int channel, gridvector coords, sf::Texture *texture, SoundHandler *soundhandler);
 	virtual void connectToChannel(int channelID);
 	virtual void Update(float dt);
 	virtual void Render(sf::RenderWindow *window);
@@ -17,5 +17,6 @@ private:
 	sf::Vector2i mPosition;
 	gridvector mCoords;
 	sf::Sprite mSprite;
+	SoundHandler* mSoundHandler;
 };
 //måste ha två sprites, båda innehåller cameran, den andra innehåller en genomskinlig zon som är däri man blir hittad, den andra innehåller bara cameran och är fortfarande "på"

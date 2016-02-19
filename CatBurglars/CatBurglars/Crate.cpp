@@ -2,9 +2,10 @@
 
 int INTERACTION_RADIUSS_CRATE = 64;
 
-Crate::Crate(sf::Texture *texture, gridvector position, int ID): GameObject(),
+Crate::Crate(sf::Texture *texture, gridvector position, int ID, SoundHandler *soundhandler): GameObject(),
 mID(ID),
-mCoord(position){
+mCoord(position),
+mSoundHandler(soundhandler){
 	mSprite.setTexture(*texture, true);
 
 	mPosition = sf::Vector2i(mCoord.x * 64, mCoord.y * 64);

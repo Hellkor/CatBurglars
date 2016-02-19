@@ -83,6 +83,8 @@ void AnimationHandler::reset(int direction){
 		mSprite->setTextureRect(sf::IntRect(0 * mSpriteSizeX, 0 * mSpriteSizeY, mSpriteSizeX, mSpriteSizeY));
 	if (direction == 4)
 		mSprite->setTextureRect(sf::IntRect(0 * mSpriteSizeX, 1 * mSpriteSizeY, mSpriteSizeX, mSpriteSizeY));
+
+	mX = 0;
 }
 
 void AnimationHandler::animation(int y, int frames, sf::Time time){

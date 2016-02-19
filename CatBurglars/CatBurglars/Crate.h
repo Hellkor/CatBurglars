@@ -7,7 +7,7 @@
 class Crate : public GameObject{
 public:
 
-	Crate(sf::Texture *texture, gridvector v, int ID);
+	Crate(sf::Texture *texture, gridvector v, int ID, SoundHandler *soundhandler);
 	~Crate();
 	virtual void Render(sf::RenderWindow *mainWindow);
 	virtual void Update(float dt);
@@ -41,6 +41,8 @@ private:
 	bool mMoving = false;
 
 	int direction = 0;
+
+	SoundHandler* mSoundHandler;
 };
 
 

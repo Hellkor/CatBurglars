@@ -7,7 +7,7 @@
 class Collectible : public GameObject{
 public:
 
-	Collectible(sf::Texture *texture, gridvector position, bool collected);
+	Collectible(sf::Texture *texture, gridvector position, bool collected, SoundHandler *soundhandler);
 	~Collectible();
 	virtual void Render(sf::RenderWindow *mainWindow);
 	virtual void Update(float dt);
@@ -24,6 +24,8 @@ private:
 	sf::Vector2i mPosition;
 	gridvector mCoords;
 	bool mCollected;
+
+	SoundHandler *mSoundHandler;
 };
 
 

@@ -10,7 +10,7 @@ class Guard : public GameObject
 	typedef vector<Tile*> TileRow;
 	typedef vector<TileRow> TileLayer;
 public:
-	Guard(sf::Texture *texture, gridvector v, int channel,string AIscript);
+	Guard(sf::Texture *texture, gridvector v, int channel,string AIscript, SoundHandler *soundhandler);
 	~Guard();
 
 	virtual void Render(sf::RenderWindow *mainWindow);
@@ -57,6 +57,7 @@ private:
 	void moveRight(TileLayer *tileLayer, std::vector<Entity*> *Entities);
 
 	AnimationHandler mAnimationhandler;
+	SoundHandler* mSoundHandler;
 };
 
 #endif

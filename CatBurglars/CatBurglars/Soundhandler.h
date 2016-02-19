@@ -11,11 +11,16 @@ public:
 	~SoundHandler();
 
 	void Initialize();
-	sf::SoundBuffer *GetSound(int ID);
+	void PlaySound(int ID);
 	void startMusic(int ID);
-
+	void stopMusic();
+	void setMusicVolume(int volume);
+	void setSoundVolume(int volume);
 private:
-	sf::SoundBuffer mBuffer;
+	int mMusicVolume = 100;
+	int mSoundVolume = 100;
+	sf::SoundBuffer mBuffer, mBuffer2;
+	sf::Sound mSound, mSound2;
 	sf::Music mMusic;
 };
 

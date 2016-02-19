@@ -1,8 +1,9 @@
 #include "Door.h"
 
-Door::Door(int channel, gridvector coords, sf::Texture *texture):
+Door::Door(int channel, gridvector coords, sf::Texture *texture, SoundHandler *soundhandler):
 	mChannel(channel),
-	mCoords(coords){
+	mCoords(coords),
+	mSoundHandler(soundhandler){
 
 	mPosition.x = mCoords.x * 64;
 	mPosition.y = mCoords.y * 64;

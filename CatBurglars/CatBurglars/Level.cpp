@@ -321,8 +321,8 @@ void Level::load(){
 	mEntities.push_back(new Button(3, textures.GetTexture(12), gridvector(4, 2), false, 10));
 	mEntities.push_back(new Button(4, textures.GetTexture(12), gridvector(5, 2), false, 10));
 	mEntities.push_back(new Button(5, textures.GetTexture(12), gridvector(6, 2), false, 10));
-	mEntities.push_back(new Computer(10, textures.GetTexture(13), gridvector(1, 1), false, 5));
-	mEntities.push_back(new Collectible(textures.GetTexture(12), gridvector(1, 1), false));
+	mEntities.push_back(new Computer(10, textures.GetTexture(13), gridvector(1, 1), false, 5, &soundhandler));
+	mEntities.push_back(new Collectible(textures.GetTexture(12), gridvector(1, 1), false, &soundhandler));
 	generateLevel(mFile);
 
 	
@@ -463,15 +463,15 @@ void Level::generateLevel(string name){
 
 		}
 		if (objectID == 2){
-			mEntities.push_back(new Crate(textures.GetTexture(4), gridvector(xPos, yPos), 1));
+			mEntities.push_back(new Crate(textures.GetTexture(4), gridvector(xPos, yPos), 1, &soundhandler));
 
 		}
 		if (objectID == 3){
-			mEntities.push_back(new Door(channel, gridvector(xPos, yPos), textures.GetTexture(11)));
+			mEntities.push_back(new Door(channel, gridvector(xPos, yPos), textures.GetTexture(11), &soundhandler));
 
 		}
 		if (objectID == 4){
-			mEntities.push_back(new Guard(textures.GetTexture(5), gridvector(xPos, yPos), 1, "testAI"));
+			mEntities.push_back(new Guard(textures.GetTexture(5), gridvector(xPos, yPos), 1, "testAI", &soundhandler));
 		}
 
 

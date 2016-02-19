@@ -4,12 +4,13 @@
 int COMPUTER_INTERACTION_RADIUS = 20;
 
 
-Computer::Computer(int channel, sf::Texture *texture, gridvector coords, bool toggle, float holdlength) :
+Computer::Computer(int channel, sf::Texture *texture, gridvector coords, bool toggle, float holdlength, SoundHandler *soundhandler) :
 Usable(),
 mChannelID(channel),
 mCoords(coords),
 mToggle(toggle),
-mHoldlength(holdlength){
+mHoldlength(holdlength),
+mSoundHandler(soundhandler){
 
 	mPosition.x = mCoords.x * 64;
 	mPosition.y = mCoords.y * 64;
