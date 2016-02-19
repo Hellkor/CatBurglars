@@ -4,10 +4,12 @@
 int INTERACTION_RADIUS = 20;
 
 
-Button::Button(int channel, sf::Texture *texture,gridvector coords) :
+Button::Button(int channel, sf::Texture *texture, gridvector coords, bool toggle, float holdlength) :
 	Usable(),
 	mChannelID(channel),
-	mCoords(coords){
+	mCoords(coords),
+	mToggle(toggle),
+	mHoldlength(holdlength){
 
 	mPosition.x = mCoords.x * 64;
 	mPosition.y = mCoords.y * 64;
@@ -36,7 +38,7 @@ bool Button::getInteraction(GameObject *g){
 
 		if (length(mPosition, g->GetPosition()) < INTERACTION_RADIUS && g->isInteracting()){
 					// activate channel
-					Channels::setActive(mChannelID, false, 10);
+					Channels::setActive(mChannelID, mToggle, mHoldlength);
 					// play sound
 					return true;
 		}

@@ -18,6 +18,8 @@ public:
 
 	void playAnimation(int y, int frames, sf::Time time);
 
+	void setFrame(int y, int x);
+
 private:
 	sf::Sprite *mSprite;
 	sf::Texture *mTexture;

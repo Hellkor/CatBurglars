@@ -2,12 +2,13 @@
 #define INCLUDED_LEVEL
 #include <string>
 #include <vector>
-#include "SFML\Window.hpp"
-using namespace std;
-
 #include "Tile.h"
 #include "Cat.h"
 #include "TextureHandler.h"
+#include "Controller.h"
+#include "SFML\Window.hpp"
+using namespace std;
+
 
 typedef vector<Tile*> TileRow;
 typedef vector<TileRow> TileLayer;
@@ -24,9 +25,14 @@ public:
 
 private:
 
-	sf::View followPlayer;
-
 	bool mLoaded;
+	void renderLight(sf::RenderWindow *window);
+
+	void renderPlayerFOV(sf::RenderWindow *window, int player);
+
+
+
+
 	sf::Sprite mSprite;
 	sf::View mView;
 	sf::Texture mTexture;
@@ -42,6 +48,18 @@ private:
 
 
 	std::vector<Entity*> mEntities;
+
+	sf::View mPlayer1View;
+	sf::View mPlayer2View;
+	sf::View guiView;
+	
+	Controller p1Controller;
+	Controller p2Controller;
+
+	int mPlayers;
+
+	void generateView();
+	void updateViews();
 
 };
 

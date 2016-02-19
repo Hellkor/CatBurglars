@@ -1,13 +1,13 @@
-#ifndef INCLUDED_BUTTON
-#define INCLUDED_BUTTON
+#ifndef INCLUDED_COMPUTER
+#define INCLUDED_COMPUTER
 
 #include "Usable.h"
 #include "gridvector.h"
 
-class Button : public Usable{
+class Computer : public Usable{
 public:
 
-	Button(int ID, sf::Texture *texture, gridvector coords,bool toggle,float holdlength);
+	Computer(int ID, sf::Texture *texture, gridvector coords, bool toggle, float holdlength);
 	virtual void Render(sf::RenderWindow *mainWindow);
 	virtual void Update(float dt);
 	virtual sf::Vector2i GetPosition();

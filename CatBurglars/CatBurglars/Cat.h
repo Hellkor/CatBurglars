@@ -11,7 +11,7 @@ class Cat : public GameObject
 	typedef vector<Tile*> TileRow;
 	typedef vector<TileRow> TileLayer;
 public:
-	Cat(sf::Texture *texture, gridvector v, int ID, SoundHandler *soundhandler);
+	Cat(sf::Texture *texture, gridvector v, int ID, SoundHandler *soundhandler,int player);
 	~Cat();
 	virtual void Render(sf::RenderWindow *mainWindow);
 	virtual void Update(float dt);
@@ -36,7 +36,14 @@ public:
 
 	virtual bool isSolid();
 	
-	void shadowDash(TileLayer *tileLayer, std::vector<Entity*> *Entities);
+	bool canPushCrate = true;
+
+	void shadowDash(TileLayer *tileLayer, std::vector<Entity*> *Entities, int direc);
+
+	bool snowHax();
+
+	int getPlayerIndex();
+	
 
 private:
 
@@ -46,6 +53,8 @@ private:
 	sf::Vector2i mPosition;
 	gridvector mCoord;
 	
+	int mPlayerIndex;
+
 	sf::Sound mSound;
 	SoundHandler* mSoundHandler;
 
@@ -54,7 +63,6 @@ private:
 	bool mMoving = false;
 	bool mColliding = false;
 	bool mDashing = false;
-
 	Grid mGrid;
 
 

@@ -15,6 +15,8 @@ mAnimationhandler(64, 128, &mSprite){
 	//Starting position
 	mPosition = sf::Vector2i(mCoords.x * 64, mCoords.y * 64);
 
+	//mAIfile = "AIScript." + std::to_string(ID);
+
 	loadAI(mAIfile);
 }
 Guard::~Guard(){
@@ -68,7 +70,7 @@ void Guard::AImovement(TileLayer *tiles, std::vector<Entity*> *entities){
 		if (mQueuePos <= mCommandQueue.size()){
 			mQueuePos += 1;
 		}
-		if (mQueuePos > mCommandQueue.size() - 1){
+		if (mQueuePos > mCommandQueue.size() - 1){ 
 			mQueuePos = 0;
 		}
 	}

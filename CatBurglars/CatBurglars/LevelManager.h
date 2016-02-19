@@ -5,29 +5,26 @@
 class LevelManager{
 
 public:
-	LevelManager();
-	void addLevel(Level *level);
+	static void addLevel(Level *level);
 	
-	Level getLevel();
 
-	void clearLevels();
+	static void clearLevels();
 
-	void loadLevel(int level);
-	void nextLevel();
+	static void loadLevel(int level);
+	static void nextLevel();
 
-	void update(float dt);
-	void render(sf::RenderWindow *window);
+	static void update(float dt);
+	static void render(sf::RenderWindow *window);
 
-	void addCollectible();
+	static void addCollectible();
 	
-	void load();
-	void save();
+	static void load();
+	static void save();
 
 private:
 	static void loadGame();
 	static void saveGame();
 
-	std::vector<Level*> mLevels;
-	int mCurrentLevel;
+	
 };
 #endif

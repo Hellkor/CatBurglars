@@ -1,10 +1,11 @@
 #include "EventPad.h"
-
+#include "LevelManager.h"
 
 EventPad::EventPad(EVENT_TYPE eventtype, gridvector coords):
 	mEventType(eventtype),
 	mCoords(coords){
 
+	isActivated = false;
 	mPosition.x = mCoords.x * 64;
 	mPosition.y = mCoords.y * 64;
 
@@ -12,21 +13,22 @@ EventPad::EventPad(EVENT_TYPE eventtype, gridvector coords):
 
 bool EventPad::getInteraction(GameObject *g){
 
-	if (!isActivated){
+	if (Cat *c = dynamic_cast<Cat*>(g)){
+		if (g->getCoords() == mCoords  && !isActivated){
 
-		if (g->getCoords() == mCoords && g->isInteracting()){
-			
 			if (mEventType == WIN){
-				cout << "Win!" << endl;
+				LevelManager::nextLevel();
 			}
 			if (mEventType == DIALOG){
 				cout << "Dialog!" << endl;
 			}
-			
+			isActivated = true;
 			return true;
 		}
-
+		else return false;
 	}
+	else return false;
+		
 
 }
 void EventPad::Update(float dt){

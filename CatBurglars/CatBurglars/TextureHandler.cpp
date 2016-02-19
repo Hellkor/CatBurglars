@@ -23,7 +23,7 @@ void TextureHandler::Initialize()
 	mDoor.loadFromFile("Resources/Door.png");
 	mGuard.loadFromFile("Resources/vakt_walk_spritesheet.png");
 	mArea.loadFromFile("Resources/area.png");
-	mCamera.loadFromFile("Resources/camera.png");
+	mCamera.loadFromFile("Resources/camerasheet.png");
 	
 	mCrate.setSmooth(true);
 }

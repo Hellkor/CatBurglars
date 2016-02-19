@@ -1,4 +1,3 @@
-
 #pragma once
 
 #include "Recievers.h"
@@ -10,7 +9,7 @@ class secuCam : public Recievers{
 
 public:
 
-	secuCam(int channel, gridvector coords, sf::Texture *texture,int range);
+	secuCam(int channel, gridvector coords, sf::Texture *texture,int range,int direction);
 	~secuCam();
 	virtual void connectToChannel(int channelID);
 	virtual void Update(float dt);
@@ -19,7 +18,11 @@ public:
 	virtual sf::Vector2i getDirection();
 	virtual gridvector getCoords();
 	virtual bool isInteracting();
-	bool isOn;
+
+
+
+	
+
 
 	bool getIntersection(GameObject *obj);
 
@@ -27,16 +30,17 @@ public:
 
 
 private:
-
+	sf::ConvexShape mConvex;
 	std::vector<gridvector*> mVision;
 	int mChannel;
-	bool mOn;
+	
+	bool isOn;
 	//bool mSolid; //samma som med isSolid();
 	sf::Vector2i mPosition;
 	sf::Vector2i mDirection;
 	gridvector mCoords;
 	sf::Sprite mSprite;
-	sf::Sprite knark;
+	sf::Sprite mHitboxSprite;
 
 
 

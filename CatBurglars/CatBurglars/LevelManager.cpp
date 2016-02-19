@@ -7,19 +7,15 @@ static string FILENAME = "save.txt";
 static string LEVEL = "Level:";
 static string COLLECT = "Collectibles:";
 
+static std::vector<Level*> mLevels;
 
+static int mCurrentLevel;
 static int mLevelProgression;
 static int mCollectibles;
 static int loadedLevel;
 static int loadedCollectibles;
 
-// När en manager skapas startar currentlevel på 0. Alltså första banan i listan.
-LevelManager::LevelManager() :
-	mCurrentLevel(0){
 
-	
-
-}
 // Lägger till ny level i hanterarens lista
 void LevelManager::addLevel(Level *level){
 	mLevels.push_back(level);
