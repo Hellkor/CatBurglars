@@ -75,9 +75,12 @@
     <ClCompile Include="Cat.cpp" />
     <ClCompile Include="Channel.cpp" />
     <ClCompile Include="Channels.cpp" />
+    <ClCompile Include="Collectible.cpp" />
     <ClCompile Include="Computer.cpp" />
     <ClCompile Include="Controller.cpp" />
     <ClCompile Include="Crate.cpp" />
+    <ClCompile Include="Dialog.cpp" />
+    <ClCompile Include="DialogManager.cpp" />
     <ClCompile Include="Door.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="EventPad.cpp" />
@@ -102,9 +105,12 @@
     <ClInclude Include="Cat.h" />
     <ClInclude Include="Channel.h" />
     <ClInclude Include="Channels.h" />
+    <ClInclude Include="Collectible.h" />
     <ClInclude Include="Computer.h" />
     <ClInclude Include="Controller.h" />
     <ClInclude Include="Crate.h" />
+    <ClInclude Include="Dialog.h" />
+    <ClInclude Include="DialogManager.h" />
     <ClInclude Include="Door.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="EventPad.h" />

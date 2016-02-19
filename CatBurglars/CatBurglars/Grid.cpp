@@ -88,7 +88,7 @@ bool Grid::isTilePassable(gridvector originalpos, gridvector position, TileLayer
 	
 	if (position.x > -1 && position.y > -1 && position.x < mTiles[1].size() && position.y < mTiles.size()){
 		if (mTiles[position.y][position.x]->GetID() > 0){
-		return false;
+		  return false;
 		}
 		else return true;
 

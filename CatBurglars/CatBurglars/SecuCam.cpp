@@ -2,10 +2,11 @@
 #include "TextureHandler.h"
 TextureHandler textures;
 
-secuCam::secuCam(int channel, gridvector coords, sf::Texture *texture, int range, int direction) :
+secuCam::secuCam(int channel, gridvector coords, sf::Texture *texture, int range, string face) :
 mChannel(channel),
 mCoords(coords),
-isOn(true){
+isOn(true),
+mFace(face){
 
 	// mConvex for visionrange visual effect
 	mConvex.setPointCount(3);
@@ -14,7 +15,20 @@ isOn(true){
 
 	mPosition.x = mCoords.x * 64;
 	mPosition.y = mCoords.y * 64;
-
+	int direction;
+	if (mFace == "N") {
+		direction = 1;
+	}
+	if (mFace == "S") {
+		direction = 2;
+	}
+	if (mFace == "E") {
+		direction = 3;
+	}
+	if (mFace == "W") {
+		direction = 4;
+	}
+	
 	mSprite.setTexture(*texture);
 	mSprite.setTextureRect(sf::IntRect((direction-1) * 64, 0, 64, 64));
 	mSprite.setPosition((sf::Vector2f)mPosition);
@@ -26,7 +40,7 @@ isOn(true){
 	int width = 1;
 	int height = 0;
 
-	if (direction == 1){
+	if (mFace == "N"){
 		for (int i = 0; i <= range; i++){
 			mVision.push_back(new gridvector(mCoords.x, mCoords.y - i));
 
@@ -43,7 +57,7 @@ isOn(true){
 		mConvex.setPoint(1, sf::Vector2f(conePos.x - 32 - (width-2) * 64, conePos.y - 32 - range * 64));
 		mConvex.setPoint(2, sf::Vector2f(conePos.x + 32 + (width-2) * 64, conePos.y - 32 - range * 64));
 	}
-	if (direction == 2){
+	if (mFace == "S"){
 		for (int i = 0; i <= range; i++){
 
 			mVision.push_back(new gridvector(mCoords.x, mCoords.y + i));
@@ -63,7 +77,7 @@ isOn(true){
 		mConvex.setPoint(2, sf::Vector2f(conePos.x + 32 + (width - 2) * 64, conePos.y + 32 + range * 64));
 
 	}
-	if (direction == 3){
+	if (mFace == "E"){
 		for (int i = 0; i <= range; i++){
 
 			mVision.push_back(new gridvector(mCoords.x + i, mCoords.y ));
@@ -82,7 +96,7 @@ isOn(true){
 		mConvex.setPoint(1, sf::Vector2f(conePos.x + 32 + range * 64, conePos.y - 32 -(width - 2) * 64));
 		mConvex.setPoint(2, sf::Vector2f(conePos.x + 32 + range * 64, conePos.y + 32 +(width - 2) * 64));
 	}
-	if (direction == 4){
+	if (mFace == "W"){
 		for (int i = 0; i <= range; i++){
 
 			mVision.push_back(new gridvector(mCoords.x - i, mCoords.y));
@@ -171,3 +185,6 @@ bool secuCam::isSolid(){
 	return true;
 }
 
+Layer secuCam::getLayer() {
+	return FRONT;
+}

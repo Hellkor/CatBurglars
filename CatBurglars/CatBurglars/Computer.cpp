@@ -48,7 +48,9 @@ bool Computer::getInteraction(GameObject *g){
 	}
 }
 
-
+Layer Computer::getLayer() {
+	return BACK;
+}
 sf::Vector2i Computer::GetPosition(){
 	return mPosition;
 }

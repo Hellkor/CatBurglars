@@ -14,6 +14,7 @@ public:
 	virtual gridvector getCoords();
 	virtual bool isSolid();
 	virtual bool isInteracting();
+	virtual Layer getLayer();
 private:
 	std::vector<int> mChannels;
 	int mChannel;

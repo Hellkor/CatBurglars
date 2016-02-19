@@ -197,3 +197,6 @@ int Guard::getDirection(){
 bool Guard::isMoving(){
 	return mMoving;
 }
+Layer Guard::getLayer() {
+	return BACK;
+}

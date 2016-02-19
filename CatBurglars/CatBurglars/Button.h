@@ -18,7 +18,7 @@ public:
 	virtual bool isSolid();
 
 	virtual bool isInteracting();
-
+	virtual Layer getLayer();
 private:
 	sf::Sprite mSprite;
 	sf::Vector2i mPosition;

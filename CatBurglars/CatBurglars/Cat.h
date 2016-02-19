@@ -43,7 +43,7 @@ public:
 	bool snowHax();
 
 	int getPlayerIndex();
-	
+	virtual Layer getLayer();
 
 private:
 	float mSpeed;

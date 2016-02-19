@@ -14,8 +14,9 @@
 #include "Computer.h"
 #include "Collectible.h"
 #include <SFML\Graphics\BlendMode.hpp>;
-using namespace std;
+#include "DialogManager.h"
 #include "Controller.h"
+using namespace std;
 
 static TextureHandler	textures;
 static SoundHandler		soundhandler;
@@ -37,6 +38,9 @@ sf::Sprite				light;
 sf::RenderTexture		lightMapTexture;
 sf::Sprite				lightmap;
 
+// TEST DIALOGMANAGER
+
+DialogManager dialogManager("dialog", textures);
 
 // LIGHT STRUCTURE FOR BOTH LIGHT AND FOV LIGHT
 struct Light
@@ -53,8 +57,8 @@ struct Light
 };
 
 // FOV LIGHTS
-Light				*l1		= new Light(sf::Vector2f(0, 0), sf::Vector2f(1.2f, 1.2f), sf::Color(255, 180, 130, 255));
-Light				*l2		= new Light(sf::Vector2f(0, 0), sf::Vector2f(1.2f, 1.2f), sf::Color(255, 180, 130, 255));
+Light				*l1		= new Light(sf::Vector2f(0, 0), sf::Vector2f(0.9f, 0.9f), sf::Color(255, 255, 255, 255)); // 255, 180, 130, 255
+Light				*l2		= new Light(sf::Vector2f(0, 0), sf::Vector2f(0.9f, 0.9f), sf::Color(255, 255, 255, 255));
 
 std::vector<Light*> lights; // Contains all the lights
 
@@ -77,14 +81,14 @@ Level::Level(string filename) :
 	soundhandler.Initialize();
 
 	
-
+	
 
 	// FOV LIGHT ------------------------------------------------------------------------------------------------------------------------------------
 	FOV_lightMapTexture.create(5000, 5000); // Make a lightmap that can cover our screen
 	FOV_lightmap.setTexture(FOV_lightMapTexture.getTexture()); // Make our lightmap sprite use the correct texture
 
 
-	FOV_lightTexture.loadFromFile("Resources/fovlight.png"); // Load in our light 
+	FOV_lightTexture.loadFromFile("Resources/light.png"); // Load in our light 
 	FOV_lightTexture.setSmooth(true); // (Optional) It just smoothes the light out a bit
 
 	FOV_light.setTexture(FOV_lightTexture); // Make our lightsprite use our loaded image
@@ -104,7 +108,7 @@ Level::Level(string filename) :
 	light.setTextureRect(sf::IntRect(0, 0, 1024, 1024)); // Set where on the image we will take the sprite (X position, Y position, Width, Height)
 	light.setOrigin(512.f, 512.f); // This will offset where we draw our ligts so the center of the light is right over where we want our light to be
 
-	lights.push_back(new Light(sf::Vector2f(200, 200), sf::Vector2f(0.6f, 0.6f), sf::Color(255, 180, 130, 255)));
+	lights.push_back(new Light(sf::Vector2f(200, 200), sf::Vector2f(0.1f, 0.1f), sf::Color(255, 180, 130, 255)));
 	//--------------------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -112,6 +116,10 @@ Level::Level(string filename) :
 	DIVIDER_TEXTURE.loadFromFile("Resources/split_divider.png");
 	DIVIDER_SPRITE.setTexture(DIVIDER_TEXTURE);
 	DIVIDER_SPRITE.setOrigin(DIVIDER_TEXTURE.getSize().x / 2, DIVIDER_TEXTURE.getSize().y / 2);
+
+	dialogManager.startConversation(0, 1, 5);
+	dialogManager.showDialog(1, 10);
+	
 }
 
 // Renderar level
@@ -130,7 +138,14 @@ void Level::render(sf::RenderWindow *window){
 		}
 	}
 	for each (Entity *e in mEntities){
-		e->Render(window);
+		if (e->getLayer() == BACK) {
+			e->Render(window);
+		}
+	}
+	for each (Entity *e in mEntities) {
+		if (e->getLayer() == FRONT) {
+			e->Render(window);
+		}
 	}
 	
 	renderLight(window);
@@ -147,8 +162,15 @@ void Level::render(sf::RenderWindow *window){
 				mTopTileLayer[y][x]->Render(window);
 			}
 		}
-		for each (Entity *e in mEntities){
-			e->Render(window);
+		for each (Entity *e in mEntities) {
+			if (e->getLayer() == BACK) {
+				e->Render(window);
+			}
+		}
+		for each (Entity *e in mEntities) {
+			if (e->getLayer() == FRONT) {
+				e->Render(window);
+			}
 		}
 		
 		renderLight(window);
@@ -165,6 +187,7 @@ void Level::render(sf::RenderWindow *window){
 		window->draw(DIVIDER_SPRITE);
 	}
 	
+	dialogManager.render(window, sf::Vector2f(5,300));
 }
 
 void Level::addPlayer(Cat *cat , int player){
@@ -174,6 +197,9 @@ void Level::addPlayer(Cat *cat , int player){
 }
 void Level::update(float dt){
 	bool test = false;
+
+	dialogManager.update();
+
 	if (mLoaded){
 		Channels::update();
 
@@ -310,19 +336,6 @@ void Level::load(){
 	Channels::addChannel(Channel(10));
 	soundhandler.startMusic(1);
 
-	mEntities.push_back(new Button(1, textures.GetTexture(12), gridvector(25, 3), false, 10));
-	mEntities.push_back(new secuCam(1,gridvector(27,3),textures.GetTexture(13), 2,1));
-	mEntities.push_back(new EventPad(WIN, gridvector(4, 4)));
-
-	mEntities.push_back(new MultiDoor(1, 3, gridvector(10, 4), textures.GetTexture(11)));
-
-	mEntities.push_back(new Button(1, textures.GetTexture(12), gridvector(2, 2), false, 10));
-	mEntities.push_back(new Button(2, textures.GetTexture(12), gridvector(3, 2), false, 10));
-	mEntities.push_back(new Button(3, textures.GetTexture(12), gridvector(4, 2), false, 10));
-	mEntities.push_back(new Button(4, textures.GetTexture(12), gridvector(5, 2), false, 10));
-	mEntities.push_back(new Button(5, textures.GetTexture(12), gridvector(6, 2), false, 10));
-	mEntities.push_back(new Computer(10, textures.GetTexture(13), gridvector(1, 1), false, 5, &soundhandler));
-	mEntities.push_back(new Collectible(textures.GetTexture(12), gridvector(1, 1), false, &soundhandler));
 	generateLevel(mFile);
 
 	
@@ -352,9 +365,7 @@ void Level::updateViews(){
 // Laddar in leveln från sparfilen
 void Level::generateLevel(string name){
 	mPlayers = 0;
-	
 	ifstream inputFile("Maps/" + name + ".txt");
-	
 	string input;
 	inputFile >> input;
 	mMapSizeX = stoi(input);
@@ -370,11 +381,13 @@ void Level::generateLevel(string name){
 		{
 			inputFile >> input;
 			int ID = stoi(input);
-			
+			cout << ID << " ";
 			Tile *tile = new Tile(gridvector( x , y ), ID, 0, &textures);
 			mTileRow.push_back(tile);
+			
 
 		}
+		cout << endl;
 		mBottomTileLayer.push_back(mTileRow);
 
 	}
@@ -386,20 +399,28 @@ void Level::generateLevel(string name){
 		{
 			inputFile >> input;
 			int ID = stoi(input);
+			cout << ID << " ";
+			if (ID != 24) {
+				Tile *tile = new Tile(gridvector(x, y), ID, 0, &textures);
+				mTileTopRow.push_back(tile);
+			}
+			else {
+				Tile *tile = new Tile(gridvector(x, y), 0, 0, &textures);
+				mTileTopRow.push_back(tile);
+			}
 			
-			Tile *tile = new Tile(gridvector(x, y), ID, 0, &textures);
-			mTileTopRow.push_back(tile);
+			
 			
 		}
 		mTopTileLayer.push_back(mTileTopRow);
-
+		cout << endl;
 	}
 	inputFile >> input;
 	int objectNumber;
 	objectNumber = stoi(input);
 	//Bottom layer objects
 	for (int i = 0; i < objectNumber; i++){
-		int objectID, xPos, yPos, channel, layer;
+		int objectID, xPos, yPos, channel, layer, hold;
 
 		inputFile >> input;
 		objectID = stoi(input);
@@ -417,8 +438,15 @@ void Level::generateLevel(string name){
 		layer = stoi(input);
 
 
+		inputFile >> input;
+		hold = stoi(input);
+
+
 		if (objectID == 1){
-			mEntities.push_back(new Button(channel, textures.GetTexture(12), gridvector(xPos, yPos),true,10));
+			mEntities.push_back(new Button(channel, textures.GetTexture(12), gridvector(xPos, yPos),false,hold));
+		}
+		if (objectID == 5) {
+			mEntities.push_back(new Button(channel, textures.GetTexture(12), gridvector(xPos, yPos), true, hold));
 		}
 
 	}
@@ -430,7 +458,8 @@ void Level::generateLevel(string name){
 
 	//Top layer objects
 	for (int i = 0; i < objectNumber; i++){
-		int objectID, xPos, yPos, channel, layer;
+		int objectID, xPos, yPos, channel, layer,range;
+		string script, facing;
 
 		inputFile >> input;
 		objectID = stoi(input);
@@ -447,10 +476,17 @@ void Level::generateLevel(string name){
 		inputFile >> input;
 		layer = stoi(input);
 
+		inputFile >> input;
+		script = input;
+
+		inputFile >> input;
+		facing = input;
+
+		inputFile >> input;
+		range = stoi(input);
 
 		if (objectID == 0){
 			playernum++;
-			//mEntities.push_back(new Cat(textures.GetTexture(10), gridvector(xPos, yPos), 1, &soundhandler));
 			if (playernum == 2){
 				mEntities.push_back(new Cat(textures.GetTexture(10), gridvector(xPos, yPos), 1, &soundhandler, 2));
 			}
@@ -458,22 +494,28 @@ void Level::generateLevel(string name){
 				mEntities.push_back(new Cat(textures.GetTexture(10), gridvector(xPos, yPos), 1, &soundhandler,1));
 				
 			}
-			
-			
-
 		}
+
 		if (objectID == 2){
 			mEntities.push_back(new Crate(textures.GetTexture(4), gridvector(xPos, yPos), 1, &soundhandler));
 
 		}
 		if (objectID == 3){
-			mEntities.push_back(new Door(channel, gridvector(xPos, yPos), textures.GetTexture(11), &soundhandler));
 
+			mEntities.push_back(new Door(channel, gridvector(xPos, yPos), textures.GetTexture(11), &soundhandler));
 		}
 		if (objectID == 4){
-			mEntities.push_back(new Guard(textures.GetTexture(5), gridvector(xPos, yPos), 1, "testAI", &soundhandler));
+			mEntities.push_back(new Guard(textures.GetTexture(5), gridvector(xPos, yPos), 1, script, &soundhandler));
 		}
-
+		if (objectID == 6) {
+			mEntities.push_back(new secuCam(channel, gridvector(xPos, yPos), textures.GetTexture(13), range, facing));
+		}
+		if (objectID == 7) {
+			mEntities.push_back(new Computer(channel, textures.GetTexture(13), gridvector(xPos, yPos), false, 5));
+		}
+		if (objectID == 8) {
+			mEntities.push_back(new MultiDoor(channel, range, gridvector(xPos, yPos), textures.GetTexture(11)));
+		}
 
 	}
 	

@@ -9,7 +9,7 @@ Door::Door(int channel, gridvector coords, sf::Texture *texture, SoundHandler *s
 	mPosition.y = mCoords.y * 64;
 
 	mSprite.setTexture(*texture);
-	mSprite.setPosition((sf::Vector2f)mPosition);
+	mSprite.setPosition(sf::Vector2f(mPosition.x,mPosition.y - 64));
 }
 
 void Door::Update(float dt){
@@ -19,7 +19,9 @@ void Door::Update(float dt){
 	}
 	else mSolid = true;
 }
-
+Layer Door::getLayer() {
+	return FRONT;
+}
 void Door::connectToChannel(int channel){
 	mChannel = channel;
 }

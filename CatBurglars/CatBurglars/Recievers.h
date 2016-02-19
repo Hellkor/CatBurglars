@@ -13,6 +13,7 @@ public:
 	virtual gridvector getCoords() = 0;
 	virtual bool isSolid() = 0;
 	virtual bool isInteracting() = 0;
+	virtual Layer getLayer() = 0;
 private:
 
 
