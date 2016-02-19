@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -18,13 +18,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
@@ -75,6 +75,7 @@
     <ClCompile Include="Cat.cpp" />
     <ClCompile Include="Channel.cpp" />
     <ClCompile Include="Channels.cpp" />
+    <ClCompile Include="Collectible.cpp" />
     <ClCompile Include="Controller.cpp" />
     <ClCompile Include="Crate.cpp" />
     <ClCompile Include="Door.cpp" />
@@ -87,6 +88,7 @@
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="LevelManager.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="MultiDoor.cpp" />
     <ClCompile Include="Recievers.cpp" />
     <ClCompile Include="SecuCam.cpp" />
     <ClCompile Include="SoundHandler.cpp" />
@@ -100,6 +102,8 @@
     <ClInclude Include="Cat.h" />
     <ClInclude Include="Channel.h" />
     <ClInclude Include="Channels.h" />
+    <ClInclude Include="Collectible.h" />
+    <ClInclude Include="Computer.h" />
     <ClInclude Include="Controller.h" />
     <ClInclude Include="Crate.h" />
     <ClInclude Include="Door.h" />
@@ -112,6 +116,7 @@
     <ClInclude Include="Guard.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="LevelManager.h" />
+    <ClInclude Include="MultiDoor.h" />
     <ClInclude Include="Recievers.h" />
     <ClInclude Include="SecuCam.h" />
     <ClInclude Include="Soundhandler.h" />

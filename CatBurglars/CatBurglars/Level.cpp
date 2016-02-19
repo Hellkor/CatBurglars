@@ -14,24 +14,17 @@
 #include "Computer.h"
 #include "Collectible.h"
 #include <SFML\Graphics\BlendMode.hpp>;
-#include "Controller.h"
 using namespace std;
+#include "Controller.h"
 
-
-
-
-
-Controller controller;
-static TextureHandler textures;
-static SoundHandler soundhandler;
-
-
+static TextureHandler	textures;
+static SoundHandler		soundhandler;
 
 // SPLIT SCREEN BORDER
 sf::Texture				DIVIDER_TEXTURE;
 sf::Sprite				DIVIDER_SPRITE;
 // LOAD PROGRESS
-float					LOAD_PROGRESS			=	0;
+float					LOAD_PROGRESS = 0;
 // FOV LIGHT VARIABLES
 sf::Texture				FOV_lightTexture;
 sf::Sprite				FOV_light;
@@ -60,44 +53,29 @@ struct Light
 };
 
 // FOV LIGHTS
-Light				*l1		= new Light(sf::Vector2f(0, 0), sf::Vector2f(1.2f, 1.2f), sf::Color(255, 180, 130, 255));
-Light				*l2		= new Light(sf::Vector2f(0, 0), sf::Vector2f(1.2f, 1.2f), sf::Color(255, 180, 130, 255));
+Light				*l1 = new Light(sf::Vector2f(0, 0), sf::Vector2f(1.2f, 1.2f), sf::Color(255, 180, 130, 255));
+Light				*l2 = new Light(sf::Vector2f(0, 0), sf::Vector2f(1.2f, 1.2f), sf::Color(255, 180, 130, 255));
 
 std::vector<Light*> lights; // Contains all the lights
 
 
 
-// Skapar en level från en textfil
+							// Skapar en level från en textfil
 Level::Level(string filename) :
 	mFile(filename),
-
-	mLoaded(false){
-	mView = sf::View(sf::Vector2f(0,0), sf::Vector2f(1024, 720));
-
-	mView.setViewport(sf::FloatRect(0.1f, 0.1f, 0.8f, 0.8f));
+	mLoaded(false),
 	p1Controller(Controller(KeyboardOne)),
-	p2Controller(Controller(KeyboardTwo)){
+	p2Controller(Controller(KeyboardTwo)) {
 
-// Initialize GUI View
+
+	// Initialize GUI View
 	guiView.setSize(1024, 720);
 	guiView.setViewport(sf::FloatRect(0, 0, 1, 1));
 
-
-	mView.setCenter(sf::Vector2f(512, 360));
-	
-	mSprite.setScale(sf::Vector2f(0.5f, 2.f)); // absolute scale factor
-	mSprite.scale(sf::Vector2f(1.5f, 3.f)); // factor relative to the current scale
-	
-	mTexture.setSmooth(true);
-
-
-
 	//Initialize textures
 	textures.Initialize();
-
 	soundhandler.Initialize();
 
-	
 
 
 	// FOV LIGHT ------------------------------------------------------------------------------------------------------------------------------------
