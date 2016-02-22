@@ -36,6 +36,8 @@ void Guard::setVision(string face) {
 	mFace = face;
 
 	if (mFace == "N") {
+		mSprite.setTextureRect(sf::IntRect(0 * 64, 3 * 128, 64, 128));
+
 		for (int i = 0; i <= range; i++) {
 			mVision.push_back(new gridvector(mCoords.x, mCoords.y - i));
 
@@ -53,6 +55,7 @@ void Guard::setVision(string face) {
 		mConvex.setPoint(2, sf::Vector2f(conePos.x + 32 + (width - 2) * 64, conePos.y - 32 - range * 64));
 	}
 	if (mFace == "S") {
+		mSprite.setTextureRect(sf::IntRect(0 * 64, 2 * 128, 64, 128));
 		for (int i = 0; i <= range; i++) {
 
 			mVision.push_back(new gridvector(mCoords.x, mCoords.y + i));
@@ -73,6 +76,7 @@ void Guard::setVision(string face) {
 
 	}
 	if (mFace == "E") {
+		mSprite.setTextureRect(sf::IntRect(0 * 64, 0 * 128, 64, 128));
 		for (int i = 0; i <= range; i++) {
 
 			mVision.push_back(new gridvector(mCoords.x + i, mCoords.y));
@@ -92,6 +96,7 @@ void Guard::setVision(string face) {
 		mConvex.setPoint(2, sf::Vector2f(conePos.x + 32 + range * 64, conePos.y + 32 + (width - 2) * 64));
 	}
 	if (mFace == "W") {
+		mSprite.setTextureRect(sf::IntRect(0 * 64, 1 * 128, 64, 128));
 		for (int i = 0; i <= range; i++) {
 
 			mVision.push_back(new gridvector(mCoords.x - i, mCoords.y));
@@ -178,23 +183,35 @@ void Guard::AImovement(TileLayer *tiles, std::vector<Entity*> *entities){
 
 	
 
-	if (!mMoving && mWait <= 0 && mQueuePos < mCommandQueue.size()){
+	if (!mMoving && mClock.getElapsedTime() >= sf::seconds(1) && mQueuePos < mCommandQueue.size()){
 
 
-		if (mCommandQueue[mQueuePos] == "forward"){
+		if (mCommandQueue[mQueuePos] == "N"){
 			moveForward(tiles, entities);
 		}
-		if (mCommandQueue[mQueuePos] == "backwards"){
+		if (mCommandQueue[mQueuePos] == "S"){
 			moveBackWards(tiles, entities);
 		}
-		if (mCommandQueue[mQueuePos] == "left"){
+		if (mCommandQueue[mQueuePos] == "W"){
 			moveLeft(tiles, entities);
 		}
-		if (mCommandQueue[mQueuePos] == "right"){
+		if (mCommandQueue[mQueuePos] == "E"){
 			moveRight(tiles, entities);
 		}
+		if (mCommandQueue[mQueuePos] == "TN") {
+			setVision("N");
+		}
+		if (mCommandQueue[mQueuePos] == "TS") {
+			setVision("S");
+		}
+		if (mCommandQueue[mQueuePos] == "TW") {
+			setVision("W");
+		}
+		if (mCommandQueue[mQueuePos] == "TE") {
+			setVision("E");
+		}
 		if (mCommandQueue[mQueuePos] == "wait"){
-			mWait = 100;//stoi(mCommandQueue[mQueuePos + 1]);
+			mClock.restart();
 		}
 
 		
@@ -212,7 +229,6 @@ void Guard::AImovement(TileLayer *tiles, std::vector<Entity*> *entities){
 }
 void Guard::Update(float dt){
 	UpdateConePos();
-	mWait -= dt;
 
 	if (mMoving){
 		if (direction == 4 && mPosition.y != newPos.y) {
@@ -322,7 +338,7 @@ bool Guard::isInteracting(){
 	return mInteracting;
 }
 bool Guard::isSolid(){
-	return false;
+	return true;
 }
 
 //Returns position of sprite

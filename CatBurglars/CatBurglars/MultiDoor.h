@@ -17,13 +17,13 @@ public:
 	virtual Layer getLayer();
 private:
 	std::vector<int> mChannels;
+	bool checkChannels();
+	int mActiveChannels;
 	int mChannel;
 	bool mSolid;
 	sf::Vector2i mPosition;
 	gridvector mCoords;
 	sf::Sprite mSprite;
 
-	bool checkChannels();
-
-	int mActiveChannels;
+	
 };

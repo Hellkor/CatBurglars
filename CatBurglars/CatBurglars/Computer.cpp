@@ -14,7 +14,8 @@ mSoundHandler(soundhandler){
 
 	mPosition.x = mCoords.x * 64;
 	mPosition.y = mCoords.y * 64;
-	mSprite.setPosition(sf::Vector2f(mPosition));
+	mSprite.setTextureRect(sf::IntRect(0 * 64, 0 * 64,64,128));
+	mSprite.setPosition(sf::Vector2f(mPosition.x,mPosition.y + 64));
 	mSprite.setTexture(*texture);
 
 }

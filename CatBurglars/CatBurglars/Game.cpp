@@ -36,8 +36,10 @@ Game::Game() {
 	//Test for loading in maps
 
 	Level *testLevel = new Level("11");
+	Level *level2 = new Level("13");
 
 	LevelManager::addLevel(testLevel);
+	LevelManager::addLevel(level2);
 
 	//window->setVerticalSyncEnabled(true);
 	window->setFramerateLimit(60);
@@ -46,7 +48,7 @@ Game::Game() {
 	LevelManager::addCollectible();
 	LevelManager::save();
 
-	LevelManager::loadLevel(0);
+	LevelManager::loadLevel(1);
 	
 
 

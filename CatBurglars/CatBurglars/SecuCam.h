@@ -10,7 +10,7 @@ class secuCam : public Recievers{
 
 public:
 
-	secuCam(int channel, gridvector coords, sf::Texture *texture,int range,string direction);
+	secuCam(int channel,int channelRange, gridvector coords, sf::Texture *texture,int range,string direction);
 	~secuCam();
 	virtual void connectToChannel(int channelID);
 	virtual void Update(float dt);
@@ -41,6 +41,10 @@ private:
 	sf::Sprite mHitboxSprite;
 
 	string mFace;
+
+	std::vector<int> mChannels;
+	bool checkChannels();
+	int mActiveChannels;
 
 
 

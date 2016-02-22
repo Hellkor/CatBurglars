@@ -2,16 +2,18 @@
 #include "TextureHandler.h"
 TextureHandler textures;
 
-secuCam::secuCam(int channel, gridvector coords, sf::Texture *texture, int range, string face) :
+secuCam::secuCam(int channel, int channelRange, gridvector coords, sf::Texture *texture, int range, string face) :
 mChannel(channel),
 mCoords(coords),
 isOn(true),
 mFace(face){
 
+
+	for (int i = 0; i <= channelRange; i++) {
+		mChannels.push_back(mChannel + i);
+	}
 	// mConvex for visionrange visual effect
 	mConvex.setPointCount(3);
-
-	
 
 	mPosition.x = mCoords.x * 64;
 	mPosition.y = mCoords.y * 64;
@@ -120,9 +122,24 @@ mFace(face){
 secuCam::~secuCam(){
 	mVision.clear();
 }
+bool secuCam::checkChannels() {
+	for each (int channel in mChannels) {
+		if (!Channels::isChannelActive(channel)) {
+			return false;
+		}
 
+	}
+
+	return true;
+}
 void secuCam::Update(float dt){
-	if (Channels::isChannelActive(mChannel)){ isOn = false; }
+	//if (Channels::isChannelActive(mChannel)){ isOn = false; }
+	//else isOn = true;
+
+	//ifall någon kanal är inaktiv så är dörren stängd
+	if (checkChannels()) {
+		isOn = false;
+	}
 	else isOn = true;
 }
 
@@ -181,7 +198,7 @@ bool secuCam::isInteracting(){
 }
 
 bool secuCam::isSolid(){
-	return true;
+	return false;
 }
 
 Layer secuCam::getLayer() {

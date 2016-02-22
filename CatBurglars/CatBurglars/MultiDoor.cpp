@@ -12,7 +12,7 @@ mSolid(true){
 	mSprite.setTexture(*texture);
 	mSprite.setPosition(sf::Vector2f(mPosition.x, mPosition.y - 64));
 
-	for (int i = 0; i < numberofchannels; i++){
+	for (int i = 0; i <= numberofchannels; i++){
 		mChannels.push_back(mChannel + i);
 	}
 }

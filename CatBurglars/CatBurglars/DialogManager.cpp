@@ -4,8 +4,9 @@
 
 DialogManager::DialogManager(string filename,TextureHandler handler):
 	mFilename(filename),
-	mPosition(1,300){
-	mDialogBox.setTexture(*handler.GetTexture(1));
+	mPosition(1,500),
+	mCurrentConversationDialogID(-1){
+	mDialogBox.setTexture(*handler.GetTexture(99));
 	mFont.loadFromFile("Resources/Fonts/arial.ttf");
 	mRenderText.setFont(mFont);
 	mRenderText.setCharacterSize(12);
@@ -70,7 +71,7 @@ void DialogManager::render(sf::RenderWindow *window,sf::Vector2f position) {
 	if (mShowDialog) {
 		mDialogBox.setPosition(mPosition);
 		
-		//window->draw(mRenderText);
+
 		for each (sf::Text t in TextRows) {
 			t.setFont(mFont);
 			t.setCharacterSize(12);

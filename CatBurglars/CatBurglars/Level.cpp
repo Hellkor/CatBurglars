@@ -117,8 +117,8 @@ Level::Level(string filename) :
 	DIVIDER_SPRITE.setTexture(DIVIDER_TEXTURE);
 	DIVIDER_SPRITE.setOrigin(DIVIDER_TEXTURE.getSize().x / 2, DIVIDER_TEXTURE.getSize().y / 2);
 
-	dialogManager.startConversation(0, 1, 5);
-	dialogManager.showDialog(1, 10);
+	//dialogManager.startConversation(0, 1, 5);
+	//dialogManager.showDialog(1, 10);
 	
 }
 
@@ -139,6 +139,11 @@ void Level::render(sf::RenderWindow *window){
 	}
 	for each (Entity *e in mEntities){
 		if (e->getLayer() == BACK) {
+			e->Render(window);
+		}
+	}
+	for each (Entity *e in mEntities) {
+		if (e->getLayer() == MIDDLE) {
 			e->Render(window);
 		}
 	}
@@ -175,6 +180,12 @@ void Level::render(sf::RenderWindow *window){
 				e->Render(window);
 			}
 		}
+		for each (Entity *e in mEntities) {
+			if (e->getLayer() == MIDDLE) {
+				e->Render(window);
+			}
+		}
+
 		for each (Entity *e in mEntities) {
 			if (e->getLayer() == FRONT) {
 				e->Render(window);
@@ -351,6 +362,7 @@ void Level::load(){
 	mEntities.clear();
 	mBottomTileLayer.clear();
 	mWallTileLayer.clear();
+	mTopTileLayer.clear();
 	Channels::clearChannels();
 	
 
@@ -399,13 +411,11 @@ void Level::generateLevel(string name){
 		{
 			inputFile >> input;
 			int ID = stoi(input);
-			cout << ID << " ";
 			Tile *tile = new Tile(gridvector( x , y ), ID, 0, &textures);
 			mTileRow.push_back(tile);
 			
 
 		}
-		cout << endl;
 		mBottomTileLayer.push_back(mTileRow);
 
 	}
@@ -417,7 +427,6 @@ void Level::generateLevel(string name){
 		{
 			inputFile >> input;
 			int ID = stoi(input);
-			cout << ID << " ";
 			if (ID != 24) {
 				Tile *tile = new Tile(gridvector(x, y), ID, 0, &textures);
 				mTileTopRow.push_back(tile);
@@ -431,7 +440,6 @@ void Level::generateLevel(string name){
 			
 		}
 		mWallTileLayer.push_back(mTileTopRow);
-		cout << endl;
 	}
 	//Top layer tiles
 	for (int y = 0; y < mMapSizeY; y++)
@@ -441,21 +449,18 @@ void Level::generateLevel(string name){
 		{
 			inputFile >> input;
 			int ID = stoi(input);
-			cout << ID << " ";
 			if (ID != 24) {
 				Tile *tile = new Tile(gridvector(x, y), ID, 0, &textures);
+				tile->setAlpha(255 / 2);
 				mTileTopRow.push_back(tile);
 			}
 			else {
 				Tile *tile = new Tile(gridvector(x, y), 0, 0, &textures);
+				tile->setAlpha(255 / 2);
 				mTileTopRow.push_back(tile);
 			}
-
-
-
 		}
 		mTopTileLayer.push_back(mTileTopRow);
-		cout << endl;
 	}
 	inputFile >> input;
 	int objectNumber;
@@ -500,7 +505,7 @@ void Level::generateLevel(string name){
 
 	//Top layer objects
 	for (int i = 0; i < objectNumber; i++){
-		int objectID, xPos, yPos, channel, layer,range;
+		int objectID, xPos, yPos, channel, layer,range,hold;
 		string script, facing;
 
 		inputFile >> input;
@@ -527,6 +532,9 @@ void Level::generateLevel(string name){
 		inputFile >> input;
 		range = stoi(input);
 
+		inputFile >> input;
+		hold = stoi(input);
+
 		if (objectID == 0){
 			playernum++;
 			if (playernum == 2){
@@ -550,14 +558,14 @@ void Level::generateLevel(string name){
 			mEntities.push_back(new Guard(&textures, gridvector(xPos, yPos), 1, script, &soundhandler));
 		}
 		if (objectID == 6) {
-			mEntities.push_back(new secuCam(channel, gridvector(xPos, yPos), textures.GetTexture(13), range, facing));
+			mEntities.push_back(new secuCam(channel,hold, gridvector(xPos, yPos), textures.GetTexture(13), range, facing));
 		}
 		if (objectID == 7) {
 			if (range == 0) {
-				mEntities.push_back(new Computer(channel, textures.GetTexture(13), gridvector(xPos, yPos), false, 5,&soundhandler));
+				mEntities.push_back(new Computer(channel, textures.GetTexture(13), gridvector(xPos, yPos), false, hold,&soundhandler));
 			}
 			else if (range == 1) {
-				mEntities.push_back(new Computer(channel, textures.GetTexture(13), gridvector(xPos, yPos), true, 1, &soundhandler));
+				mEntities.push_back(new Computer(channel, textures.GetTexture(14), gridvector(xPos, yPos), true, hold, &soundhandler));
 			}
 			
 		}
@@ -570,7 +578,6 @@ void Level::generateLevel(string name){
 	inputFile >> input;
 	objectNumber = stoi(input);
 
-	int playernum = 0;
 
 	//Eventpad layer
 	for (int i = 0; i < objectNumber; i++) {
@@ -592,10 +599,10 @@ void Level::generateLevel(string name){
 		
 		
 		if (range == 0) {
-			mEntities.push_back(new EventPad(DIALOG, gridvector(xPos, yPos)));
+			mEntities.push_back(new EventPad(DIALOG, gridvector(xPos, yPos),channel));
 		}
 		else if (range == 1) {
-			mEntities.push_back(new EventPad(WIN, gridvector(xPos, yPos)));
+			mEntities.push_back(new EventPad(WIN, gridvector(xPos, yPos),channel));
 		}
 		
 

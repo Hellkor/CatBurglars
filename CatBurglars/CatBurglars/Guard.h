@@ -54,7 +54,8 @@ private:
 
 	void setVision(string face);
 
-	float mWait;
+	sf::Clock mClock;
+	sf::Time mWait;
 	int mQueuePos;
 
 	string mAIfile;

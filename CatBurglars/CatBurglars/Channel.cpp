@@ -48,7 +48,7 @@ void Channel::mSetActiveTime(float holdlength) {
 void Channel::runTimer() {
 	mTime = mClock.getElapsedTime();
 
-	if (mTime.asSeconds() <= mTimer){
+	if (mTime.asMilliseconds() <= mTimer){
 		mActive = true;
 	}
 	else if (!mToggled){

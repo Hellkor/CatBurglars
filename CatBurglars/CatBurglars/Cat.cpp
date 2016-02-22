@@ -32,7 +32,6 @@ canPushCrate(true){
 	mSprite.setTextureRect(sf::IntRect(1*64, 1*64, 64, 64));
 	//Starting position
 	mPosition = sf::Vector2i(mCoord.x * 64, mCoord.y * 64);
-	mSoundHandler->stopMusic();
 }
 Cat::~Cat(){
 
@@ -369,5 +368,5 @@ bool Cat::snowHax(){
 		return false;
 }
 Layer Cat::getLayer() {
-	return BACK;
+	return MIDDLE;
 }

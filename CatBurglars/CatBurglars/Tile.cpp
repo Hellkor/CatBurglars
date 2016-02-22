@@ -23,7 +23,9 @@ Tile::~Tile()
 {
 
 }
-
+void Tile::setAlpha(int alpha) {
+	mSprite.setColor(sf::Color(255, 255, 255, alpha));
+}
 gridvector Tile::getCoords(){
 	return mCoords;
 }

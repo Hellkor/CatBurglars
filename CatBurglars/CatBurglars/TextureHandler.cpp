@@ -24,6 +24,7 @@ void TextureHandler::Initialize()
 	mGuard.loadFromFile("Resources/vakt_walk_spritesheet.png");
 	mArea.loadFromFile("Resources/area.png");
 	mCamera.loadFromFile("Resources/camerasheet.png");
+	mComputer.loadFromFile("Resources/computer.png");
 	
 }
 
@@ -50,6 +51,8 @@ sf::Texture* TextureHandler::GetTexture(int ID)
 		return &mButton;
 	if (ID == 13)
 		return &mCamera;
+	if (ID == 14)
+		return &mComputer;
 	if (ID == 99)
 		return &mArea;
 }

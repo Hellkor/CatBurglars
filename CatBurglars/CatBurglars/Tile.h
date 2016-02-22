@@ -20,6 +20,7 @@ public:
 	gridvector getCoords();
 	virtual Layer getLayer();
 	
+	void setAlpha(int alpha);
 private:
 	int mID = 0;
 	gridvector mCoords;
