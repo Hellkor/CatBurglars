@@ -8,7 +8,7 @@ class EventPad : public Usable{
 	
 public:
 
-	EventPad(EVENT_TYPE eventtype, gridvector coords);
+	EventPad(EVENT_TYPE eventtype, gridvector coords, int dialogID);
 	virtual void Render(sf::RenderWindow *mainWindow);
 	virtual void Update(float dt);
 	virtual sf::Vector2i GetPosition();
@@ -20,6 +20,7 @@ public:
 	virtual bool isInteracting();
 
 private:
+	int mDialogID;
 	sf::Sprite mSprite;
 	sf::Vector2i mPosition;
 	gridvector mCoords;

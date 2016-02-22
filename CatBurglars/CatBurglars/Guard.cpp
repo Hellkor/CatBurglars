@@ -4,21 +4,144 @@
 
 string DIRECTORY = "Resources/AI/";
 
-Guard::Guard(sf::Texture *texture, gridvector position, int ID,string AIscript, SoundHandler *soundhandler) : GameObject(),
+Guard::Guard(TextureHandler *textures, gridvector position, int ID,string AIscript, SoundHandler *soundhandler) : GameObject(),
 mID(ID),
 mCoords(position),
 mSpeed(1),
 mAIfile(AIscript),
 mAnimationhandler(64, 128, &mSprite),
-mSoundHandler(soundhandler){
-	mSprite.setTexture(*texture, true);
+mSoundHandler(soundhandler),
+mRange(3){
+	mSprite.setTexture(*textures->GetTexture(5), true);
 	mSprite.setTextureRect(sf::IntRect(1*64, 3*128, 64, 128));
 	//Starting position
 	mPosition = sf::Vector2i(mCoords.x * 64, mCoords.y * 64);
 
-	//mAIfile = "AIScript." + std::to_string(ID);
-
 	loadAI(mAIfile);
+	
+
+	mConvex.setPointCount(3);
+	mConvex.setTexture(textures->GetTexture(99));
+
+	mHitboxSprite.setTexture(*textures->GetTexture(99));
+	mHitboxSprite.setPosition((sf::Vector2f)mPosition);
+	
+	setVision("E");
+}
+void Guard::setVision(string face) {
+	mVision.clear();
+	int range = mRange;
+	width = 1;
+	int height = 0;
+	mFace = face;
+
+	if (mFace == "N") {
+		for (int i = 0; i <= range; i++) {
+			mVision.push_back(new gridvector(mCoords.x, mCoords.y - i));
+
+			for (int j = 1; j < width; j++) {
+				mVision.push_back(new gridvector(mCoords.x + j, mCoords.y - i));
+				mVision.push_back(new gridvector(mCoords.x + -j, mCoords.y - i));
+			}
+
+			width++;
+		}
+		sf::Vector2f conePos(mPosition.x + 32, mPosition.y + 32);
+		// define the points
+		mConvex.setPoint(0, sf::Vector2f(conePos.x, conePos.y));
+		mConvex.setPoint(1, sf::Vector2f(conePos.x - 32 - (width - 2) * 64, conePos.y - 32 - range * 64));
+		mConvex.setPoint(2, sf::Vector2f(conePos.x + 32 + (width - 2) * 64, conePos.y - 32 - range * 64));
+	}
+	if (mFace == "S") {
+		for (int i = 0; i <= range; i++) {
+
+			mVision.push_back(new gridvector(mCoords.x, mCoords.y + i));
+
+			for (int j = 1; j < width; j++) {
+				mVision.push_back(new gridvector(mCoords.x + j, mCoords.y + i));
+				mVision.push_back(new gridvector(mCoords.x + -j, mCoords.y + i));
+			}
+
+			width++;
+
+		}
+		sf::Vector2f conePos(mPosition.x + 32, mPosition.y + 32);
+		// define the points
+		mConvex.setPoint(0, sf::Vector2f(conePos.x, conePos.y));
+		mConvex.setPoint(1, sf::Vector2f(conePos.x - 32 - (width - 2) * 64, conePos.y + 32 + range * 64));
+		mConvex.setPoint(2, sf::Vector2f(conePos.x + 32 + (width - 2) * 64, conePos.y + 32 + range * 64));
+
+	}
+	if (mFace == "E") {
+		for (int i = 0; i <= range; i++) {
+
+			mVision.push_back(new gridvector(mCoords.x + i, mCoords.y));
+
+			for (int j = 1; j < width; j++) {
+				mVision.push_back(new gridvector(mCoords.x + i, mCoords.y + j));
+				mVision.push_back(new gridvector(mCoords.x + i, mCoords.y - j));
+			}
+
+			width++;
+		}
+
+		sf::Vector2f conePos(mPosition.x + 32, mPosition.y + 32);
+		// define the points
+		mConvex.setPoint(0, sf::Vector2f(conePos.x, conePos.y));
+		mConvex.setPoint(1, sf::Vector2f(conePos.x + 32 + range * 64, conePos.y - 32 - (width - 2) * 64));
+		mConvex.setPoint(2, sf::Vector2f(conePos.x + 32 + range * 64, conePos.y + 32 + (width - 2) * 64));
+	}
+	if (mFace == "W") {
+		for (int i = 0; i <= range; i++) {
+
+			mVision.push_back(new gridvector(mCoords.x - i, mCoords.y));
+
+			for (int j = 1; j < width; j++) {
+				mVision.push_back(new gridvector(mCoords.x - i, mCoords.y + j));
+				mVision.push_back(new gridvector(mCoords.x - i, mCoords.y - j));
+			}
+
+			width++;
+		}
+		sf::Vector2f conePos(mPosition.x + 32, mPosition.y + 32);
+		// define the points
+		mConvex.setPoint(0, sf::Vector2f(conePos.x, conePos.y));
+		mConvex.setPoint(1, sf::Vector2f(conePos.x - 32 - range * 64, conePos.y + 32 + (width - 2) * 64));
+		mConvex.setPoint(2, sf::Vector2f(conePos.x - 32 - range * 64, conePos.y - 32 - (width - 2) * 64));
+	}
+}
+void Guard::UpdateConePos() {
+	int range = mRange;
+	
+
+	if (mFace == "N") {
+		sf::Vector2f conePos(mPosition.x + 32, mPosition.y + 32);
+		// define the points
+		mConvex.setPoint(0, sf::Vector2f(conePos.x, conePos.y));
+		mConvex.setPoint(1, sf::Vector2f(conePos.x - 32 - (width - 2) * 64, conePos.y - 32 - range * 64));
+		mConvex.setPoint(2, sf::Vector2f(conePos.x + 32 + (width - 2) * 64, conePos.y - 32 - range * 64));
+	}
+	if (mFace == "S") {
+		sf::Vector2f conePos(mPosition.x + 32, mPosition.y + 32);
+		// define the points
+		mConvex.setPoint(0, sf::Vector2f(conePos.x, conePos.y));
+		mConvex.setPoint(1, sf::Vector2f(conePos.x - 32 - (width - 2) * 64, conePos.y + 32 + range * 64));
+		mConvex.setPoint(2, sf::Vector2f(conePos.x + 32 + (width - 2) * 64, conePos.y + 32 + range * 64));
+	}
+	if (mFace == "E") {
+		sf::Vector2f conePos(mPosition.x + 32, mPosition.y + 32);
+		// define the points
+		mConvex.setPoint(0, sf::Vector2f(conePos.x, conePos.y));
+		mConvex.setPoint(1, sf::Vector2f(conePos.x + 32 + range * 64, conePos.y - 32 - (width - 2) * 64));
+		mConvex.setPoint(2, sf::Vector2f(conePos.x + 32 + range * 64, conePos.y + 32 + (width - 2) * 64));
+	}
+	if (mFace == "W") {
+		sf::Vector2f conePos(mPosition.x + 32, mPosition.y + 32);
+		// define the points
+		mConvex.setPoint(0, sf::Vector2f(conePos.x, conePos.y));
+		mConvex.setPoint(1, sf::Vector2f(conePos.x - 32 - range * 64, conePos.y + 32 + (width - 2) * 64));
+		mConvex.setPoint(2, sf::Vector2f(conePos.x - 32 - range * 64, conePos.y - 32 - (width - 2) * 64));
+	}
 }
 Guard::~Guard(){
 
@@ -26,9 +149,17 @@ Guard::~Guard(){
 //Render sprite on screen
 void Guard::Render(sf::RenderWindow *mainWindow){
 
-
+	mHitboxSprite.setPosition((sf::Vector2f)mPosition);
 	mSprite.setPosition(sf::Vector2f(mPosition.x,mPosition.y-64));
 	mainWindow->draw(mSprite);
+
+
+	mainWindow->draw(mConvex);
+
+	for each (gridvector *v in mVision) {
+		mHitboxSprite.setPosition(v->x * 64, v->y * 64);
+		mainWindow->draw(mHitboxSprite);
+	}
 }
 void Guard::loadAI(string filename){
 	mCommandQueue.clear();
@@ -80,7 +211,7 @@ void Guard::AImovement(TileLayer *tiles, std::vector<Entity*> *entities){
 
 }
 void Guard::Update(float dt){
-
+	UpdateConePos();
 	mWait -= dt;
 
 	if (mMoving){
@@ -110,21 +241,26 @@ void Guard::Update(float dt){
 			// säkrar att den håller rätt position
 			if (direction == 4) {
 				mCoords.y--;
+				setVision("N");
 				if (mPosition.y != newPos.y)
 					mPosition.y = newPos.y;
+
 			}
 			if (direction == 3) {
 				mCoords.y++;
+				setVision("S");
 				if (mPosition.y != newPos.y)
 					mPosition.y = newPos.y;
 			}
 			if (direction == 2) {
 				mCoords.x--;
+				setVision("W");
 				if (mPosition.x != newPos.x)
 					mPosition.x = newPos.x;
 			}
 			if (direction == 1) {
 				mCoords.x++;
+				setVision("E");
 				if (mPosition.x != newPos.x)
 					mPosition.x = newPos.x;
 			}
@@ -138,7 +274,7 @@ void Guard::moveForward(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 		direction = 4;
 		if (mGrid.isTilePassable(mCoords, gridvector(mCoords.x, mCoords.y - 1), tileLayer, Entities)){
 			newPos.y = mPosition.y - 64;
-
+			setVision("N");
 			mMoving = true;
 		}
 	}
@@ -148,7 +284,7 @@ void Guard::moveBackWards(TileLayer *tileLayer, std::vector<Entity*> *Entities) 
 		direction = 3;
 		if (mGrid.isTilePassable(mCoords, gridvector(mCoords.x, mCoords.y + 1), tileLayer, Entities)){
 			newPos.y = mPosition.y + 64;
-
+			setVision("S");
 			mMoving = true;
 		}
 	}
@@ -158,7 +294,7 @@ void Guard::moveLeft(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 		direction = 2;
 		if (mGrid.isTilePassable(mCoords, gridvector(mCoords.x - 1, mCoords.y), tileLayer, Entities)){
 			newPos.x = mPosition.x - 64;
-
+			setVision("W");
 			mMoving = true;
 		}
 	}
@@ -168,13 +304,20 @@ void Guard::moveRight(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 		direction = 1;
 		if (mGrid.isTilePassable(mCoords, gridvector(mCoords.x + 1, mCoords.y), tileLayer, Entities)){
 			newPos.x = mPosition.x + 64;
-
+			setVision("E");
 			mMoving = true;
 
 		}
 	}
 }
-
+bool Guard::getIntersection(GameObject *obj) {
+	for each (gridvector *v in mVision) {
+		if (obj->getCoords() == v) {
+				return true;
+		}
+	}
+	return false;
+}
 bool Guard::isInteracting(){
 	return mInteracting;
 }

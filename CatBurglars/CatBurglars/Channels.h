@@ -16,7 +16,7 @@ class Channels {
 
 
 public:
-
+	static void clearChannels();
 	static void addChannel(Channel c);
 
 	static bool isChannelActive(int ID);

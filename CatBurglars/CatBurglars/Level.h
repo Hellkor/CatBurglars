@@ -32,7 +32,9 @@ private:
 
 	TileRow mTileRow;
 	TileRow mTileTopRow;
+
 	TileLayer mBottomTileLayer;
+	TileLayer mWallTileLayer;
 	TileLayer mTopTileLayer;
 
 	int  mMapSizeX, mMapSizeY;

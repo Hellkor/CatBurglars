@@ -137,7 +137,6 @@ bool secuCam::getIntersection(GameObject *obj){
 			}
 		}
 	}
-
 	return false;
 }
 

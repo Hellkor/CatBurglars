@@ -1,9 +1,10 @@
 #include "EventPad.h"
 #include "LevelManager.h"
 
-EventPad::EventPad(EVENT_TYPE eventtype, gridvector coords):
+EventPad::EventPad(EVENT_TYPE eventtype, gridvector coords, int dialogID):
 	mEventType(eventtype),
-	mCoords(coords){
+	mCoords(coords),
+	mDialogID(dialogID){
 
 	isActivated = false;
 	mPosition.x = mCoords.x * 64;

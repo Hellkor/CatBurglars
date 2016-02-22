@@ -10,7 +10,7 @@ class Guard : public GameObject
 	typedef vector<Tile*> TileRow;
 	typedef vector<TileRow> TileLayer;
 public:
-	Guard(sf::Texture *texture, gridvector v, int channel,string AIscript, SoundHandler *soundhandler);
+	Guard(TextureHandler *textures, gridvector v, int channel,string AIscript, SoundHandler *soundhandler);
 	~Guard();
 
 	virtual void Render(sf::RenderWindow *mainWindow);
@@ -29,6 +29,7 @@ public:
 	int getDirection();
 	virtual Layer getLayer();
 
+	bool getIntersection(GameObject *obj);
 
 	virtual bool isSolid();
 
@@ -41,7 +42,17 @@ private:
 	sf::Vector2i newPos;
 	bool mMoving = false;
 	Grid mGrid;
-	int direction = 0;
+
+	sf::ConvexShape mConvex;
+	void UpdateConePos();
+	std::vector<gridvector*> mVision;
+	int mRange;
+	int direction = 1;
+	int width;
+	string mFace;
+	sf::Sprite mHitboxSprite;
+
+	void setVision(string face);
 
 	float mWait;
 	int mQueuePos;

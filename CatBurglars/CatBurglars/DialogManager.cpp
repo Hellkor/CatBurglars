@@ -57,7 +57,6 @@ void DialogManager::update() {
 		}
 	}
 	else {
-		cout << "reset" << endl;
 		mCurrentConversationDialogID = -1;
 	}
 	
@@ -124,4 +123,8 @@ void DialogManager::showDialog(int ID,float time_as_seconds) {
 }
 void DialogManager::setPosition(sf::Vector2f v) {
 	mPosition = v;
+}
+
+bool DialogManager::isDialogActive() {
+	return mShowDialog;
 }

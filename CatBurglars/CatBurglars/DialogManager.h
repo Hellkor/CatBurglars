@@ -14,6 +14,7 @@ public:
 	void update();
 	void render(sf::RenderWindow *window,sf::Vector2f position);
 	void setPosition(sf::Vector2f v);
+	bool isDialogActive();
 private:
 	int mSelectedDialog;
 	DialogList mDialogList;

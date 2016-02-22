@@ -134,7 +134,7 @@ void Level::render(sf::RenderWindow *window){
 		for (TileRow::size_type x = 0; x < mBottomTileLayer[y].size(); x++)
 		{
 			mBottomTileLayer[y][x]->Render(window);
-			mTopTileLayer[y][x]->Render(window);
+			mWallTileLayer[y][x]->Render(window);
 		}
 	}
 	for each (Entity *e in mEntities){
@@ -148,8 +148,16 @@ void Level::render(sf::RenderWindow *window){
 		}
 	}
 	
+	
+	for (TileLayer::size_type y = 0; y < mTopTileLayer.size(); y++)
+	{
+		for (TileRow::size_type x = 0; x < mTopTileLayer[y].size(); x++)
+		{
+			mTopTileLayer[y][x]->Render(window);
+		}
+	}
 	renderLight(window);
-	renderPlayerFOV(window, 1);
+	//renderPlayerFOV(window, 1);
 	
 	
 	if (mPlayers == 2){
@@ -159,7 +167,7 @@ void Level::render(sf::RenderWindow *window){
 			for (TileRow::size_type x = 0; x < mBottomTileLayer[y].size(); x++)
 			{
 				mBottomTileLayer[y][x]->Render(window);
-				mTopTileLayer[y][x]->Render(window);
+				mWallTileLayer[y][x]->Render(window);
 			}
 		}
 		for each (Entity *e in mEntities) {
@@ -173,6 +181,14 @@ void Level::render(sf::RenderWindow *window){
 			}
 		}
 		
+		
+		for (TileLayer::size_type y = 0; y < mTopTileLayer.size(); y++)
+		{
+			for (TileRow::size_type x = 0; x < mTopTileLayer[y].size(); x++)
+			{
+				mTopTileLayer[y][x]->Render(window);
+			}
+		}
 		renderLight(window);
 		renderPlayerFOV(window, 2);
 
@@ -200,69 +216,78 @@ void Level::update(float dt){
 
 	dialogManager.update();
 
-	if (mLoaded){
-		Channels::update();
 
-		for each (Entity *e in mEntities){
+	if (mLoaded) {
+		if (!dialogManager.isDialogActive()) {
+			Channels::update();
 
-			e->Update(dt);
+			for each (Entity *e in mEntities) {
 
-			if (GameObject *obj = dynamic_cast<GameObject*>(e)){
+				e->Update(dt);
 
-				if (Guard *guard = dynamic_cast<Guard*>(obj)){
+				if (GameObject *obj = dynamic_cast<GameObject*>(e)) {
 
-					guard->AImovement(&mTopTileLayer, &mEntities);
-				}
-				for each (Entity *ent in mEntities){
+					if (Guard *guard = dynamic_cast<Guard*>(obj)) {
 
-					if (Usable *u = dynamic_cast<Usable*>(ent)){
-						u->getInteraction(obj);
+						guard->AImovement(&mWallTileLayer, &mEntities);
 					}
+					for each (Entity *ent in mEntities) {
+
+						if (Usable *u = dynamic_cast<Usable*>(ent)) {
+							u->getInteraction(obj);
+						}
+					}
+
+
+				}
+				if (Cat *cat = dynamic_cast<Cat*>(e)) {
+
+					if (cat->getPlayerIndex() == 1) {
+						l1->position.x = cat->GetPosition().x + 32;
+						l1->position.y = cat->GetPosition().y + 32;
+						p1Controller.move(cat, &mWallTileLayer, &mEntities);
+						mPlayer1View.setCenter((sf::Vector2f)cat->GetPosition());
+					}
+					if (cat->getPlayerIndex() == 2) {
+						l2->position.x = cat->GetPosition().x + 32;
+						l2->position.y = cat->GetPosition().y + 32;
+						p2Controller.move(cat, &mWallTileLayer, &mEntities);
+						mPlayer2View.setCenter((sf::Vector2f)cat->GetPosition());
+					}
+
+
+					for each (Entity *entity in mEntities) {
+						//Pick up Collectible
+						if (Collectible *collectible = dynamic_cast<Collectible*>(entity)) {
+							if (collectible->getInteraction(cat)) {
+
+							}
+						}
+						if (secuCam *cam = dynamic_cast<secuCam*>(entity)) {
+							if (cam->getIntersection(cat) && !(cat->getDashing())) {
+
+								test = true;
+							}
+						}
+						if (Guard *guard = dynamic_cast<Guard*>(entity)) {
+							if (guard->getIntersection(cat) && !(cat->getDashing())) {
+
+								test = true;
+							}
+						}
+
+					}
+
 				}
 
 
 			}
-			if (Cat *cat = dynamic_cast<Cat*>(e)){
-				
-				if (cat->getPlayerIndex() == 1){
-					l1->position.x = cat->GetPosition().x +32;
-					l1->position.y = cat->GetPosition().y +32;
-					p1Controller.move(cat, &mTopTileLayer, &mEntities);
-					mPlayer1View.setCenter((sf::Vector2f)cat->GetPosition());
-				}
-				if (cat->getPlayerIndex() == 2){
-					l2->position.x = cat->GetPosition().x + 32;
-					l2->position.y = cat->GetPosition().y + 32;
-					p2Controller.move(cat, &mTopTileLayer, &mEntities);
-					mPlayer2View.setCenter((sf::Vector2f)cat->GetPosition());
-				}
-				
-
-				for each (Entity *entity in mEntities){
-					//Pick up Collectible
-					if (Collectible *collectible = dynamic_cast<Collectible*>(entity)) {
-						if (collectible->getInteraction(cat)) {
-
-						}
-					}
-					if (secuCam *cam = dynamic_cast<secuCam*>(entity)){
-						if (cam->getIntersection(cat)&& !(cat->getDashing())){
-							
-							test = true;
-						}
-					}
-
-				}
-
-			}
-
-
 		}
-	}
 
 
-	if (test){
-		load();
+		if (test) {
+			load();
+		}
 	}
 
 }
@@ -325,15 +350,13 @@ void Level::load(){
 
 	mEntities.clear();
 	mBottomTileLayer.clear();
-	mTopTileLayer.clear();
+	mWallTileLayer.clear();
+	Channels::clearChannels();
 	
-	Channel c = Channel(1);
-	Channels::addChannel(c);
-	Channels::addChannel(Channel(2));
-	Channels::addChannel(Channel(3));
-	Channels::addChannel(Channel(4));
-	Channels::addChannel(Channel(5));
-	Channels::addChannel(Channel(10));
+
+	for (int i = 0; i < 30; i++) {
+		Channels::addChannel(Channel(i));
+	}
 	soundhandler.startMusic(1);
 
 	generateLevel(mFile);
@@ -353,11 +376,6 @@ void Level::generateView(){
 		mPlayer2View.setSize(512, 720);
 		mPlayer2View.setViewport(sf::FloatRect(0.5, 0, 0.5f, 1));
 	}
-	
-
-
-	
-
 }
 void Level::updateViews(){
 	
@@ -391,7 +409,7 @@ void Level::generateLevel(string name){
 		mBottomTileLayer.push_back(mTileRow);
 
 	}
-	//Top layer tiles
+	//Wall layer tiles
 	for (int y = 0; y < mMapSizeY; y++)
 	{
 		mTileTopRow.clear();
@@ -411,6 +429,30 @@ void Level::generateLevel(string name){
 			
 			
 			
+		}
+		mWallTileLayer.push_back(mTileTopRow);
+		cout << endl;
+	}
+	//Top layer tiles
+	for (int y = 0; y < mMapSizeY; y++)
+	{
+		mTileTopRow.clear();
+		for (int x = 0; x < mMapSizeX; x++)
+		{
+			inputFile >> input;
+			int ID = stoi(input);
+			cout << ID << " ";
+			if (ID != 24) {
+				Tile *tile = new Tile(gridvector(x, y), ID, 0, &textures);
+				mTileTopRow.push_back(tile);
+			}
+			else {
+				Tile *tile = new Tile(gridvector(x, y), 0, 0, &textures);
+				mTileTopRow.push_back(tile);
+			}
+
+
+
 		}
 		mTopTileLayer.push_back(mTileTopRow);
 		cout << endl;
@@ -505,21 +547,59 @@ void Level::generateLevel(string name){
 			mEntities.push_back(new Door(channel, gridvector(xPos, yPos), textures.GetTexture(11), &soundhandler));
 		}
 		if (objectID == 4){
-			mEntities.push_back(new Guard(textures.GetTexture(5), gridvector(xPos, yPos), 1, script, &soundhandler));
+			mEntities.push_back(new Guard(&textures, gridvector(xPos, yPos), 1, script, &soundhandler));
 		}
 		if (objectID == 6) {
 			mEntities.push_back(new secuCam(channel, gridvector(xPos, yPos), textures.GetTexture(13), range, facing));
 		}
 		if (objectID == 7) {
-			mEntities.push_back(new Computer(channel, textures.GetTexture(13), gridvector(xPos, yPos), false, 5));
+			if (range == 0) {
+				mEntities.push_back(new Computer(channel, textures.GetTexture(13), gridvector(xPos, yPos), false, 5,&soundhandler));
+			}
+			else if (range == 1) {
+				mEntities.push_back(new Computer(channel, textures.GetTexture(13), gridvector(xPos, yPos), true, 1, &soundhandler));
+			}
+			
 		}
 		if (objectID == 8) {
 			mEntities.push_back(new MultiDoor(channel, range, gridvector(xPos, yPos), textures.GetTexture(11)));
 		}
 
 	}
-	
 
+	inputFile >> input;
+	objectNumber = stoi(input);
+
+	int playernum = 0;
+
+	//Eventpad layer
+	for (int i = 0; i < objectNumber; i++) {
+		int  xPos, yPos, channel, range;
+
+
+		inputFile >> input;
+		xPos = stoi(input);
+
+		inputFile >> input;
+		yPos = stoi(input);
+
+		inputFile >> input;
+		range = stoi(input);
+
+		inputFile >> input;
+		channel = stoi(input);
+
+		
+		
+		if (range == 0) {
+			mEntities.push_back(new EventPad(DIALOG, gridvector(xPos, yPos)));
+		}
+		else if (range == 1) {
+			mEntities.push_back(new EventPad(WIN, gridvector(xPos, yPos)));
+		}
+		
+
+	}
 	mPlayers = playernum;
 	generateView();
 	mLoaded = true;
