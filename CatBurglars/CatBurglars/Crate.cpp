@@ -27,16 +27,20 @@ void Crate::Update(float dt){
 	if (mMoving){
 		if (direction == 4 && mPosition.y != newPos.y) {
 			mPosition.y -= 2;
+			mSoundHandler->PlaySound(4);
 		}
 		else if (direction == 3 && mPosition.y != newPos.y) {
 			mPosition.y += 2;
+			mSoundHandler->PlaySound(4);
 		}
 		else if (direction == 2 && mPosition.x != newPos.x) {
 			mPosition.x -= 2;
+			mSoundHandler->PlaySound(4);
 
 		}
 		else if (direction == 1 && mPosition.x != newPos.x) {
 			mPosition.x += 2;
+			mSoundHandler->PlaySound(4);
 		}
 		else {
 			mMoving = false;
@@ -79,7 +83,7 @@ void Crate::moveForward(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 			newPos.y = mPosition.y - 64;
 			direction = 4;
 			c.restart();
-			
+			mSoundHandler->PlaySound(4);
 			mMoving = true;
 			mSolid = false;
 		}
@@ -91,7 +95,7 @@ void Crate::moveBackWards(TileLayer *tileLayer, std::vector<Entity*> *Entities) 
 			newPos.y = mPosition.y + 64;
 			direction = 3;
 			c.restart();
-			
+			mSoundHandler->PlaySound(4);
 			mMoving = true;
 			mSolid = false;
 		}
@@ -103,7 +107,7 @@ void Crate::moveLeft(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 			newPos.x = mPosition.x - 64;
 			direction = 2;
 			c.restart();
-			
+			mSoundHandler->PlaySound(4);
 			mMoving = true;
 			mSolid = false;
 		}
@@ -115,7 +119,7 @@ void Crate::moveRight(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 			newPos.x = mPosition.x + 64;
 			direction = 1;
 			c.restart();
-			
+
 			mMoving = true;
 			mSolid = false;
 		}

@@ -19,8 +19,8 @@ public:
 private:
 	int mMusicVolume = 100;
 	int mSoundVolume = 100;
-	sf::SoundBuffer mBuffer, mBuffer2;
-	sf::Sound mSound, mSound2;
+	sf::SoundBuffer mVaktGårB, mShadowDashB, mSnowHaxB, mCratePushB, mDoorOpenB;
+	sf::Sound mVaktGår, mShadowDash, mSnowHax, mCratePush, mDoorOpen;
 	sf::Music mMusic;
 };
 
