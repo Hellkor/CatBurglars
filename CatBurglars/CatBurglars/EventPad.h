@@ -3,12 +3,13 @@
 
 #include "Usable.h"
 #include "gridvector.h"
+#include "DialogManager.h"
 enum EVENT_TYPE { WIN, DIALOG };
 class EventPad : public Usable{
 	
 public:
 
-	EventPad(EVENT_TYPE eventtype, gridvector coords, int dialogID);
+	EventPad(EVENT_TYPE eventtype, gridvector coords, int dialogID,DialogManager *dialogmanager);
 	virtual void Render(sf::RenderWindow *mainWindow);
 	virtual void Update(float dt);
 	virtual sf::Vector2i GetPosition();
@@ -27,7 +28,8 @@ private:
 	int mChannelID;
 	bool isActivated;
 	EVENT_TYPE mEventType;
-
+	DialogManager *mDialogManager;
+	
 };
 
 

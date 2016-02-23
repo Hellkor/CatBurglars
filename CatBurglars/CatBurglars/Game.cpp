@@ -36,7 +36,7 @@ Game::Game() {
 	//Test for loading in maps
 
 	Level *testLevel = new Level("11");
-	Level *level2 = new Level("13");
+	Level *level2 = new Level("12");
 
 	LevelManager::addLevel(testLevel);
 	LevelManager::addLevel(level2);

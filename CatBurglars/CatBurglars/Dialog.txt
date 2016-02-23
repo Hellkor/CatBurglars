@@ -1,7 +1,10 @@
-1 {
-Hi, my name is Axel. This is a test to try out the dialog box.
-aasdasdasdasdsad jfjfjfjfjf asjdasjdasjd jdsjasj...--- 
-}
-2 { 
-asdasdasdsadsadsafdsg
-}
+ID: 0
+Text: { Test Text yoyoyoyoyoyo dialog 0 }
+ID: 1
+TEXT: { Dialog 1 test }
+ID: 2
+TEXT: { Dialog 2 test }
+ID: 3
+TEXT: { Dialog 3 test }
+ID: 4
+TEXT: { Dialog 4 test }

@@ -2,12 +2,20 @@
 
 int INTERACTION_RADIUSS_CRATE = 64;
 
-Crate::Crate(sf::Texture *texture, gridvector position, int ID, SoundHandler *soundhandler): GameObject(),
+Crate::Crate(sf::Texture *texture, gridvector position, int ID, SoundHandler *soundhandler, bool movable): GameObject(),
 mID(ID),
 mCoord(position),
 mSoundHandler(soundhandler),
-mSolid(true){
+mSolid(true),
+mMoveable(movable){
+
 	mSprite.setTexture(*texture, true);
+	if (mMoveable) {
+		mSprite.setTextureRect(sf::IntRect(0, 0, 64, 64));
+	}
+	else {
+		mSprite.setTextureRect(sf::IntRect(64, 0, 64, 64));
+	}
 
 	mPosition = sf::Vector2i(mCoord.x * 64, mCoord.y * 64);
 }
@@ -74,7 +82,7 @@ sf::Vector2i Crate::GetPosition(){
 }
 
 void Crate::moveForward(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
-	if (!mMoving) {
+	if (!mMoving && mMoveable) {
 		if (mGrid.canCrateMove(gridvector(mCoord.x, mCoord.y - 1), tileLayer, Entities)){
 			newPos.y = mPosition.y - 64;
 			direction = 4;
@@ -86,7 +94,7 @@ void Crate::moveForward(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 	}
 }
 void Crate::moveBackWards(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
-	if (!mMoving) {
+	if (!mMoving && mMoveable) {
 		if (mGrid.canCrateMove(gridvector(mCoord.x, mCoord.y + 1), tileLayer, Entities)){
 			newPos.y = mPosition.y + 64;
 			direction = 3;
@@ -98,7 +106,7 @@ void Crate::moveBackWards(TileLayer *tileLayer, std::vector<Entity*> *Entities) 
 	}
 }
 void Crate::moveLeft(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
-	if (!mMoving) {
+	if (!mMoving && mMoveable) {
 		if (mGrid.canCrateMove(gridvector(mCoord.x - 1, mCoord.y), tileLayer, Entities)){
 			newPos.x = mPosition.x - 64;
 			direction = 2;
@@ -110,7 +118,7 @@ void Crate::moveLeft(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 	}
 }
 void Crate::moveRight(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
-	if (!mMoving) {
+	if (!mMoving && mMoveable) {
 		if (mGrid.canCrateMove(gridvector(mCoord.x + 1, mCoord.y), tileLayer, Entities)){
 			newPos.x = mPosition.x + 64;
 			direction = 1;
@@ -135,35 +143,6 @@ bool Crate::getInteraction(Cat *cat){
 
 	return true;
 
-	//if (lengthCrate(mPosition, cat->GetPosition()) < INTERACTION_RADIUSS_CRATE){
-	/*
-		if (cat->interacting()){
-			std::cout << "I am being interacted interacting" << std::endl;
-			if ((cat->getDirection() == 1)){
-				
-				moveRight();
-			}
-			if ((cat->getDirection() == 2)){
-				
-				moveLeft();
-			}
-			if ((cat->getDirection() == 3)){
-				
-				moveBackWards();
-			}
-			if ((cat->getDirection() == 4)){
-				
-				moveForward();
-			}
-			return true;
-		}
-		*/
-		
-		//else
-			//cat->Collide();
-		//return true;
-		
-		//}
 
 }
 

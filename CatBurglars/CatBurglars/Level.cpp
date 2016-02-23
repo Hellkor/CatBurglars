@@ -88,7 +88,7 @@ Level::Level(string filename) :
 	FOV_lightmap.setTexture(FOV_lightMapTexture.getTexture()); // Make our lightmap sprite use the correct texture
 
 
-	FOV_lightTexture.loadFromFile("Resources/light.png"); // Load in our light 
+	FOV_lightTexture.loadFromFile("Resources/fovlight.png"); // Load in our light 
 	FOV_lightTexture.setSmooth(true); // (Optional) It just smoothes the light out a bit
 
 	FOV_light.setTexture(FOV_lightTexture); // Make our lightsprite use our loaded image
@@ -134,7 +134,6 @@ void Level::render(sf::RenderWindow *window){
 		for (TileRow::size_type x = 0; x < mBottomTileLayer[y].size(); x++)
 		{
 			mBottomTileLayer[y][x]->Render(window);
-			mWallTileLayer[y][x]->Render(window);
 		}
 	}
 	for each (Entity *e in mEntities){
@@ -147,13 +146,14 @@ void Level::render(sf::RenderWindow *window){
 			e->Render(window);
 		}
 	}
-	for each (Entity *e in mEntities) {
-		if (e->getLayer() == FRONT) {
-			e->Render(window);
+	for (TileLayer::size_type y = 0; y < mBottomTileLayer.size(); y++)
+	{
+		for (TileRow::size_type x = 0; x < mBottomTileLayer[y].size(); x++)
+		{
+			mWallTileLayer[y][x]->Render(window);
 		}
 	}
-	
-	
+
 	for (TileLayer::size_type y = 0; y < mTopTileLayer.size(); y++)
 	{
 		for (TileRow::size_type x = 0; x < mTopTileLayer[y].size(); x++)
@@ -161,8 +161,25 @@ void Level::render(sf::RenderWindow *window){
 			mTopTileLayer[y][x]->Render(window);
 		}
 	}
+	for each (Entity *e in mEntities) {
+		if (e->getLayer() == OnWallUsables) {
+			e->Render(window);
+		}
+	}
+	for each (Entity *e in mEntities) {
+		if (e->getLayer() == FRONT) {
+			e->Render(window);
+		}
+	}
+	for each (Entity *e in mEntities) {
+		if (e->getLayer() == DOORS) {
+			e->Render(window);
+		}
+	}
+	
+	
 	renderLight(window);
-	//renderPlayerFOV(window, 1);
+	renderPlayerFOV(window, 1);
 	
 	
 	if (mPlayers == 2){
@@ -172,7 +189,6 @@ void Level::render(sf::RenderWindow *window){
 			for (TileRow::size_type x = 0; x < mBottomTileLayer[y].size(); x++)
 			{
 				mBottomTileLayer[y][x]->Render(window);
-				mWallTileLayer[y][x]->Render(window);
 			}
 		}
 		for each (Entity *e in mEntities) {
@@ -185,14 +201,13 @@ void Level::render(sf::RenderWindow *window){
 				e->Render(window);
 			}
 		}
-
-		for each (Entity *e in mEntities) {
-			if (e->getLayer() == FRONT) {
-				e->Render(window);
+		for (TileLayer::size_type y = 0; y < mBottomTileLayer.size(); y++)
+		{
+			for (TileRow::size_type x = 0; x < mBottomTileLayer[y].size(); x++)
+			{
+				mWallTileLayer[y][x]->Render(window);
 			}
 		}
-		
-		
 		for (TileLayer::size_type y = 0; y < mTopTileLayer.size(); y++)
 		{
 			for (TileRow::size_type x = 0; x < mTopTileLayer[y].size(); x++)
@@ -200,6 +215,24 @@ void Level::render(sf::RenderWindow *window){
 				mTopTileLayer[y][x]->Render(window);
 			}
 		}
+		for each (Entity *e in mEntities) {
+			if (e->getLayer() == OnWallUsables) {
+				e->Render(window);
+			}
+		}
+		for each (Entity *e in mEntities) {
+			if (e->getLayer() == FRONT) {
+				e->Render(window);
+			}
+		}
+		for each (Entity *e in mEntities) {
+			if (e->getLayer() == DOORS) {
+				e->Render(window);
+			}
+		}
+
+
+		
 		renderLight(window);
 		renderPlayerFOV(window, 2);
 
@@ -214,7 +247,7 @@ void Level::render(sf::RenderWindow *window){
 		window->draw(DIVIDER_SPRITE);
 	}
 	
-	dialogManager.render(window, sf::Vector2f(5,300));
+	dialogManager.render(window, sf::Vector2f(5,650));
 }
 
 void Level::addPlayer(Cat *cat , int player){
@@ -229,9 +262,10 @@ void Level::update(float dt){
 
 
 	if (mLoaded) {
-		if (!dialogManager.isDialogActive()) {
-			Channels::update();
 
+		if (!dialogManager.isDialogActive()) {
+
+			Channels::update();
 			for each (Entity *e in mEntities) {
 
 				e->Update(dt);
@@ -366,9 +400,11 @@ void Level::load(){
 	Channels::clearChannels();
 	
 
-	for (int i = 0; i < 30; i++) {
+	for (int i = 0; i <= 45; i++) {
+
 		Channels::addChannel(Channel(i));
 	}
+
 	soundhandler.startMusic(1);
 
 	generateLevel(mFile);
@@ -451,12 +487,11 @@ void Level::generateLevel(string name){
 			int ID = stoi(input);
 			if (ID != 24) {
 				Tile *tile = new Tile(gridvector(x, y), ID, 0, &textures);
-				tile->setAlpha(255 / 2);
+
 				mTileTopRow.push_back(tile);
 			}
 			else {
 				Tile *tile = new Tile(gridvector(x, y), 0, 0, &textures);
-				tile->setAlpha(255 / 2);
 				mTileTopRow.push_back(tile);
 			}
 		}
@@ -538,18 +573,19 @@ void Level::generateLevel(string name){
 		if (objectID == 0){
 			playernum++;
 			if (playernum == 2){
-				mEntities.push_back(new Cat(textures.GetTexture(10), gridvector(xPos, yPos), 1, &soundhandler, 2));
+				mEntities.push_back(new Cat(textures.GetTexture(9), gridvector(xPos, yPos), channel, &soundhandler, 2));
 			}
 			if (playernum == 1){
-				mEntities.push_back(new Cat(textures.GetTexture(10), gridvector(xPos, yPos), 1, &soundhandler,1));
+				mEntities.push_back(new Cat(textures.GetTexture(10), gridvector(xPos, yPos), channel, &soundhandler,1));
 				
 			}
 		}
 
 		if (objectID == 2){
-			mEntities.push_back(new Crate(textures.GetTexture(4), gridvector(xPos, yPos), 1, &soundhandler));
+			mEntities.push_back(new Crate(textures.GetTexture(4), gridvector(xPos, yPos), 1, &soundhandler,true));
 
 		}
+		
 		if (objectID == 3){
 
 			mEntities.push_back(new Door(channel, gridvector(xPos, yPos), textures.GetTexture(11), &soundhandler));
@@ -562,15 +598,18 @@ void Level::generateLevel(string name){
 		}
 		if (objectID == 7) {
 			if (range == 0) {
-				mEntities.push_back(new Computer(channel, textures.GetTexture(13), gridvector(xPos, yPos), false, hold,&soundhandler));
+				mEntities.push_back(new Computer(channel, textures.GetTexture(13), gridvector(xPos, yPos), false, hold,&soundhandler,facing));
 			}
 			else if (range == 1) {
-				mEntities.push_back(new Computer(channel, textures.GetTexture(14), gridvector(xPos, yPos), true, hold, &soundhandler));
+				mEntities.push_back(new Computer(channel, textures.GetTexture(14), gridvector(xPos, yPos), true, hold, &soundhandler, facing));
 			}
 			
 		}
 		if (objectID == 8) {
 			mEntities.push_back(new MultiDoor(channel, range, gridvector(xPos, yPos), textures.GetTexture(11)));
+		}
+		if (objectID == 9) {
+			mEntities.push_back(new Crate(textures.GetTexture(4), gridvector(xPos, yPos), 1, &soundhandler, false));
 		}
 
 	}
@@ -599,10 +638,10 @@ void Level::generateLevel(string name){
 		
 		
 		if (range == 0) {
-			mEntities.push_back(new EventPad(DIALOG, gridvector(xPos, yPos),channel));
+			mEntities.push_back(new EventPad(DIALOG, gridvector(xPos, yPos),channel, &dialogManager));
 		}
 		else if (range == 1) {
-			mEntities.push_back(new EventPad(WIN, gridvector(xPos, yPos),channel));
+			mEntities.push_back(new EventPad(WIN, gridvector(xPos, yPos),channel,&dialogManager));
 		}
 		
 

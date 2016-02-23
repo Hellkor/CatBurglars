@@ -24,6 +24,7 @@ private:
 	void readFile();
 	string mFilename;
 	sf::Vector2f mPosition;
+	sf::Vector2f mTextPos;
 	sf::Sprite mDialogBox;
 	sf::Font mFont;
 	sf::Text mRenderText;

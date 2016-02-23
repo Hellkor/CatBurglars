@@ -1,7 +1,7 @@
 #include "Guard.h"
 #include <iostream>
 #include <fstream>
-
+#include <stdio.h>
 string DIRECTORY = "Resources/AI/";
 
 Guard::Guard(TextureHandler *textures, gridvector position, int ID,string AIscript, SoundHandler *soundhandler) : GameObject(),
@@ -163,7 +163,7 @@ void Guard::Render(sf::RenderWindow *mainWindow){
 
 	for each (gridvector *v in mVision) {
 		mHitboxSprite.setPosition(v->x * 64, v->y * 64);
-		mainWindow->draw(mHitboxSprite);
+		//mainWindow->draw(mHitboxSprite);
 	}
 }
 void Guard::loadAI(string filename){
@@ -174,6 +174,13 @@ void Guard::loadAI(string filename){
 
 	while (!inputFile.eof()){
 		inputFile >> input;
+		
+		string tempinput;
+		for (std::string::size_type i = 0; i < input.size(); i++) {
+			char *c = &input[i];
+			*c = toupper(*c);
+		}
+		
 		mCommandQueue.push_back(input);
 	}
 	
@@ -186,16 +193,16 @@ void Guard::AImovement(TileLayer *tiles, std::vector<Entity*> *entities){
 	if (!mMoving && mClock.getElapsedTime() >= sf::seconds(1) && mQueuePos < mCommandQueue.size()){
 
 
-		if (mCommandQueue[mQueuePos] == "N"){
+		if (mCommandQueue[mQueuePos] == "N" ){
 			moveForward(tiles, entities);
 		}
-		if (mCommandQueue[mQueuePos] == "S"){
+		if (mCommandQueue[mQueuePos] == "S" ){
 			moveBackWards(tiles, entities);
 		}
-		if (mCommandQueue[mQueuePos] == "W"){
+		if (mCommandQueue[mQueuePos] == "W" ){
 			moveLeft(tiles, entities);
 		}
-		if (mCommandQueue[mQueuePos] == "E"){
+		if (mCommandQueue[mQueuePos] == "E" ){
 			moveRight(tiles, entities);
 		}
 		if (mCommandQueue[mQueuePos] == "TN") {
@@ -357,5 +364,5 @@ bool Guard::isMoving(){
 	return mMoving;
 }
 Layer Guard::getLayer() {
-	return BACK;
+	return FRONT;
 }

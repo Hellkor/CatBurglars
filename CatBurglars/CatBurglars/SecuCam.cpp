@@ -133,8 +133,6 @@ bool secuCam::checkChannels() {
 	return true;
 }
 void secuCam::Update(float dt){
-	//if (Channels::isChannelActive(mChannel)){ isOn = false; }
-	//else isOn = true;
 
 	//ifall någon kanal är inaktiv så är dörren stängd
 	if (checkChannels()) {
@@ -185,7 +183,7 @@ void secuCam::Render(sf::RenderWindow *window){
 		for each (gridvector *v in mVision){
 			mHitboxSprite.setPosition(v->x * 64, v->y * 64);
 			
-			window->draw(mHitboxSprite);
+			//window->draw(mHitboxSprite);
 		}
 	}
 

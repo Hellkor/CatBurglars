@@ -8,7 +8,7 @@ class Computer : public Usable{
 public:
 
 
-	Computer(int channel, sf::Texture *texture, gridvector coords, bool toggle, float holdlength, SoundHandler *soundhandler);
+	Computer(int channel, sf::Texture *texture, gridvector coords, bool toggle, float holdlength, SoundHandler *soundhandler, string face);
 	virtual void Render(sf::RenderWindow *mainWindow);
 	virtual void Update(float dt);
 	virtual sf::Vector2i GetPosition();
@@ -21,6 +21,7 @@ public:
 	virtual bool isInteracting();
 	virtual Layer getLayer();
 private:
+	string mFace;
 	sf::Sprite mSprite;
 	sf::Vector2i mPosition;
 	gridvector mCoords;

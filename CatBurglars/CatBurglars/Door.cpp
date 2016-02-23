@@ -20,7 +20,7 @@ void Door::Update(float dt){
 	else mSolid = true;
 }
 Layer Door::getLayer() {
-	return FRONT;
+	return DOORS;
 }
 void Door::connectToChannel(int channel){
 	mChannel = channel;

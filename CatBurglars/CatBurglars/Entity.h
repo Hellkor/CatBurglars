@@ -5,7 +5,7 @@
 #include <iostream>
 
 using namespace std;
-enum Layer { FRONT, MIDDLE ,BACK };
+enum Layer { BACK, MIDDLE , FRONT, OnWallUsables , DOORS };
 class Entity
 {
 public:

@@ -1,10 +1,11 @@
 #include "EventPad.h"
 #include "LevelManager.h"
 
-EventPad::EventPad(EVENT_TYPE eventtype, gridvector coords, int dialogID):
+EventPad::EventPad(EVENT_TYPE eventtype, gridvector coords, int dialogID, DialogManager *dialogmanager):
 	mEventType(eventtype),
 	mCoords(coords),
-	mDialogID(dialogID){
+	mDialogID(dialogID),
+	mDialogManager(dialogmanager){
 
 	isActivated = false;
 	mPosition.x = mCoords.x * 64;
@@ -21,7 +22,7 @@ bool EventPad::getInteraction(GameObject *g){
 				LevelManager::nextLevel();
 			}
 			if (mEventType == DIALOG){
-				cout << "Dialog!" << endl;
+				mDialogManager->showDialog(mDialogID,5);
 			}
 			isActivated = true;
 			return true;
@@ -29,8 +30,6 @@ bool EventPad::getInteraction(GameObject *g){
 		else return false;
 	}
 	else return false;
-		
-
 }
 void EventPad::Update(float dt){
 

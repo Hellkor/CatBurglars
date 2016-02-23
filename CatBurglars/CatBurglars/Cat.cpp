@@ -19,7 +19,7 @@ canPushCrate(true){
 		mSpeed = 2;
 	}
 	if (mID == 2){
-		mSpeed = 1;
+		mSpeed = 2;
 		canPushCrate = false;
 	}
 	if (mID == 3){
@@ -368,5 +368,5 @@ bool Cat::snowHax(){
 		return false;
 }
 Layer Cat::getLayer() {
-	return MIDDLE;
+	return FRONT;
 }
