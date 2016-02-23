@@ -405,7 +405,8 @@ void Level::load(){
 		Channels::addChannel(Channel(i));
 	}
 
-	soundhandler.startMusic(1);
+	soundhandler.startMusic(2);
+
 
 	generateLevel(mFile);
 
