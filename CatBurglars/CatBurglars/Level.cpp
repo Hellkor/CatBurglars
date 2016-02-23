@@ -154,13 +154,7 @@ void Level::render(sf::RenderWindow *window){
 		}
 	}
 
-	for (TileLayer::size_type y = 0; y < mTopTileLayer.size(); y++)
-	{
-		for (TileRow::size_type x = 0; x < mTopTileLayer[y].size(); x++)
-		{
-			mTopTileLayer[y][x]->Render(window);
-		}
-	}
+	
 	for each (Entity *e in mEntities) {
 		if (e->getLayer() == OnWallUsables) {
 			e->Render(window);
@@ -176,7 +170,13 @@ void Level::render(sf::RenderWindow *window){
 			e->Render(window);
 		}
 	}
-	
+	for (TileLayer::size_type y = 0; y < mTopTileLayer.size(); y++)
+	{
+		for (TileRow::size_type x = 0; x < mTopTileLayer[y].size(); x++)
+		{
+			mTopTileLayer[y][x]->Render(window);
+		}
+	}
 	
 	renderLight(window);
 	renderPlayerFOV(window, 1);
@@ -208,13 +208,7 @@ void Level::render(sf::RenderWindow *window){
 				mWallTileLayer[y][x]->Render(window);
 			}
 		}
-		for (TileLayer::size_type y = 0; y < mTopTileLayer.size(); y++)
-		{
-			for (TileRow::size_type x = 0; x < mTopTileLayer[y].size(); x++)
-			{
-				mTopTileLayer[y][x]->Render(window);
-			}
-		}
+		
 		for each (Entity *e in mEntities) {
 			if (e->getLayer() == OnWallUsables) {
 				e->Render(window);
@@ -230,7 +224,13 @@ void Level::render(sf::RenderWindow *window){
 				e->Render(window);
 			}
 		}
-
+		for (TileLayer::size_type y = 0; y < mTopTileLayer.size(); y++)
+		{
+			for (TileRow::size_type x = 0; x < mTopTileLayer[y].size(); x++)
+			{
+				mTopTileLayer[y][x]->Render(window);
+			}
+		}
 
 		
 		renderLight(window);

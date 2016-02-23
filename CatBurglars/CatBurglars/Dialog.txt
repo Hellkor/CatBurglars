@@ -1,9 +1,9 @@
 ID: 0
 Text: { Test Text yoyoyoyoyoyo dialog 0 }
 ID: 1
-TEXT: { Dialog 1 test }
+TEXT: { Press 'E' to dash }
 ID: 2
-TEXT: { Dialog 2 test }
+TEXT: { Press 'E' to dash }
 ID: 3
 TEXT: { Dialog 3 test }
 ID: 4

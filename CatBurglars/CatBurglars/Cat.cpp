@@ -362,7 +362,7 @@ bool Cat::getDashing(){
 
 bool Cat::snowHax(){
 	if (mID == 2){
-		mSoundHandler->PlaySound(3);
+		
 		return true;
 	}
 	else

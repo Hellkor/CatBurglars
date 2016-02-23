@@ -41,7 +41,6 @@ Game::Game() {
 	LevelManager::addLevel(testLevel);
 	LevelManager::addLevel(level2);
 
-	//window->setVerticalSyncEnabled(true);
 	window->setFramerateLimit(60);
 
 	LevelManager::load();
