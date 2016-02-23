@@ -1,6 +1,8 @@
 #pragma once
 #include "Recievers.h"
 #include "Channels.h"
+#include "Soundhandler.h"
+
 class Door : public Recievers{
 public:
 	Door(int channel, gridvector coords, sf::Texture *texture, SoundHandler *soundhandler);

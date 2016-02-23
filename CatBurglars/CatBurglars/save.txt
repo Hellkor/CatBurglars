@@ -1,2 +1,2 @@
-Collectibles: 549
+Collectibles: 578
 Level: 10

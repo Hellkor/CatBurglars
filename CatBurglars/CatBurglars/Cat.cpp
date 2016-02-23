@@ -15,6 +15,15 @@ mAnimationhandler(64, 64, &mSprite),
 mPlayerIndex(player),
 canPushCrate(true){
 
+	if (player == 1) {
+		mSoundHandler->initializeCat1(this);
+	}
+
+	if (player == 2) {
+		mSoundHandler->initializeCat1(this);
+	}
+
+
 	if (mID == 1){
 		mSpeed = 2;
 	}

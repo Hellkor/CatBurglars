@@ -4,7 +4,7 @@
 #include "Recievers.h"
 #include "Channels.h"
 #include <SFML/Graphics.hpp>
-
+#include "Soundhandler.h"
 
 class secuCam : public Recievers{
 
