@@ -143,7 +143,7 @@ void Cat::moveForward(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 		direction = 4;
 		if (mGrid.isTilePassable(mCoord, gridvector(mCoord.x, mCoord.y - 1), tileLayer, Entities)){
 			newPos.y = mPosition.y - 64;
-			mSoundHandler->PlaySound(1);
+			//mSoundHandler->PlaySound(1);
 			mMoving = true;
 		}
 	}

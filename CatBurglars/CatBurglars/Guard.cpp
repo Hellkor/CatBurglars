@@ -234,31 +234,41 @@ void Guard::AImovement(TileLayer *tiles, std::vector<Entity*> *entities){
 }
 void Guard::Update(float dt){
 	UpdateConePos();
+	if (mSound.getStatus() == sf::Sound::Playing) {
 	mSound.setVolume(mSoundHandler->distanceSoundTest(this));
+	}
 	if (mMoving){
 		if (direction == 4 && mPosition.y != newPos.y) {
 			mPosition.y -= (1 * mSpeed);
 			mAnimationhandler.animation(3, 5, sf::milliseconds(150));
 			//mSoundHandler->PlaySound(1);
-			mSound.play();
+			if (!(mSound.getStatus() == sf::Sound::Playing)) {
+				mSound.play();
+			}
 		}
 		else if (direction == 3 && mPosition.y != newPos.y) {
 			mPosition.y += (1 * mSpeed);
 			mAnimationhandler.animation(2, 5, sf::milliseconds(150));
 			//mSoundHandler->PlaySound(1);
-			mSound.play();
+			if (!(mSound.getStatus() == sf::Sound::Playing)) {
+				mSound.play();
+			}
 		}
 		else if (direction == 2 && mPosition.x != newPos.x) {
 			mPosition.x -= (1 * mSpeed);
 			mAnimationhandler.animation(1, 5, sf::milliseconds(200));
 			//mSoundHandler->PlaySound(1);
-			mSound.play();
+			if (!(mSound.getStatus() == sf::Sound::Playing)) {
+				mSound.play();
+			}
 		}
 		else if (direction == 1 && mPosition.x != newPos.x) {
 			mPosition.x += (1 * mSpeed);
 			mAnimationhandler.animation(0, 5, sf::milliseconds(200));
 			//mSoundHandler->PlaySound(1);
-			mSound.play();
+			if (!(mSound.getStatus() == sf::Sound::Playing)) {
+				mSound.play();
+			}
 		}
 		else {
 			mMoving = false;
