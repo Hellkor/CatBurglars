@@ -125,7 +125,7 @@ Level::Level(string filename) :
 // Renderar level
 void Level::render(sf::RenderWindow *window){
 	
-	window->clear();
+	//window->clear();
 	window->setView(mPlayer1View);
 	
 
@@ -239,7 +239,7 @@ void Level::render(sf::RenderWindow *window){
 		
 		
 	}
-
+	
 	// Draw gui objects
 	window->setView(guiView);
 	if (mPlayers == 2) {
