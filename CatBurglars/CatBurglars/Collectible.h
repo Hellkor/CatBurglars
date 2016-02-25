@@ -4,6 +4,7 @@
 #include "GameObject.h"
 #include "gridvector.h"
 #include "Cat.h"
+#include "Soundhandler.h"
 class Collectible : public GameObject{
 public:
 

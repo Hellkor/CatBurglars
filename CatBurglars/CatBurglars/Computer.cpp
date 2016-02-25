@@ -12,7 +12,7 @@ mToggle(toggle),
 mHoldlength(holdlength),
 mSoundHandler(soundhandler),
 mFace(face){
-
+	mInteractedSound.setBuffer(*mSoundHandler->getSound(3));
 	mPosition.x = mCoords.x * 64;
 	mPosition.y = mCoords.y * 64;
 	if (mFace == "S") {
@@ -52,7 +52,8 @@ bool Computer::getInteraction(GameObject *g){
 		if (cat->snowHax()){
 			if (computerLength(mPosition, g->GetPosition()) < COMPUTER_INTERACTION_RADIUS && g->isInteracting()){
 				// activate channel
-				mSoundHandler->PlaySound(3);
+				//mSoundHandler->PlaySound(3);
+				//mInteractedSound.play(); 
 				Channels::setActive(mChannelID, mToggle, mHoldlength);
 				// play sound
 				return true;

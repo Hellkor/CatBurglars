@@ -5,7 +5,7 @@
 #include "GameObject.h"
 #include "Grid.h"
 #include "AnimationHandler.h"
-
+#include "Soundhandler.h"
 class Cat : public GameObject
 {
 	typedef vector<Tile*> TileRow;

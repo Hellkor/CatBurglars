@@ -31,7 +31,7 @@ private:
 	float mHoldlength;
 
 	SoundHandler *mSoundHandler;
-
+	sf::Sound mInteractedSound;
 };
 
 

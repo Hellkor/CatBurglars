@@ -5,6 +5,7 @@
 #include "GameObject.h"
 #include "Grid.h"
 #include "AnimationHandler.h"
+#include "Soundhandler.h"
 class Guard : public GameObject
 {
 	typedef vector<Tile*> TileRow;
@@ -70,6 +71,8 @@ private:
 
 	AnimationHandler mAnimationhandler;
 	SoundHandler* mSoundHandler;
+
+	sf::Sound mWalkSound;
 };
 
 #endif

@@ -14,24 +14,24 @@ SoundHandler::~SoundHandler()
 void SoundHandler::Initialize()
 {
 	mVaktGårB.loadFromFile("Resources/Sounds/Fotsteg.ogg");
-	mVaktGår.setBuffer(mVaktGårB);
+	//mVaktGår.setBuffer(mVaktGårB);
 
 	mShadowDashB.loadFromFile("Resources/Sounds/ahem.wav");
-	mShadowDash.setBuffer(mShadowDashB);
+	//mShadowDash.setBuffer(mShadowDashB);
 
 	mSnowHaxB.loadFromFile("Resources/Sounds/Tangent.ogg");
-	mSnowHax.setBuffer(mSnowHaxB);
+	//mSnowHax.setBuffer(mSnowHaxB);
 
 	mCratePushB.loadFromFile("Resources/Sounds/Putta.ogg");
-	mCratePush.setBuffer(mCratePushB);
+	//mCratePush.setBuffer(mCratePushB);
 
 	mDoorOpenB.loadFromFile("Resources/Sounds/Dörr.ogg");
-	mDoorOpen.setBuffer(mDoorOpenB);
+	//mDoorOpen.setBuffer(mDoorOpenB);
 }
 
 void SoundHandler::PlaySound(int ID)
 {
-	if (ID == 1) {
+/*	if (ID == 1) {
 		if (!(mVaktGår.getStatus() == sf::Sound::Playing)) {
 			mVaktGår.play();
 		}
@@ -55,7 +55,7 @@ void SoundHandler::PlaySound(int ID)
 		if (!(mDoorOpen.getStatus() == sf::Sound::Playing)) {
 			mDoorOpen.play();
 		}
-	}
+	}*/
 }
 
 void SoundHandler::startMusic(int ID){
@@ -82,9 +82,93 @@ void SoundHandler::setMusicVolume(int volume) {
 
 void SoundHandler::setSoundVolume(int volume) {
 	mSoundVolume = volume;
-	mVaktGår.setVolume(volume);
-	mShadowDash.setVolume(volume);
-	mSnowHax.setVolume(volume);
-	mCratePush.setVolume(volume);
-	mDoorOpen.setVolume(volume);
+}
+
+void SoundHandler::initializeCat1(GameObject *cat1) {
+	mCat1 = cat1;
+}
+
+void SoundHandler::initializeCat2(GameObject *cat2) {
+	mCat2 = cat2;
+}
+
+sf::SoundBuffer* SoundHandler::getSound(int ID) {
+	if (ID == 1) {
+		return &mVaktGårB;
+	}
+	if (ID == 2) {
+		return &mShadowDashB;
+	}
+	if (ID == 3) {
+		return &mSnowHaxB;
+	}
+	if (ID == 4) {
+		return &mCratePushB;
+	}
+	if (ID == 5) {
+		return &mDoorOpenB;
+	}
+}
+
+int SoundHandler::distanceSound(GameObject *gameobject) {
+	int newVolume = mSoundVolume;
+	int x = mCat1->getCoords().x - gameobject->getCoords().x;
+	int y = mCat1->getCoords().y - gameobject->getCoords().y;
+	int x2 = 0;
+	int y2 = 0;
+	int length;
+	//Check if not NULL
+	if (mCat2 != 0) {
+		x2 = mCat2->getCoords().x - gameobject->getCoords().x;
+		y2 = mCat2->getCoords().y - gameobject->getCoords().y;
+	}
+
+	if (pythagoras(x, y) >= pythagoras(x2, y2)) {
+		length = pythagoras(x, y);
+	}
+	else {
+		length = (pythagoras(x2, y2));
+	}
+
+	if (length <-10 || length >10) {
+		newVolume = 0;
+	}
+	if (length == -10 || length == 10) {
+		newVolume = mSoundVolume * 0.1;
+	}
+	if (length == -9 || length == 9) {
+		newVolume = mSoundVolume * 0.2;
+	}
+	if (length == -8 || length == 8) {
+		newVolume = mSoundVolume * 0.3;
+	}
+	if (length == -7 || length == 7) {
+		newVolume = mSoundVolume * 0.4;
+	}
+	if (length == -6 || length == 6) {
+		newVolume = mSoundVolume * 0.5;
+	}
+	if (length == -5 || length == 5) {
+		newVolume = mSoundVolume * 0.6;
+	}
+	if (length == -4 || length == 4) {
+		newVolume = mSoundVolume * 0.7;
+	}
+	if (length == -3 || length == 3) {
+		newVolume = mSoundVolume * 0.8;
+	}
+	if (length == -2 || length == 2) {
+		newVolume = mSoundVolume * 0.9;
+	}
+	if (length == -1 || length == 1) {
+		newVolume = mSoundVolume * 1;
+	}
+
+	return newVolume;
+}
+
+int SoundHandler::pythagoras(int x, int y) {
+	int length;
+	length = (sqrt((x * x) + (y * y)));
+	return length;
 }
