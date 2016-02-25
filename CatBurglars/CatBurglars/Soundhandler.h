@@ -19,8 +19,6 @@ public:
 	void setSoundVolume(int volume);
 	void initializeCat1(GameObject *cat1);
 	void initializeCat2(GameObject *cat2);
-	void distanceSound(int ID, GameObject *gameobject);
-
 	sf::SoundBuffer* getSound(int ID);
 	int distanceSoundTest(GameObject *gameobject);
 
@@ -34,6 +32,8 @@ private:
 
 	GameObject *mCat1;
 	GameObject *mCat2;
+
+	int pythagoras(int x, int y);
 };
 
 #endif
