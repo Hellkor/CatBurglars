@@ -80,20 +80,28 @@ Game::Game() {
 	auto b3 = sfg::Button::Create("Select Stage");
 
 	auto sfgwindow = sfg::Window::Create();
-	auto box = sfg::Box::Create(sfg::Box::Orientation::VERTICAL, 5.0f);
-	auto m_label = sfg::Label::Create("Menu");
-	box->Pack(m_label);
-	for (int i = 0; i < 10; i++) {
-		auto my_button = sfg::Button::Create("Tile: " + std::to_string(i));
-		my_button->SetPosition(sf::Vector2f(0, 0));
-		auto sgImage = sfg::Image::Create(image);
-		my_button->SetImage(sgImage);
-		my_button->GetSignal(sfg::Widget::OnLeftClick).Connect(std::bind(&Game::OnButtonClick, this, i));
-		box->Pack(my_button, false);
-	}
-    
-	sfgwindow->Add(box);
+	auto scroll = sfg::Scrollbar::Create(sfg::Range::Orientation::VERTICAL);
 	
+	
+	auto m_label = sfg::Label::Create("Menu");
+	auto table = sfg::Table::Create();
+	//table->Attach(scroll, sf::Rect<sf::Uint32>(5, 0, 1, 1), sfg::Table::FILL | sfg::Table::EXPAND, sfg::Table::FILL, sf::Vector2f(10.f, 10.f));
+	int id = 0;
+	for (int j = 0; j < 10; j++) {
+		
+		for (int i = 0; i < 4; i++) {
+			id++;
+			auto my_button = sfg::Button::Create( std::to_string(id));
+			auto sgImage = sfg::Image::Create(image);
+			my_button->SetImage(sgImage);
+			my_button->GetSignal(sfg::Widget::OnLeftClick).Connect(std::bind(&Game::OnButtonClick, this, id));
+			table->Attach(my_button, sf::Rect<sf::Uint32>(i, j, 1, 1), sfg::Table::FILL | sfg::Table::FILL, sfg::Table::FILL, sf::Vector2f(10.f, 10.f));
+		}
+		id++;
+	}
+	
+	sfgwindow->Add(table);
+    
 	
 
 	

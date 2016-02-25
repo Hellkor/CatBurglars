@@ -21,6 +21,9 @@
 #include <SFGUI\Desktop.hpp>
 #include <SFGUI\Engines\BREW.hpp>
 #include <SFGUI\Image.hpp>
+#include <SFGUI\\Table.hpp>
+#include <SFGUI\Scrollbar.hpp>
+#include <SFGUI\ScrolledWindow.hpp>
 
 class Game
 {
