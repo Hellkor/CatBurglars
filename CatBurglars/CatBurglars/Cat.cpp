@@ -45,7 +45,11 @@ int Cat::getPlayerIndex(){
 	return mPlayerIndex;
 }
 void Cat::Update(float dt){
-	
+	if (!canMove) {
+		if (interactionClock.getElapsedTime().asSeconds() > interactionTime.asSeconds()) {
+			canMove = true;
+		}
+	}
 
 	if (mMoving){
 		if (direction == 4 && mPosition.y != newPos.y) {
@@ -130,9 +134,9 @@ void Cat::Update(float dt){
 }
 
 void Cat::moveForward(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
-	if (!mMoving) {
+	if (!mMoving && canMove) {
 		direction = 4;
-		if (mGrid.isTilePassable(mCoord, gridvector(mCoord.x, mCoord.y - 1), tileLayer, Entities)){
+		if (mGrid.isTilePassable(this, gridvector(mCoord.x, mCoord.y - 1), tileLayer, Entities)){
 			newPos.y = mPosition.y - 64;
 			mSoundHandler->PlaySound(1);
 			mMoving = true;
@@ -140,27 +144,27 @@ void Cat::moveForward(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 	}
 }
 void Cat::moveBackWards(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
-	if (!mMoving) {
+	if (!mMoving && canMove) {
 		direction = 3;
-		if (mGrid.isTilePassable(mCoord, gridvector(mCoord.x, mCoord.y + 1), tileLayer, Entities)){
+		if (mGrid.isTilePassable(this, gridvector(mCoord.x, mCoord.y + 1), tileLayer, Entities)){
 			newPos.y = mPosition.y + 64;
 			mMoving = true;
 		}
 	}
 }
 void Cat::moveLeft(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
-	if (!mMoving) {
+	if (!mMoving && canMove) {
 		direction = 2;
-		if (mGrid.isTilePassable(mCoord, gridvector(mCoord.x - 1, mCoord.y), tileLayer, Entities)){
+		if (mGrid.isTilePassable(this, gridvector(mCoord.x - 1, mCoord.y), tileLayer, Entities)){
 			newPos.x = mPosition.x - 64;
 			mMoving = true;
 		}
 	}
 }
 void Cat::moveRight(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
-	if (!mMoving) {
+	if (!mMoving && canMove) {
 		direction = 1;
-		if (mGrid.isTilePassable(mCoord, gridvector(mCoord.x + 1, mCoord.y), tileLayer, Entities)){
+		if (mGrid.isTilePassable(this, gridvector(mCoord.x + 1, mCoord.y), tileLayer, Entities)){
 			newPos.x = mPosition.x + 64;
 			mMoving = true;
 			
@@ -181,6 +185,25 @@ bool Cat::isInteracting(){
 }
 bool Cat::isSolid(){
 	return true;
+}
+
+void Cat::interaction(Usable *usable) {
+	if (isInteracting()) {
+		if (Computer *comp = dynamic_cast<Computer*>(usable)) {
+			//playhackanimation
+			comp->playSound();
+			canMove = false;
+			interactionClock.restart();
+			interactionTime = sf::seconds(3);
+			comp->Activate(sf::seconds(3));
+		}
+		if (Button *butt = dynamic_cast<Button*>(usable)) {
+
+		}
+	}
+}
+void Cat::CompleteInteraction(GameObject *object) {
+	
 }
 
 //Returns position of sprite

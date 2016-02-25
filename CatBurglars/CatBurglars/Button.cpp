@@ -44,8 +44,17 @@ bool Button::getInteraction(GameObject *g){
 		}
 		
 }
-
-
+bool Button::Activate(sf::Time time) {
+	activateChannel();
+	return true;
+}
+bool Button::playSound() {
+	//play sound
+	return true;
+}
+void Button::activateChannel() {
+	Channels::setActive(mChannelID, mToggle, mHoldlength);
+}
 sf::Vector2i Button::GetPosition(){
 	return mPosition;
 }

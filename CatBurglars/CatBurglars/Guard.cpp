@@ -295,7 +295,7 @@ void Guard::Update(float dt){
 void Guard::moveForward(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 	if (!mMoving) {
 		direction = 4;
-		if (mGrid.isTilePassable(mCoords, gridvector(mCoords.x, mCoords.y - 1), tileLayer, Entities)){
+		if (mGrid.isTilePassable(this, gridvector(mCoords.x, mCoords.y - 1), tileLayer, Entities)){
 			newPos.y = mPosition.y - 64;
 			setVision("N");
 			mMoving = true;
@@ -305,7 +305,7 @@ void Guard::moveForward(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 void Guard::moveBackWards(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 	if (!mMoving) {
 		direction = 3;
-		if (mGrid.isTilePassable(mCoords, gridvector(mCoords.x, mCoords.y + 1), tileLayer, Entities)){
+		if (mGrid.isTilePassable(this, gridvector(mCoords.x, mCoords.y + 1), tileLayer, Entities)){
 			newPos.y = mPosition.y + 64;
 			setVision("S");
 			mMoving = true;
@@ -315,7 +315,7 @@ void Guard::moveBackWards(TileLayer *tileLayer, std::vector<Entity*> *Entities) 
 void Guard::moveLeft(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 	if (!mMoving) {
 		direction = 2;
-		if (mGrid.isTilePassable(mCoords, gridvector(mCoords.x - 1, mCoords.y), tileLayer, Entities)){
+		if (mGrid.isTilePassable(this, gridvector(mCoords.x - 1, mCoords.y), tileLayer, Entities)){
 			newPos.x = mPosition.x - 64;
 			setVision("W");
 			mMoving = true;
@@ -325,7 +325,7 @@ void Guard::moveLeft(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 void Guard::moveRight(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 	if (!mMoving) {
 		direction = 1;
-		if (mGrid.isTilePassable(mCoords, gridvector(mCoords.x + 1, mCoords.y), tileLayer, Entities)){
+		if (mGrid.isTilePassable(this, gridvector(mCoords.x + 1, mCoords.y), tileLayer, Entities)){
 			newPos.x = mPosition.x + 64;
 			setVision("E");
 			mMoving = true;

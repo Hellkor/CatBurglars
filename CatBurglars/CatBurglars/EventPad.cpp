@@ -31,6 +31,12 @@ bool EventPad::getInteraction(GameObject *g){
 	}
 	else return false;
 }
+bool Activate(sf::Time active_time) {
+	return true;
+}
+bool playSound() {
+	return true;
+}
 void EventPad::Update(float dt){
 
 }

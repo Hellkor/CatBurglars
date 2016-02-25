@@ -278,9 +278,9 @@ void Level::update(float dt){
 					}
 					for each (Entity *ent in mEntities) {
 
-						if (Usable *u = dynamic_cast<Usable*>(ent)) {
-							u->getInteraction(obj);
-						}
+						//if (Usable *u = dynamic_cast<Usable*>(ent)) {
+						//	u->getInteraction(obj);
+						//}
 					}
 
 
@@ -302,6 +302,11 @@ void Level::update(float dt){
 
 
 					for each (Entity *entity in mEntities) {
+
+						if (Usable *u = dynamic_cast<Usable*>(entity)) {
+							cat->interaction(u);
+						}
+
 						//Pick up Collectible
 						if (Collectible *collectible = dynamic_cast<Collectible*>(entity)) {
 							if (collectible->getInteraction(cat)) {
@@ -578,6 +583,7 @@ void Level::generateLevel(string name){
 			}
 			if (playernum == 1){
 				mEntities.push_back(new Cat(textures.GetTexture(10), gridvector(xPos, yPos), channel, &soundhandler,1));
+				mEntities.push_back(new Crate(textures.GetTexture(4), gridvector(xPos, yPos - 5), 1, &soundhandler, true));
 				
 			}
 		}

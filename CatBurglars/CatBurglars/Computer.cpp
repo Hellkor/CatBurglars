@@ -1,5 +1,6 @@
 #include "Computer.h"
 #include "Channels.h"
+#include "Cat.h"
 
 int COMPUTER_INTERACTION_RADIUS = 20;
 
@@ -61,6 +62,21 @@ bool Computer::getInteraction(GameObject *g){
 	}
 }
 
+bool Computer::Activate(sf::Time active_time) {
+	if (!gettingHacked) {
+		activateDelay = active_time;
+		activateClock.restart();
+		gettingHacked = true;
+		return true;
+	}
+	else return false;
+}
+bool Computer::playSound() {
+	return true;
+}
+void Computer::activateChannel() {
+	Channels::setActive(mChannelID, mToggle, mHoldlength);
+}
 Layer Computer::getLayer() {
 	return OnWallUsables;
 }
@@ -73,6 +89,12 @@ void Computer::Render(sf::RenderWindow *window){
 	window->draw(mSprite);
 }
 void Computer::Update(float dt){
+	if (gettingHacked) {
+		if (activateClock.getElapsedTime().asSeconds() > activateDelay.asSeconds()) {
+			gettingHacked = false;
+			activateChannel();
+		}
+	}
 }
 bool Computer::isInteracting(){
 	return false;

@@ -5,6 +5,10 @@
 #include "GameObject.h"
 #include "Grid.h"
 #include "AnimationHandler.h"
+#include "Computer.h"
+#include "Usable.h"
+#include "Button.h"
+
 
 class Cat : public GameObject
 {
@@ -45,7 +49,10 @@ public:
 	int getPlayerIndex();
 	virtual Layer getLayer();
 
+	void interaction(Usable *object);
+
 private:
+	void CompleteInteraction(GameObject *object);
 	float mSpeed;
 	sf::Sprite mSprite;
 	int mID;
@@ -58,6 +65,9 @@ private:
 
 	sf::Vector2i newPos;
 
+	sf::Clock interactionClock;
+	sf::Time interactionTime;
+	bool canMove = true;
 	bool mMoving = false;
 	bool mColliding = false;
 	bool mDashing = false;

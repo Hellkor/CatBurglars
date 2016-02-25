@@ -1,7 +1,7 @@
 #ifndef INCLUDED_USABLE
 #define INCLUDED_USABLE
 #include "GameObject.h"
-#include "Cat.h"
+
 
 class Usable : public GameObject{
 public:
@@ -16,6 +16,9 @@ public:
 	virtual int getChannelID() = 0;
 	virtual Layer getLayer() = 0;
 	virtual bool isSolid() = 0;
+
+
+	
 };
 
 #endif

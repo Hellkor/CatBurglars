@@ -20,6 +20,8 @@ public:
 	virtual Layer getLayer();
 	virtual bool isInteracting();
 
+	bool Activate(sf::Time active_time);
+	bool playSound();
 private:
 	int mDialogID;
 	sf::Sprite mSprite;
