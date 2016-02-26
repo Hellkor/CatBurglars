@@ -6,6 +6,7 @@
 #include "Grid.h"
 #include "AnimationHandler.h"
 #include "Soundhandler.h"
+#include "Button.h"
 class Guard : public GameObject
 {
 	typedef vector<Tile*> TileRow;
@@ -33,6 +34,8 @@ public:
 	bool getIntersection(GameObject *obj);
 
 	virtual bool isSolid();
+
+	void interaction(Usable *usable);
 
 private:
 	float mSpeed;

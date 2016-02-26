@@ -7,7 +7,8 @@ Channel::Channel(int id) :
 	mID(id),
 	mActive(false),
 	mTimer(0),
-	mClock(){
+	mClock(),
+	mToggled(false){
 
 
 }
@@ -24,10 +25,16 @@ void Channel::setActive(bool toggle, float holdlength) {
 	bool istoggle = toggle;
 	float HOLD = holdlength;
 	
-	if (istoggle) {
+	if (istoggle && !mActive) {
 		mActive = true;
 		mToggled = true;
+		
 	}
+	else if (istoggle && mToggled) {
+		mToggled = false;
+		mActive = false;
+	}
+	
 
 	if (HOLD > 0 && istoggle == false) {
 
@@ -48,7 +55,7 @@ void Channel::mSetActiveTime(float holdlength) {
 void Channel::runTimer() {
 	mTime = mClock.getElapsedTime();
 
-	if (mTime.asMilliseconds() <= mTimer){
+	if (mTime.asSeconds() <= mTimer){
 		mActive = true;
 	}
 	else if (!mToggled){

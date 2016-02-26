@@ -7,7 +7,6 @@
 class Computer : public Usable{
 public:
 
-
 	Computer(int channel, sf::Texture *texture, gridvector coords, bool toggle, float holdlength, SoundHandler *soundhandler, string face);
 	virtual void Render(sf::RenderWindow *mainWindow);
 	virtual void Update(float dt);
@@ -20,6 +19,11 @@ public:
 
 	virtual bool isInteracting();
 	virtual Layer getLayer();
+
+	bool Activate(sf::Time active_time);
+	bool playSound();
+
+	string getFace();
 private:
 	string mFace;
 	sf::Sprite mSprite;
@@ -31,7 +35,15 @@ private:
 	float mHoldlength;
 
 	SoundHandler *mSoundHandler;
+
+
+	void activateChannel();
+	bool gettingHacked = false;
+	sf::Time activateDelay;
+	sf::Clock activateClock;
+
 	sf::Sound mInteractedSound;
+
 };
 
 

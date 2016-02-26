@@ -31,15 +31,15 @@ void Controller::move(Cat *cat, TileLayer *tileLayer, std::vector<Entity*> *Enti
 		{
 			cat->moveForward(tileLayer, Entities);
 		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 		{
 			cat->moveLeft(tileLayer, Entities);
 		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 		{
 			cat->moveBackWards(tileLayer, Entities);
 		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 		{
 			cat->moveRight(tileLayer, Entities);
 		}
@@ -61,15 +61,15 @@ void Controller::move(Cat *cat, TileLayer *tileLayer, std::vector<Entity*> *Enti
 		{
 			cat->moveForward(tileLayer, Entities);
 		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 		{
 			cat->moveLeft(tileLayer, Entities);
 		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 		{
 			cat->moveBackWards(tileLayer, Entities);
 		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 		{
 			cat->moveRight(tileLayer, Entities);
 		}

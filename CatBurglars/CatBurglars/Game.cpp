@@ -7,7 +7,8 @@
 static sf::RenderWindow *window;
 static TextureHandler textures;
 
-
+int WINDOW_WIDTH = 1280;
+int WINDOW_HEIGHT = 720;
 
 // TIME
 // Timestep (Constant Game Speed independent of Variable FPS)
@@ -31,15 +32,18 @@ GameState_ GameState = RunGame;
 
 Game::Game() {
 	//Creates the main window
-	window = new sf::RenderWindow(sf::VideoMode(1024, 720), "CatBurglars");
+	window = new sf::RenderWindow(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "CatBurglars", sf::Style::Close);
+	
 
 	//Test for loading in maps
 
 	Level *testLevel = new Level("11");
 	Level *level2 = new Level("12");
+	Level *level3 = new Level("15");
 
 	LevelManager::addLevel(testLevel);
 	LevelManager::addLevel(level2);
+	LevelManager::addLevel(level3);
 
 	window->setFramerateLimit(60);
 
@@ -47,7 +51,7 @@ Game::Game() {
 	LevelManager::addCollectible();
 	LevelManager::save();
 
-	LevelManager::loadLevel(1);
+	LevelManager::loadLevel(2);
 	
 
 

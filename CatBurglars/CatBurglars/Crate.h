@@ -21,6 +21,7 @@ public:
 	virtual bool isInteracting();
 	bool getInteraction(Cat *c);
 	virtual Layer getLayer();
+	void interaction(Usable *usable);
 
 private:
 	sf::Sprite mSprite;

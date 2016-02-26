@@ -19,7 +19,13 @@ public:
 
 	virtual bool isInteracting();
 	virtual Layer getLayer();
+
+	bool Activate(sf::Time active_time);
+	bool playSound();
 private:
+
+	void activateChannel();
+
 	sf::Sprite mSprite;
 	sf::Vector2i mPosition;
 	gridvector mCoords;
@@ -27,6 +33,13 @@ private:
 
 	bool mToggle;
 	float mHoldlength;
+
+
+	sf::Clock mButtonPressClock;
+	sf::Time mButtonPressTime;
+
+
+
 
 
 };

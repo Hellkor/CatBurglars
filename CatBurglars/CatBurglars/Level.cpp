@@ -18,6 +18,8 @@
 #include "Controller.h"
 using namespace std;
 
+bool IMMORTALITY_MODE = true;
+
 static TextureHandler	textures;
 static SoundHandler		soundhandler;
 
@@ -72,6 +74,7 @@ Level::Level(string filename) :
 	p2Controller(Controller(KeyboardTwo)){
 
 
+	
 	// Initialize GUI View
 	guiView.setSize(1024, 720);
 	guiView.setViewport(sf::FloatRect(0, 0, 1, 1));
@@ -117,8 +120,6 @@ Level::Level(string filename) :
 	DIVIDER_SPRITE.setTexture(DIVIDER_TEXTURE);
 	DIVIDER_SPRITE.setOrigin(DIVIDER_TEXTURE.getSize().x / 2, DIVIDER_TEXTURE.getSize().y / 2);
 
-	//dialogManager.startConversation(0, 1, 5);
-	//dialogManager.showDialog(1, 10);
 	
 }
 
@@ -126,9 +127,8 @@ Level::Level(string filename) :
 void Level::render(sf::RenderWindow *window){
 	
 	window->clear();
+	mPlayer1View.setSize(sf::Vector2f(window->getSize().x / 2, window->getSize().y));
 	window->setView(mPlayer1View);
-	
-
 	for (TileLayer::size_type y = 0; y < mBottomTileLayer.size(); y++)
 	{
 		for (TileRow::size_type x = 0; x < mBottomTileLayer[y].size(); x++)
@@ -183,6 +183,7 @@ void Level::render(sf::RenderWindow *window){
 	
 	
 	if (mPlayers == 2){
+		mPlayer2View.setSize(sf::Vector2f(window->getSize().x / 2, window->getSize().y));
 		window->setView(mPlayer2View); 
 		for (TileLayer::size_type y = 0; y < mBottomTileLayer.size(); y++)
 		{
@@ -278,13 +279,32 @@ void Level::update(float dt){
 					}
 					for each (Entity *ent in mEntities) {
 
-						if (Usable *u = dynamic_cast<Usable*>(ent)) {
-							u->getInteraction(obj);
-						}
+						//if (Usable *u = dynamic_cast<Usable*>(ent)) {
+						//	u->getInteraction(obj);
+						//}
 					}
 
 
 				}
+				if (Guard *guard = dynamic_cast<Guard*>(e)) {
+					for each (Entity *entity in mEntities) {
+						
+						if (Usable *u = dynamic_cast<Usable*>(entity)) {
+							guard->interaction(u);
+						}
+
+					}
+				}
+				if (Crate *crate = dynamic_cast<Crate*>(e)) {
+					for each (Entity *entity in mEntities) {
+
+						if (Usable *u = dynamic_cast<Usable*>(entity)) {
+							crate->interaction(u);
+						}
+
+					}
+				}
+
 				if (Cat *cat = dynamic_cast<Cat*>(e)) {
 
 					if (cat->getPlayerIndex() == 1) {
@@ -302,6 +322,11 @@ void Level::update(float dt){
 
 
 					for each (Entity *entity in mEntities) {
+
+						if (Usable *u = dynamic_cast<Usable*>(entity)) {
+							cat->interaction(u);
+						}
+
 						//Pick up Collectible
 						if (Collectible *collectible = dynamic_cast<Collectible*>(entity)) {
 							if (collectible->getInteraction(cat)) {
@@ -330,7 +355,7 @@ void Level::update(float dt){
 		}
 
 
-		if (test) {
+		if (test && !IMMORTALITY_MODE) {
 			load();
 		}
 	}
@@ -409,21 +434,24 @@ void Level::load(){
 
 
 	generateLevel(mFile);
-
+	
 	
 
 }
 void Level::generateView(){
 
 	if (mPlayers == 1){
-		mPlayer1View.setSize(1024, 720);
+		//mPlayer1View.setSize(1024, 720);
 		mPlayer1View.setViewport(sf::FloatRect(0, 0, 1, 1));
+		
 	}
 	else if (mPlayers == 2){
-		mPlayer1View.setSize(512, 720);
+		//mPlayer1View.setSize(512, 720);
 		mPlayer1View.setViewport(sf::FloatRect(0, 0, 0.5f, 1));
-		mPlayer2View.setSize(512, 720);
+		mPlayer1View.zoom(1.5f);
+		//mPlayer2View.setSize(512, 720);
 		mPlayer2View.setViewport(sf::FloatRect(0.5, 0, 0.5f, 1));
+		mPlayer2View.zoom(1.5f);
 	}
 }
 void Level::updateViews(){
@@ -527,6 +555,7 @@ void Level::generateLevel(string name){
 
 		if (objectID == 1){
 			mEntities.push_back(new Button(channel, textures.GetTexture(12), gridvector(xPos, yPos),false,hold));
+			cout << "hold: " << hold << endl;
 		}
 		if (objectID == 5) {
 			mEntities.push_back(new Button(channel, textures.GetTexture(12), gridvector(xPos, yPos), true, hold));
@@ -574,10 +603,10 @@ void Level::generateLevel(string name){
 		if (objectID == 0){
 			playernum++;
 			if (playernum == 2){
-				mEntities.push_back(new Cat(textures.GetTexture(9), gridvector(xPos, yPos), channel, &soundhandler, 2));
+				mEntities.push_back(new Cat(&textures, gridvector(xPos, yPos), channel, &soundhandler, 2));
 			}
 			if (playernum == 1){
-				mEntities.push_back(new Cat(textures.GetTexture(10), gridvector(xPos, yPos), channel, &soundhandler,1));
+				mEntities.push_back(new Cat(&textures, gridvector(xPos, yPos), channel, &soundhandler,1));
 				
 			}
 		}

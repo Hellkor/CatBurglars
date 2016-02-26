@@ -5,13 +5,19 @@
 #include "GameObject.h"
 #include "Grid.h"
 #include "AnimationHandler.h"
+
+#include "Computer.h"
+#include "Usable.h"
+#include "Button.h"
+
 #include "Soundhandler.h"
+#include "TextureHandler.h"
 class Cat : public GameObject
 {
 	typedef vector<Tile*> TileRow;
 	typedef vector<TileRow> TileLayer;
 public:
-	Cat(sf::Texture *texture, gridvector v, int ID, SoundHandler *soundhandler,int player);
+	Cat(TextureHandler *texturehandler, gridvector v, int ID, SoundHandler *soundhandler,int player);
 	~Cat();
 	virtual void Render(sf::RenderWindow *mainWindow);
 	virtual void Update(float dt);
@@ -45,7 +51,10 @@ public:
 	int getPlayerIndex();
 	virtual Layer getLayer();
 
+	void interaction(Usable *object);
+
 private:
+	void CompleteInteraction(GameObject *object);
 	float mSpeed;
 	sf::Sprite mSprite;
 	int mID;
@@ -58,6 +67,9 @@ private:
 
 	sf::Vector2i newPos;
 
+	sf::Clock interactionClock;
+	sf::Time interactionTime;
+	bool canMove = true;
 	bool mMoving = false;
 	bool mColliding = false;
 	bool mDashing = false;
