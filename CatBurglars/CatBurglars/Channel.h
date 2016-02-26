@@ -13,7 +13,7 @@ public:
 	void runTimer();
 private:
 	bool mActive;
-	bool mToggled;
+	bool mToggled = false;
 	int mID;
 	void mSetActiveTime(float holdlength);
 	float mTimer;

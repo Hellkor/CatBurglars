@@ -1,7 +1,7 @@
 #ifndef INCLUDED_USABLE
 #define INCLUDED_USABLE
 #include "GameObject.h"
-#include "Cat.h"
+
 #include "Soundhandler.h"
 class Usable : public GameObject{
 public:

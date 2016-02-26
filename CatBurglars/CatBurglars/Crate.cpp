@@ -93,7 +93,6 @@ void Crate::moveForward(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 			c.restart();
 			//mSoundHandler->PlaySound(4);
 			mMoving = true;
-			mSolid = false;
 		}
 	}
 }
@@ -105,7 +104,6 @@ void Crate::moveBackWards(TileLayer *tileLayer, std::vector<Entity*> *Entities) 
 			c.restart();
 			//mSoundHandler->PlaySound(4);
 			mMoving = true;
-			mSolid = false;
 		}
 	}
 }
@@ -117,7 +115,6 @@ void Crate::moveLeft(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 			c.restart();
 			//mSoundHandler->PlaySound(4);
 			mMoving = true;
-			mSolid = false;
 		}
 	}
 }
@@ -129,7 +126,6 @@ void Crate::moveRight(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 			c.restart();
 
 			mMoving = true;
-			mSolid = false;
 		}
 	}
 }
@@ -147,6 +143,15 @@ bool Crate::getInteraction(Cat *cat){
 
 	return true;
 
+
+}
+void Crate::interaction(Usable *usable) {
+	
+	if (Button *butt = dynamic_cast<Button*>(usable)) {
+		if (mCoord == butt->getCoords()) {
+			butt->Activate(sf::seconds(0));
+		}
+	}
 
 }
 

@@ -11,12 +11,13 @@
 #include "Button.h"
 
 #include "Soundhandler.h"
+#include "TextureHandler.h"
 class Cat : public GameObject
 {
 	typedef vector<Tile*> TileRow;
 	typedef vector<TileRow> TileLayer;
 public:
-	Cat(sf::Texture *texture, gridvector v, int ID, SoundHandler *soundhandler,int player);
+	Cat(TextureHandler *texturehandler, gridvector v, int ID, SoundHandler *soundhandler,int player);
 	~Cat();
 	virtual void Render(sf::RenderWindow *mainWindow);
 	virtual void Update(float dt);

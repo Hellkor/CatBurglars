@@ -62,7 +62,9 @@ bool Computer::getInteraction(GameObject *g){
 		}
 	}
 }
-
+string Computer::getFace() {
+	return mFace;
+}
 bool Computer::Activate(sf::Time active_time) {
 	if (!gettingHacked) {
 		activateDelay = active_time;
@@ -73,6 +75,10 @@ bool Computer::Activate(sf::Time active_time) {
 	else return false;
 }
 bool Computer::playSound() {
+	if (mInteractedSound.getStatus() != sf::Sound::Playing) {
+		mInteractedSound.play();
+	}
+	
 	return true;
 }
 void Computer::activateChannel() {

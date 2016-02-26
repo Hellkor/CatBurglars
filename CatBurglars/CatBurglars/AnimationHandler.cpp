@@ -1,5 +1,5 @@
 #include "AnimationHandler.h"
-
+#include <iostream>
 AnimationHandler::AnimationHandler(int x, int y, sf::Sprite *sprite) :
 mSpriteSizeX(x),
 mSpriteSizeY(y),
@@ -88,25 +88,56 @@ void AnimationHandler::reset(int direction){
 }
 
 void AnimationHandler::animation(int y, int frames, sf::Time time){
-	mSprite->setTextureRect(sf::IntRect(mX * mSpriteSizeX, y * mSpriteSizeY, mSpriteSizeX, mSpriteSizeY));
-	if (mClock.getElapsedTime() >= time)
-	{
-		mX++;
-		mClock.restart();
-	}
+	if (!playAnimationBool) {
+		mSprite->setTextureRect(sf::IntRect(mX * mSpriteSizeX, y * mSpriteSizeY, mSpriteSizeX, mSpriteSizeY));
+		if (mClock.getElapsedTime() >= time)
+		{
+			mX++;
+			mClock.restart();
+		}
 
-	if (mX >= frames)
-	{
-		mX = 0;
+		if (mX >= frames)
+		{
+			mX = 0;
+		}
+
+	}
+	
+}
+
+void AnimationHandler::Update() {
+
+	if (playAnimationBool) {
+		
+		
+		
+		if (mClock.getElapsedTime() >= mTime && mX < mMaxFrames)
+		{
+			mSprite->setTextureRect(sf::IntRect(mX * mSpriteSizeX, 0 * mSpriteSizeY, mSpriteSizeX, mSpriteSizeY));
+			std::cout << "nextframe" << std::endl;
+			mX++;
+			mClock.restart();
+		}
+
+		if (mX >= mMaxFrames)
+		{
+			std::cout << "reset" << std::endl;
+			playAnimationBool = false;
+			mX = 0;
+		}
+		
+
 	}
 }
 
 void AnimationHandler::playAnimation(int y, int frames, sf::Time time){
-	mSprite->setTextureRect(sf::IntRect(mX * mSpriteSizeX, y * mSpriteSizeY, mSpriteSizeX, mSpriteSizeY));
-	if (mClock.getElapsedTime() >= time && mX < frames)
-	{
-		mX++;
-		mClock.restart();
+	if (!playAnimationBool) {
+		mYOffset = y;
+		mMaxFrames = frames;
+		mTime = time;
+		playAnimationBool = true;
+		//mSprite->setTextureRect(sf::IntRect(mX * mSpriteSizeX, y * mSpriteSizeY, mSpriteSizeX, mSpriteSizeY));
+		
 	}
 }
 

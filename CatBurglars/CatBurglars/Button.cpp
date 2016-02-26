@@ -45,7 +45,8 @@ bool Button::getInteraction(GameObject *g){
 		
 }
 bool Button::Activate(sf::Time time) {
-	activateChannel();
+	//activateChannel();
+	Channels::setActive(mChannelID, mToggle, mHoldlength);
 	return true;
 }
 bool Button::playSound() {

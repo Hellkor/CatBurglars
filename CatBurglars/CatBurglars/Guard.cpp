@@ -337,6 +337,15 @@ void Guard::moveRight(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 		}
 	}
 }
+void Guard::interaction(Usable *usable) {
+
+	if (Button *butt = dynamic_cast<Button*>(usable)) {
+		if (mCoords == butt->getCoords()) {
+			butt->Activate(sf::seconds(0));
+		}
+	}
+
+}
 bool Guard::getIntersection(GameObject *obj) {
 	for each (gridvector *v in mVision) {
 		if (obj->getCoords() == v) {

@@ -22,6 +22,8 @@ public:
 
 	bool Activate(sf::Time active_time);
 	bool playSound();
+
+	string getFace();
 private:
 	string mFace;
 	sf::Sprite mSprite;

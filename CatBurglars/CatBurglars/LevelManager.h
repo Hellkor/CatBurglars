@@ -20,7 +20,7 @@ public:
 	
 	static void load();
 	static void save();
-
+	
 private:
 	static void loadGame();
 	static void saveGame();

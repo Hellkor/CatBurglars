@@ -19,7 +19,7 @@ public:
 	void playAnimation(int y, int frames, sf::Time time);
 
 	void setFrame(int y, int x);
-
+	void Update();
 private:
 	sf::Sprite *mSprite;
 	sf::Texture *mTexture;
@@ -29,6 +29,10 @@ private:
 
 	sf::Clock mClock;
 	sf::Time mTime;
+
+	bool playAnimationBool;
+	int mMaxFrames;
+	int mYOffset;
 };
 
 #endif

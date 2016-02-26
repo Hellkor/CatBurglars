@@ -5,7 +5,7 @@
 int TILESIZE = 64;
 
 
-Cat::Cat(sf::Texture *texture, gridvector position, int ID, SoundHandler *soundhandler,int player) : GameObject(),
+Cat::Cat(TextureHandler *texturehandler, gridvector position, int ID, SoundHandler *soundhandler,int player) : GameObject(),
 mID(ID),
 mCoord(position),
 mSpeed(),
@@ -19,13 +19,15 @@ canPushCrate(true){
 		mSoundHandler->initializeCat1(this);
 	}
 	if (player == 2) {
-		mSoundHandler->initializeCat1(this);
+		mSoundHandler->initializeCat2(this);
 	}
 	if (mID == 1){
 		mSpeed = 2;
+		mSprite.setTexture(*texturehandler->GetTexture(10), true);
 	}
 	if (mID == 2){
 		mSpeed = 2;
+		mSprite.setTexture(*texturehandler->GetTexture(9), true);
 		canPushCrate = false;
 	}
 	if (mID == 3){
@@ -34,7 +36,7 @@ canPushCrate(true){
 	if (mID == 4){
 
 	}
-	mSprite.setTexture(*texture, true);
+	
 	mSprite.setTextureRect(sf::IntRect(1*64, 1*64, 64, 64));
 	//Starting position
 	mPosition = sf::Vector2i(mCoord.x * 64, mCoord.y * 64);
@@ -51,6 +53,8 @@ int Cat::getPlayerIndex(){
 	return mPlayerIndex;
 }
 void Cat::Update(float dt){
+	
+
 	if (!canMove) {
 		if (interactionClock.getElapsedTime().asSeconds() > interactionTime.asSeconds()) {
 			canMove = true;
@@ -122,7 +126,7 @@ void Cat::Update(float dt){
 			mAnimationhandler.reset(direction);
 		}
 	}
-	else
+	else if (canMove) // TEMP , SKA ÄNDRAS MED IDLE ANIMATION
 	{
 		if (direction == 4) {
 			mAnimationhandler.setFrame(1, 4);
@@ -137,6 +141,8 @@ void Cat::Update(float dt){
 			mAnimationhandler.setFrame(2, 0);
 		}
 	}
+
+	mAnimationhandler.Update();
 }
 
 void Cat::moveForward(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
@@ -193,20 +199,35 @@ bool Cat::isSolid(){
 	return true;
 }
 
+
 void Cat::interaction(Usable *usable) {
 	if (isInteracting()) {
 		if (Computer *comp = dynamic_cast<Computer*>(usable)) {
-			//playhackanimation
-			comp->playSound();
-			canMove = false;
-			interactionClock.restart();
-			interactionTime = sf::seconds(3);
-			comp->Activate(sf::seconds(3));
-		}
-		if (Button *butt = dynamic_cast<Button*>(usable)) {
-
+			if (mCoord == comp->getCoords()) {
+				if (comp->getFace() == "N") {
+					mAnimationhandler.playAnimation(2, 6, sf::milliseconds(3000 / 6));
+				}
+				else if (comp->getFace() == "E") {
+					mAnimationhandler.playAnimation(2, 6, sf::milliseconds(3000 / 6));
+				}
+				else if (comp->getFace() == "W") {
+					mAnimationhandler.playAnimation(2, 6, sf::milliseconds(3000 / 6));
+				}
+				
+				comp->playSound();
+				canMove = false;
+				interactionClock.restart();
+				interactionTime = sf::seconds(3);
+				comp->Activate(sf::seconds(3));
+			}
 		}
 	}
+	if (Button *butt = dynamic_cast<Button*>(usable)) {
+		if (mCoord == butt->getCoords()) {
+			butt->Activate(sf::seconds(1));
+		}
+	}
+	
 }
 void Cat::CompleteInteraction(GameObject *object) {
 	

@@ -35,6 +35,10 @@ private:
 	float mHoldlength;
 
 
+	sf::Clock mButtonPressClock;
+	sf::Time mButtonPressTime;
+
+
 
 
 
