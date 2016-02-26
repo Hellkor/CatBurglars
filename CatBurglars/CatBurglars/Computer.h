@@ -34,10 +34,14 @@ private:
 
 	SoundHandler *mSoundHandler;
 
+
 	void activateChannel();
 	bool gettingHacked = false;
 	sf::Time activateDelay;
 	sf::Clock activateClock;
+
+	sf::Sound mInteractedSound;
+
 };
 
 

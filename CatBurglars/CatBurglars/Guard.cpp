@@ -27,6 +27,9 @@ mRange(3){
 	mHitboxSprite.setPosition((sf::Vector2f)mPosition);
 	
 	setVision("E");
+
+	mWalkSound.setBuffer(*mSoundHandler->getSound(1));
+
 }
 void Guard::setVision(string face) {
 	mVision.clear();
@@ -236,27 +239,28 @@ void Guard::AImovement(TileLayer *tiles, std::vector<Entity*> *entities){
 }
 void Guard::Update(float dt){
 	UpdateConePos();
-
+	if (mWalkSound.getStatus() == sf::Sound::Playing) {
+		mWalkSound.setVolume(mSoundHandler->distanceSound(this));
+	}
 	if (mMoving){
+		if (!(mWalkSound.getStatus() == sf::Sound::Playing)) {
+			mWalkSound.play();
+		}
 		if (direction == 4 && mPosition.y != newPos.y) {
 			mPosition.y -= (1 * mSpeed);
 			mAnimationhandler.animation(3, 5, sf::milliseconds(150));
-			mSoundHandler->PlaySound(1);
 		}
 		else if (direction == 3 && mPosition.y != newPos.y) {
 			mPosition.y += (1 * mSpeed);
 			mAnimationhandler.animation(2, 5, sf::milliseconds(150));
-			mSoundHandler->PlaySound(1);
 		}
 		else if (direction == 2 && mPosition.x != newPos.x) {
 			mPosition.x -= (1 * mSpeed);
 			mAnimationhandler.animation(1, 5, sf::milliseconds(200));
-			mSoundHandler->PlaySound(1);
 		}
 		else if (direction == 1 && mPosition.x != newPos.x) {
 			mPosition.x += (1 * mSpeed);
 			mAnimationhandler.animation(0, 5, sf::milliseconds(200));
-			mSoundHandler->PlaySound(1);
 		}
 		else {
 			mMoving = false;

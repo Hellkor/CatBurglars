@@ -15,6 +15,12 @@ mAnimationhandler(64, 64, &mSprite),
 mPlayerIndex(player),
 canPushCrate(true){
 
+	if (player == 1) {
+		mSoundHandler->initializeCat1(this);
+	}
+	if (player == 2) {
+		mSoundHandler->initializeCat1(this);
+	}
 	if (mID == 1){
 		mSpeed = 2;
 	}
@@ -294,7 +300,7 @@ void Cat::shadowDash(TileLayer *tileLayer, std::vector<Entity*> *Entities, int d
 			mDashing = true;
 			mMoving = true;
 			mAbilityClock.restart();
-			mSoundHandler->PlaySound(2);
+			//mSoundHandler->PlaySound(2);
 		}
 		else if ((mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX), mCoord.y + (positionY)), tileLayer, Entities)) && (mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX*2), mCoord.y + (positionY*2)), tileLayer, Entities)) && (mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX*3), mCoord.y + (positionY*3)), tileLayer, Entities))) {
 			std::cout << "3 Tile dash" << std::endl;

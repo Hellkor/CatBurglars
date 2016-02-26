@@ -1,7 +1,7 @@
 #pragma once
 
 #include "GameObject.h"
-
+#include "Soundhandler.h"
 class Recievers : public GameObject{
 public:
 	Recievers(){ }

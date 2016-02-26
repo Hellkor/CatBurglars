@@ -5,11 +5,12 @@
 #include "GameObject.h"
 #include "Grid.h"
 #include "AnimationHandler.h"
+
 #include "Computer.h"
 #include "Usable.h"
 #include "Button.h"
 
-
+#include "Soundhandler.h"
 class Cat : public GameObject
 {
 	typedef vector<Tile*> TileRow;
