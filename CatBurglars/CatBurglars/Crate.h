@@ -14,10 +14,10 @@ public:
 	virtual sf::Vector2i GetPosition();
 	virtual gridvector getCoords();
 	virtual bool isSolid();
-	void moveForward(TileLayer *tileLayer, std::vector<Entity*> *Entities);
-	void moveBackWards(TileLayer *tileLayer, std::vector<Entity*> *Entities);
-	void moveLeft(TileLayer *tileLayer, std::vector<Entity*> *Entities);
-	void moveRight(TileLayer *tileLayer, std::vector<Entity*> *Entities);
+	bool moveForward(TileLayer *tileLayer, std::vector<Entity*> *Entities);
+	bool moveBackWards(TileLayer *tileLayer, std::vector<Entity*> *Entities);
+	bool moveLeft(TileLayer *tileLayer, std::vector<Entity*> *Entities);
+	bool moveRight(TileLayer *tileLayer, std::vector<Entity*> *Entities);
 	virtual bool isInteracting();
 	bool getInteraction(Cat *c);
 	virtual Layer getLayer();

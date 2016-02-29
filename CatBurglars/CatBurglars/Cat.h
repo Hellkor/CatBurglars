@@ -73,6 +73,7 @@ private:
 	bool mMoving = false;
 	bool mColliding = false;
 	bool mDashing = false;
+	bool mPushing = false;
 	Grid mGrid;
 
 

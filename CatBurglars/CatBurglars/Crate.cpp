@@ -85,7 +85,7 @@ sf::Vector2i Crate::GetPosition(){
 	return mPosition;
 }
 
-void Crate::moveForward(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
+bool Crate::moveForward(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 	if (!mMoving && mMoveable) {
 		if (mGrid.canCrateMove(gridvector(mCoord.x, mCoord.y - 1), tileLayer, Entities)){
 			newPos.y = mPosition.y - 64;
@@ -93,10 +93,11 @@ void Crate::moveForward(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 			c.restart();
 			//mSoundHandler->PlaySound(4);
 			mMoving = true;
+			return true;
 		}
 	}
 }
-void Crate::moveBackWards(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
+bool Crate::moveBackWards(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 	if (!mMoving && mMoveable) {
 		if (mGrid.canCrateMove(gridvector(mCoord.x, mCoord.y + 1), tileLayer, Entities)){
 			newPos.y = mPosition.y + 64;
@@ -104,10 +105,11 @@ void Crate::moveBackWards(TileLayer *tileLayer, std::vector<Entity*> *Entities) 
 			c.restart();
 			//mSoundHandler->PlaySound(4);
 			mMoving = true;
+			return true;
 		}
 	}
 }
-void Crate::moveLeft(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
+bool Crate::moveLeft(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 	if (!mMoving && mMoveable) {
 		if (mGrid.canCrateMove(gridvector(mCoord.x - 1, mCoord.y), tileLayer, Entities)){
 			newPos.x = mPosition.x - 64;
@@ -115,10 +117,11 @@ void Crate::moveLeft(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 			c.restart();
 			//mSoundHandler->PlaySound(4);
 			mMoving = true;
+			return true;
 		}
 	}
 }
-void Crate::moveRight(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
+bool Crate::moveRight(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 	if (!mMoving && mMoveable) {
 		if (mGrid.canCrateMove(gridvector(mCoord.x + 1, mCoord.y), tileLayer, Entities)){
 			newPos.x = mPosition.x + 64;
@@ -126,6 +129,7 @@ void Crate::moveRight(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 			c.restart();
 
 			mMoving = true;
+			return true;
 		}
 	}
 }

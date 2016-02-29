@@ -42,7 +42,7 @@ sf::Sprite				lightmap;
 
 // TEST DIALOGMANAGER
 
-DialogManager dialogManager("dialog", textures);
+DialogManager dialogManager("dialog", &textures,sf::Vector2f(300,500));
 
 // LIGHT STRUCTURE FOR BOTH LIGHT AND FOV LIGHT
 struct Light
@@ -120,7 +120,7 @@ Level::Level(string filename) :
 	DIVIDER_SPRITE.setTexture(DIVIDER_TEXTURE);
 	DIVIDER_SPRITE.setOrigin(DIVIDER_TEXTURE.getSize().x / 2, DIVIDER_TEXTURE.getSize().y / 2);
 
-	
+	//dialogManager.startConversation(0, 4, 5);
 }
 
 // Renderar level

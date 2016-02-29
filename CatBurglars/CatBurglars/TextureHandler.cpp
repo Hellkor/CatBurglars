@@ -23,6 +23,7 @@ void TextureHandler::Initialize()
 	mCamera.loadFromFile("Resources/camerasheet.png");
 	mComputer.loadFromFile("Resources/computer.png");
 	mSnow.loadFromFile("Resources/snow_spritesheet.png");
+	mSocksPortait.loadFromFile("Resources/socks_portrait.png");
 	
 }
 
@@ -47,6 +48,8 @@ sf::Texture* TextureHandler::GetTexture(int ID)
 		return &mCamera;
 	if (ID == 14)
 		return &mComputer;
+	if (ID == 25)
+		return &mSocksPortait;
 	if (ID == 99)
 		return &mArea;
 }

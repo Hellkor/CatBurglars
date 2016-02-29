@@ -4,10 +4,11 @@
 sf::Texture DIALOG_BOX_TEXTURE;
 
 
-DialogManager::DialogManager(string filename,TextureHandler handler):
+DialogManager::DialogManager(string filename,TextureHandler *handler, sf::Vector2f position):
 	mFilename(filename),
-	mPosition(300,500),
-	mCurrentConversationDialogID(-1){
+	mCurrentConversationDialogID(-1),
+	mTextureHandler(handler),
+	mPosition(position){
 	DIALOG_BOX_TEXTURE.loadFromFile("Resources/DialogBox.png");
 	mDialogBox.setTexture(DIALOG_BOX_TEXTURE);
 	mFont.loadFromFile("Resources/Fonts/arial.ttf");
@@ -15,7 +16,8 @@ DialogManager::DialogManager(string filename,TextureHandler handler):
 	mRenderText.setCharacterSize(12);
 	mRenderText.setColor(sf::Color::White);
 	readFile();
-	
+
+	mTextPos = sf::Vector2f(mPosition.x + 128, mPosition.y);
 }
 
 void DialogManager::readFile() {
@@ -23,6 +25,9 @@ void DialogManager::readFile() {
 	vector<string> text_block;
 	string input;
 	int ID;
+
+	string Character;
+	string Mood;
 	
 	while (!inputFile.eof()) {
 		
@@ -32,6 +37,18 @@ void DialogManager::readFile() {
 			inputFile >> input;
 			ID = stoi(input);
 			cout << "ID: " << ID << endl;
+		}
+		inputFile >> input;
+		if (input == "CHARACTER:") {
+			inputFile >> input;
+			Character = input;
+			cout << "CHARACTER: " << Character << endl;
+		}
+		inputFile >> input;
+		if (input == "MOOD:") {
+			inputFile >> input;
+			Mood = input;
+			cout << "Mood: " << Mood << endl;
 		}
 		inputFile >> input;
 		if (input == "Text:") {
@@ -52,7 +69,10 @@ void DialogManager::readFile() {
 		}
 		if (input == "}") {
 			cout << endl;
-			mDialogList.push_back(new Dialog(text_block, ID));
+			Dialog *dialog = new Dialog(text_block, ID);
+			dialog->setCharacter(Character);
+			dialog->setMood(Mood);
+			mDialogList.push_back(dialog);
 			text_block.clear();
 		}
 
@@ -85,7 +105,7 @@ void DialogManager::update() {
 		mShowDialog = false;
 	}
 	
-	if (mCurrentConversationDialogID >= 0 && mCurrentConversationDialogID <= mNumberOfDialogs) {
+	if (mCurrentConversationDialogID > -1 && mCurrentConversationDialogID <= mNumberOfDialogs) {
 		if (!mShowDialog) {
 			showDialog(mCurrentConversationDialogID, 4);
 			cout << "add" << endl;
@@ -99,11 +119,13 @@ void DialogManager::update() {
 }
 void DialogManager::render(sf::RenderWindow *window,sf::Vector2f position) {
 	
-	mPosition = position;
-	mTextPos = sf::Vector2f(mPosition.x + 40, mPosition.y + 10);
 	
+	
+	mPortrait.setPosition(mPosition);
+
 	if (mShowDialog) {
 		mDialogBox.setPosition(mPosition);
+
 		
 		for each (sf::Text t in TextRows) {
 			t.setFont(mFont);
@@ -112,6 +134,7 @@ void DialogManager::render(sf::RenderWindow *window,sf::Vector2f position) {
 		}
 		
 		window->draw(mDialogBox);
+		window->draw(mPortrait);
 		
 		
 	}
@@ -161,7 +184,8 @@ void DialogManager::showDialog(int ID,float time_as_seconds) {
 		row.clear();
 	}
 	
-
+	
+	setPortrait(mDialogList[ID]->getCharacter(), mDialogList[ID]->getMood());
 	mShowDialog = true;
 	mClock.restart();
 	mTimer = sf::seconds(time_as_seconds);
@@ -172,4 +196,83 @@ void DialogManager::setPosition(sf::Vector2f v) {
 
 bool DialogManager::isDialogActive() {
 	return mShowDialog;
+}
+
+void DialogManager::setPortrait(Character character, Mood mood) {
+	switch (character) {
+	case SOCKS:
+		switch (mood) {
+			case ANGRY:
+				cout << "angry socks" << endl;
+				mPortrait.setTexture(*mTextureHandler->GetTexture(25));
+			break;
+			case SAD:
+			break;
+			case NEUTRAL:
+			break;
+			case HAPPY:
+			break;
+		}
+		break;
+	case SCOOTER:
+		switch (mood) {
+			case ANGRY:
+			break;
+			case SAD:
+			break;
+			case NEUTRAL:
+			break;
+			case HAPPY:
+			break;
+		}
+		break;
+	case SNOW:
+		switch (mood) {
+			case ANGRY:
+			break;
+			case SAD:
+			break;
+			case NEUTRAL:
+			break;
+			case HAPPY:
+			break;
+		}
+		break;
+	case SHADOW:
+		switch (mood) {
+			case ANGRY:
+			break;
+			case SAD:
+			break;
+			case NEUTRAL:
+			break;
+			case HAPPY:
+			break;
+		}
+		break;
+	case ALEX:
+		switch (mood) {
+			case ANGRY:
+			break;
+			case SAD:
+			break;
+			case NEUTRAL:
+			break;
+			case HAPPY:
+			break;
+		}
+		break;
+	case DOUGLAS:
+		switch (mood) {
+			case ANGRY:
+			break;
+			case SAD:
+			break;
+			case NEUTRAL:
+			break;
+			case HAPPY:
+			break;
+		}
+		break;
+	}
 }

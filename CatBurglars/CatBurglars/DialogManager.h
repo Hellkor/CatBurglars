@@ -8,7 +8,7 @@ typedef vector<Dialog*> DialogList;
 
 class DialogManager {
 public:
-	DialogManager(string filename,TextureHandler handler);
+	DialogManager(string filename,TextureHandler *handler, sf::Vector2f position);
 	void showDialog(int ID, float time_In_Sec);
 	void startConversation(int ID, int dialogs, float time_in_sec);
 	void update();
@@ -16,6 +16,9 @@ public:
 	void setPosition(sf::Vector2f v);
 	bool isDialogActive();
 private:
+	TextureHandler *mTextureHandler;
+	void setPortrait(Character character, Mood mood);
+
 	int mSelectedDialog;
 	DialogList mDialogList;
 	DialogList mConversation;
@@ -36,4 +39,6 @@ private:
 
 	sf::Clock mClock;
 	sf::Time mTimer;
+
+	sf::Sprite mPortrait;
 };

@@ -67,6 +67,10 @@ void Cat::Update(float dt){
 			if (mDashing == true){
 				mAnimationhandler.animation(4, 5, sf::milliseconds(250));
 			}
+			else if (mPushing) {
+				//mAnimationhandler.animation(12, 5, sf::milliseconds(100));
+				
+			}
 			else
 				mAnimationhandler.animation(1, 5, sf::milliseconds(50));
 		}
@@ -74,6 +78,9 @@ void Cat::Update(float dt){
 			mPosition.y += (1 * mSpeed);
 			if (mDashing == true){
 				mAnimationhandler.animation(5, 5, sf::milliseconds(250));
+			}
+			else if (mPushing) {
+				mAnimationhandler.animation(13, 5, sf::milliseconds(100));
 			}
 			else
 				mAnimationhandler.animation(0, 5, sf::milliseconds(50));
@@ -83,6 +90,9 @@ void Cat::Update(float dt){
 			if (mDashing == true){
 				mAnimationhandler.animation(7, 5, sf::milliseconds(250));
 			}
+			else if (mPushing) {
+				mAnimationhandler.animation(14, 5, sf::milliseconds(100));
+			}
 			else
 				mAnimationhandler.animation(3, 5, sf::milliseconds(50));
 			
@@ -91,6 +101,9 @@ void Cat::Update(float dt){
 			mPosition.x += (1 * mSpeed);
 			if (mDashing == true){
 				mAnimationhandler.animation(6, 5, sf::milliseconds(250));
+			}
+			else if (mPushing) {
+				mAnimationhandler.animation(15, 5, sf::milliseconds(100));
 			}
 			else
 				mAnimationhandler.animation(2, 5, sf::milliseconds(50));
@@ -122,23 +135,38 @@ void Cat::Update(float dt){
 			if (mDashing){
 				mSpeed = 2;
 				mDashing = false;
+				if (direction == 4) {
+					mAnimationhandler.setFrame(1, 4);
+				}
+				if (direction == 3) {
+					mAnimationhandler.setFrame(0, 0);
+				}
+				if (direction == 2) {
+					mAnimationhandler.setFrame(3, 0);
+				}
+				if (direction == 1) {
+					mAnimationhandler.setFrame(2, 0);
+				}
 			}
-			mAnimationhandler.reset(direction);
+			if (mPushing) {
+				mPushing = false;
+			}
+			//mAnimationhandler.reset(direction);
 		}
 	}
 	else if (canMove) // TEMP , SKA ÄNDRAS MED IDLE ANIMATION
 	{
 		if (direction == 4) {
-			mAnimationhandler.setFrame(1, 4);
+			//mAnimationhandler.setFrame(1, 4);
 		}
 		if (direction == 3) {
-			mAnimationhandler.setFrame(0, 0);
+			//mAnimationhandler.setFrame(0, 0);
 		}
 		if (direction == 2) {
-			mAnimationhandler.setFrame(3, 0);
+			//mAnimationhandler.setFrame(3, 0);
 		}
 		if (direction == 1) {
-			mAnimationhandler.setFrame(2, 0);
+			//mAnimationhandler.setFrame(2, 0);
 		}
 	}
 
@@ -148,6 +176,10 @@ void Cat::Update(float dt){
 void Cat::moveForward(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 	if (!mMoving && canMove) {
 		direction = 4;
+		if (mGrid.moveCrate(this, gridvector(mCoord.x, mCoord.y - 1), tileLayer, Entities)) {
+			mAnimationhandler.playAnimation(12, 5, sf::milliseconds(100));
+			mPushing = true;
+		}
 		if (mGrid.isTilePassable(this, gridvector(mCoord.x, mCoord.y - 1), tileLayer, Entities)){
 			newPos.y = mPosition.y - 64;
 			mSoundHandler->PlaySound(1);
@@ -158,6 +190,11 @@ void Cat::moveForward(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 void Cat::moveBackWards(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 	if (!mMoving && canMove) {
 		direction = 3;
+
+		if (mGrid.moveCrate(this, gridvector(mCoord.x, mCoord.y + 1), tileLayer, Entities)) {
+			mPushing = true;
+		}
+
 		if (mGrid.isTilePassable(this, gridvector(mCoord.x, mCoord.y + 1), tileLayer, Entities)){
 			newPos.y = mPosition.y + 64;
 			mMoving = true;
@@ -167,6 +204,9 @@ void Cat::moveBackWards(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 void Cat::moveLeft(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 	if (!mMoving && canMove) {
 		direction = 2;
+		if (mGrid.moveCrate(this, gridvector(mCoord.x - 1, mCoord.y), tileLayer, Entities)) {
+			mPushing = true;
+		}
 		if (mGrid.isTilePassable(this, gridvector(mCoord.x - 1, mCoord.y), tileLayer, Entities)){
 			newPos.x = mPosition.x - 64;
 			mMoving = true;
@@ -176,6 +216,9 @@ void Cat::moveLeft(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 void Cat::moveRight(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 	if (!mMoving && canMove) {
 		direction = 1;
+		if (mGrid.moveCrate(this, gridvector(mCoord.x + 1, mCoord.y), tileLayer, Entities)) {
+			mPushing = true;
+		}
 		if (mGrid.isTilePassable(this, gridvector(mCoord.x + 1, mCoord.y), tileLayer, Entities)){
 			newPos.x = mPosition.x + 64;
 			mMoving = true;

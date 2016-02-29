@@ -75,16 +75,18 @@ void AnimationHandler::abilityAnimation(){
 }
 
 void AnimationHandler::reset(int direction){
-	if (direction == 1)
-		mSprite->setTextureRect(sf::IntRect(0 * mSpriteSizeX, 2 * mSpriteSizeY, mSpriteSizeX, mSpriteSizeY));
-	if (direction == 2)
-		mSprite->setTextureRect(sf::IntRect(0 * mSpriteSizeX, 3 * mSpriteSizeY, mSpriteSizeX, mSpriteSizeY));
-	if (direction == 3)
-		mSprite->setTextureRect(sf::IntRect(0 * mSpriteSizeX, 0 * mSpriteSizeY, mSpriteSizeX, mSpriteSizeY));
-	if (direction == 4)
-		mSprite->setTextureRect(sf::IntRect(0 * mSpriteSizeX, 1 * mSpriteSizeY, mSpriteSizeX, mSpriteSizeY));
+	if (!playAnimationBool) {
+		if (direction == 1)
+			mSprite->setTextureRect(sf::IntRect(0 * mSpriteSizeX, 2 * mSpriteSizeY, mSpriteSizeX, mSpriteSizeY));
+		if (direction == 2)
+			mSprite->setTextureRect(sf::IntRect(0 * mSpriteSizeX, 3 * mSpriteSizeY, mSpriteSizeX, mSpriteSizeY));
+		if (direction == 3)
+			mSprite->setTextureRect(sf::IntRect(0 * mSpriteSizeX, 0 * mSpriteSizeY, mSpriteSizeX, mSpriteSizeY));
+		if (direction == 4)
+			mSprite->setTextureRect(sf::IntRect(0 * mSpriteSizeX, 1 * mSpriteSizeY, mSpriteSizeX, mSpriteSizeY));
 
-	mX = 0;
+		mX = 0;
+	}
 }
 
 void AnimationHandler::animation(int y, int frames, sf::Time time){
@@ -113,7 +115,7 @@ void AnimationHandler::Update() {
 		
 		if (mClock.getElapsedTime() >= mTime && mX < mMaxFrames)
 		{
-			mSprite->setTextureRect(sf::IntRect(mX * mSpriteSizeX, 0 * mSpriteSizeY, mSpriteSizeX, mSpriteSizeY));
+			mSprite->setTextureRect(sf::IntRect(mX * mSpriteSizeX, mYOffset * mSpriteSizeY, mSpriteSizeX, mSpriteSizeY));
 			std::cout << "nextframe" << std::endl;
 			mX++;
 			mClock.restart();

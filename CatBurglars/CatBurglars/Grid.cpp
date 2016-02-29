@@ -3,6 +3,9 @@
 #include "Crate.h"
 
 
+// TRUE = FIRST PUSH CRATE SYSTEM. FALSE = NEW PUSH SYSTEM
+bool PUSH_SYSTEM = false;
+
 Grid::Grid(){
 
 }
@@ -42,6 +45,47 @@ bool Grid::canCrateMove(gridvector position, TileLayer *Tiles, std::vector<Entit
 
 	
 }
+bool Grid::moveCrate(GameObject *gameobject, gridvector position, TileLayer *Tiles, std::vector<Entity*> *Entities) {
+	TileLayer mTiles = *Tiles;
+	std::vector<Entity*> mEntities = *Entities;
+
+
+	
+	if (!PUSH_SYSTEM) {
+
+		for each (Entity *e in mEntities) {
+			if (Crate *crate = dynamic_cast<Crate*>(e)) {
+
+				if ((gameobject->getCoords().x == position.x) && (gameobject->getCoords().y - 1 == position.y) && position.y == crate->getCoords().y && position.x == crate->getCoords().x) {
+					if (crate->moveForward(Tiles, Entities)) {
+						return true;
+					}
+					
+				}
+				if ((gameobject->getCoords().x == position.x) && (gameobject->getCoords().y + 1 == position.y) && position.y == crate->getCoords().y && position.x == crate->getCoords().x) {
+					if (crate->moveBackWards(Tiles, Entities)) {
+					    return true;
+					}
+				}
+				if ((gameobject->getCoords().x + 1 == position.x) && (gameobject->getCoords().y == position.y) && position.y == crate->getCoords().y && position.x == crate->getCoords().x) {
+					if (crate->moveRight(Tiles, Entities)) {
+						return true;
+					}
+				}
+				if ((gameobject->getCoords().x - 1 == position.x) && (gameobject->getCoords().y == position.y) && position.y == crate->getCoords().y && position.x == crate->getCoords().x) {
+					if (crate->moveLeft(Tiles, Entities)) {
+						return true;
+					}
+				}
+
+			}
+
+
+
+		}
+	}
+	return false;
+}
 bool Grid::isTilePassable(GameObject *gameobject, gridvector position, TileLayer *Tiles, std::vector<Entity*> *Entities){
 	
 	TileLayer mTiles = *Tiles;
@@ -52,28 +96,30 @@ bool Grid::isTilePassable(GameObject *gameobject, gridvector position, TileLayer
 	
 	
 	for each (Entity *e in mEntities){
-		if (Cat *cat = dynamic_cast<Cat*>(gameobject)) {
-			if (cat->canPushCrate) {
-				if (Crate *crate = dynamic_cast<Crate*>(e)) {
 
-					if ((gameobject->getCoords().x == position.x) && (gameobject->getCoords().y - 1 == position.y) && position.y == crate->getCoords().y && position.x == crate->getCoords().x) {
-						crate->moveForward(Tiles, Entities);
-					}
-					if ((gameobject->getCoords().x == position.x) && (gameobject->getCoords().y + 1 == position.y) && position.y == crate->getCoords().y && position.x == crate->getCoords().x) {
-						crate->moveBackWards(Tiles, Entities);
-					}
-					if ((gameobject->getCoords().x + 1 == position.x) && (gameobject->getCoords().y == position.y) && position.y == crate->getCoords().y && position.x == crate->getCoords().x) {
-						crate->moveRight(Tiles, Entities);
-					}
-					if ((gameobject->getCoords().x - 1 == position.x) && (gameobject->getCoords().y == position.y) && position.y == crate->getCoords().y && position.x == crate->getCoords().x) {
-						crate->moveLeft(Tiles, Entities);
+		if (PUSH_SYSTEM) {
+			if (Cat *cat = dynamic_cast<Cat*>(gameobject)) {
+				if (cat->canPushCrate) {
+					if (Crate *crate = dynamic_cast<Crate*>(e)) {
+
+						if ((gameobject->getCoords().x == position.x) && (gameobject->getCoords().y - 1 == position.y) && position.y == crate->getCoords().y && position.x == crate->getCoords().x) {
+							crate->moveForward(Tiles, Entities);
+						}
+						if ((gameobject->getCoords().x == position.x) && (gameobject->getCoords().y + 1 == position.y) && position.y == crate->getCoords().y && position.x == crate->getCoords().x) {
+							crate->moveBackWards(Tiles, Entities);
+						}
+						if ((gameobject->getCoords().x + 1 == position.x) && (gameobject->getCoords().y == position.y) && position.y == crate->getCoords().y && position.x == crate->getCoords().x) {
+							crate->moveRight(Tiles, Entities);
+						}
+						if ((gameobject->getCoords().x - 1 == position.x) && (gameobject->getCoords().y == position.y) && position.y == crate->getCoords().y && position.x == crate->getCoords().x) {
+							crate->moveLeft(Tiles, Entities);
+						}
+
 					}
 
 				}
-
 			}
 		}
-		
 		if (GameObject *object = dynamic_cast<GameObject*>(e)){
 
 			

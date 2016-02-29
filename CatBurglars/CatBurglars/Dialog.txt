@@ -1,10 +1,20 @@
 ID: 0
+CHARACTER: SOCKS
+MOOD: ANGRY
 Text: { Test Text yoyoyoyoyoyo dialog 0 }
 ID: 1
+CHARACTER: SOCKS
+MOOD: ANGRY
 TEXT: { Press 'E' to dash }
 ID: 2
+CHARACTER: SOCKS
+MOOD: ANGRY
 TEXT: { Press 'E' to dash }
 ID: 3
+CHARACTER: SOCKS
+MOOD: ANGRY
 TEXT: { Dialog 3 test }
 ID: 4
+CHARACTER: SOCKS
+MOOD: ANGRY
 TEXT: { Dialog 4 test }

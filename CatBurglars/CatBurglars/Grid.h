@@ -13,6 +13,8 @@ public:
 	bool isTilePassable(GameObject *gameobject,gridvector position, TileLayer *Tiles,std::vector<Entity*> *Entities);
 	bool canCrateMove(gridvector position, TileLayer *Tiles, std::vector<Entity*> *Entities);
 	bool canCatDash(gridvector originalpos, gridvector position, TileLayer *Tiles, std::vector<Entity*> *Entities);
+
+	bool moveCrate(GameObject *gameobject, gridvector position, TileLayer *Tiles, std::vector<Entity*> *Entities);
 private:
 
 };
