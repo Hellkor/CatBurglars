@@ -120,7 +120,7 @@ Level::Level(string filename) :
 	DIVIDER_SPRITE.setTexture(DIVIDER_TEXTURE);
 	DIVIDER_SPRITE.setOrigin(DIVIDER_TEXTURE.getSize().x / 2, DIVIDER_TEXTURE.getSize().y / 2);
 
-	//dialogManager.startConversation(0, 4, 5);
+	dialogManager.startConversation(0, 4, 5);
 }
 
 // Renderar level

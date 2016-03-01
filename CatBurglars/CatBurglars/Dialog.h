@@ -17,11 +17,20 @@ public:
 	void setCharacter(string Character);
 	Mood getMood();
 	Character getCharacter();
+
+	void setMood2(string mood);
+	void setCharacter2(string Character);
+	Mood getMood2();
+	Character getCharacter2();
 private:
 
 
 	Mood mMood;
 	Character mCharacter;
+
+	Mood mMood2;
+	Character mCharacter2;
+
 	int mID;
 	TEXT mText;
 	string mString;

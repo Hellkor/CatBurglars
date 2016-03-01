@@ -71,3 +71,55 @@ void Dialog::setCharacter(string Character) {
 		mCharacter = SHADOW;
 	}
 }
+
+void Dialog::setMood2(string mood) {
+	string inputMood = mood;
+	for (std::string::size_type i = 0; i < inputMood.size(); i++) {
+		char *c = &inputMood[i];
+		*c = toupper(*c);
+	}
+	if (inputMood == "ANGRY") {
+		mMood2 = ANGRY;
+	}
+	if (inputMood == "SAD") {
+		mMood2 = SAD;
+	}
+	if (inputMood == "HAPPY") {
+		mMood2 = HAPPY;
+	}
+	if (inputMood == "NEUTRAL") {
+		mMood2 = NEUTRAL;
+	}
+
+}
+Mood Dialog::getMood2() {
+	return mMood2;
+}
+Character Dialog::getCharacter2() {
+	return mCharacter2;
+}
+void Dialog::setCharacter2(string Character) {
+	string inputCharacter = Character;
+	for (std::string::size_type i = 0; i < inputCharacter.size(); i++) {
+		char *c = &inputCharacter[i];
+		*c = toupper(*c);
+	}
+	if (inputCharacter == "SOCKS") {
+		mCharacter2 = SOCKS;
+	}
+	if (inputCharacter == "SNOW") {
+		mCharacter2 = SNOW;
+	}
+	if (inputCharacter == "SCOOTER") {
+		mCharacter2 = SCOOTER;
+	}
+	if (inputCharacter == "ALEX") {
+		mCharacter2 = ALEX;
+	}
+	if (inputCharacter == "DOUGLAS") {
+		mCharacter2 = DOUGLAS;
+	}
+	if (inputCharacter == "SHADOW") {
+		mCharacter2 = SHADOW;
+	}
+}
