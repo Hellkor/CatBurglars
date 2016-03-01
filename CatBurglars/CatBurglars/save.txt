@@ -1,2 +1,6 @@
+<<<<<<< HEAD
 Collectibles: 786
+=======
+Collectibles: 846
+>>>>>>> origin/master
 Level: 10

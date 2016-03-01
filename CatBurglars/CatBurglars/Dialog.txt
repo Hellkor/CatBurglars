@@ -1,20 +1,24 @@
 ID: 0
 CHARACTER: SOCKS
 MOOD: ANGRY
-Text: { Test Text yoyoyoyoyoyo dialog 0 }
+CHARACTER2: SOCKS
+MOOD2: ANGRY
+Text(1): { Test Test }
 ID: 1
 CHARACTER: SOCKS
 MOOD: ANGRY
-TEXT: { Press 'E' to dash }
+CHARACTER2: SOCKS
+MOOD2: ANGRY
+Text(2): { Test 2 }
 ID: 2
 CHARACTER: SOCKS
 MOOD: ANGRY
-TEXT: { Press 'E' to dash }
+CHARACTER2: SOCKS
+MOOD2: ANGRY
+Text(1): { Test aksjd }
 ID: 3
 CHARACTER: SOCKS
 MOOD: ANGRY
-TEXT: { Dialog 3 test }
-ID: 4
-CHARACTER: SOCKS
-MOOD: ANGRY
-TEXT: { Dialog 4 test }
+CHARACTER2: SOCKS
+MOOD2: ANGRY
+Text(2): { asdasd 22 }
