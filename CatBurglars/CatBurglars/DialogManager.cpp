@@ -3,21 +3,29 @@
 #include <iostream>
 sf::Texture DIALOG_BOX_TEXTURE;
 
+sf::Vector2f PORTRAIT_ONE_POS;
+sf::Vector2f PORTRAIT_TWO_POS;
 
-DialogManager::DialogManager(string filename,TextureHandler *handler, sf::Vector2f position):
+sf::Vector2f PORTRAIT_SIZE = sf::Vector2f(200, 200);
+
+int FONT_SIZE = 24;
+
+
+DialogManager::DialogManager(string filename,TextureHandler *handler, sf::Vector2f resolution):
 	mFilename(filename),
 	mCurrentConversationDialogID(-1),
-	mTextureHandler(handler),
-	mPosition(position){
+	mTextureHandler(handler){
 	DIALOG_BOX_TEXTURE.loadFromFile("Resources/DialogBox.png");
 	mDialogBox.setTexture(DIALOG_BOX_TEXTURE);
 	mFont.loadFromFile("Resources/Fonts/arial.ttf");
-	mRenderText.setFont(mFont);
-	mRenderText.setCharacterSize(12);
-	mRenderText.setColor(sf::Color::White);
+	
 	readFile();
 
-	mTextPos = sf::Vector2f(mPosition.x + 128, mPosition.y);
+
+
+
+	mTextPos = sf::Vector2f(resolution.x/2,resolution.y - 100);
+	
 }
 
 void DialogManager::readFile() {
@@ -28,6 +36,11 @@ void DialogManager::readFile() {
 
 	string Character;
 	string Mood;
+
+	string Character2;
+	string Mood2;
+
+	SelectedCharacter highlighted;
 	
 	while (!inputFile.eof()) {
 		
@@ -51,15 +64,33 @@ void DialogManager::readFile() {
 			cout << "Mood: " << Mood << endl;
 		}
 		inputFile >> input;
-		if (input == "Text:") {
-			cout << "Input: text" << endl;
+		if (input == "CHARACTER2:") {
 			inputFile >> input;
+			Character2 = input;
+			cout << "CHARACTER2: " << Character2 << endl;
 		}
+		inputFile >> input;
+		if (input == "MOOD2:") {
+			inputFile >> input;
+			Mood2 = input;
+			cout << "Mood2: " << Mood2 << endl;
+		}
+		inputFile >> input;
+		if (input == "Text(1):") {
+			cout << "Input: text" << endl;
+			highlighted = ONE;
+		}
+		else if (input == "Text(2):") {
+			cout << "Input: text" << endl;
+			highlighted = TWO;
+		}
+		inputFile >> input;
 		if (input == "{") {
 			inputFile >> input;
 			text_block.push_back(input);
 		}
 		while (input != "}") {
+			
 			inputFile >> input;
 			
 			if (input != "}") {
@@ -72,6 +103,9 @@ void DialogManager::readFile() {
 			Dialog *dialog = new Dialog(text_block, ID);
 			dialog->setCharacter(Character);
 			dialog->setMood(Mood);
+			dialog->setCharacter2(Character2);
+			dialog->setMood2(Mood2);
+			dialog->setSelectedCharacter(highlighted);
 			mDialogList.push_back(dialog);
 			text_block.clear();
 		}
@@ -117,24 +151,62 @@ void DialogManager::update() {
 	}
 	
 }
-void DialogManager::render(sf::RenderWindow *window,sf::Vector2f position) {
+void DialogManager::render(sf::RenderWindow *window,sf::View view) {
+
+	mPortrait.setOrigin(mPortrait.getTexture()->getSize().x / 2, mPortrait.getTexture()->getSize().y / 2);
+	mPortrait2.setOrigin(mPortrait2.getTexture()->getSize().x / 2, mPortrait2.getTexture()->getSize().y / 2);
 	
+	PORTRAIT_ONE_POS = view.getCenter() + sf::Vector2f(-350,0);
+	PORTRAIT_TWO_POS = view.getCenter() + sf::Vector2f(350, 0);
 	
-	
-	mPortrait.setPosition(mPosition);
 
 	if (mShowDialog) {
+		sf::RenderTexture rtext;
+		rtext.create(200, 200);
+		rtext.clear(sf::Color(150, 150, 150, 0));
+		sf::RectangleShape rect;
+		rect.setSize(sf::Vector2f(mPortrait.getTexture()->getSize().x, mPortrait.getTexture()->getSize().y));
+		rect.setTexture(&rtext.getTexture());
+
+
+		rect.setOrigin(rect.getSize().x / 2, rect.getSize().y / 2);
+
+		mPortrait.setPosition(PORTRAIT_ONE_POS);
+		mPortrait2.setPosition(PORTRAIT_TWO_POS);
+
+		switch (mHighLighted)
+		{
+		case ONE:
+			
+			window->draw(mPortrait2);
+			rect.setPosition(mPortrait2.getPosition());
+			window->draw(rect, sf::BlendMultiply);
+			window->draw(mPortrait);
+			break;
+		case TWO:
+			window->draw(mPortrait);
+			rect.setPosition(mPortrait.getPosition());
+			window->draw(rect, sf::BlendMultiply);
+			window->draw(mPortrait2);
+			break;
+		default:
+			break;
+		}
+
 		mDialogBox.setPosition(mPosition);
 
 		
 		for each (sf::Text t in TextRows) {
 			t.setFont(mFont);
-			t.setCharacterSize(12);
+			t.setCharacterSize(FONT_SIZE);
 			window->draw(t);
 		}
 		
 		window->draw(mDialogBox);
-		window->draw(mPortrait);
+
+		
+		
+		
 		
 		
 	}
@@ -167,7 +239,7 @@ void DialogManager::showDialog(int ID,float time_as_seconds) {
 	
 			sf::Text text;
 			text.setString(row);
-			rowPos.y += 12;
+			rowPos.y += FONT_SIZE;
 			text.setPosition(rowPos);
 			TextRows.push_back(text);
 			charactercount = 0;
@@ -177,15 +249,17 @@ void DialogManager::showDialog(int ID,float time_as_seconds) {
 	if (charactercount <= maxcount) {
 		sf::Text text;
 		text.setString(row);
-		rowPos.y += 12;
+		rowPos.y += FONT_SIZE;
 		text.setPosition(rowPos);
 		TextRows.push_back(text);
 		charactercount = 0;
 		row.clear();
 	}
 	
+	mHighLighted = mDialogList[ID]->getSelectedCharacter();
 	
 	setPortrait(mDialogList[ID]->getCharacter(), mDialogList[ID]->getMood());
+	setPortrait2(mDialogList[ID]->getCharacter2(), mDialogList[ID]->getMood2());
 	mShowDialog = true;
 	mClock.restart();
 	mTimer = sf::seconds(time_as_seconds);
@@ -205,6 +279,7 @@ void DialogManager::setPortrait(Character character, Mood mood) {
 			case ANGRY:
 				cout << "angry socks" << endl;
 				mPortrait.setTexture(*mTextureHandler->GetTexture(25));
+				mPortrait.setScale(sf::Vector2f(-1.0f,-1.0f));
 			break;
 			case SAD:
 			break;
@@ -271,6 +346,83 @@ void DialogManager::setPortrait(Character character, Mood mood) {
 			case NEUTRAL:
 			break;
 			case HAPPY:
+			break;
+		}
+		break;
+	}
+}
+void DialogManager::setPortrait2(Character character, Mood mood) {
+	switch (character) {
+	case SOCKS:
+		switch (mood) {
+		case ANGRY:
+			mPortrait2.setTexture(*mTextureHandler->GetTexture(25));
+			break;
+		case SAD:
+			break;
+		case NEUTRAL:
+			break;
+		case HAPPY:
+			break;
+		}
+		break;
+	case SCOOTER:
+		switch (mood) {
+		case ANGRY:
+			break;
+		case SAD:
+			break;
+		case NEUTRAL:
+			break;
+		case HAPPY:
+			break;
+		}
+		break;
+	case SNOW:
+		switch (mood) {
+		case ANGRY:
+			break;
+		case SAD:
+			break;
+		case NEUTRAL:
+			break;
+		case HAPPY:
+			break;
+		}
+		break;
+	case SHADOW:
+		switch (mood) {
+		case ANGRY:
+			break;
+		case SAD:
+			break;
+		case NEUTRAL:
+			break;
+		case HAPPY:
+			break;
+		}
+		break;
+	case ALEX:
+		switch (mood) {
+		case ANGRY:
+			break;
+		case SAD:
+			break;
+		case NEUTRAL:
+			break;
+		case HAPPY:
+			break;
+		}
+		break;
+	case DOUGLAS:
+		switch (mood) {
+		case ANGRY:
+			break;
+		case SAD:
+			break;
+		case NEUTRAL:
+			break;
+		case HAPPY:
 			break;
 		}
 		break;

@@ -42,7 +42,7 @@ sf::Sprite				lightmap;
 
 // TEST DIALOGMANAGER
 
-DialogManager dialogManager("dialog", &textures,sf::Vector2f(300,500));
+DialogManager dialogManager("dialog", &textures,sf::Vector2f(1280,720));
 
 // LIGHT STRUCTURE FOR BOTH LIGHT AND FOV LIGHT
 struct Light
@@ -76,7 +76,7 @@ Level::Level(string filename) :
 
 	
 	// Initialize GUI View
-	guiView.setSize(1024, 720);
+	//guiView.setSize(1024, 720);
 	guiView.setViewport(sf::FloatRect(0, 0, 1, 1));
 
 	//Initialize textures
@@ -126,7 +126,6 @@ Level::Level(string filename) :
 // Renderar level
 void Level::render(sf::RenderWindow *window){
 	
-	window->clear();
 	mPlayer1View.setSize(sf::Vector2f(window->getSize().x / 2, window->getSize().y));
 	window->setView(mPlayer1View);
 	for (TileLayer::size_type y = 0; y < mBottomTileLayer.size(); y++)
@@ -242,13 +241,14 @@ void Level::render(sf::RenderWindow *window){
 	}
 
 	// Draw gui objects
+	guiView.setSize(sf::Vector2f(window->getSize()));
 	window->setView(guiView);
-	if (mPlayers == 2) {
+	if (mPlayers == 2 && !dialogManager.isDialogActive()) {
 		DIVIDER_SPRITE.setPosition(guiView.getCenter());
 		window->draw(DIVIDER_SPRITE);
 	}
+	dialogManager.render(window,guiView);
 	
-	dialogManager.render(window, sf::Vector2f(5,650));
 }
 
 void Level::addPlayer(Cat *cat , int player){

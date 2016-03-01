@@ -40,6 +40,12 @@ void Dialog::setMood(string mood) {
 	}
 
 }
+void Dialog::setSelectedCharacter(SelectedCharacter one_or_two) {
+	mSelectedCharacter = one_or_two;
+}
+SelectedCharacter Dialog::getSelectedCharacter() {
+	return mSelectedCharacter;
+}
 Mood Dialog::getMood() {
 	return mMood;
 }

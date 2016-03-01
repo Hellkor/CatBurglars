@@ -6,6 +6,7 @@ using namespace std;
 typedef vector<string> TEXT;
 enum Mood {ANGRY,SAD,HAPPY,NEUTRAL};
 enum Character {SOCKS,SNOW,SHADOW,SCOOTER,ALEX,DOUGLAS};
+enum SelectedCharacter {ONE,TWO};
 
 class Dialog {
 public:
@@ -22,8 +23,11 @@ public:
 	void setCharacter2(string Character);
 	Mood getMood2();
 	Character getCharacter2();
-private:
 
+	void setSelectedCharacter(SelectedCharacter one_or_two);
+	SelectedCharacter getSelectedCharacter();
+private:
+	SelectedCharacter mSelectedCharacter;
 
 	Mood mMood;
 	Character mCharacter;
