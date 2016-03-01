@@ -57,6 +57,14 @@ void LevelManager::nextLevel(){
 	}
 }
 
+void LevelManager::prevLevel() {
+	if (mCurrentLevel != mLevels.size() + 1) {
+		std::cout << "Changing to previous level" << std::endl;
+		mCurrentLevel--;
+		loadLevel(mCurrentLevel);
+	}
+}
+
 
 void LevelManager::render(sf::RenderWindow *window){
 	mLevels[mCurrentLevel]->render(window);

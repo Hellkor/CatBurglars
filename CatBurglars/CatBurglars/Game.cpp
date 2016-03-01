@@ -37,13 +37,20 @@ Game::Game() {
 
 	//Test for loading in maps
 
-	Level *testLevel = new Level("11");
-	Level *level2 = new Level("12");
-	Level *level3 = new Level("15");
+	Level *Level0 = new Level("11");
+	Level *level1 = new Level("12");
+	Level *level2 = new Level("13");
+	Level *level3 = new Level("14");
+	Level *level4 = new Level("15");
+	Level *level5 = new Level("16");
+	
 
-	LevelManager::addLevel(testLevel);
+	LevelManager::addLevel(Level0);
+	LevelManager::addLevel(level1);
 	LevelManager::addLevel(level2);
 	LevelManager::addLevel(level3);
+	LevelManager::addLevel(level4); 
+	LevelManager::addLevel(level5);
 
 	window->setFramerateLimit(60);
 
@@ -51,7 +58,7 @@ Game::Game() {
 	LevelManager::addCollectible();
 	LevelManager::save();
 
-	LevelManager::loadLevel(2);
+	LevelManager::loadLevel(0);
 	
 
 
@@ -123,6 +130,9 @@ void Game::Update(float dt){
 			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::M)){
 				LevelManager::loadLevel(0);
+			}
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::P)) {
+				LevelManager::nextLevel();
 			}
 			break;
 

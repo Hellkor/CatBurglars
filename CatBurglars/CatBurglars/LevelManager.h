@@ -12,6 +12,7 @@ public:
 
 	static void loadLevel(int level);
 	static void nextLevel();
+	static void prevLevel();
 
 	static void update(float dt);
 	static void render(sf::RenderWindow *window);
