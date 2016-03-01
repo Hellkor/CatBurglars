@@ -44,12 +44,12 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>\\hsnas6\StudentHome\2015\a15axeka\Documents\SFML VS 14\SFML-2.3.2\include;%(AdditionalIncludeDirectories);\\hsnas6\StudentHome\2015\b15jonni\Downloads\SFML-2.3.2\include;C:\Users\Hellkor\Downloads\SFML-2.3.2\include;\\hsnas6\studenthome\2015\b15jonni\Downloads\SFML-2.3.2\include;\\hsnas6\StudentHome\2014\a14rasli\Documents\SFML-2.3.2-windows-vc12-32-bit\SFML-2.3.2\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>\\hsnas6\StudentHome\2015\b15jonni\Downloads\sfeMovie-Debug-2.0.0-win32\include;%(AdditionalIncludeDirectories);\\hsnas6\StudentHome\2015\b15jonni\Downloads\SFML-2.3.2\include;C:\Users\Hellkor\Downloads\SFML-2.3.2\include;\\hsnas6\studenthome\2015\b15jonni\Downloads\SFML-2.3.2\include;\\hsnas6\StudentHome\2014\a14rasli\Documents\SFML-2.3.2-windows-vc12-32-bit\SFML-2.3.2\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>\\hsnas6\StudentHome\2015\a15axeka\Documents\SFML VS 14\SFML-2.3.2\lib;\\hsnas6\StudentHome\2015\a15axeka\Downloads\SFML-2.3.2-windows-vc12-32-bit\SFML-2.3.2\lib;\\hsnas6\studenthome\2015\b15jonni\Downloads\SFML-2.3.2\lib;C:\Users\Hellkor\Downloads\SFML-2.3.2\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>sfml-system-d.lib;sfml-window-d.lib;sfml-graphics-d.lib;sfml-network-d.lib;sfml-audio-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>\\hsnas6\StudentHome\2015\b15jonni\Downloads\sfeMovie-Debug-2.0.0-win32\lib;\\hsnas6\studenthome\2015\b15jonni\Downloads\SFML-2.3.2\lib;C:\Users\Hellkor\Downloads\SFML-2.3.2\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>sfml-system-d.lib;sfml-window-d.lib;sfml-graphics-d.lib;sfml-network-d.lib;sfml-audio-d.lib;sfeMovie-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -91,6 +91,7 @@
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="LevelManager.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="MovieHandler.cpp" />
     <ClCompile Include="MultiDoor.cpp" />
     <ClCompile Include="Recievers.cpp" />
     <ClCompile Include="SecuCam.cpp" />
@@ -121,6 +122,7 @@
     <ClInclude Include="Guard.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="LevelManager.h" />
+    <ClInclude Include="MovieHandler.h" />
     <ClInclude Include="MultiDoor.h" />
     <ClInclude Include="Recievers.h" />
     <ClInclude Include="SecuCam.h" />

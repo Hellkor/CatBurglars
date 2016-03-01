@@ -3,9 +3,13 @@
 #include "Crate.h"
 #include <SFML\Audio.hpp>
 #include "Soundhandler.h"
+#include "MovieHandler.h"
+
 
 static sf::RenderWindow *window;
 static TextureHandler textures;
+ MovieHandler movieHandler;
+ sfe::Movie mMovie;
 
 int WINDOW_WIDTH = 1280;
 int WINDOW_HEIGHT = 720;
@@ -53,7 +57,7 @@ Game::Game() {
 
 	LevelManager::loadLevel(2);
 	
-
+	movieHandler.Initialize();
 
 }
 
@@ -63,7 +67,10 @@ Game::~Game()
 }
 
 void Game::Run(){
-	
+	//mMovie.openFromFile("Resources/Sounds/some_movie.ogv");
+	//mMovie.fit(0, 0, 1280, 720);
+	//mMovie.play();
+	movieHandler.PlayMovie(0);
 	while (window->isOpen())
 	{
 		sf::Event event;
@@ -143,14 +150,15 @@ void Game::Update(float dt){
 void Game::Render()
 {
 	//window->setView(view1);
-
+	movieHandler.getMovie()->update();
+	//mMovie.update();
 	window->clear();
 	switch (GameState){
 	case Menu:
 		break;
 		// Main Game Case
 	case RunGame:
-		LevelManager::render(window);
+		//LevelManager::render(window);
 		break;
 	case Pause:
 		break;
@@ -159,7 +167,7 @@ void Game::Render()
 	}
 	
 
-	
-
+	//window->draw(mMovie);
+	window->draw(*movieHandler.getMovie());
 	window->display();
 }
