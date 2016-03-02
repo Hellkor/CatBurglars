@@ -3,9 +3,11 @@
 #include "Crate.h"
 #include <SFML\Audio.hpp>
 #include "Soundhandler.h"
+#include "MovieHandler.h"
 
 static sf::RenderWindow *window;
 static TextureHandler textures;
+MovieHandler moviehandler;
 
 int WINDOW_WIDTH = 1280;
 int WINDOW_HEIGHT = 720;
@@ -60,7 +62,7 @@ Game::Game() {
 
 	LevelManager::loadLevel(0);
 	
-
+	moviehandler.Initialize();
 
 }
 
@@ -70,7 +72,7 @@ Game::~Game()
 }
 
 void Game::Run(){
-	
+	moviehandler.PlayMovie(0);
 	while (window->isOpen())
 	{
 		sf::Event event;
@@ -153,7 +155,7 @@ void Game::Update(float dt){
 void Game::Render()
 {
 	//window->setView(view1);
-
+	moviehandler.getMovie()->update();
 	window->clear();
 	switch (GameState){
 	case Menu:
@@ -170,6 +172,6 @@ void Game::Render()
 	
 
 	
-
+	window->draw(*moviehandler.getMovie());
 	window->display();
 }
