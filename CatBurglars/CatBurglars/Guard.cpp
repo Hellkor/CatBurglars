@@ -26,29 +26,43 @@ mRange(3){
 	mHitboxSprite.setTexture(*textures->GetTexture(99));
 	mHitboxSprite.setPosition((sf::Vector2f)mPosition);
 	
-	setVision("E");
+	//setVision("E",0,0);
 
 	mWalkSound.setBuffer(*mSoundHandler->getSound(1));
 
 }
-void Guard::setVision(string face) {
+void Guard::setVision(string face, TileLayer *tiles, std::vector<Entity*> *entities) {
 	mVision.clear();
 	int range = mRange;
 	width = 1;
 	int height = 0;
 	mFace = face;
-
+	bool sak = true;
+	bool sak2 = true;
+	bool fix = true;
 	if (mFace == "N") {
 		mSprite.setTextureRect(sf::IntRect(0 * 64, 3 * 128, 64, 128));
 
 		for (int i = 0; i <= range; i++) {
-			mVision.push_back(new gridvector(mCoords.x, mCoords.y - i));
-
-			for (int j = 1; j < width; j++) {
-				mVision.push_back(new gridvector(mCoords.x + j, mCoords.y - i));
-				mVision.push_back(new gridvector(mCoords.x + -j, mCoords.y - i));
+			if (mGrid.isLightPassable(this, gridvector(mCoords.x, mCoords.y - i), tiles, entities)&& fix) {
+				mVision.push_back(new gridvector(mCoords.x, mCoords.y - i));
 			}
-
+			else
+				fix = false;
+			sak = true;
+			sak2 = true;
+			for (int j = 1; j < width; j++) {
+				if (mGrid.isLightPassable(this, gridvector(mCoords.x + j, mCoords.y - i), tiles, entities)&& sak && fix) {
+					mVision.push_back(new gridvector(mCoords.x + j, mCoords.y - i));
+				}
+				else
+					sak = false;
+				if (mGrid.isLightPassable(this, gridvector(mCoords.x + -j, mCoords.y - i), tiles, entities)&& sak2 && fix) {
+					mVision.push_back(new gridvector(mCoords.x + -j, mCoords.y - i));
+				}
+				else
+					sak2 = false;
+				}
 			width++;
 		}
 		sf::Vector2f conePos(mPosition.x + 32, mPosition.y + 32);
@@ -60,14 +74,25 @@ void Guard::setVision(string face) {
 	if (mFace == "S") {
 		mSprite.setTextureRect(sf::IntRect(0 * 64, 2 * 128, 64, 128));
 		for (int i = 0; i <= range; i++) {
-
-			mVision.push_back(new gridvector(mCoords.x, mCoords.y + i));
-
-			for (int j = 1; j < width; j++) {
-				mVision.push_back(new gridvector(mCoords.x + j, mCoords.y + i));
-				mVision.push_back(new gridvector(mCoords.x + -j, mCoords.y + i));
+			if (mGrid.isLightPassable(this, gridvector(mCoords.x, mCoords.y + i), tiles, entities) && fix) {
+				mVision.push_back(new gridvector(mCoords.x, mCoords.y + i));
 			}
-
+			else
+				fix = false;
+			sak = true;
+			sak2 = true;
+			for (int j = 1; j < width; j++) {
+					if (mGrid.isLightPassable(this, gridvector(mCoords.x + j, mCoords.y + i), tiles, entities) && sak && fix) {
+						mVision.push_back(new gridvector(mCoords.x + j, mCoords.y + i));
+					}
+					else
+						sak = false;
+					if (mGrid.isLightPassable(this, gridvector(mCoords.x + -j, mCoords.y + i), tiles, entities) && sak2 && fix) {
+						mVision.push_back(new gridvector(mCoords.x + -j, mCoords.y + i));
+					}
+					else
+						sak2 = false;
+				}
 			width++;
 
 		}
@@ -81,14 +106,25 @@ void Guard::setVision(string face) {
 	if (mFace == "E") {
 		mSprite.setTextureRect(sf::IntRect(0 * 64, 0 * 128, 64, 128));
 		for (int i = 0; i <= range; i++) {
-
-			mVision.push_back(new gridvector(mCoords.x + i, mCoords.y));
-
-			for (int j = 1; j < width; j++) {
-				mVision.push_back(new gridvector(mCoords.x + i, mCoords.y + j));
-				mVision.push_back(new gridvector(mCoords.x + i, mCoords.y - j));
+			if (mGrid.isLightPassable(this, gridvector(mCoords.x + i, mCoords.y), tiles, entities) && fix) {
+				mVision.push_back(new gridvector(mCoords.x + i, mCoords.y));
 			}
-
+			else
+				fix = false;
+			sak = true;
+			sak2 = true;
+			for (int j = 1; j < width; j++) {
+				if (mGrid.isLightPassable(this, gridvector(mCoords.x + i, mCoords.y + j), tiles, entities) && sak && fix) {
+					mVision.push_back(new gridvector(mCoords.x + i, mCoords.y + j));
+				}
+				else
+					sak = false;
+				if (mGrid.isLightPassable(this, gridvector(mCoords.x + i, mCoords.y - j), tiles, entities) && sak2 && fix) {
+					mVision.push_back(new gridvector(mCoords.x + i, mCoords.y - j));
+				}
+				else
+					sak2 = false;
+			}
 			width++;
 		}
 
@@ -101,14 +137,25 @@ void Guard::setVision(string face) {
 	if (mFace == "W") {
 		mSprite.setTextureRect(sf::IntRect(0 * 64, 1 * 128, 64, 128));
 		for (int i = 0; i <= range; i++) {
-
-			mVision.push_back(new gridvector(mCoords.x - i, mCoords.y));
-
-			for (int j = 1; j < width; j++) {
-				mVision.push_back(new gridvector(mCoords.x - i, mCoords.y + j));
-				mVision.push_back(new gridvector(mCoords.x - i, mCoords.y - j));
+			if (mGrid.isLightPassable(this, gridvector(mCoords.x - i, mCoords.y), tiles, entities) && fix) {
+				mVision.push_back(new gridvector(mCoords.x - i, mCoords.y));
 			}
-
+			else
+				fix = false;
+			sak = true;
+			sak2 = true;
+			for (int j = 1; j < width; j++) {
+				if (mGrid.isLightPassable(this, gridvector(mCoords.x - i, mCoords.y + j), tiles, entities) && sak && fix) {
+					mVision.push_back(new gridvector(mCoords.x - i, mCoords.y + j));
+				}
+				else
+					sak = false;
+				if (mGrid.isLightPassable(this, gridvector(mCoords.x - i, mCoords.y - j), tiles, entities) && sak2 && fix) {
+					mVision.push_back(new gridvector(mCoords.x - i, mCoords.y - j));
+				}
+				else
+					sak2 = false;
+			}
 			width++;
 		}
 		sf::Vector2f conePos(mPosition.x + 32, mPosition.y + 32);
@@ -166,7 +213,7 @@ void Guard::Render(sf::RenderWindow *mainWindow){
 
 	for each (gridvector *v in mVision) {
 		mHitboxSprite.setPosition(v->x * 64, v->y * 64);
-		//mainWindow->draw(mHitboxSprite);
+		mainWindow->draw(mHitboxSprite);
 	}
 }
 void Guard::loadAI(string filename){
@@ -209,16 +256,16 @@ void Guard::AImovement(TileLayer *tiles, std::vector<Entity*> *entities){
 			moveRight(tiles, entities);
 		}
 		if (mCommandQueue[mQueuePos] == "TN") {
-			setVision("N");
+			setVision("N", tiles, entities);
 		}
 		if (mCommandQueue[mQueuePos] == "TS") {
-			setVision("S");
+			setVision("S", tiles, entities);
 		}
 		if (mCommandQueue[mQueuePos] == "TW") {
-			setVision("W");
+			setVision("W", tiles, entities);
 		}
 		if (mCommandQueue[mQueuePos] == "TE") {
-			setVision("E");
+			setVision("E", tiles, entities);
 		}
 		if (mCommandQueue[mQueuePos] == "wait"){
 			mClock.restart();
@@ -268,26 +315,26 @@ void Guard::Update(float dt){
 			// säkrar att den håller rätt position
 			if (direction == 4) {
 				mCoords.y--;
-				setVision("N");
+			//	setVision("N", tiles, entities);
 				if (mPosition.y != newPos.y)
 					mPosition.y = newPos.y;
 
 			}
 			if (direction == 3) {
 				mCoords.y++;
-				setVision("S");
+			//	setVision("S", tiles, entities);
 				if (mPosition.y != newPos.y)
 					mPosition.y = newPos.y;
 			}
 			if (direction == 2) {
 				mCoords.x--;
-				setVision("W");
+			//	setVision("W", tiles, entities);
 				if (mPosition.x != newPos.x)
 					mPosition.x = newPos.x;
 			}
 			if (direction == 1) {
 				mCoords.x++;
-				setVision("E");
+			//	setVision("E", tiles, entities);
 				if (mPosition.x != newPos.x)
 					mPosition.x = newPos.x;
 			}
@@ -301,7 +348,7 @@ void Guard::moveForward(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 		direction = 4;
 		if (mGrid.isTilePassable(this, gridvector(mCoords.x, mCoords.y - 1), tileLayer, Entities)){
 			newPos.y = mPosition.y - 64;
-			setVision("N");
+			setVision("N", tileLayer, Entities);
 			mMoving = true;
 		}
 	}
@@ -311,7 +358,7 @@ void Guard::moveBackWards(TileLayer *tileLayer, std::vector<Entity*> *Entities) 
 		direction = 3;
 		if (mGrid.isTilePassable(this, gridvector(mCoords.x, mCoords.y + 1), tileLayer, Entities)){
 			newPos.y = mPosition.y + 64;
-			setVision("S");
+			setVision("S", tileLayer, Entities);
 			mMoving = true;
 		}
 	}
@@ -321,7 +368,7 @@ void Guard::moveLeft(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 		direction = 2;
 		if (mGrid.isTilePassable(this, gridvector(mCoords.x - 1, mCoords.y), tileLayer, Entities)){
 			newPos.x = mPosition.x - 64;
-			setVision("W");
+			setVision("W", tileLayer, Entities);
 			mMoving = true;
 		}
 	}
@@ -331,7 +378,7 @@ void Guard::moveRight(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 		direction = 1;
 		if (mGrid.isTilePassable(this, gridvector(mCoords.x + 1, mCoords.y), tileLayer, Entities)){
 			newPos.x = mPosition.x + 64;
-			setVision("E");
+			setVision("E", tileLayer, Entities);
 			mMoving = true;
 
 		}

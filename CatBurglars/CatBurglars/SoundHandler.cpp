@@ -123,7 +123,7 @@ int SoundHandler::distanceSound(GameObject *gameobject) {
 		y2 = mCat2->getCoords().y - gameobject->getCoords().y;
 	}
 
-	if (pythagoras(x, y) >= pythagoras(x2, y2)) {
+	if (pythagoras(x, y) <= pythagoras(x2, y2)) {
 		length = pythagoras(x, y);
 	}
 	else {
