@@ -72,7 +72,7 @@ Game::~Game()
 }
 
 void Game::Run(){
-	moviehandler.PlayMovie(0);
+	//moviehandler.PlayMovie(0);
 	while (window->isOpen())
 	{
 		sf::Event event;

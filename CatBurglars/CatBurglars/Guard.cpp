@@ -206,15 +206,18 @@ void Guard::Render(sf::RenderWindow *mainWindow){
 
 	mHitboxSprite.setPosition((sf::Vector2f)mPosition);
 	mSprite.setPosition(sf::Vector2f(mPosition.x,mPosition.y-64));
-	mainWindow->draw(mSprite);
-
-
-	mainWindow->draw(mConvex);
 
 	for each (gridvector *v in mVision) {
 		mHitboxSprite.setPosition(v->x * 64, v->y * 64);
 		mainWindow->draw(mHitboxSprite);
 	}
+
+	mainWindow->draw(mSprite);
+
+
+//	mainWindow->draw(mConvex);
+
+	
 }
 void Guard::loadAI(string filename){
 	mCommandQueue.clear();
