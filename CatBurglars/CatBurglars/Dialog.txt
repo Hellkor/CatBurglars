@@ -3,22 +3,22 @@ CHARACTER: SOCKS
 MOOD: ANGRY
 CHARACTER2: SOCKS
 MOOD2: ANGRY
-Text(1): { Test Test }
+Text(1): { Socks1: Hello! !!!!!!! !!!!!! !!!!!! !!! !!!! !!!!! !!! 111!!!!!!!!!!!!!!!!!!!!!!!! !!!!!!!!!!!!!!!!!!! !!!!!!!!!!!!! }
 ID: 1
 CHARACTER: SOCKS
 MOOD: ANGRY
 CHARACTER2: SOCKS
 MOOD2: ANGRY
-Text(2): { Test 2 }
+Text(2): { Socks2: Hi there! }
 ID: 2
 CHARACTER: SOCKS
 MOOD: ANGRY
 CHARACTER2: SOCKS
 MOOD2: ANGRY
-Text(1): { Test aksjd }
+Text(1): { Socks1: Programming is an artform and a creative process! }
 ID: 3
 CHARACTER: SOCKS
 MOOD: ANGRY
 CHARACTER2: SOCKS
 MOOD2: ANGRY
-Text(2): { asdasd 22 }
+Text(2): { Socks2: Oh , cool! }

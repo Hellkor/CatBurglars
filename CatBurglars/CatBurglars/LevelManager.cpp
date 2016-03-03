@@ -44,6 +44,7 @@ void LevelManager::loadLevel(int i){
 	mCurrentLevel = i;
 	mLevels[mCurrentLevel]->load();
 
+
 }
 
 // Byter level till nästa i listan. 

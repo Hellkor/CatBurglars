@@ -8,7 +8,7 @@ sf::Vector2f PORTRAIT_TWO_POS;
 
 sf::Vector2f PORTRAIT_SIZE = sf::Vector2f(200, 200);
 
-int FONT_SIZE = 24;
+int FONT_SIZE = 16;
 
 
 DialogManager::DialogManager(string filename,TextureHandler *handler, sf::Vector2f resolution):
@@ -17,14 +17,13 @@ DialogManager::DialogManager(string filename,TextureHandler *handler, sf::Vector
 	mTextureHandler(handler){
 	DIALOG_BOX_TEXTURE.loadFromFile("Resources/DialogBox.png");
 	mDialogBox.setTexture(DIALOG_BOX_TEXTURE);
+	
 	mFont.loadFromFile("Resources/Fonts/arial.ttf");
 	
 	readFile();
 
-
-
-
-	mTextPos = sf::Vector2f(resolution.x/2,resolution.y - 100);
+	//setPortrait(SOCKS, ANGRY);
+	//setPortrait2(SOCKS, ANGRY);
 	
 }
 
@@ -49,39 +48,32 @@ void DialogManager::readFile() {
 		if (input == "ID:") {
 			inputFile >> input;
 			ID = stoi(input);
-			cout << "ID: " << ID << endl;
 		}
 		inputFile >> input;
 		if (input == "CHARACTER:") {
 			inputFile >> input;
 			Character = input;
-			cout << "CHARACTER: " << Character << endl;
 		}
 		inputFile >> input;
 		if (input == "MOOD:") {
 			inputFile >> input;
 			Mood = input;
-			cout << "Mood: " << Mood << endl;
 		}
 		inputFile >> input;
 		if (input == "CHARACTER2:") {
 			inputFile >> input;
 			Character2 = input;
-			cout << "CHARACTER2: " << Character2 << endl;
 		}
 		inputFile >> input;
 		if (input == "MOOD2:") {
 			inputFile >> input;
 			Mood2 = input;
-			cout << "Mood2: " << Mood2 << endl;
 		}
 		inputFile >> input;
 		if (input == "Text(1):") {
-			cout << "Input: text" << endl;
 			highlighted = ONE;
 		}
 		else if (input == "Text(2):") {
-			cout << "Input: text" << endl;
 			highlighted = TWO;
 		}
 		inputFile >> input;
@@ -94,12 +86,10 @@ void DialogManager::readFile() {
 			inputFile >> input;
 			
 			if (input != "}") {
-				cout << input;
 				text_block.push_back(input);
 			}
 		}
 		if (input == "}") {
-			cout << endl;
 			Dialog *dialog = new Dialog(text_block, ID);
 			dialog->setCharacter(Character);
 			dialog->setMood(Mood);
@@ -110,25 +100,6 @@ void DialogManager::readFile() {
 			text_block.clear();
 		}
 
-		/*
-		inputFile >> input;
-		ID = stoi(input);
-		inputFile >> input;
-		if (input == "{") {
-			//continue;
-		}
-		else break;
-		//inputFile >> input;
-		while (input != "}") {
-			inputFile >> input;
-			if (input != "}") {
-				text_block.push_back(input);
-			}
-		}
-		if (input == "}") {
-			mDialogList.push_back(new Dialog(text_block, ID));
-		}
-		*/
 		
 	}
 	
@@ -142,7 +113,7 @@ void DialogManager::update() {
 	if (mCurrentConversationDialogID > -1 && mCurrentConversationDialogID <= mNumberOfDialogs) {
 		if (!mShowDialog) {
 			showDialog(mCurrentConversationDialogID, 4);
-			cout << "add" << endl;
+			
 			mCurrentConversationDialogID += 1;
 		}
 	}
@@ -151,13 +122,20 @@ void DialogManager::update() {
 	}
 	
 }
+void DialogManager::initialize(sf::View view) {
+	PORTRAIT_ONE_POS = view.getCenter() + sf::Vector2f(-450, 0);
+	PORTRAIT_TWO_POS = view.getCenter() + sf::Vector2f(450, 0);
+
+	mDialogBox.setOrigin(sf::Vector2f(mDialogBox.getTexture()->getSize().x / 2, mDialogBox.getTexture()->getSize().y / 2));
+	mDialogBox.setPosition(sf::Vector2f(view.getCenter().x, view.getCenter().y + (view.getCenter().y/2)));
+	mTextPos = sf::Vector2f(mDialogBox.getPosition().x + (FONT_SIZE) - ((mDialogBox.getTexture()->getSize().x / 2)),
+							mDialogBox.getPosition().y - (mDialogBox.getTexture()->getSize().y / 2));
+}
 void DialogManager::render(sf::RenderWindow *window,sf::View view) {
 
 	mPortrait.setOrigin(mPortrait.getTexture()->getSize().x / 2, mPortrait.getTexture()->getSize().y / 2);
 	mPortrait2.setOrigin(mPortrait2.getTexture()->getSize().x / 2, mPortrait2.getTexture()->getSize().y / 2);
 	
-	PORTRAIT_ONE_POS = view.getCenter() + sf::Vector2f(-350,0);
-	PORTRAIT_TWO_POS = view.getCenter() + sf::Vector2f(350, 0);
 	
 
 	if (mShowDialog) {
@@ -193,16 +171,15 @@ void DialogManager::render(sf::RenderWindow *window,sf::View view) {
 			break;
 		}
 
-		mDialogBox.setPosition(mPosition);
-
 		
+		window->draw(mDialogBox);
 		for each (sf::Text t in TextRows) {
 			t.setFont(mFont);
 			t.setCharacterSize(FONT_SIZE);
 			window->draw(t);
 		}
 		
-		window->draw(mDialogBox);
+		
 
 		
 		
@@ -223,10 +200,7 @@ void DialogManager::showDialog(int ID,float time_as_seconds) {
 	mText_String.clear();
 	mText_String = mDialogList[ID]->getString();
 	
-	cout << mText_String << endl;
-	
-
-	int maxcount = 20;
+	int maxcount = mDialogBox.getTexture()->getSize().x / (FONT_SIZE / 2);
 	int charactercount = 0;
 	
 	sf::Vector2f rowPos = mTextPos;
@@ -277,9 +251,8 @@ void DialogManager::setPortrait(Character character, Mood mood) {
 	case SOCKS:
 		switch (mood) {
 			case ANGRY:
-				cout << "angry socks" << endl;
 				mPortrait.setTexture(*mTextureHandler->GetTexture(25));
-				mPortrait.setScale(sf::Vector2f(-1.0f,-1.0f));
+				mPortrait.setScale(sf::Vector2f(-1.0f,1.0f));
 			break;
 			case SAD:
 			break;

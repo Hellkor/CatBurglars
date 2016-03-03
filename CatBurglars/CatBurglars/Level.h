@@ -21,6 +21,8 @@ public:
 	void addPlayer(Cat *cat, int player);
 	void load();
 
+
+	void InitializeGuiView(sf::RenderWindow *window);
 private:
 	bool mLoaded;
 	void renderLight(sf::RenderWindow *window);

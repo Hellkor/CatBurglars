@@ -12,7 +12,7 @@ class Guard : public GameObject
 	typedef vector<Tile*> TileRow;
 	typedef vector<TileRow> TileLayer;
 public:
-	Guard(TextureHandler *textures, gridvector v, int channel,string AIscript, SoundHandler *soundhandler);
+	Guard(TextureHandler *textures, gridvector v, int channel,string AIscript, SoundHandler *soundhandler,string directory);
 	~Guard();
 
 	virtual void Render(sf::RenderWindow *mainWindow);
@@ -63,6 +63,7 @@ private:
 	int mQueuePos;
 
 	string mAIfile;
+	string mDirectory;
 
 	void loadAI(string filename);
 	std::vector<string> mCommandQueue;

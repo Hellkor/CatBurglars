@@ -67,8 +67,8 @@ std::vector<Light*> lights; // Contains all the lights
 
 
 // Skapar en level från en textfil
-Level::Level(string filename) :
-	mFile(filename),
+Level::Level(string level_directory) :
+	mFile(level_directory),
 	mLoaded(false),
 	p1Controller(Controller(KeyboardOne)),
 	p2Controller(Controller(KeyboardTwo)){
@@ -120,13 +120,23 @@ Level::Level(string filename) :
 	DIVIDER_SPRITE.setTexture(DIVIDER_TEXTURE);
 	DIVIDER_SPRITE.setOrigin(DIVIDER_TEXTURE.getSize().x / 2, DIVIDER_TEXTURE.getSize().y / 2);
 
-	dialogManager.startConversation(0, 4, 5);
+	
+}
+
+void Level::InitializeGuiView(sf::RenderWindow *window) {
+	guiView.setSize(sf::Vector2f(window->getSize()));
+
 }
 
 // Renderar level
 void Level::render(sf::RenderWindow *window){
 	
-	mPlayer1View.setSize(sf::Vector2f(window->getSize().x / 2, window->getSize().y));
+	if (mPlayers > 1) {
+		mPlayer1View.setSize(sf::Vector2f(window->getSize().x / 2, window->getSize().y));
+	}
+	else {
+		mPlayer1View.setSize(sf::Vector2f(window->getSize().x , window->getSize().y));
+	}
 	window->setView(mPlayer1View);
 	for (TileLayer::size_type y = 0; y < mBottomTileLayer.size(); y++)
 	{
@@ -247,7 +257,9 @@ void Level::render(sf::RenderWindow *window){
 		DIVIDER_SPRITE.setPosition(guiView.getCenter());
 		window->draw(DIVIDER_SPRITE);
 	}
-	dialogManager.render(window,guiView);
+	if (dialogManager.isDialogActive()) {
+		dialogManager.render(window, guiView);
+	}
 	
 }
 
@@ -335,7 +347,7 @@ void Level::update(float dt){
 						}
 						if (secuCam *cam = dynamic_cast<secuCam*>(entity)) {
 							if (cam->getIntersection(cat) && !(cat->getDashing())) {
-
+								dialogManager.startConversation(0, 4, 5);
 								test = true;
 							}
 						}
@@ -423,7 +435,8 @@ void Level::load(){
 	mWallTileLayer.clear();
 	mTopTileLayer.clear();
 	Channels::clearChannels();
-	
+
+	dialogManager.initialize(guiView);
 
 	for (int i = 0; i <= 45; i++) {
 
@@ -460,7 +473,7 @@ void Level::updateViews(){
 // Laddar in leveln från sparfilen
 void Level::generateLevel(string name){
 	mPlayers = 0;
-	ifstream inputFile("Maps/" + name + ".txt");
+	ifstream inputFile("Maps/" + name +"/"+"level.txt");
 	string input;
 	inputFile >> input;
 	mMapSizeX = stoi(input);
@@ -555,7 +568,6 @@ void Level::generateLevel(string name){
 
 		if (objectID == 1){
 			mEntities.push_back(new Button(channel, textures.GetTexture(12), gridvector(xPos, yPos),false,hold));
-			cout << "hold: " << hold << endl;
 		}
 		if (objectID == 5) {
 			mEntities.push_back(new Button(channel, textures.GetTexture(12), gridvector(xPos, yPos), true, hold));
@@ -621,7 +633,7 @@ void Level::generateLevel(string name){
 			mEntities.push_back(new Door(channel, gridvector(xPos, yPos), textures.GetTexture(11), &soundhandler));
 		}
 		if (objectID == 4){
-			mEntities.push_back(new Guard(&textures, gridvector(xPos, yPos), 1, script, &soundhandler));
+			mEntities.push_back(new Guard(&textures, gridvector(xPos, yPos), 1, script, &soundhandler,mFile));
 		}
 		if (objectID == 6) {
 			mEntities.push_back(new secuCam(channel,hold, gridvector(xPos, yPos), textures.GetTexture(13), range, facing));
