@@ -121,13 +121,15 @@ int SoundHandler::distanceSound(GameObject *gameobject) {
 	if (mCat2 != 0) {
 		x2 = mCat2->getCoords().x - gameobject->getCoords().x;
 		y2 = mCat2->getCoords().y - gameobject->getCoords().y;
-	}
-
-	if (pythagoras(x, y) <= pythagoras(x2, y2)) {
-		length = pythagoras(x, y);
+		if (pythagoras(x, y) <= pythagoras(x2, y2)) {
+			length = pythagoras(x, y);
+		}
+		else {
+			length = (pythagoras(x2, y2));
+		}
 	}
 	else {
-		length = (pythagoras(x2, y2));
+		length = pythagoras(x, y);
 	}
 
 	if (length <-10 || length >10) {
@@ -163,7 +165,6 @@ int SoundHandler::distanceSound(GameObject *gameobject) {
 	if (length == -1 || length == 1) {
 		newVolume = mSoundVolume * 1;
 	}
-
 	return newVolume;
 }
 
