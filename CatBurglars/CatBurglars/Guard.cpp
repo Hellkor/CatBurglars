@@ -224,7 +224,7 @@ void Guard::loadAI(string filename){
 	mCommandQueue.clear();
 
 	cout << "trying to load" << endl;
-	ifstream inputFile("Maps/" + mDirectory +"/"+ "AI/" + filename + ".txt");
+	ifstream inputFile("Maps/" + mDirectory + "/AI/" + filename + ".txt");
 	string input;
 
 	while (!inputFile.eof()){
@@ -272,7 +272,7 @@ void Guard::AImovement(TileLayer *tiles, std::vector<Entity*> *entities){
 		if (mCommandQueue[mQueuePos] == "TE") {
 			setVision("E", tiles, entities);
 		}
-		if (mCommandQueue[mQueuePos] == "wait"){
+		if (mCommandQueue[mQueuePos] == "WAIT"){
 			mClock.restart();
 		}
 

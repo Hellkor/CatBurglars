@@ -24,6 +24,7 @@ void TextureHandler::Initialize()
 	mComputer.loadFromFile("Resources/computer.png");
 	mSnow.loadFromFile("Resources/snow_spritesheet.png");
 	mSocksPortait.loadFromFile("Resources/socks_portrait.png");
+	mPropTileTexture.loadFromFile("Resources/tileset_props.png");
 	
 }
 
@@ -32,6 +33,8 @@ sf::Texture* TextureHandler::GetTexture(int ID)
 {
 	if (ID == 0)
 		return &mTileTexture;
+	if (ID == 1)
+		return &mPropTileTexture;
 	if (ID == 4)
 		return &mCrate;
 	if (ID == 5)

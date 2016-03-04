@@ -14,9 +14,16 @@ Tile::Tile(gridvector coords, int ID, int textureID, TextureHandler *textures)
 	mCoords = gridvector(mCoords.x, mCoords.y);
 
 	textureHandler = textures;
-	texture = textureHandler->GetTexture(textureID);
-	mSprite.setTexture(*texture, true);
-	mSprite.setTextureRect(sf::IntRect((ID % 3) * width, floor(ID / 3) * height, width, height));
+	if (mID >= 1000) {
+		texture = textureHandler->GetTexture(textureID + 1);
+		mSprite.setTexture(*texture, true);
+		mSprite.setTextureRect(sf::IntRect(((ID-1000) % 3) * width, floor((ID - 1000) / 3) * height, width, height));
+	}
+	else {
+		texture = textureHandler->GetTexture(textureID);
+		mSprite.setTexture(*texture, true);
+		mSprite.setTextureRect(sf::IntRect((ID % 3) * width, floor(ID / 3) * height, width, height));
+	}
 }
 
 Tile::~Tile()

@@ -6,7 +6,6 @@ sf::Texture DIALOG_BOX_TEXTURE;
 sf::Vector2f PORTRAIT_ONE_POS;
 sf::Vector2f PORTRAIT_TWO_POS;
 
-sf::Vector2f PORTRAIT_SIZE = sf::Vector2f(200, 200);
 
 int FONT_SIZE = 16;
 
@@ -39,6 +38,8 @@ void DialogManager::readFile() {
 	string Character2;
 	string Mood2;
 
+	bool win = false;
+
 	SelectedCharacter highlighted;
 	
 	while (!inputFile.eof()) {
@@ -70,6 +71,16 @@ void DialogManager::readFile() {
 			Mood2 = input;
 		}
 		inputFile >> input;
+		if (input == "WIN:") {
+			inputFile >> input;
+			if (input == "TRUE") {
+				win = true;
+			}
+			else if (input == "FALSE") {
+				win = false;
+			}
+		}
+		inputFile >> input;
 		if (input == "Text(1):") {
 			highlighted = ONE;
 		}
@@ -96,6 +107,7 @@ void DialogManager::readFile() {
 			dialog->setCharacter2(Character2);
 			dialog->setMood2(Mood2);
 			dialog->setSelectedCharacter(highlighted);
+			dialog->setWinDialog(win);
 			mDialogList.push_back(dialog);
 			text_block.clear();
 		}
@@ -118,11 +130,15 @@ void DialogManager::update() {
 		}
 	}
 	else {
+		if (mWin) {
+			mWin = false;
+			// WIN
+		}
 		mCurrentConversationDialogID = -1;
 	}
 	
 }
-void DialogManager::initialize(sf::View view) {
+void DialogManager::initialize(sf::View view) { // Initialize portrait and dialogbox positions
 	PORTRAIT_ONE_POS = view.getCenter() + sf::Vector2f(-450, 0);
 	PORTRAIT_TWO_POS = view.getCenter() + sf::Vector2f(450, 0);
 
@@ -235,6 +251,7 @@ void DialogManager::showDialog(int ID,float time_as_seconds) {
 	setPortrait(mDialogList[ID]->getCharacter(), mDialogList[ID]->getMood());
 	setPortrait2(mDialogList[ID]->getCharacter2(), mDialogList[ID]->getMood2());
 	mShowDialog = true;
+	mWin = mDialogList[ID]->isAWinDialog();
 	mClock.restart();
 	mTimer = sf::seconds(time_as_seconds);
 }

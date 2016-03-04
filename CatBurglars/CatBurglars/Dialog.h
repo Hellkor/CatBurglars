@@ -26,6 +26,9 @@ public:
 
 	void setSelectedCharacter(SelectedCharacter one_or_two);
 	SelectedCharacter getSelectedCharacter();
+
+	void setWinDialog(bool willWin);
+	bool isAWinDialog();
 private:
 	SelectedCharacter mSelectedCharacter;
 
@@ -38,4 +41,6 @@ private:
 	int mID;
 	TEXT mText;
 	string mString;
+
+	bool mWin;
 };

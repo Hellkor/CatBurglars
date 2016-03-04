@@ -40,6 +40,12 @@ void Dialog::setMood(string mood) {
 	}
 
 }
+void Dialog::setWinDialog(bool willWin) {
+	mWin = willWin;
+}
+bool Dialog::isAWinDialog() {
+	return mWin;
+}
 void Dialog::setSelectedCharacter(SelectedCharacter one_or_two) {
 	mSelectedCharacter = one_or_two;
 }

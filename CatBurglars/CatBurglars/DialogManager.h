@@ -46,4 +46,6 @@ private:
 	sf::Sprite mPortrait2;
 
 	SelectedCharacter mHighLighted;
+
+	bool mWin = false;
 };

@@ -347,7 +347,7 @@ void Level::update(float dt){
 						}
 						if (secuCam *cam = dynamic_cast<secuCam*>(entity)) {
 							if (cam->getIntersection(cat) && !(cat->getDashing())) {
-								dialogManager.startConversation(0, 4, 5);
+								dialogManager.startConversation(0, 0, 5);
 								test = true;
 							}
 						}
@@ -475,6 +475,8 @@ void Level::generateLevel(string name){
 	mPlayers = 0;
 	ifstream inputFile("Maps/" + name +"/"+"level.txt");
 	string input;
+	inputFile >> input;
+	cout << "Version: " + input << endl;
 	inputFile >> input;
 	mMapSizeX = stoi(input);
 	cout << "Map width: " << mMapSizeX << endl;
@@ -662,7 +664,7 @@ void Level::generateLevel(string name){
 
 	//Eventpad layer
 	for (int i = 0; i < objectNumber; i++) {
-		int  xPos, yPos, channel, range;
+		int  xPos, yPos, channel, range , hold;
 
 
 		inputFile >> input;
@@ -677,13 +679,19 @@ void Level::generateLevel(string name){
 		inputFile >> input;
 		channel = stoi(input);
 
+		inputFile >> input;
+		hold = stoi(input);
+
 		
 		
 		if (range == 0) {
-			mEntities.push_back(new EventPad(DIALOG, gridvector(xPos, yPos),channel, &dialogManager));
+			mEntities.push_back(new EventPad(DIALOG, gridvector(xPos, yPos),channel,hold, &dialogManager));
 		}
 		else if (range == 1) {
-			mEntities.push_back(new EventPad(WIN, gridvector(xPos, yPos),channel,&dialogManager));
+			mEntities.push_back(new EventPad(WIN, gridvector(xPos, yPos),channel,hold,&dialogManager));
+		}
+		else if (range == 2) {
+			//add hintpad
 		}
 		
 
