@@ -56,7 +56,7 @@ private:
 	string mFace;
 	sf::Sprite mHitboxSprite;
 
-	void setVision(string face);
+	void setVision(string face, TileLayer *tiles, std::vector<Entity*> *entities);
 
 	sf::Clock mClock;
 	sf::Time mWait;

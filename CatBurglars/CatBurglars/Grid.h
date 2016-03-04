@@ -15,6 +15,7 @@ public:
 	bool canCatDash(gridvector originalpos, gridvector position, TileLayer *Tiles, std::vector<Entity*> *Entities);
 
 	bool moveCrate(GameObject *gameobject, gridvector position, TileLayer *Tiles, std::vector<Entity*> *Entities);
+	bool isLightPassable(GameObject *gameobject, gridvector position, TileLayer *Tiles, std::vector<Entity*> *Entities);
 private:
 
 };
