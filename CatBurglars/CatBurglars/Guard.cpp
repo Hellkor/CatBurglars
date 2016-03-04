@@ -38,31 +38,31 @@ void Guard::setVision(string face, TileLayer *tiles, std::vector<Entity*> *entit
 	width = 1;
 	int height = 0;
 	mFace = face;
-	bool sak = true;
-	bool sak2 = true;
-	bool fix = true;
+	bool rightVision = true;
+	bool leftVision = true;
+	bool forwardVision = true;
 	if (mFace == "N") {
 		mSprite.setTextureRect(sf::IntRect(0 * 64, 3 * 128, 64, 128));
 
 		for (int i = 0; i <= range; i++) {
-			if (mGrid.isLightPassable(this, gridvector(mCoords.x, mCoords.y - i), tiles, entities)&& fix) {
+			if (mGrid.isLightPassable(this, gridvector(mCoords.x, mCoords.y - i), tiles, entities)&& forwardVision) {
 				mVision.push_back(new gridvector(mCoords.x, mCoords.y - i));
 			}
 			else
-				fix = false;
-			sak = true;
-			sak2 = true;
+				forwardVision = false;
+			rightVision = true;
+			leftVision = true;
 			for (int j = 1; j < width; j++) {
-				if (mGrid.isLightPassable(this, gridvector(mCoords.x + j, mCoords.y - i), tiles, entities)&& sak && fix) {
+				if (mGrid.isLightPassable(this, gridvector(mCoords.x + j, mCoords.y - i), tiles, entities)&& rightVision && forwardVision) {
 					mVision.push_back(new gridvector(mCoords.x + j, mCoords.y - i));
 				}
 				else
-					sak = false;
-				if (mGrid.isLightPassable(this, gridvector(mCoords.x + -j, mCoords.y - i), tiles, entities)&& sak2 && fix) {
+					rightVision = false;
+				if (mGrid.isLightPassable(this, gridvector(mCoords.x + -j, mCoords.y - i), tiles, entities)&& leftVision && forwardVision) {
 					mVision.push_back(new gridvector(mCoords.x + -j, mCoords.y - i));
 				}
 				else
-					sak2 = false;
+					leftVision = false;
 				}
 			width++;
 		}
@@ -75,24 +75,24 @@ void Guard::setVision(string face, TileLayer *tiles, std::vector<Entity*> *entit
 	if (mFace == "S") {
 		mSprite.setTextureRect(sf::IntRect(0 * 64, 2 * 128, 64, 128));
 		for (int i = 0; i <= range; i++) {
-			if (mGrid.isLightPassable(this, gridvector(mCoords.x, mCoords.y + i), tiles, entities) && fix) {
+			if (mGrid.isLightPassable(this, gridvector(mCoords.x, mCoords.y + i), tiles, entities) && forwardVision) {
 				mVision.push_back(new gridvector(mCoords.x, mCoords.y + i));
 			}
 			else
-				fix = false;
-			sak = true;
-			sak2 = true;
+				forwardVision = false;
+			rightVision = true;
+			leftVision = true;
 			for (int j = 1; j < width; j++) {
-					if (mGrid.isLightPassable(this, gridvector(mCoords.x + j, mCoords.y + i), tiles, entities) && sak && fix) {
+					if (mGrid.isLightPassable(this, gridvector(mCoords.x + j, mCoords.y + i), tiles, entities) && rightVision && forwardVision) {
 						mVision.push_back(new gridvector(mCoords.x + j, mCoords.y + i));
 					}
 					else
-						sak = false;
-					if (mGrid.isLightPassable(this, gridvector(mCoords.x + -j, mCoords.y + i), tiles, entities) && sak2 && fix) {
+						rightVision = false;
+					if (mGrid.isLightPassable(this, gridvector(mCoords.x + -j, mCoords.y + i), tiles, entities) && leftVision && forwardVision) {
 						mVision.push_back(new gridvector(mCoords.x + -j, mCoords.y + i));
 					}
 					else
-						sak2 = false;
+						leftVision = false;
 				}
 			width++;
 
@@ -107,24 +107,24 @@ void Guard::setVision(string face, TileLayer *tiles, std::vector<Entity*> *entit
 	if (mFace == "E") {
 		mSprite.setTextureRect(sf::IntRect(0 * 64, 0 * 128, 64, 128));
 		for (int i = 0; i <= range; i++) {
-			if (mGrid.isLightPassable(this, gridvector(mCoords.x + i, mCoords.y), tiles, entities) && fix) {
+			if (mGrid.isLightPassable(this, gridvector(mCoords.x + i, mCoords.y), tiles, entities) && forwardVision) {
 				mVision.push_back(new gridvector(mCoords.x + i, mCoords.y));
 			}
 			else
-				fix = false;
-			sak = true;
-			sak2 = true;
+				forwardVision = false;
+			rightVision = true;
+			leftVision = true;
 			for (int j = 1; j < width; j++) {
-				if (mGrid.isLightPassable(this, gridvector(mCoords.x + i, mCoords.y + j), tiles, entities) && sak && fix) {
+				if (mGrid.isLightPassable(this, gridvector(mCoords.x + i, mCoords.y + j), tiles, entities) && rightVision && forwardVision) {
 					mVision.push_back(new gridvector(mCoords.x + i, mCoords.y + j));
 				}
 				else
-					sak = false;
-				if (mGrid.isLightPassable(this, gridvector(mCoords.x + i, mCoords.y - j), tiles, entities) && sak2 && fix) {
+					rightVision = false;
+				if (mGrid.isLightPassable(this, gridvector(mCoords.x + i, mCoords.y - j), tiles, entities) && leftVision && forwardVision) {
 					mVision.push_back(new gridvector(mCoords.x + i, mCoords.y - j));
 				}
 				else
-					sak2 = false;
+					leftVision = false;
 			}
 			width++;
 		}
@@ -138,24 +138,24 @@ void Guard::setVision(string face, TileLayer *tiles, std::vector<Entity*> *entit
 	if (mFace == "W") {
 		mSprite.setTextureRect(sf::IntRect(0 * 64, 1 * 128, 64, 128));
 		for (int i = 0; i <= range; i++) {
-			if (mGrid.isLightPassable(this, gridvector(mCoords.x - i, mCoords.y), tiles, entities) && fix) {
+			if (mGrid.isLightPassable(this, gridvector(mCoords.x - i, mCoords.y), tiles, entities) && forwardVision) {
 				mVision.push_back(new gridvector(mCoords.x - i, mCoords.y));
 			}
 			else
-				fix = false;
-			sak = true;
-			sak2 = true;
+				forwardVision = false;
+			rightVision = true;
+			leftVision = true;
 			for (int j = 1; j < width; j++) {
-				if (mGrid.isLightPassable(this, gridvector(mCoords.x - i, mCoords.y + j), tiles, entities) && sak && fix) {
+				if (mGrid.isLightPassable(this, gridvector(mCoords.x - i, mCoords.y + j), tiles, entities) && rightVision && forwardVision) {
 					mVision.push_back(new gridvector(mCoords.x - i, mCoords.y + j));
 				}
 				else
-					sak = false;
-				if (mGrid.isLightPassable(this, gridvector(mCoords.x - i, mCoords.y - j), tiles, entities) && sak2 && fix) {
+					rightVision = false;
+				if (mGrid.isLightPassable(this, gridvector(mCoords.x - i, mCoords.y - j), tiles, entities) && leftVision && forwardVision) {
 					mVision.push_back(new gridvector(mCoords.x - i, mCoords.y - j));
 				}
 				else
-					sak2 = false;
+					leftVision = false;
 			}
 			width++;
 		}
