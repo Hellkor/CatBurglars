@@ -1,6 +1,2 @@
-<<<<<<< HEAD
-Collectibles: 786
-=======
-Collectibles: 846
->>>>>>> origin/master
+Collectibles: 916
 Level: 10

@@ -4,14 +4,15 @@
 #include <stdio.h>
 string DIRECTORY = "Resources/AI/";
 
-Guard::Guard(TextureHandler *textures, gridvector position, int ID,string AIscript, SoundHandler *soundhandler) : GameObject(),
+Guard::Guard(TextureHandler *textures, gridvector position, int ID,string AIscript, SoundHandler *soundhandler , string directory) : GameObject(),
 mID(ID),
 mCoords(position),
 mSpeed(1),
 mAIfile(AIscript),
 mAnimationhandler(64, 128, &mSprite),
 mSoundHandler(soundhandler),
-mRange(3){
+mRange(3),
+mDirectory(directory){
 	mSprite.setTexture(*textures->GetTexture(5), true);
 	mSprite.setTextureRect(sf::IntRect(1*64, 3*128, 64, 128));
 	//Starting position
@@ -222,7 +223,8 @@ void Guard::Render(sf::RenderWindow *mainWindow){
 void Guard::loadAI(string filename){
 	mCommandQueue.clear();
 
-	ifstream inputFile("Resources/AI/" + filename + ".txt");
+	cout << "trying to load" << endl;
+	ifstream inputFile("Maps/" + mDirectory +"/"+ "AI/" + filename + ".txt");
 	string input;
 
 	while (!inputFile.eof()){

@@ -36,15 +36,15 @@ Game::Game() {
 	//Creates the main window
 	window = new sf::RenderWindow(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "CatBurglars", sf::Style::Close);
 	
-
+	window->setFramerateLimit(60);
 	//Test for loading in maps
 
-	Level *Level0 = new Level("11");
-	Level *level1 = new Level("12");
-	Level *level2 = new Level("13");
-	Level *level3 = new Level("14");
-	Level *level4 = new Level("15");
-	Level *level5 = new Level("16");
+	Level *Level0 = new Level("1_1");
+	Level *level1 = new Level("1_2");
+	Level *level2 = new Level("1_3");
+	Level *level3 = new Level("1_4");
+	Level *level4 = new Level("1_5");
+	Level *level5 = new Level("1_6");
 	
 
 	LevelManager::addLevel(Level0);
@@ -54,7 +54,7 @@ Game::Game() {
 	LevelManager::addLevel(level4); 
 	LevelManager::addLevel(level5);
 
-	window->setFramerateLimit(60);
+	
 
 	LevelManager::load();
 	LevelManager::addCollectible();
@@ -115,18 +115,6 @@ void Game::Update(float dt){
 		case RunGame:
 			LevelManager::update(dt);
 
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
-				//view1.move(0, 2);
-			}
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)){
-				//view1.move(0, -2);
-			}
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)){
-				//view1.move(-2, 0);
-			}
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)){
-				//view1.move(2, 0);
-			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::N)){
 				LevelManager::nextLevel();
 			}
@@ -155,7 +143,7 @@ void Game::Update(float dt){
 void Game::Render()
 {
 	//window->setView(view1);
-	moviehandler.getMovie()->update();
+	
 	window->clear();
 	switch (GameState){
 	case Menu:
@@ -165,6 +153,7 @@ void Game::Render()
 		LevelManager::render(window);
 		break;
 	case Pause:
+		moviehandler.getMovie()->update();
 		break;
 
 

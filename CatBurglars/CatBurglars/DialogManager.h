@@ -15,6 +15,8 @@ public:
 	void render(sf::RenderWindow *window,sf::View view);
 	void setPosition(sf::Vector2f v);
 	bool isDialogActive();
+
+	void initialize(sf::View view);
 private:
 	TextureHandler *mTextureHandler;
 	void setPortrait(Character character, Mood mood);
