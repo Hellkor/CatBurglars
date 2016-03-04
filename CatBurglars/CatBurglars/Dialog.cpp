@@ -38,6 +38,12 @@ void Dialog::setMood(string mood) {
 	if (inputMood == "NEUTRAL") {
 		mMood = NEUTRAL;
 	}
+	if (inputMood == "CONFUSED") {
+		mMood = CONFUSED;
+	}
+	if (inputMood == "EMBARESSED") {
+		mMood = EMBARESSED;
+	}
 
 }
 void Dialog::setWinDialog(bool willWin) {

@@ -4,7 +4,7 @@
 using namespace std;
 
 typedef vector<string> TEXT;
-enum Mood {ANGRY,SAD,HAPPY,NEUTRAL};
+enum Mood {ANGRY,SAD,HAPPY,NEUTRAL,CONFUSED,EMBARESSED};
 enum Character {SOCKS,SNOW,SHADOW,SCOOTER,ALEX,DOUGLAS};
 enum SelectedCharacter {ONE,TWO};
 
