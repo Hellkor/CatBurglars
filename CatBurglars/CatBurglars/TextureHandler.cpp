@@ -18,7 +18,7 @@ void TextureHandler::Initialize()
 {
 	mTileTexture.loadFromFile("Resources/TileMap.png");
 	mCat1Texture.loadFromFile("Resources/shadow_spritesheet.png");
-	mCrate.loadFromFile("Resources/Crate.png");
+	mCrate.loadFromFile("Resources/Crate.png");	
 	mButton.loadFromFile("Resources/Button.png");
 	mDoor.loadFromFile("Resources/Door.png");
 	mGuard.loadFromFile("Resources/vakt_walk_spritesheet.png");
@@ -26,9 +26,9 @@ void TextureHandler::Initialize()
 	mCamera.loadFromFile("Resources/camerasheet.png");
 	mComputer.loadFromFile("Resources/computer.png");
 	mSnow.loadFromFile("Resources/snow_spritesheet.png");
-	mSocksPortrait.loadFromFile(PORTRAITS_DIRECTORY+  "socks_portrait.png");
+	mSocksPortrait.loadFromFile(PORTRAITS_DIRECTORY+  "Sockskon_neutral.png");
 	mShadowPortrait.loadFromFile(PORTRAITS_DIRECTORY + "Shadowkon_neutral.png");
-	mSnowPortrait.loadFromFile(PORTRAITS_DIRECTORY + "snowkongoggles_neutral");
+	mSnowPortrait.loadFromFile(PORTRAITS_DIRECTORY + "snowkgoggles_neutral.png");
 	mAlexPortrait.loadFromFile(PORTRAITS_DIRECTORY + "Alexkon_neutral.png");
 	
 

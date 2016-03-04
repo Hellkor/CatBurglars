@@ -345,9 +345,13 @@ void Level::update(float dt){
 
 							}
 						}
+						//Interaction with eventpad
+						if (EventPad *eventpad = dynamic_cast<EventPad*>(entity)) {
+							eventpad->getInteraction(cat);
+						}
 						if (secuCam *cam = dynamic_cast<secuCam*>(entity)) {
 							if (cam->getIntersection(cat) && !(cat->getDashing())) {
-								dialogManager.startConversation(0, 0, 5);
+								//dialogManager.startConversation(0, 0, 5);
 								test = true;
 							}
 						}
@@ -438,7 +442,7 @@ void Level::load(){
 
 	dialogManager.initialize(guiView);
 
-	for (int i = 0; i <= 45; i++) {
+	for (int i = 0; i <= 100; i++) {
 
 		Channels::addChannel(Channel(i));
 	}

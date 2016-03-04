@@ -159,7 +159,7 @@ void DialogManager::render(sf::RenderWindow *window,sf::View view) {
 		rtext.create(200, 200);
 		rtext.clear(sf::Color(150, 150, 150, 0));
 		sf::RectangleShape rect;
-		rect.setSize(sf::Vector2f(mPortrait.getTexture()->getSize().x, mPortrait.getTexture()->getSize().y));
+		rect.setSize(sf::Vector2f((mPortrait.getTexture()->getSize().x)*4,( mPortrait.getTexture()->getSize().y)*4));
 		rect.setTexture(&rtext.getTexture());
 
 
@@ -266,10 +266,10 @@ bool DialogManager::isDialogActive() {
 void DialogManager::setPortrait(Character character, Mood mood) {
 	switch (character) {
 	case SOCKS:
+		mPortrait.setTexture(*mTextureHandler->GetTexture(25));
+		mPortrait.setScale(sf::Vector2f(-1.0f, 1.0f));
 		switch (mood) {
 			case ANGRY:
-				mPortrait.setTexture(*mTextureHandler->GetTexture(25));
-				mPortrait.setScale(sf::Vector2f(-1.0f,1.0f));
 			break;
 			case SAD:
 			break;
@@ -300,6 +300,8 @@ void DialogManager::setPortrait(Character character, Mood mood) {
 		}
 		break;
 	case SNOW:
+		mPortrait.setScale(sf::Vector2f(-4.0f, 4.0f));
+		mPortrait.setTexture(*mTextureHandler->GetTexture(27));
 		switch (mood) {
 			case ANGRY:
 			break;
@@ -316,6 +318,8 @@ void DialogManager::setPortrait(Character character, Mood mood) {
 		}
 		break;
 	case SHADOW:
+		mPortrait.setScale(sf::Vector2f(-4.0f, 4.0f));
+		mPortrait.setTexture(*mTextureHandler->GetTexture(26));
 		switch (mood) {
 			case ANGRY:
 			break;
@@ -332,6 +336,8 @@ void DialogManager::setPortrait(Character character, Mood mood) {
 		}
 		break;
 	case ALEX:
+		mPortrait.setTexture(*mTextureHandler->GetTexture(28));
+		mPortrait.setScale(sf::Vector2f(-4.0f, 4.0f));
 		switch (mood) {
 			case ANGRY:
 			break;
@@ -369,6 +375,7 @@ void DialogManager::setPortrait2(Character character, Mood mood) {
 	switch (character) {
 	case SOCKS:
 		mPortrait2.setTexture(*mTextureHandler->GetTexture(25));
+		mPortrait2.setScale(sf::Vector2f(-4.0f, 4.0f));
 		switch (mood) {
 		case ANGRY:
 			
@@ -382,14 +389,12 @@ void DialogManager::setPortrait2(Character character, Mood mood) {
 			
 			break;
 		case EMBARESSED:
-			mPortrait2.setTexture(*mTextureHandler->GetTexture(28));
 			break;
 		case CONFUSED:
 			break;
 		}
 		break;
 	case SCOOTER:
-		mPortrait2.setTexture(*mTextureHandler->GetTexture(26));
 		switch (mood) {
 		case ANGRY:
 			break;
@@ -407,6 +412,7 @@ void DialogManager::setPortrait2(Character character, Mood mood) {
 		break;
 	case SNOW:
 		mPortrait2.setTexture(*mTextureHandler->GetTexture(27));
+		mPortrait2.setScale(sf::Vector2f(-4.0f, 4.0f));
 		switch (mood) {
 		case ANGRY:
 			break;
@@ -423,6 +429,8 @@ void DialogManager::setPortrait2(Character character, Mood mood) {
 		}
 		break;
 	case SHADOW:
+		mPortrait2.setTexture(*mTextureHandler->GetTexture(26));
+		mPortrait2.setScale(sf::Vector2f(-4.0f, 4.0f));
 		switch (mood) {
 		case ANGRY:
 			break;
@@ -439,6 +447,8 @@ void DialogManager::setPortrait2(Character character, Mood mood) {
 		}
 		break;
 	case ALEX:
+		mPortrait2.setTexture(*mTextureHandler->GetTexture(28));
+		mPortrait2.setScale(sf::Vector2f(-4.0f, 4.0f));
 		switch (mood) {
 		case ANGRY:
 			break;
