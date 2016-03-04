@@ -1,4 +1,7 @@
 #include "TextureHandler.h"
+#include <string>
+
+std::string PORTRAITS_DIRECTORY = "Resources/Portraits/";
 
 TextureHandler::TextureHandler()
 {
@@ -23,7 +26,12 @@ void TextureHandler::Initialize()
 	mCamera.loadFromFile("Resources/camerasheet.png");
 	mComputer.loadFromFile("Resources/computer.png");
 	mSnow.loadFromFile("Resources/snow_spritesheet.png");
-	mSocksPortait.loadFromFile("Resources/socks_portrait.png");
+	mSocksPortrait.loadFromFile(PORTRAITS_DIRECTORY+  "socks_portrait.png");
+	mShadowPortrait.loadFromFile(PORTRAITS_DIRECTORY + "Shadowkon_neutral.png");
+	mSnowPortrait.loadFromFile(PORTRAITS_DIRECTORY + "snowkongoggles_neutral");
+	mAlexPortrait.loadFromFile(PORTRAITS_DIRECTORY + "Alexkon_neutral.png");
+	
+
 	mPropTileTexture.loadFromFile("Resources/tileset_props.png");
 	
 }
@@ -52,7 +60,13 @@ sf::Texture* TextureHandler::GetTexture(int ID)
 	if (ID == 14)
 		return &mComputer;
 	if (ID == 25)
-		return &mSocksPortait;
+		return &mSocksPortrait;
+	if (ID == 26)
+		return &mShadowPortrait;
+	if (ID == 27)
+		return &mSnowPortrait;
+	if (ID == 28)
+		return &mAlexPortrait;
 	if (ID == 99)
 		return &mArea;
 }

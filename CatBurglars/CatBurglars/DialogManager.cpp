@@ -277,6 +277,10 @@ void DialogManager::setPortrait(Character character, Mood mood) {
 			break;
 			case HAPPY:
 			break;
+			case EMBARESSED:
+			break;
+			case CONFUSED:
+			break;
 		}
 		break;
 	case SCOOTER:
@@ -289,6 +293,10 @@ void DialogManager::setPortrait(Character character, Mood mood) {
 			break;
 			case HAPPY:
 			break;
+			case EMBARESSED:
+				break;
+			case CONFUSED:
+				break;
 		}
 		break;
 	case SNOW:
@@ -301,6 +309,10 @@ void DialogManager::setPortrait(Character character, Mood mood) {
 			break;
 			case HAPPY:
 			break;
+			case EMBARESSED:
+				break;
+			case CONFUSED:
+				break;
 		}
 		break;
 	case SHADOW:
@@ -313,6 +325,10 @@ void DialogManager::setPortrait(Character character, Mood mood) {
 			break;
 			case HAPPY:
 			break;
+			case EMBARESSED:
+				break;
+			case CONFUSED:
+				break;
 		}
 		break;
 	case ALEX:
@@ -325,6 +341,10 @@ void DialogManager::setPortrait(Character character, Mood mood) {
 			break;
 			case HAPPY:
 			break;
+			case EMBARESSED:
+				break;
+			case CONFUSED:
+				break;
 		}
 		break;
 	case DOUGLAS:
@@ -337,6 +357,10 @@ void DialogManager::setPortrait(Character character, Mood mood) {
 			break;
 			case HAPPY:
 			break;
+			case EMBARESSED:
+				break;
+			case CONFUSED:
+				break;
 		}
 		break;
 	}
@@ -344,19 +368,28 @@ void DialogManager::setPortrait(Character character, Mood mood) {
 void DialogManager::setPortrait2(Character character, Mood mood) {
 	switch (character) {
 	case SOCKS:
+		mPortrait2.setTexture(*mTextureHandler->GetTexture(25));
 		switch (mood) {
 		case ANGRY:
-			mPortrait2.setTexture(*mTextureHandler->GetTexture(25));
+			
 			break;
 		case SAD:
 			break;
 		case NEUTRAL:
+			
 			break;
 		case HAPPY:
+			
+			break;
+		case EMBARESSED:
+			mPortrait2.setTexture(*mTextureHandler->GetTexture(28));
+			break;
+		case CONFUSED:
 			break;
 		}
 		break;
 	case SCOOTER:
+		mPortrait2.setTexture(*mTextureHandler->GetTexture(26));
 		switch (mood) {
 		case ANGRY:
 			break;
@@ -365,10 +398,15 @@ void DialogManager::setPortrait2(Character character, Mood mood) {
 		case NEUTRAL:
 			break;
 		case HAPPY:
+			break;
+		case EMBARESSED:
+			break;
+		case CONFUSED:
 			break;
 		}
 		break;
 	case SNOW:
+		mPortrait2.setTexture(*mTextureHandler->GetTexture(27));
 		switch (mood) {
 		case ANGRY:
 			break;
@@ -377,6 +415,10 @@ void DialogManager::setPortrait2(Character character, Mood mood) {
 		case NEUTRAL:
 			break;
 		case HAPPY:
+			break;
+		case EMBARESSED:
+			break;
+		case CONFUSED:
 			break;
 		}
 		break;
@@ -390,6 +432,10 @@ void DialogManager::setPortrait2(Character character, Mood mood) {
 			break;
 		case HAPPY:
 			break;
+		case EMBARESSED:
+			break;
+		case CONFUSED:
+			break;
 		}
 		break;
 	case ALEX:
@@ -402,6 +448,10 @@ void DialogManager::setPortrait2(Character character, Mood mood) {
 			break;
 		case HAPPY:
 			break;
+		case EMBARESSED:
+			break;
+		case CONFUSED:
+			break;
 		}
 		break;
 	case DOUGLAS:
@@ -413,6 +463,10 @@ void DialogManager::setPortrait2(Character character, Mood mood) {
 		case NEUTRAL:
 			break;
 		case HAPPY:
+			break;
+		case EMBARESSED:
+			break;
+		case CONFUSED:
 			break;
 		}
 		break;

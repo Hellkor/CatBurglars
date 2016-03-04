@@ -10,7 +10,7 @@ public:
 	~TextureHandler();
 	void Initialize();
 	sf::Texture mTileTexture,mPropTileTexture, mSidebarTexture, mSelectorTexture, mSaveTexture, mCat1Texture, mCrate,mButton,mDoor,mGuard,mArea,mCamera, mComputer,mSnow,
-				mSocksPortait, mShadowPortait, mScooterPortrait, mSnowPortait;
+				mSocksPortrait, mShadowPortrait, mScooterPortrait, mSnowPortrait, mAlexPortrait;
 	sf::Texture* GetTexture(int ID);
 };
 
