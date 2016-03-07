@@ -450,9 +450,22 @@ void Level::load(){
 		Channels::addChannel(Channel(i));
 	}
 
-	soundhandler.startMusic(2);
-
-
+	cout << mFile << endl;
+	if (mFile == string ("1_1")|| mFile == string("1_2")) {
+		soundhandler.startMusic(1);
+	}
+	else if (mFile == string("1_3")) {
+		soundhandler.startMusic(2);
+	}
+	else if (mFile == string("1_4")) {
+		soundhandler.startMusic(3);
+	}
+	else if (mFile == string("1_5")) {
+		soundhandler.startMusic(4);
+	}
+	else if (mFile == string("1_6")) {
+		soundhandler.startMusic(5);
+	}
 	generateLevel(mFile);
 	
 	

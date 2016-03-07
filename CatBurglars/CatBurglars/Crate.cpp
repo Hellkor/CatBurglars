@@ -18,6 +18,8 @@ mMoveable(movable){
 	}
 
 	mPosition = sf::Vector2i(mCoord.x * 64, mCoord.y * 64);
+	mCrateMoving.setBuffer(*mSoundHandler->getSound(4));
+	mCrateMoving.setVolume(mSoundHandler->changeIndiVolume(0.2));
 }
 
 Crate::~Crate(){
@@ -33,22 +35,21 @@ Layer Crate::getLayer() {
 }
 void Crate::Update(float dt){
 	if (mMoving){
+		if (!(mCrateMoving.getStatus() == sf::Sound::Playing)) {
+			mCrateMoving.play();
+		}
 		if (direction == 4 && mPosition.y != newPos.y) {
 			mPosition.y -= 2;
-			//mSoundHandler->PlaySound(4);
 		}
 		else if (direction == 3 && mPosition.y != newPos.y) {
 			mPosition.y += 2;
-			//mSoundHandler->PlaySound(4);
 		}
 		else if (direction == 2 && mPosition.x != newPos.x) {
 			mPosition.x -= 2;
-			//mSoundHandler->PlaySound(4);
 
 		}
 		else if (direction == 1 && mPosition.x != newPos.x) {
 			mPosition.x += 2;
-			//mSoundHandler->PlaySound(4);
 		}
 		else {
 			mMoving = false;
@@ -91,7 +92,6 @@ bool Crate::moveForward(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 			newPos.y = mPosition.y - 64;
 			direction = 4;
 			c.restart();
-			//mSoundHandler->PlaySound(4);
 			mMoving = true;
 			return true;
 		}
@@ -103,7 +103,6 @@ bool Crate::moveBackWards(TileLayer *tileLayer, std::vector<Entity*> *Entities) 
 			newPos.y = mPosition.y + 64;
 			direction = 3;
 			c.restart();
-			//mSoundHandler->PlaySound(4);
 			mMoving = true;
 			return true;
 		}
@@ -115,7 +114,6 @@ bool Crate::moveLeft(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 			newPos.x = mPosition.x - 64;
 			direction = 2;
 			c.restart();
-			//mSoundHandler->PlaySound(4);
 			mMoving = true;
 			return true;
 		}
@@ -127,7 +125,6 @@ bool Crate::moveRight(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 			newPos.x = mPosition.x + 64;
 			direction = 1;
 			c.restart();
-
 			mMoving = true;
 			return true;
 		}

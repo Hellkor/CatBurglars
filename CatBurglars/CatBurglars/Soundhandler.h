@@ -21,6 +21,7 @@ public:
 	void initializeCat2(GameObject *cat2);
 	sf::SoundBuffer* getSound(int ID);
 	int distanceSound(GameObject *gameobject);
+	float changeIndiVolume(float change);
 private:
 	int mMusicVolume = 100;
 	int mSoundVolume = 100;

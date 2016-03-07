@@ -16,13 +16,13 @@ void SoundHandler::Initialize()
 	mVaktGårB.loadFromFile("Resources/Sounds/Fotsteg.ogg");
 	//mVaktGår.setBuffer(mVaktGårB);
 
-	mShadowDashB.loadFromFile("Resources/Sounds/ahem.wav");
+	mShadowDashB.loadFromFile("Resources/Sounds/dash.wav");
 	//mShadowDash.setBuffer(mShadowDashB);
 
 	mSnowHaxB.loadFromFile("Resources/Sounds/Tangent.ogg");
 	//mSnowHax.setBuffer(mSnowHaxB);
 
-	mCratePushB.loadFromFile("Resources/Sounds/Putta.ogg");
+	mCratePushB.loadFromFile("Resources/Sounds/crate.wav");
 	//mCratePush.setBuffer(mCratePushB);
 
 	mDoorOpenB.loadFromFile("Resources/Sounds/Dörr.ogg");
@@ -31,41 +31,32 @@ void SoundHandler::Initialize()
 
 void SoundHandler::PlaySound(int ID)
 {
-/*	if (ID == 1) {
-		if (!(mVaktGår.getStatus() == sf::Sound::Playing)) {
-			mVaktGår.play();
-		}
-	}
-	if (ID == 2) {	
-		if (!(mShadowDash.getStatus() == sf::Sound::Playing)) {
-			mShadowDash.play();
-		}
-	}
-	if (ID == 3) {
-		if (!(mSnowHax.getStatus() == sf::Sound::Playing)) {
-			mSnowHax.play();
-		}
-	}
-	if (ID == 4) {
-		if (!(mCratePush.getStatus() == sf::Sound::Playing)) {
-			mCratePush.play();
-		}
-	}
-	if (ID == 5) {
-		if (!(mDoorOpen.getStatus() == sf::Sound::Playing)) {
-			mDoorOpen.play();
-		}
-	}*/
+
 }
 
 void SoundHandler::startMusic(int ID){
 	if (ID == 1){
-		mMusic.openFromFile("Resources/Sounds/sound.ogg");
+		mMusic.openFromFile("Resources/Music/level_1_1-2.ogg");
 		mMusic.setLoop(true);
 		mMusic.play();
 	}
 	if (ID == 2) {
-		mMusic.openFromFile("Resources/Sounds/CBF1R1v4.ogg");
+		mMusic.openFromFile("Resources/Music/level_1_3.ogg");
+		mMusic.setLoop(true);
+		mMusic.play();
+	}
+	if (ID == 3) {
+		mMusic.openFromFile("Resources/Music/level_1_4.ogg");
+		mMusic.setLoop(true);
+		mMusic.play();
+	}
+	if (ID == 4) {
+		mMusic.openFromFile("Resources/Music/level_1_5.ogg");
+		mMusic.setLoop(true);
+		mMusic.play();
+	}
+	if (ID == 5) {
+		mMusic.openFromFile("Resources/Music/level_1_6.ogg");
 		mMusic.setLoop(true);
 		mMusic.play();
 	}
@@ -132,39 +123,12 @@ int SoundHandler::distanceSound(GameObject *gameobject) {
 		length = pythagoras(x, y);
 	}
 
-	if (length <-10 || length >10) {
+	if (length >10) {
 		newVolume = 0;
 	}
-	if (length == -10 || length == 10) {
-		newVolume = mSoundVolume * 0.1;
-	}
-	if (length == -9 || length == 9) {
-		newVolume = mSoundVolume * 0.2;
-	}
-	if (length == -8 || length == 8) {
-		newVolume = mSoundVolume * 0.3;
-	}
-	if (length == -7 || length == 7) {
-		newVolume = mSoundVolume * 0.4;
-	}
-	if (length == -6 || length == 6) {
-		newVolume = mSoundVolume * 0.5;
-	}
-	if (length == -5 || length == 5) {
-		newVolume = mSoundVolume * 0.6;
-	}
-	if (length == -4 || length == 4) {
-		newVolume = mSoundVolume * 0.7;
-	}
-	if (length == -3 || length == 3) {
-		newVolume = mSoundVolume * 0.8;
-	}
-	if (length == -2 || length == 2) {
-		newVolume = mSoundVolume * 0.9;
-	}
-	if (length == -1 || length == 1) {
-		newVolume = mSoundVolume * 1;
-	}
+	else
+		newVolume = mSoundVolume * (1-((length*0.1)-0.1));
+
 	return newVolume;
 }
 
@@ -172,4 +136,8 @@ int SoundHandler::pythagoras(int x, int y) {
 	int length;
 	length = (sqrt((x * x) + (y * y)));
 	return length;
+}
+
+float SoundHandler::changeIndiVolume(float change) {
+	return mSoundVolume * change;
 }
