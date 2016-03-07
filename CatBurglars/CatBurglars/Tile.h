@@ -4,6 +4,7 @@
 #include "Entity.h"
 #include "TextureHandler.h"
 #include "gridvector.h"
+#include "PathNode.h"
 
 class Tile : public Entity
 {
@@ -27,6 +28,8 @@ private:
 	//Added
 	sf::Sprite mSprite;
 	sf::Vector2i mPosition;
+	//Rasmus pathfinding additions
+	PathNode mPathNode;
 };
 
 #endif
