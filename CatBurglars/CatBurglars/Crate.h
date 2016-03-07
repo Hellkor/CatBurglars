@@ -45,6 +45,7 @@ private:
 	int direction = 0;
 
 	SoundHandler* mSoundHandler;
+	sf::Sound mCrateMoving;
 };
 
 
