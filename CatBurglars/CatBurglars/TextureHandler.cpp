@@ -21,6 +21,7 @@ void TextureHandler::Initialize()
 	mCrate.loadFromFile("Resources/Crate.png");	
 	mButton.loadFromFile("Resources/Button.png");
 	mDoor.loadFromFile("Resources/Door.png");
+	mBars.loadFromFile("Resources/Bars.png");
 	mGuard.loadFromFile("Resources/vakt_walk_spritesheet.png");
 	mArea.loadFromFile("Resources/area.png");
 	mCamera.loadFromFile("Resources/camerasheet.png");
@@ -59,6 +60,8 @@ sf::Texture* TextureHandler::GetTexture(int ID)
 		return &mCamera;
 	if (ID == 14)
 		return &mComputer;
+	if (ID == 15)
+		return &mBars;
 	if (ID == 25)
 		return &mSocksPortrait;
 	if (ID == 26)

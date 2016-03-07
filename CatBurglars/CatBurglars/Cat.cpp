@@ -176,9 +176,11 @@ void Cat::Update(float dt){
 void Cat::moveForward(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 	if (!mMoving && canMove) {
 		direction = 4;
-		if (mGrid.moveCrate(this, gridvector(mCoord.x, mCoord.y - 1), tileLayer, Entities)) {
-			mAnimationhandler.playAnimation(12, 5, sf::milliseconds(100));
-			mPushing = true;
+		if (canPushCrate) {
+			if (mGrid.moveCrate(this, gridvector(mCoord.x, mCoord.y - 1), tileLayer, Entities)) {
+				mAnimationhandler.playAnimation(12, 5, sf::milliseconds(100));
+				mPushing = true;
+			}
 		}
 		if (mGrid.isTilePassable(this, gridvector(mCoord.x, mCoord.y - 1), tileLayer, Entities)){
 			newPos.y = mPosition.y - 64;
@@ -191,8 +193,10 @@ void Cat::moveBackWards(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 	if (!mMoving && canMove) {
 		direction = 3;
 
-		if (mGrid.moveCrate(this, gridvector(mCoord.x, mCoord.y + 1), tileLayer, Entities)) {
-			mPushing = true;
+		if (canPushCrate) {
+			if (mGrid.moveCrate(this, gridvector(mCoord.x, mCoord.y + 1), tileLayer, Entities)) {
+				mPushing = true;
+			}
 		}
 
 		if (mGrid.isTilePassable(this, gridvector(mCoord.x, mCoord.y + 1), tileLayer, Entities)){
@@ -204,8 +208,10 @@ void Cat::moveBackWards(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 void Cat::moveLeft(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 	if (!mMoving && canMove) {
 		direction = 2;
-		if (mGrid.moveCrate(this, gridvector(mCoord.x - 1, mCoord.y), tileLayer, Entities)) {
-			mPushing = true;
+		if (canPushCrate) {
+			if (mGrid.moveCrate(this, gridvector(mCoord.x - 1, mCoord.y), tileLayer, Entities)) {
+				mPushing = true;
+			}
 		}
 		if (mGrid.isTilePassable(this, gridvector(mCoord.x - 1, mCoord.y), tileLayer, Entities)){
 			newPos.x = mPosition.x - 64;
@@ -216,8 +222,10 @@ void Cat::moveLeft(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 void Cat::moveRight(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 	if (!mMoving && canMove) {
 		direction = 1;
-		if (mGrid.moveCrate(this, gridvector(mCoord.x + 1, mCoord.y), tileLayer, Entities)) {
-			mPushing = true;
+		if (canPushCrate) {
+			if (mGrid.moveCrate(this, gridvector(mCoord.x + 1, mCoord.y), tileLayer, Entities)) {
+				mPushing = true;
+			}
 		}
 		if (mGrid.isTilePassable(this, gridvector(mCoord.x + 1, mCoord.y), tileLayer, Entities)){
 			newPos.x = mPosition.x + 64;
@@ -246,7 +254,7 @@ bool Cat::isSolid(){
 void Cat::interaction(Usable *usable) {
 	if (isInteracting()) {
 		if (Computer *comp = dynamic_cast<Computer*>(usable)) {
-			if (mCoord == comp->getCoords()) {
+			if (mCoord == comp->getCoords() && mID == 2) {
 				if (comp->getFace() == "N") {
 					mAnimationhandler.playAnimation(2, 6, sf::milliseconds(3000 / 6));
 				}

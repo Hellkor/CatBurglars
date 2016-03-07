@@ -16,6 +16,9 @@ public:
 	void setPosition(sf::Vector2f v);
 	bool isDialogActive();
 
+	void nextDialog();
+	void setSkipText(string skipkey);
+
 	void initialize(sf::View view);
 private:
 	TextureHandler *mTextureHandler;
@@ -48,4 +51,7 @@ private:
 	SelectedCharacter mHighLighted;
 
 	bool mWin = false;
+
+	string mSkipString;
+	sf::Text mSkipText;
 };

@@ -18,11 +18,9 @@ DialogManager::DialogManager(string filename,TextureHandler *handler, sf::Vector
 	mDialogBox.setTexture(DIALOG_BOX_TEXTURE);
 	
 	mFont.loadFromFile("Resources/Fonts/arial.ttf");
-	
+	mSkipText.setFont(mFont);
+	mSkipText.setCharacterSize(24);
 	readFile();
-
-	//setPortrait(SOCKS, ANGRY);
-	//setPortrait2(SOCKS, ANGRY);
 	
 }
 
@@ -116,11 +114,17 @@ void DialogManager::readFile() {
 	}
 	
 }
+void DialogManager::nextDialog() {
+	mShowDialog = false;
+}
+void DialogManager::setSkipText(string skipkey) {
+	mSkipString = skipkey;
+}
 void DialogManager::update() {
 	
-	if (mClock.getElapsedTime().asSeconds() > mTimer.asSeconds()) {
-		mShowDialog = false;
-	}
+	//if (mClock.getElapsedTime().asSeconds() > mTimer.asSeconds()) {
+	//	mShowDialog = false;
+	//}
 	
 	if (mCurrentConversationDialogID > -1 && mCurrentConversationDialogID <= mNumberOfDialogs) {
 		if (!mShowDialog) {
@@ -155,31 +159,38 @@ void DialogManager::render(sf::RenderWindow *window,sf::View view) {
 	
 
 	if (mShowDialog) {
+		
+
+		mPortrait.setPosition(PORTRAIT_ONE_POS);
+		mPortrait2.setPosition(PORTRAIT_TWO_POS);
+
 		sf::RenderTexture rtext;
 		rtext.create(200, 200);
 		rtext.clear(sf::Color(150, 150, 150, 0));
 		sf::RectangleShape rect;
-		rect.setSize(sf::Vector2f((mPortrait.getTexture()->getSize().x)*4,( mPortrait.getTexture()->getSize().y)*4));
+		rect.setSize(sf::Vector2f((mPortrait.getTexture()->getSize().x)* mPortrait.getScale().y, (mPortrait.getTexture()->getSize().y)* mPortrait.getScale().y));
 		rect.setTexture(&rtext.getTexture());
+		sf::RectangleShape rect2;
+		rect2.setSize(sf::Vector2f((mPortrait2.getTexture()->getSize().x) * mPortrait2.getScale().y, (mPortrait2.getTexture()->getSize().y) *mPortrait2.getScale().y));
+		rect2.setTexture(&rtext.getTexture());
 
 
 		rect.setOrigin(rect.getSize().x / 2, rect.getSize().y / 2);
+		rect2.setOrigin(rect2.getSize().x / 2, rect2.getSize().y / 2);
 
-		mPortrait.setPosition(PORTRAIT_ONE_POS);
-		mPortrait2.setPosition(PORTRAIT_TWO_POS);
+		rect.setPosition(mPortrait.getPosition());
+		rect2.setPosition(mPortrait2.getPosition());
 
 		switch (mHighLighted)
 		{
 		case ONE:
 			
 			window->draw(mPortrait2);
-			rect.setPosition(mPortrait2.getPosition());
-			window->draw(rect, sf::BlendMultiply);
+			window->draw(rect2, sf::BlendMultiply);
 			window->draw(mPortrait);
 			break;
 		case TWO:
 			window->draw(mPortrait);
-			rect.setPosition(mPortrait.getPosition());
 			window->draw(rect, sf::BlendMultiply);
 			window->draw(mPortrait2);
 			break;
@@ -189,14 +200,21 @@ void DialogManager::render(sf::RenderWindow *window,sf::View view) {
 
 		
 		window->draw(mDialogBox);
+
 		for each (sf::Text t in TextRows) {
 			t.setFont(mFont);
 			t.setCharacterSize(FONT_SIZE);
 			window->draw(t);
 		}
 		
+	    
 		
-
+		string skipstring = "Press: " + mSkipString + " to skip!";
+		mSkipText.setPosition(sf::Vector2f((view.getCenter().x)   - (mSkipText.getCharacterSize()* (skipstring.size()/4)),
+										   (view.getCenter().y) + ((view.getSize().y/2)-mSkipText.getCharacterSize())));
+		mSkipText.setString(skipstring);
+		mSkipText.setColor(sf::Color::Red);
+		window->draw(mSkipText);
 		
 		
 		
@@ -246,10 +264,11 @@ void DialogManager::showDialog(int ID,float time_as_seconds) {
 		row.clear();
 	}
 	
-	mHighLighted = mDialogList[ID]->getSelectedCharacter();
+	
 	
 	setPortrait(mDialogList[ID]->getCharacter(), mDialogList[ID]->getMood());
 	setPortrait2(mDialogList[ID]->getCharacter2(), mDialogList[ID]->getMood2());
+	mHighLighted = mDialogList[ID]->getSelectedCharacter();
 	mShowDialog = true;
 	mWin = mDialogList[ID]->isAWinDialog();
 	mClock.restart();
@@ -375,7 +394,7 @@ void DialogManager::setPortrait2(Character character, Mood mood) {
 	switch (character) {
 	case SOCKS:
 		mPortrait2.setTexture(*mTextureHandler->GetTexture(25));
-		mPortrait2.setScale(sf::Vector2f(-4.0f, 4.0f));
+		mPortrait2.setScale(sf::Vector2f(4.0f, 4.0f));
 		switch (mood) {
 		case ANGRY:
 			
@@ -412,7 +431,7 @@ void DialogManager::setPortrait2(Character character, Mood mood) {
 		break;
 	case SNOW:
 		mPortrait2.setTexture(*mTextureHandler->GetTexture(27));
-		mPortrait2.setScale(sf::Vector2f(-4.0f, 4.0f));
+		mPortrait2.setScale(sf::Vector2f(4.0f, 4.0f));
 		switch (mood) {
 		case ANGRY:
 			break;
@@ -430,7 +449,7 @@ void DialogManager::setPortrait2(Character character, Mood mood) {
 		break;
 	case SHADOW:
 		mPortrait2.setTexture(*mTextureHandler->GetTexture(26));
-		mPortrait2.setScale(sf::Vector2f(-4.0f, 4.0f));
+		mPortrait2.setScale(sf::Vector2f(4.0f, 4.0f));
 		switch (mood) {
 		case ANGRY:
 			break;
@@ -448,7 +467,7 @@ void DialogManager::setPortrait2(Character character, Mood mood) {
 		break;
 	case ALEX:
 		mPortrait2.setTexture(*mTextureHandler->GetTexture(28));
-		mPortrait2.setScale(sf::Vector2f(-4.0f, 4.0f));
+		mPortrait2.setScale(sf::Vector2f(4.0f, 4.0f));
 		switch (mood) {
 		case ANGRY:
 			break;

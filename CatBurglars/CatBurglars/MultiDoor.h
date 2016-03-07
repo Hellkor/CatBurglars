@@ -4,7 +4,7 @@
 
 class MultiDoor : public Recievers{
 public:
-	MultiDoor(int channel,int numberofchannels, gridvector coords, sf::Texture *texture);
+	MultiDoor(int channel,int numberofchannels, gridvector coords, sf::Texture *texture,string face);
 
 	virtual void connectToChannel(int channelID);
 
@@ -24,6 +24,8 @@ private:
 	sf::Vector2i mPosition;
 	gridvector mCoords;
 	sf::Sprite mSprite;
+
+	string mFace;
 
 	
 };

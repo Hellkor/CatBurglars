@@ -369,6 +369,9 @@ void Level::update(float dt){
 
 			}
 		}
+		else if (dialogManager.isDialogActive()) {
+			p1Controller.nextDialog(&dialogManager);
+		}
 
 
 		if (test && !IMMORTALITY_MODE) {
@@ -382,7 +385,7 @@ void Level::renderLight(sf::RenderWindow *window) {
 	// -----------------------------------------------------------------------------------------------------------------------------------------------------
 
 	// Clear the buffer where we draw the lights, this color could be changed depending on the time of day in the game to show a night/daytime cycle
-	lightMapTexture.clear(sf::Color(150, 150, 150, 0));
+	lightMapTexture.clear(sf::Color(170, 170, 170, 0));
 
 	// Loop over the lights in the vector
 	for (std::size_t i = 0; i < lights.size(); ++i)
@@ -636,7 +639,7 @@ void Level::generateLevel(string name){
 		
 		if (objectID == 3){
 
-			mEntities.push_back(new Door(channel, gridvector(xPos, yPos), textures.GetTexture(11), &soundhandler));
+			mEntities.push_back(new Door(channel, gridvector(xPos, yPos), textures.GetTexture(15), &soundhandler));
 		}
 		if (objectID == 4){
 			mEntities.push_back(new Guard(&textures, gridvector(xPos, yPos), 1, script, &soundhandler,mFile));
@@ -646,7 +649,7 @@ void Level::generateLevel(string name){
 		}
 		if (objectID == 7) {
 			if (range == 0) {
-				mEntities.push_back(new Computer(channel, textures.GetTexture(13), gridvector(xPos, yPos), false, hold,&soundhandler,facing));
+				mEntities.push_back(new Computer(channel, textures.GetTexture(14), gridvector(xPos, yPos), false, hold,&soundhandler,facing));
 			}
 			else if (range == 1) {
 				mEntities.push_back(new Computer(channel, textures.GetTexture(14), gridvector(xPos, yPos), true, hold, &soundhandler, facing));
@@ -654,7 +657,7 @@ void Level::generateLevel(string name){
 			
 		}
 		if (objectID == 8) {
-			mEntities.push_back(new MultiDoor(channel, range, gridvector(xPos, yPos), textures.GetTexture(11)));
+			mEntities.push_back(new MultiDoor(channel, range, gridvector(xPos, yPos), textures.GetTexture(11),facing));
 		}
 		if (objectID == 9) {
 			mEntities.push_back(new Crate(textures.GetTexture(4), gridvector(xPos, yPos), 1, &soundhandler, false));

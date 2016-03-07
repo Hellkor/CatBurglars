@@ -3,7 +3,7 @@
 
 Controller::Controller(CONTROLLER_TYPE controllertype):
 C_TYPE(controllertype){
-	
+	assignKeys();
 }
 
 Controller::~Controller(){
@@ -17,7 +17,52 @@ void Controller::assignController(int player, Cat *cat){
 		mCat = cat;
 	}
 }
+void Controller::assignKeys() {
+	switch (C_TYPE)
+	{
+	case KeyboardOne:
+		InteractionKey = sf::Keyboard::Space;
+		break;
+	case KeyboardTwo:
+		InteractionKey = sf::Keyboard::RControl;
+		break;
+	case GamepadOne:
+		break;
+	case GamepadTwo:
+		break;
+	default:
+		break;
+	}
+}
+void Controller::nextDialog(DialogManager *dialogmanager) {
 
+
+	switch (C_TYPE) {
+		//Keyboard One (WASD)
+	case KeyboardOne:
+		dialogmanager->setSkipText("Space");
+		if (sf::Keyboard::isKeyPressed(InteractionKey))
+		{
+			if (dialogClock.getElapsedTime().asSeconds() >= dialogCooldown.asSeconds()) {
+				dialogClock.restart();
+				dialogmanager->nextDialog();
+			}
+		}
+		
+		break;
+		//Keyboard Two (Arrows)
+	case KeyboardTwo:
+		dialogmanager->setSkipText("LControl");
+		if (sf::Keyboard::isKeyPressed(InteractionKey))
+		{
+			if (dialogClock.getElapsedTime().asSeconds() >= dialogCooldown.asSeconds()) {
+				dialogClock.restart();
+				dialogmanager->nextDialog();
+			}
+		}
+		
+	}
+}
 //Change position of cat with keyboard
 void Controller::move(Cat *cat, TileLayer *tileLayer, std::vector<Entity*> *Entities){
 	switch (C_TYPE){
