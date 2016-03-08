@@ -1,5 +1,5 @@
-#ifndef INCLUDED_LEVEL
-#define INCLUDED_LEVEL
+#pragma once
+
 #include <string>
 #include <vector>
 using namespace std;
@@ -60,4 +60,3 @@ private:
 
 
 
-#endif
