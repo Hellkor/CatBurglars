@@ -1,6 +1,8 @@
 #include <iostream>
 #include "SoundHandler.h"
 
+static sf::SoundBuffer mVaktGårB, mShadowDashB, mSnowHaxB, mCratePushB, mDoorOpenB;
+
 SoundHandler::SoundHandler()
 {
 

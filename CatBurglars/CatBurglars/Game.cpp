@@ -36,8 +36,11 @@ Game::Game() {
 	//Creates the main window
 	window = new sf::RenderWindow(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "CatBurglars", sf::Style::Close);
 	
-	window->setFramerateLimit(60);
-	//Test for loading in maps
+	//window->setFramerateLimit(60);
+	//window->setVerticalSyncEnabled(true);
+
+	TextureHandler::Initialize();
+	SoundHandler::Initialize();
 
 	Level *Level0 = new Level("1_1");
 	Level *level1 = new Level("1_2");

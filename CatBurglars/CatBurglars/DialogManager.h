@@ -40,10 +40,8 @@ private:
 	bool mShowDialog;
 	TEXT mText_block;
 	string mText_String;
-	float mShowTime;
+	
 
-	sf::Clock mClock;
-	sf::Time mTimer;
 
 	sf::Sprite mPortrait;
 	sf::Sprite mPortrait2;

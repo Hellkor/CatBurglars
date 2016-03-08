@@ -8,9 +8,8 @@ class TextureHandler
 public:
 	TextureHandler();
 	~TextureHandler();
-	void Initialize();
-	sf::Texture mTileTexture,mPropTileTexture, mSidebarTexture, mSelectorTexture, mSaveTexture, mCat1Texture, mCrate,mButton,mDoor,mBars,mGuard,mArea,mCamera, mComputer,mSnow,
-				mSocksPortrait, mShadowPortrait, mScooterPortrait, mSnowPortrait, mAlexPortrait;
+	static void Initialize();
+	
 	sf::Texture* GetTexture(int ID);
 };
 

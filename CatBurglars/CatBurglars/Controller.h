@@ -21,7 +21,7 @@ private:
 	CONTROLLER_TYPE C_TYPE;
 
 	sf::Clock dialogClock;
-	sf::Time dialogCooldown = sf::seconds(2);
+	sf::Time dialogCooldown = sf::seconds(1);
 
 	void assignKeys();
 
