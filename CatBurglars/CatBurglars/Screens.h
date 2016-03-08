@@ -2,6 +2,10 @@
 #include <SFML\Graphics.hpp>
 
 
+
+
+
+
 class cScreen
 {
 public: 
@@ -9,3 +13,4 @@ public:
 
 
 };
+

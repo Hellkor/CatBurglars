@@ -34,6 +34,8 @@ GameState_ GameState = RunGame;
 
 Game::Game() {
 	//Creates the main window
+
+
 	window = new sf::RenderWindow(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "CatBurglars", sf::Style::Close);
 	
 	//window->setFramerateLimit(60);
