@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -18,13 +18,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
@@ -44,12 +44,12 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>\\hsnas6\StudentHome\2015\a15axeka\Downloads\SFML-2.3.2-windows-vc12-32-bit\SFML-2.3.2\include;\\hsnas6\studenthome\2015\b15jonni\Downloads\SFML-2.3.2\include;C:\Users\Hellkor\Downloads\SFML-2.3.2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>\\hsnas6\StudentHome\2015\a15samwe\Documents\sfeMovie-Debug-2.0.0-win32\include;%(AdditionalIncludeDirectories);\\hsnas6\StudentHome\2015\a15samwe\Documents\SFML-2.3.2\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>\\hsnas6\StudentHome\2015\a15axeka\Downloads\SFML-2.3.2-windows-vc12-32-bit\SFML-2.3.2\lib;\\hsnas6\studenthome\2015\b15jonni\Downloads\SFML-2.3.2\lib;C:\Users\Hellkor\Downloads\SFML-2.3.2\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>sfml-system-d.lib;sfml-window-d.lib;sfml-graphics-d.lib;sfml-network-d.lib;sfml-audio-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>\\hsnas6\StudentHome\2015\a15samwe\Documents\sfeMovie-Debug-2.0.0-win32\lib;\\hsnas6\StudentHome\2015\a15samwe\Documents\SFML-2.3.2\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>sfeMovie-d.lib;sfml-system-d.lib;sfml-window-d.lib;sfml-graphics-d.lib;sfml-network-d.lib;sfml-audio-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -59,47 +59,76 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>\\hsnas6\studenthome\2015\b15jonni\Downloads\SFML-2.3.2\include;C:\Users\Hellkor\Downloads\SFML-2.3.2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>\\hsnas6\StudentHome\2015\b15jonni\Downloads\sfeMovie-Release-2.0.0-win32\sfeMovie-Release-2.0.0-win32\include;\\hsnas6\studenthome\2015\b15jonni\Downloads\SFML-2.3.2\include;C:\Users\Hellkor\Downloads\SFML-2.3.2\include;%(AdditionalIncludeDirectories);\\hsnas6\StudentHome\2015\b15jonni\Downloads\SFML-2.3.2\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>\\hsnas6\studenthome\2015\b15jonni\Downloads\SFML-2.3.2\lib;C:\Users\Hellkor\Downloads\SFML-2.3.2\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>sfml-system.lib;sfml-window.lib;sfml-graphics.lib;sfml-network.lib;sfml-audio.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>\\hsnas6\StudentHome\2015\b15jonni\Downloads\sfeMovie-Release-2.0.0-win32\sfeMovie-Release-2.0.0-win32\lib;\\hsnas6\studenthome\2015\b15jonni\Downloads\SFML-2.3.2\lib;C:\Users\Hellkor\Downloads\SFML-2.3.2\lib;%(AdditionalLibraryDirectories);P:\Downloads\SFML-2.3.2\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>sfeMovie.lib;sfml-system.lib;sfml-window.lib;sfml-graphics.lib;sfml-network.lib;sfml-audio.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AnimationHandler.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Cat.cpp" />
     <ClCompile Include="Channel.cpp" />
     <ClCompile Include="Channels.cpp" />
+    <ClCompile Include="Collectible.cpp" />
+    <ClCompile Include="Computer.cpp" />
     <ClCompile Include="Controller.cpp" />
+    <ClCompile Include="Crate.cpp" />
+    <ClCompile Include="Dialog.cpp" />
+    <ClCompile Include="DialogManager.cpp" />
+    <ClCompile Include="Door.cpp" />
     <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="EventPad.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="Grid.cpp" />
+    <ClCompile Include="Guard.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="LevelManager.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Screens.cpp" />
+    <ClCompile Include="MovieHandler.cpp" />
+    <ClCompile Include="MultiDoor.cpp" />
     <ClCompile Include="Recievers.cpp" />
+    <ClCompile Include="SecuCam.cpp" />
+    <ClCompile Include="SoundHandler.cpp" />
     <ClCompile Include="TextureHandler.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="Usable.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AnimationHandler.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="Cat.h" />
     <ClInclude Include="Channel.h" />
     <ClInclude Include="Channels.h" />
+    <ClInclude Include="Collectible.h" />
+    <ClInclude Include="Computer.h" />
     <ClInclude Include="Controller.h" />
+    <ClInclude Include="Crate.h" />
+    <ClInclude Include="Dialog.h" />
+    <ClInclude Include="DialogManager.h" />
+    <ClInclude Include="Door.h" />
     <ClInclude Include="Entity.h" />
+    <ClInclude Include="EventPad.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Grid.h" />
     <ClInclude Include="gridvector.h" />
+    <ClInclude Include="Guard.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="LevelManager.h" />
+    <ClInclude Include="Screens.h" />
+    <ClInclude Include="MovieHandler.h" />
+    <ClInclude Include="MultiDoor.h" />
     <ClInclude Include="Recievers.h" />
+    <ClInclude Include="SecuCam.h" />
+    <ClInclude Include="Soundhandler.h" />
     <ClInclude Include="TextureHandler.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="Usable.h" />
