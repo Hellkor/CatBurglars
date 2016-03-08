@@ -76,12 +76,11 @@ Level::Level(string level_directory) :
 
 	
 	// Initialize GUI View
-	//guiView.setSize(1024, 720);
 	guiView.setViewport(sf::FloatRect(0, 0, 1, 1));
 
 	//Initialize textures
-	textures.Initialize();
-	soundhandler.Initialize();
+	//textures.Initialize();
+	//soundhandler.Initialize();
 
 	
 	
@@ -288,12 +287,6 @@ void Level::update(float dt){
 					if (Guard *guard = dynamic_cast<Guard*>(obj)) {
 
 						guard->AImovement(&mWallTileLayer, &mEntities);
-					}
-					for each (Entity *ent in mEntities) {
-
-						//if (Usable *u = dynamic_cast<Usable*>(ent)) {
-						//	u->getInteraction(obj);
-						//}
 					}
 
 

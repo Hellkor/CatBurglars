@@ -3,6 +3,9 @@
 
 std::string PORTRAITS_DIRECTORY = "Resources/Portraits/";
 
+static sf::Texture mTileTexture, mPropTileTexture, mSidebarTexture, mSelectorTexture, mSaveTexture, mCat1Texture, mCrate, mButton, mDoor, mBars, mGuard, mArea, mCamera, mComputer, mSnow,
+mSocksPortrait, mShadowPortrait, mScooterPortrait, mSnowPortrait, mAlexPortrait;
+
 TextureHandler::TextureHandler()
 {
 

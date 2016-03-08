@@ -1,6 +1,7 @@
 #include "DialogManager.h"
 #include <fstream>
 #include <iostream>
+#include "LevelManager.h"
 sf::Texture DIALOG_BOX_TEXTURE;
 
 sf::Vector2f PORTRAIT_ONE_POS;
@@ -122,9 +123,6 @@ void DialogManager::setSkipText(string skipkey) {
 }
 void DialogManager::update() {
 	
-	//if (mClock.getElapsedTime().asSeconds() > mTimer.asSeconds()) {
-	//	mShowDialog = false;
-	//}
 	
 	if (mCurrentConversationDialogID > -1 && mCurrentConversationDialogID <= mNumberOfDialogs) {
 		if (!mShowDialog) {
@@ -135,8 +133,9 @@ void DialogManager::update() {
 	}
 	else {
 		if (mWin) {
+			LevelManager::nextLevel();
+			mShowDialog = false;
 			mWin = false;
-			// WIN
 		}
 		mCurrentConversationDialogID = -1;
 	}
@@ -271,8 +270,6 @@ void DialogManager::showDialog(int ID,float time_as_seconds) {
 	mHighLighted = mDialogList[ID]->getSelectedCharacter();
 	mShowDialog = true;
 	mWin = mDialogList[ID]->isAWinDialog();
-	mClock.restart();
-	mTimer = sf::seconds(time_as_seconds);
 }
 void DialogManager::setPosition(sf::Vector2f v) {
 	mPosition = v;
