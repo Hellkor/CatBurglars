@@ -130,69 +130,14 @@ void Level::InitializeGuiView(sf::RenderWindow *window) {
 // Renderar level
 void Level::render(sf::RenderWindow *window){
 	
-	if (mPlayers > 1) {
-		mPlayer1View.setSize(sf::Vector2f(window->getSize().x / 2, window->getSize().y));
-	}
-	else {
-		mPlayer1View.setSize(sf::Vector2f(window->getSize().x , window->getSize().y));
-	}
-	window->setView(mPlayer1View);
-	for (TileLayer::size_type y = 0; y < mBottomTileLayer.size(); y++)
-	{
-		for (TileRow::size_type x = 0; x < mBottomTileLayer[y].size(); x++)
-		{
-			mBottomTileLayer[y][x]->Render(window);
+	if (mLoaded) {
+		if (mPlayers > 1) {
+			mPlayer1View.setSize(sf::Vector2f(window->getSize().x / 2, window->getSize().y));
 		}
-	}
-	for each (Entity *e in mEntities){
-		if (e->getLayer() == BACK) {
-			e->Render(window);
+		else {
+			mPlayer1View.setSize(sf::Vector2f(window->getSize().x, window->getSize().y));
 		}
-	}
-	for each (Entity *e in mEntities) {
-		if (e->getLayer() == MIDDLE) {
-			e->Render(window);
-		}
-	}
-	for (TileLayer::size_type y = 0; y < mBottomTileLayer.size(); y++)
-	{
-		for (TileRow::size_type x = 0; x < mBottomTileLayer[y].size(); x++)
-		{
-			mWallTileLayer[y][x]->Render(window);
-		}
-	}
-
-	
-	for each (Entity *e in mEntities) {
-		if (e->getLayer() == OnWallUsables) {
-			e->Render(window);
-		}
-	}
-	for each (Entity *e in mEntities) {
-		if (e->getLayer() == FRONT) {
-			e->Render(window);
-		}
-	}
-	for each (Entity *e in mEntities) {
-		if (e->getLayer() == DOORS) {
-			e->Render(window);
-		}
-	}
-	for (TileLayer::size_type y = 0; y < mTopTileLayer.size(); y++)
-	{
-		for (TileRow::size_type x = 0; x < mTopTileLayer[y].size(); x++)
-		{
-			mTopTileLayer[y][x]->Render(window);
-		}
-	}
-	
-	renderLight(window);
-	renderPlayerFOV(window, 1);
-	
-	
-	if (mPlayers == 2){
-		mPlayer2View.setSize(sf::Vector2f(window->getSize().x / 2, window->getSize().y));
-		window->setView(mPlayer2View); 
+		window->setView(mPlayer1View);
 		for (TileLayer::size_type y = 0; y < mBottomTileLayer.size(); y++)
 		{
 			for (TileRow::size_type x = 0; x < mBottomTileLayer[y].size(); x++)
@@ -217,7 +162,8 @@ void Level::render(sf::RenderWindow *window){
 				mWallTileLayer[y][x]->Render(window);
 			}
 		}
-		
+
+
 		for each (Entity *e in mEntities) {
 			if (e->getLayer() == OnWallUsables) {
 				e->Render(window);
@@ -241,23 +187,79 @@ void Level::render(sf::RenderWindow *window){
 			}
 		}
 
-		
 		renderLight(window);
-		renderPlayerFOV(window, 2);
+		renderPlayerFOV(window, 1);
 
-		
-		
-	}
 
-	// Draw gui objects
-	guiView.setSize(sf::Vector2f(window->getSize()));
-	window->setView(guiView);
-	if (mPlayers == 2 && !dialogManager.isDialogActive()) {
-		DIVIDER_SPRITE.setPosition(guiView.getCenter());
-		window->draw(DIVIDER_SPRITE);
-	}
-	if (dialogManager.isDialogActive()) {
-		dialogManager.render(window, guiView);
+		if (mPlayers == 2) {
+			mPlayer2View.setSize(sf::Vector2f(window->getSize().x / 2, window->getSize().y));
+			window->setView(mPlayer2View);
+			for (TileLayer::size_type y = 0; y < mBottomTileLayer.size(); y++)
+			{
+				for (TileRow::size_type x = 0; x < mBottomTileLayer[y].size(); x++)
+				{
+					mBottomTileLayer[y][x]->Render(window);
+				}
+			}
+			for each (Entity *e in mEntities) {
+				if (e->getLayer() == BACK) {
+					e->Render(window);
+				}
+			}
+			for each (Entity *e in mEntities) {
+				if (e->getLayer() == MIDDLE) {
+					e->Render(window);
+				}
+			}
+			for (TileLayer::size_type y = 0; y < mBottomTileLayer.size(); y++)
+			{
+				for (TileRow::size_type x = 0; x < mBottomTileLayer[y].size(); x++)
+				{
+					mWallTileLayer[y][x]->Render(window);
+				}
+			}
+
+			for each (Entity *e in mEntities) {
+				if (e->getLayer() == OnWallUsables) {
+					e->Render(window);
+				}
+			}
+			for each (Entity *e in mEntities) {
+				if (e->getLayer() == FRONT) {
+					e->Render(window);
+				}
+			}
+			for each (Entity *e in mEntities) {
+				if (e->getLayer() == DOORS) {
+					e->Render(window);
+				}
+			}
+			for (TileLayer::size_type y = 0; y < mTopTileLayer.size(); y++)
+			{
+				for (TileRow::size_type x = 0; x < mTopTileLayer[y].size(); x++)
+				{
+					mTopTileLayer[y][x]->Render(window);
+				}
+			}
+
+
+			renderLight(window);
+			renderPlayerFOV(window, 2);
+
+
+
+		}
+
+		// Draw gui objects
+		guiView.setSize(sf::Vector2f(window->getSize()));
+		window->setView(guiView);
+		if (mPlayers == 2 && !dialogManager.isDialogActive()) {
+			DIVIDER_SPRITE.setPosition(guiView.getCenter());
+			window->draw(DIVIDER_SPRITE);
+		}
+		if (dialogManager.isDialogActive()) {
+			dialogManager.render(window, guiView);
+		}
 	}
 	
 }
