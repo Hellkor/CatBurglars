@@ -1,24 +1,23 @@
-#pragma once
+#ifndef INCLUDED_GRID
+#define INCLUDED_GRID
 
 #include "Tile.h"
 #include "gridvector.h"
+#include "GameObject.h"
+typedef vector<Tile*> TileRow;
+typedef vector<TileRow> TileLayer;
 
 class Grid{
 public:
-	Grid(int WIDTH, int HEIGHT);
+	Grid();
+	bool isTilePassable(GameObject *gameobject,gridvector position, TileLayer *Tiles,std::vector<Entity*> *Entities);
+	bool canCrateMove(gridvector position, TileLayer *Tiles, std::vector<Entity*> *Entities);
+	bool canCatDash(gridvector originalpos, gridvector position, TileLayer *Tiles, std::vector<Entity*> *Entities);
 
-	Tile getTile(gridvector position){
-		Tile *thisTile;
-		for each (Tile *t in tiles){
-			if (t->getGridCoord() == position){
-				thisTile = t;
-				return *thisTile;
-			}
-		}
-		
-	}
-
+	bool moveCrate(GameObject *gameobject, gridvector position, TileLayer *Tiles, std::vector<Entity*> *Entities);
+	bool isLightPassable(GameObject *gameobject, gridvector position, TileLayer *Tiles, std::vector<Entity*> *Entities);
 private:
-	vector<Tile*> tiles;
 
 };
+
+#endif

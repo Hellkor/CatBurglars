@@ -29,6 +29,10 @@ bool Channels::isChannelActive(int ID) {
 	
 }
 
+void Channels::clearChannels() {
+	mChannels.clear();
+}
+
 void Channels::update() {
 	for (int i = 0; i < mChannels.size(); i++) {
 		mChannels[i].runTimer();

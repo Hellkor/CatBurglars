@@ -1,39 +1,71 @@
 #include "Game.h"
-
+#include "gridvector.h"
+#include "Crate.h"
+#include <SFML\Audio.hpp>
+#include "Soundhandler.h"
+#include "MovieHandler.h"
 
 static sf::RenderWindow *window;
 static TextureHandler textures;
+MovieHandler moviehandler;
 
-LevelManager levelM;
+int WINDOW_WIDTH = 1280;
+int WINDOW_HEIGHT = 720;
 
-Game::Game() :
-mEntities(),
-mCat(),
-mController()
-{
-	//Test for loading in maps
-	Level testLevel = Level("test");
-	levelM.addLevel(testLevel);
+// TIME
+// Timestep (Constant Game Speed independent of Variable FPS)
+sf::Clock miReloj;
 
-	//Test för channel
-	Channel c1 = Channel(1);
-	Channel c2 = Channel(2);
-	Channels::addChannel(c1);
-	Channels::addChannel(c2);
+const int TICKS_POR_SEGUNDO = 60;
+const int SALTEO_TICKS = 1000 / TICKS_POR_SEGUNDO;
+const int MAX_SALTEO_FRAMES = 5;
 
-	Channels::setActive(1, false, 10);
+int loops;
+float interpolacion;
 
+sf::Int32 proximo_tick = miReloj.getElapsedTime().asMilliseconds();
+////////////////////////////////////////////////////////////
+
+
+sf::Sound mSound;
+
+enum GameState_  { Menu, RunGame, Pause };
+GameState_ GameState = RunGame;
+
+Game::Game() {
 	//Creates the main window
-	window = new sf::RenderWindow(sf::VideoMode(1024, 720), "CatBurglars");
-	window->setVerticalSyncEnabled(true);
-	textures.Initialize();
+	window = new sf::RenderWindow(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "CatBurglars", sf::Style::Close);
+	
+	//window->setFramerateLimit(60);
+	//window->setVerticalSyncEnabled(true);
 
-	//Creates a cat(player)
-	mCat = new Cat(textures.GetTexture(10), 50, 50, 1);
-	//Stores Entities/objects
-	mEntities.push_back(mCat);
+	TextureHandler::Initialize();
+	SoundHandler::Initialize();
 
+	Level *Level0 = new Level("1_1");
+	Level *level1 = new Level("1_2");
+	Level *level2 = new Level("1_3");
+	Level *level3 = new Level("1_4");
+	Level *level4 = new Level("1_5");
+	Level *level5 = new Level("1_6");
+	
 
+	LevelManager::addLevel(Level0);
+	LevelManager::addLevel(level1);
+	LevelManager::addLevel(level2);
+	LevelManager::addLevel(level3);
+	LevelManager::addLevel(level4); 
+	LevelManager::addLevel(level5);
+
+	
+
+	LevelManager::load();
+	LevelManager::addCollectible();
+	LevelManager::save();
+
+	LevelManager::loadLevel(0);
+	
+	moviehandler.Initialize();
 
 }
 
@@ -43,7 +75,7 @@ Game::~Game()
 }
 
 void Game::Run(){
-
+	//moviehandler.PlayMovie(0);
 	while (window->isOpen())
 	{
 		sf::Event event;
@@ -53,48 +85,85 @@ void Game::Run(){
 				window->close();
 		}
 
-		//Test för Channel
-		// Uppdaterar timers för alla kanaler
-		Channels::update();
+		// Update (the events are handled in the actualizar function)
+		loops = 0;
 
-		// Kollar om en kanal är aktiv.
-		if (Channels::isChannelActive(1)) {
+		while (miReloj.getElapsedTime().asMilliseconds() > proximo_tick && loops < MAX_SALTEO_FRAMES) {
 
-			// Gör saker sålänge den är aktiv
-			cout << "active" << endl;
+			Update(interpolacion);
+			
+			
+			proximo_tick += SALTEO_TICKS;
+			++loops;
+
 		}
-		else {
-			cout << "deactive" << endl;
-		}
 
-		Update();
+		
+		interpolacion = static_cast <float> (miReloj.getElapsedTime().asMilliseconds() + SALTEO_TICKS - proximo_tick) / static_cast <float> (SALTEO_TICKS);
+
+		
+
 		Render();
 	}
 }
 
-void Game::Update(){
+void Game::Update(float dt){
+	
 
-	for each (Cat *cat in mEntities)
-	{
-		//cout << "X : " << cat->GetPosition().x << endl;
-		//cout << "Y : " << cat->GetPosition().y << endl << endl;;
-		//Enable keyboard for cat
-		mController.move(cat);
+	switch (GameState){
+		case Menu:
+			break;
+
+
+		case RunGame:
+			LevelManager::update(dt);
+
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::N)){
+				LevelManager::nextLevel();
+			}
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::M)){
+				LevelManager::loadLevel(0);
+			}
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::P)) {
+				LevelManager::nextLevel();
+			}
+			break;
+
+
+		case Pause:
+			break;
+
+
+
 	}
+	
+
+
+
 
 }
 
 void Game::Render()
 {
-	/* Make background green for testing
-	window->clear(sf::Color(0, 200, 0, 255));*/
-
+	//window->setView(view1);
+	
 	window->clear();
-	levelM.render(window);
-	//Render all entities into the window
-	for each(Entity *entity in mEntities)
-	{
-		entity->Render(window);
+	switch (GameState){
+	case Menu:
+		break;
+		// Main Game Case
+	case RunGame:
+		LevelManager::render(window);
+		break;
+	case Pause:
+		moviehandler.getMovie()->update();
+		break;
+
+
 	}
+	
+
+	
+	window->draw(*moviehandler.getMovie());
 	window->display();
 }

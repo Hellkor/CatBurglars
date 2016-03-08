@@ -1,23 +1,31 @@
 #ifndef INCLUDED_LEVELMANAGER
 #define INCLUDED_LEVELMANAGER
-#include <vector>
+
 #include "Level.h"
 class LevelManager{
 
 public:
-	LevelManager();
-	void addLevel(Level level);
-	void nextLevel();
-	void changeLevel(int stage);
-	Level getLevel();
+	static void addLevel(Level *level);
+	
 
-	void clearLevels();
+	static void clearLevels();
 
-	void update();
-	void render(sf::RenderWindow *window);
+	static void loadLevel(int level);
+	static void nextLevel();
+	static void prevLevel();
 
+	static void update(float dt);
+	static void render(sf::RenderWindow *window);
+
+	static void addCollectible();
+	
+	static void load();
+	static void save();
+	
 private:
-	std::vector<Level> mLevels;
-	int mCurrentLevel;
+	static void loadGame();
+	static void saveGame();
+
+	
 };
 #endif
