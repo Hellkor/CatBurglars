@@ -445,22 +445,9 @@ void Level::load(){
 		Channels::addChannel(Channel(i));
 	}
 
-	cout << mFile << endl;
-	if (mFile == string ("1_1")|| mFile == string("1_2")) {
-		soundhandler.startMusic(1);
-	}
-	else if (mFile == string("1_3")) {
-		soundhandler.startMusic(2);
-	}
-	else if (mFile == string("1_4")) {
-		soundhandler.startMusic(3);
-	}
-	else if (mFile == string("1_5")) {
-		soundhandler.startMusic(4);
-	}
-	else if (mFile == string("1_6")) {
-		soundhandler.startMusic(5);
-	}
+	//Starts the music for a level
+	soundhandler.startMusic(mFile);
+
 	generateLevel(mFile);
 	
 	
@@ -665,7 +652,7 @@ void Level::generateLevel(string name){
 			
 		}
 		if (objectID == 8) {
-			mEntities.push_back(new MultiDoor(channel, range, gridvector(xPos, yPos), textures.GetTexture(11),facing));
+			mEntities.push_back(new MultiDoor(channel, range, gridvector(xPos, yPos), textures.GetTexture(11),facing, &soundhandler));
 		}
 		if (objectID == 9) {
 			mEntities.push_back(new Crate(textures.GetTexture(4), gridvector(xPos, yPos), 1, &soundhandler, false));

@@ -1,11 +1,12 @@
 #include "MultiDoor.h"
 #include "Channels.h"
 
-MultiDoor::MultiDoor(int channel, int numberofchannels, gridvector coords, sf::Texture *texture,string face) :
+MultiDoor::MultiDoor(int channel, int numberofchannels, gridvector coords, sf::Texture *texture,string face, SoundHandler *soundhandler) :
 mChannel(channel),
 mCoords(coords),
 mSolid(true),
-mFace(face){
+mFace(face),
+mSoundHandler(soundhandler){
 
 	mPosition.x = mCoords.x * 64;
 	mPosition.y = mCoords.y * 64;
@@ -26,6 +27,8 @@ mFace(face){
 	for (int i = 0; i <= numberofchannels; i++){
 		mChannels.push_back(mChannel + i);
 	}
+
+	mSound.setBuffer(*mSoundHandler->getSound(5));
 }
 
 void MultiDoor::Update(float dt){
@@ -33,9 +36,17 @@ void MultiDoor::Update(float dt){
 
 	//ifall någon kanal är inaktiv så är dörren stängd
 	if (checkChannels()){
+		if (!hasPlayed && mSound.getStatus() != sf::Sound::Playing) {
+			mSound.setVolume(mSoundHandler->distanceSound(this));
+			mSound.play();
+			hasPlayed = true;
+		}
 		mSolid = false;
 	}
-	else mSolid = true;
+	else {
+		hasPlayed = false;
+		mSolid = true;
+	}
 }
 
 bool MultiDoor::checkChannels(){

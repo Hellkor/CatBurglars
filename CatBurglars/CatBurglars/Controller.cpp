@@ -17,6 +17,14 @@ void Controller::assignController(int player, Cat *cat){
 		mCat = cat;
 	}
 }
+
+float joyX = sf::Joystick::getAxisPosition(0, sf::Joystick::X);
+float joyY = sf::Joystick::getAxisPosition(0, sf::Joystick::Y);
+float joyX1 = sf::Joystick::getAxisPosition(1, sf::Joystick::X);
+float joyY1 = sf::Joystick::getAxisPosition(1, sf::Joystick::Y);
+
+
+
 void Controller::assignKeys() {
 	switch (C_TYPE)
 	{
@@ -27,8 +35,10 @@ void Controller::assignKeys() {
 		InteractionKey = sf::Keyboard::RControl;
 		break;
 	case GamepadOne:
+
 		break;
 	case GamepadTwo:
+
 		break;
 	default:
 		break;
@@ -64,8 +74,8 @@ void Controller::nextDialog(DialogManager *dialogmanager) {
 	}
 }
 //Change position of cat with keyboard
-void Controller::move(Cat *cat, TileLayer *tileLayer, std::vector<Entity*> *Entities){
-	switch (C_TYPE){
+void Controller::move(Cat *cat, TileLayer *tileLayer, std::vector<Entity*> *Entities) {
+	switch (C_TYPE) {
 		//Keyboard One (WASD)
 	case KeyboardOne:
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::E))
@@ -92,7 +102,7 @@ void Controller::move(Cat *cat, TileLayer *tileLayer, std::vector<Entity*> *Enti
 		{
 			cat->mInteracting = true;
 		}
-		else{
+		else {
 			cat->mInteracting = false;
 		}
 		break;
@@ -122,7 +132,69 @@ void Controller::move(Cat *cat, TileLayer *tileLayer, std::vector<Entity*> *Enti
 		{
 			cat->mInteracting = true;
 		}
-		else{
+		else {
+			cat->mInteracting = false;
+		}
+		break;
+
+	case GamepadOne:
+		if (sf::Joystick::isButtonPressed(0, 1))
+		{				//kolla knappN
+			cat->useAbility(tileLayer, Entities);
+		}
+		if (joyY > 0)
+		{
+			cat->moveBackWards(tileLayer, Entities);
+		}
+		if (joyY < 0)
+		{
+			cat->moveForward(tileLayer, Entities);
+		}
+		if (joyX < 0)
+		{
+			cat->moveLeft(tileLayer, Entities);
+		}
+		if (joyX > 0)
+		{
+			cat->moveRight(tileLayer, Entities);
+		}
+		if (sf::Joystick::isButtonPressed(0, 2))
+		{
+			cat->mInteracting = true;
+		}
+		else
+		{
+			cat->mInteracting = false;
+		}
+		break;
+
+	case GamepadTwo:
+		if (sf::Joystick::isButtonPressed(1, 1))
+		{				//kolla knappN
+			cat->useAbility(tileLayer, Entities);
+		}
+		if (joyY1 > 0)
+		{
+			cat->moveBackWards(tileLayer, Entities);
+		}
+		if (joyY1 < 0)
+		{
+			cat->moveForward(tileLayer, Entities);
+		}
+		if (joyX1 < 0)
+		{
+			cat->moveLeft(tileLayer, Entities);
+		}
+		if (joyX1 > 0)
+		{
+			cat->moveRight(tileLayer, Entities);
+		}
+		if (sf::Joystick::isButtonPressed(1, 2))
+		{
+			cat->mInteracting = true;
+		}
+		else
+		{
 			cat->mInteracting = false;
 		}
 		break;

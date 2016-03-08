@@ -1,11 +1,12 @@
-#ifndef INCLUDED_CONTROLLER
-#define INCLUDED_CONTROLLER
+#pragma once
 
 #include "Cat.h"
 #include "DialogManager.h"
+
 typedef vector<Tile*> TileRow;
 typedef vector<TileRow> TileLayer;
 enum CONTROLLER_TYPE { KeyboardOne, KeyboardTwo, GamepadOne, GamepadTwo };
+
 class Controller{
 
 public:
@@ -29,4 +30,3 @@ private:
 
 };
 
-#endif

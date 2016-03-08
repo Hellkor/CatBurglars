@@ -13,7 +13,7 @@ public:
 
 	static void Initialize();
 	void PlaySound(int ID);
-	void startMusic(int ID);
+	void startMusic(string ID);
 	void stopMusic();
 	void setMusicVolume(int volume);
 	void setSoundVolume(int volume);

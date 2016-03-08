@@ -316,7 +316,7 @@ void Guard::Update(float dt){
 		}
 		else {
 			mMoving = false;
-
+			mWalkSound.stop();
 			// säkrar att den håller rätt position
 			if (direction == 4) {
 				mCoords.y--;
