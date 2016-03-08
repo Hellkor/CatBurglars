@@ -15,20 +15,20 @@ SoundHandler::~SoundHandler()
 
 void SoundHandler::Initialize()
 {
-	mVaktGårB.loadFromFile("Resources/Sounds/Fotsteg.ogg");
-	//mVaktGår.setBuffer(mVaktGårB);
+	mVaktGårB.loadFromFile("Resources/Sounds/Fotsteg.wav");
+
 
 	mShadowDashB.loadFromFile("Resources/Sounds/dash.wav");
-	//mShadowDash.setBuffer(mShadowDashB);
+
 
 	mSnowHaxB.loadFromFile("Resources/Sounds/Tangent.ogg");
-	//mSnowHax.setBuffer(mSnowHaxB);
+
 
 	mCratePushB.loadFromFile("Resources/Sounds/crate.wav");
-	//mCratePush.setBuffer(mCratePushB);
 
-	mDoorOpenB.loadFromFile("Resources/Sounds/Dörr.ogg");
-	//mDoorOpen.setBuffer(mDoorOpenB);
+
+	mDoorOpenB.loadFromFile("Resources/Sounds/door.wav");
+
 }
 
 void SoundHandler::PlaySound(int ID)
@@ -36,28 +36,28 @@ void SoundHandler::PlaySound(int ID)
 
 }
 
-void SoundHandler::startMusic(int ID){
-	if (ID == 1){
+void SoundHandler::startMusic(string ID){
+	if (ID == "1_1"||"1_2"){
 		mMusic.openFromFile("Resources/Music/level_1_1-2.ogg");
 		mMusic.setLoop(true);
 		mMusic.play();
 	}
-	if (ID == 2) {
+	if (ID == "1_3") {
 		mMusic.openFromFile("Resources/Music/level_1_3.ogg");
 		mMusic.setLoop(true);
 		mMusic.play();
 	}
-	if (ID == 3) {
+	if (ID == "1_4") {
 		mMusic.openFromFile("Resources/Music/level_1_4.ogg");
 		mMusic.setLoop(true);
 		mMusic.play();
 	}
-	if (ID == 4) {
+	if (ID == "1_5") {
 		mMusic.openFromFile("Resources/Music/level_1_5.ogg");
 		mMusic.setLoop(true);
 		mMusic.play();
 	}
-	if (ID == 5) {
+	if (ID == "1_6") {
 		mMusic.openFromFile("Resources/Music/level_1_6.ogg");
 		mMusic.setLoop(true);
 		mMusic.play();

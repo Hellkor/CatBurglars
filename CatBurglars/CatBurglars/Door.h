@@ -19,5 +19,7 @@ private:
 	gridvector mCoords;
 	sf::Sprite mSprite;
 	SoundHandler* mSoundHandler;
+	sf::Sound mSound;
+	bool hasPlayed = false;
 };
 //måste ha två sprites, båda innehåller cameran, den andra innehåller en genomskinlig zon som är däri man blir hittad, den andra innehåller bara cameran och är fortfarande "på"
