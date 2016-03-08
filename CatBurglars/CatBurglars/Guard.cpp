@@ -229,7 +229,7 @@ void Guard::loadAI(string filename){
 
 	while (!inputFile.eof()){
 		inputFile >> input;
-		
+		//////////////////////////////////////////////////////////////FORTSÄTT HÄR//////////////////////////////////////////////////////////////
 		string tempinput;
 		for (std::string::size_type i = 0; i < input.size(); i++) {
 			char *c = &input[i];
@@ -241,9 +241,11 @@ void Guard::loadAI(string filename){
 	
 
 }
-void Guard::AImovement(TileLayer *tiles, std::vector<Entity*> *entities){
+void Guard::AImovement(TileLayer *tiles, std::vector<Entity*> *entities, Pathfinder *pathfinder){
 
-	
+	mPathfinder = pathfinder;
+	PathNode *startNode, *targetNode;
+	vector<PathNode*> path = pathfinder->FindPath(startNode, targetNode);
 
 	if (!mMoving && mClock.getElapsedTime() >= sf::seconds(1) && mQueuePos < mCommandQueue.size()){
 
@@ -398,6 +400,7 @@ void Guard::interaction(Usable *usable) {
 	}
 
 }
+
 bool Guard::getIntersection(GameObject *obj) {
 	for each (gridvector *v in mVision) {
 		if (obj->getCoords() == v) {

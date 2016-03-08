@@ -7,6 +7,7 @@
 #include "AnimationHandler.h"
 #include "Soundhandler.h"
 #include "Button.h"
+#include "Pathfinder.h"
 class Guard : public GameObject
 {
 	typedef vector<Tile*> TileRow;
@@ -20,7 +21,7 @@ public:
 	virtual sf::Vector2i GetPosition();
 	virtual gridvector getCoords();
 
-	void AImovement(TileLayer *tiles, std::vector<Entity*> *entities);
+	void AImovement(TileLayer *tiles, std::vector<Entity*> *entities, Pathfinder *pathfinder);
 
 	bool mInteracting = false;
 
@@ -77,6 +78,8 @@ private:
 	SoundHandler* mSoundHandler;
 
 	sf::Sound mWalkSound;
+
+	Pathfinder *mPathfinder;
 };
 
 #endif
