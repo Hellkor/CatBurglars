@@ -9,8 +9,12 @@ static sf::RenderWindow *window;
 static TextureHandler textures;
 MovieHandler moviehandler;
 
+sf::View GuiView;
+
 int WINDOW_WIDTH = 1280;
 int WINDOW_HEIGHT = 720;
+
+
 
 // TIME
 // Timestep (Constant Game Speed independent of Variable FPS)
@@ -25,21 +29,37 @@ float interpolacion;
 
 sf::Int32 proximo_tick = miReloj.getElapsedTime().asMilliseconds();
 ////////////////////////////////////////////////////////////
-
-
 sf::Sound mSound;
 
-enum GameState_  { Menu, RunGame, Pause };
-GameState_ GameState = RunGame;
+
+sf::Texture SPLASH_SCREEN;
+sf::Sprite SPLASH_SPRITE;
+sf::Color SPLASH_COLOR;
+
+bool SPLASH_SCREEN_PLAYED = false;
+bool SPLASH_FADE_IN = false;
+bool SPLASH_FADE_OUT = false;
+
+sf::Clock fadeClock;
+sf::Time fadeTime = sf::milliseconds(10);
+float SPLASH_ALPHA = 0;
+
+enum GameState_  { Menu, RunGame, Pause , Splash };
+GameState_ GameState = Splash;
 
 Game::Game() {
 	//Creates the main window
 
 
 	window = new sf::RenderWindow(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "CatBurglars", sf::Style::Close);
-	
+	GuiView.setSize(sf::Vector2f(WINDOW_WIDTH, WINDOW_HEIGHT));
 	//window->setFramerateLimit(60);
 	//window->setVerticalSyncEnabled(true);
+
+	SPLASH_SCREEN.loadFromFile("Resources/splash.png");
+	SPLASH_SPRITE.setTexture(SPLASH_SCREEN);
+	SPLASH_SPRITE.setOrigin(sf::Vector2f(SPLASH_SCREEN.getSize().x/2, SPLASH_SCREEN.getSize().y/2));
+	SPLASH_SPRITE.setPosition(GuiView.getCenter());
 
 	TextureHandler::Initialize();
 	SoundHandler::Initialize();
@@ -68,6 +88,8 @@ Game::Game() {
 	LevelManager::loadLevel(0);
 	
 	moviehandler.Initialize();
+
+	
 
 }
 
@@ -113,7 +135,57 @@ void Game::Update(float dt){
 	
 
 	switch (GameState){
+		case Splash:
+			
+
+			if (!SPLASH_SCREEN_PLAYED && !SPLASH_FADE_IN && !SPLASH_FADE_OUT) {
+				SPLASH_FADE_IN = true;
+				SPLASH_SCREEN_PLAYED = false;
+				fadeClock.restart();
+			}
+			if (SPLASH_FADE_IN) {
+				if (SPLASH_ALPHA < 255) {
+					if (fadeClock.getElapsedTime().asMilliseconds() >= fadeTime.asMilliseconds()) {
+						if (SPLASH_ALPHA + 255 / 100 <= 255) {
+							SPLASH_ALPHA += 255 / 100;
+						}
+						else {
+							SPLASH_ALPHA = 255;
+						}
+						fadeClock.restart();
+					}
+				}
+				else {
+					SPLASH_FADE_IN = false;
+					SPLASH_FADE_OUT = true;
+					fadeClock.restart();
+				}
+			}
+			if (SPLASH_FADE_OUT) {
+				if (SPLASH_ALPHA > 0) {
+					if (fadeClock.getElapsedTime().asMilliseconds() >= fadeTime.asMilliseconds()) {
+						if (SPLASH_ALPHA - 255 / 100 >= 0) {
+							SPLASH_ALPHA -= 255 / 100;
+						}
+						else {
+							SPLASH_ALPHA = 0;
+						}
+						fadeClock.restart();
+					}
+				}
+				else {
+					SPLASH_FADE_OUT = false;
+					GameState = RunGame;
+				}
+			}
+			
+			SPLASH_COLOR = sf::Color(255, 255, 255, SPLASH_ALPHA);
+			SPLASH_SPRITE.setColor(SPLASH_COLOR);
+
+			break;
 		case Menu:
+			
+
 			break;
 
 
@@ -147,14 +219,21 @@ void Game::Update(float dt){
 
 void Game::Render()
 {
-	//window->setView(view1);
 	
-	window->clear();
+	//window->clear();
 	switch (GameState){
+	case Splash:
+		window->clear();
+		window->setView(GuiView);
+		window->draw(SPLASH_SPRITE);
+		
+		break;
 	case Menu:
+		window->setView(GuiView);
 		break;
 		// Main Game Case
 	case RunGame:
+		window->clear();
 		LevelManager::render(window);
 		break;
 	case Pause:
