@@ -1,5 +1,5 @@
 #pragma once
-
+#include <SFML/Graphics.hpp>
 #include "Cat.h"
 #include "DialogManager.h"
 
@@ -16,17 +16,22 @@ public:
 	void move(Cat *cat, TileLayer *TileLayer, std::vector<Entity*> *Entities);
 
 	void nextDialog(DialogManager *dialogManager);
+
+
 private:
+
 	Cat *mCat;
 	
 	CONTROLLER_TYPE C_TYPE;
 
 	sf::Clock dialogClock;
-	sf::Time dialogCooldown = sf::seconds(1);
+	sf::Time dialogCooldown = sf::seconds(0.5);
 
 	void assignKeys();
+	void isConnect();
 
 	sf::Keyboard::Key InteractionKey;
+	
 
 };
 
