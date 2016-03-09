@@ -368,7 +368,7 @@ void DialogManager::setPortrait(Character character, Mood mood) {
 void DialogManager::setPortrait2(Character character, Mood mood) {
 	switch (character) {
 	case SOCKS:
-		mPortrait.setTexture(*mTextureHandler->GetTexture(25));
+		mPortrait2.setTexture(*mTextureHandler->GetTexture(25));
 		//mPortrait.setScale(sf::Vector2f(-1.0f, 1.0f));
 		switch (mood) {
 		case CRYING:
@@ -379,7 +379,7 @@ void DialogManager::setPortrait2(Character character, Mood mood) {
 	case SCOOTER:
 		break;
 	case SNOW:
-		mPortrait.setTexture(*mTextureHandler->GetTexture(27));
+		mPortrait2.setTexture(*mTextureHandler->GetTexture(27));
 		//mPortrait.setScale(sf::Vector2f(-4.0f, 4.0f));
 		switch (mood) {
 		case WORRIED:
