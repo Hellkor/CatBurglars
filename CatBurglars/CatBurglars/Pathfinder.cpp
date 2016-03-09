@@ -132,17 +132,17 @@ vector<PathNode*> Pathfinder::FindPath(gridvector start, gridvector target)
 			n->SetPathValues(0, 0);
 		}
 		path = FindBlockedPath(start, target, false);
-		// SKA ANVÄNDA ALLA BLOCKAGE PÅ PATHEN OCH DE TVÅ POSITIONERNA FÖRE OCH EFTER BLOCKET.
-		bool finished = false;
-		while (!finished)
-		{
-			for (vector<PathNode*>::size_type i = 0; i < path.size(); i++)
-			{
-				if (!path[i]->GetPassable())
-				{
-					if (i < path.size() - 1)
-						vector<PathNode*> miniPath = FindBlockedPath(path[i - 1]->GetGridPosition(), path[i + 1]->GetGridPosition(), true);
+		vector<PathNode*> tempPath;
 
+		for (vector<PathNode*>::size_type i = path.size() - 1; i >= 0; i--)
+		{
+			if (!path[i]->GetPassable() && i > 0)
+			{
+				tempPath = FindBlockedPath(start, gridvector(path[i - 1]->GetGridPosition()), true);
+				if (tempPath.size() > 0)
+				{
+					path = tempPath;
+					break;
 				}
 			}
 		}
