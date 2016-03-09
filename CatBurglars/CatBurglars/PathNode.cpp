@@ -1,5 +1,7 @@
 #include "PathNode.h"
 
+PathNode::PathNode(){}
+
 PathNode::PathNode(gridvector position, bool basePassable)
 	: mGridVector(position), mBasePassable(basePassable)
 {
@@ -11,11 +13,6 @@ PathNode::~PathNode()
 
 }
 
-gridvector PathNode::GetGridVector()
-{
-	return mGridVector;
-}
-
 bool PathNode::GetPassable()
 {
 	if (mBasePassable)
@@ -23,12 +20,12 @@ bool PathNode::GetPassable()
 	else return false;
 }
 
-void PathNode::SetPassable(bool passable) { mPassable = passable; }
-
-void PathNode::ClearNeighbors()
+bool PathNode::GetBasePassable()
 {
-	mNeighborsVector.clear();
+	return mBasePassable;
 }
+
+void PathNode::SetPassable(bool passable) { mPassable = passable; }
 
 void PathNode::SetNeighbor(PathNode *node)
 {

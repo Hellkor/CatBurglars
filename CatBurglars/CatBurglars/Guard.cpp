@@ -17,6 +17,10 @@ mDirectory(directory){
 	mSprite.setTextureRect(sf::IntRect(1*64, 3*128, 64, 128));
 	//Starting position
 	mPosition = sf::Vector2i(mCoords.x * 64, mCoords.y * 64);
+	//Starting Command
+	mCurrentCommand.xPos = mCoords.x;
+	mCurrentCommand.yPos = mCoords.y;
+	mCurrentCommand.direction = "E";
 
 	loadAI(mAIfile);
 	
@@ -227,16 +231,30 @@ void Guard::loadAI(string filename){
 	ifstream inputFile("Maps/" + mDirectory + "/AI/" + filename + ".txt");
 	string input;
 
-	while (!inputFile.eof()){
+	while (!inputFile.eof())
+	{
+		Command command;
 		inputFile >> input;
-		//////////////////////////////////////////////////////////////FORTSÄTT HÄR//////////////////////////////////////////////////////////////
-		string tempinput;
-		for (std::string::size_type i = 0; i < input.size(); i++) {
+		for (std::string::size_type i = 0; i < input.size(); i++)
+		{
 			char *c = &input[i];
 			*c = toupper(*c);
 		}
+		if (input != "WAIT")
+		{
+			command.xPos = stoi(input);
+			inputFile >> input;
+			command.yPos = stoi(input);
+			inputFile >> input;
+			for (std::string::size_type i = 0; i < input.size(); i++)
+			{
+				char *c = &input[i];
+				*c = toupper(*c);
+			}
+		}
+		command.direction = input;
 		
-		mCommandQueue.push_back(input);
+		mCommandQueue.push_back(command);
 	}
 	
 
@@ -244,52 +262,48 @@ void Guard::loadAI(string filename){
 void Guard::AImovement(TileLayer *tiles, std::vector<Entity*> *entities, Pathfinder *pathfinder){
 
 	mPathfinder = pathfinder;
-	PathNode *startNode, *targetNode;
-	vector<PathNode*> path = pathfinder->FindPath(startNode, targetNode);
 
-	if (!mMoving && mClock.getElapsedTime() >= sf::seconds(1) && mQueuePos < mCommandQueue.size()){
+	if (!mMoving && mClock.getElapsedTime() >= sf::seconds(1) && mQueuePos < mCommandQueue.size())
+	{
+		if (mCommandQueue[mQueuePos].direction != "WAIT")
+			if (mCoords == gridvector(mCommandQueue[mQueuePos].xPos, mCommandQueue[mQueuePos].yPos) && mFace == mCommandQueue[mQueuePos].direction)
+			{
+				mQueuePos += 1;
+				if (mQueuePos >= mCommandQueue.size())
+					mQueuePos = 0;
+			}
 
+		if (mCommandQueue[mQueuePos].direction != "WAIT")
+		{
+			gridvector startNode, targetNode;
+			startNode = mCoords;
+			targetNode = gridvector(mCommandQueue[mQueuePos].xPos, mCommandQueue[mQueuePos].yPos);
+			vector<PathNode*> path = pathfinder->FindPath(startNode, targetNode);
 
-		if (mCommandQueue[mQueuePos] == "N" ){
-			moveForward(tiles, entities);
+			if (path.size() > 1)
+			{
+				if (path[1]->GetGridPosition().x < mCoords.x)
+					moveLeft(tiles, entities);
+				else if (path[1]->GetGridPosition().x > mCoords.x)
+					moveRight(tiles, entities);
+				else if (path[1]->GetGridPosition().y < mCoords.y)
+					moveForward(tiles, entities);
+				else if (path[1]->GetGridPosition().y > mCoords.y)
+					moveBackWards(tiles, entities);
+			}
+			else
+			{
+				setVision(mCommandQueue[mQueuePos].direction, tiles, entities);
+			}
 		}
-		if (mCommandQueue[mQueuePos] == "S" ){
-			moveBackWards(tiles, entities);
-		}
-		if (mCommandQueue[mQueuePos] == "W" ){
-			moveLeft(tiles, entities);
-		}
-		if (mCommandQueue[mQueuePos] == "E" ){
-			moveRight(tiles, entities);
-		}
-		if (mCommandQueue[mQueuePos] == "TN") {
-			setVision("N", tiles, entities);
-		}
-		if (mCommandQueue[mQueuePos] == "TS") {
-			setVision("S", tiles, entities);
-		}
-		if (mCommandQueue[mQueuePos] == "TW") {
-			setVision("W", tiles, entities);
-		}
-		if (mCommandQueue[mQueuePos] == "TE") {
-			setVision("E", tiles, entities);
-		}
-		if (mCommandQueue[mQueuePos] == "WAIT"){
+		else
+		{
 			mClock.restart();
-		}
-
-		
-		
-		if (mQueuePos <= mCommandQueue.size()){
 			mQueuePos += 1;
-		}
-		if (mQueuePos > mCommandQueue.size() - 1){ 
-			mQueuePos = 0;
+			if (mQueuePos >= mCommandQueue.size())
+				mQueuePos = 0;
 		}
 	}
-
-
-
 }
 void Guard::Update(float dt){
 	UpdateConePos();

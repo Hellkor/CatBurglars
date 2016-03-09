@@ -1,6 +1,10 @@
 #include "Pathfinder.h"
 
-Pathfinder::Pathfinder(vector<vector<Tile*>>* tileLayer)
+Pathfinder::Pathfinder()
+{
+}
+
+Pathfinder::Pathfinder(vector<vector<Tile*>> *tileLayer)
 {
 	for (vector<vector<Tile*>>::size_type y = 0; y < tileLayer->size(); y++)
 	{
@@ -8,10 +12,27 @@ Pathfinder::Pathfinder(vector<vector<Tile*>>* tileLayer)
 		for (vector<Tile*>::size_type x = 0; x < tileLayer->at(y).size(); x++)
 		{
 			PathNode *node;
-			node = new PathNode(tileLayer->at(y)[x]->getCoords(), tileLayer->at(y)[x]->GetID() != 0);
+			bool basePassable = true;
+			if (tileLayer->at(y)[x]->GetID() != 0)
+				basePassable = false;
+			node = new PathNode(gridvector(x, y), basePassable);
 			row.push_back(node);
 		}
 		mNodeMap.push_back(row);
+	}
+	for (vector<vector<Tile*>>::size_type y = 0; y < mNodeMap.size(); y++)
+	{
+		for (TileRow::size_type x = 0; x < mNodeMap[y].size(); x++)
+		{
+			if (y > 0)
+				mNodeMap[y][x]->SetNeighbor(mNodeMap[y - 1][x]);
+			if (x > 0)
+				mNodeMap[y][x]->SetNeighbor(mNodeMap[y][x - 1]);
+			if (x < mNodeMap[y].size() - 1)
+				mNodeMap[y][x]->SetNeighbor(mNodeMap[y][x + 1]);
+			if (y < mNodeMap.size() - 1)
+				mNodeMap[y][x]->SetNeighbor(mNodeMap[y + 1][x]);
+		}
 	}
 }
 
@@ -29,20 +50,23 @@ void Pathfinder::Update(vector<Entity*> *entities)
 	{
 		if (GameObject *o = dynamic_cast<GameObject*>(e))
 		{
-			if (o != dynamic_cast<Cat*>(o))
-			{
-				gridvector pos = o->getCoords();
-				mNodeMap[pos.y][pos.x]->SetPassable(!o->isSolid);
-			}
+			gridvector pos = o->getCoords();
+			if (GameObject *c = dynamic_cast<Cat*>(o))
+				mNodeMap[pos.y][pos.x]->SetPassable(true);
+			else
+				mNodeMap[pos.y][pos.x]->SetPassable(!o->isSolid());
 		}
 	}
 }
 
-vector<PathNode*> Pathfinder::FindPath(PathNode * startNode, PathNode * targetNode)
+vector<PathNode*> Pathfinder::FindPath(gridvector start, gridvector target)
 {
 	vector<PathNode*>
 		open,			//Nodes whose F cost has been calculated.
 		closed;			//Nodes that have been evaluated.
+	PathNode *startNode, *targetNode;
+	startNode = mNodeMap[start.y][start.x];
+	targetNode = mNodeMap[target.y][target.x];
 	startNode->SetPathValues(0, GetDistanceCost(startNode, targetNode));
 	open.push_back(startNode);
 	bool loop = true, failed = false;
@@ -82,7 +106,7 @@ vector<PathNode*> Pathfinder::FindPath(PathNode * startNode, PathNode * targetNo
 			else if (newPathLength < CheckPathLength(neighbor, 0) || find(open.begin(), open.end(), neighbor) == open.end())
 			{
 				neighbor->SetPathValues(newPathLength, GetDistanceCost(neighbor, targetNode));
-				//if newPathLength == CheckPathLength(neighbor, 0) Put a random chance on this to create more random Paths.
+				//if (newPathLength == CheckPathLength(neighbor, 0)) Put a random chance on this to create more random Paths.
 				neighbor->SetPathParent(current);
 
 				if (find(open.begin(), open.end(), neighbor) == open.end())
@@ -95,9 +119,135 @@ vector<PathNode*> Pathfinder::FindPath(PathNode * startNode, PathNode * targetNo
 
 	vector<PathNode*> path;
 	if (failed)
+	{
 		cout << "No Path!" << endl;
+		for each (PathNode* n in open)
+		{
+			n->SetPathParent(nullptr);
+			n->SetPathValues(0, 0);
+		}
+		for each (PathNode* n in closed)
+		{
+			n->SetPathParent(nullptr);
+			n->SetPathValues(0, 0);
+		}
+		path = FindBlockedPath(start, target, false);
+		// SKA ANVÄNDA ALLA BLOCKAGE PÅ PATHEN OCH DE TVÅ POSITIONERNA FÖRE OCH EFTER BLOCKET.
+		bool finished = false;
+		while (!finished)
+		{
+			for (vector<PathNode*>::size_type i = 0; i < path.size(); i++)
+			{
+				if (!path[i]->GetPassable())
+				{
+					if (i < path.size() - 1)
+						vector<PathNode*> miniPath = FindBlockedPath(path[i - 1]->GetGridPosition(), path[i + 1]->GetGridPosition(), true);
+
+				}
+			}
+		}
+		return path;
+	}
+	path = current->GetPath(path);
+	path.push_back(current);
+
+	for each (PathNode* n in open)
+	{
+		n->SetPathParent(nullptr);
+		n->SetPathValues(0, 0);
+	}
+	for each (PathNode* n in closed)
+	{
+		n->SetPathParent(nullptr);
+		n->SetPathValues(0, 0);
+	}
+
+	return path;
+}
+
+vector<PathNode*> Pathfinder::FindBlockedPath(gridvector start, gridvector target, bool part)
+{
+	vector<PathNode*>
+		open,			//Nodes whose F cost has been calculated.
+		closed;			//Nodes that have been evaluated.
+	PathNode *startNode, *targetNode;
+	startNode = mNodeMap[start.y][start.x];
+	targetNode = mNodeMap[target.y][target.x];
+	startNode->SetPathValues(0, GetDistanceCost(startNode, targetNode));
+	open.push_back(startNode);
+	bool loop = true, failed = false;
+
+	PathNode *current = startNode;
+	while (loop && !failed)
+	{
+		if (open.size() == 0)
+		{
+			failed = true;
+			break;
+		}
+		current = open[0];
+		for (vector<PathNode*>::size_type i = 0; i < open.size(); i++)
+		{
+			if (open[i]->GetPathValues().fCost < current->GetPathValues().fCost)
+				current = open[i];
+		}
+
+		open.erase(find(open.begin(), open.end(), current));
+
+		closed.push_back(current);
+
+		if (current == targetNode)
+		{
+			loop = false;
+			break;
+		}
+
+		for each (PathNode* neighbor in current->GetNeighbors())
+		{
+			int newPathLength = CheckPathLength(current, 0);
+			newPathLength += 10;
+			if (!part)
+			{
+				if (!neighbor->GetBasePassable() || find(closed.begin(), closed.end(), neighbor) != closed.end())
+					; //Skip
+				else if (newPathLength < CheckPathLength(neighbor, 0) || find(open.begin(), open.end(), neighbor) == open.end())
+				{
+					neighbor->SetPathValues(newPathLength, GetDistanceCost(neighbor, targetNode));
+					//if (newPathLength == CheckPathLength(neighbor, 0)) Put a random chance on this to create more random Paths.
+					neighbor->SetPathParent(current);
+
+					if (find(open.begin(), open.end(), neighbor) == open.end())
+					{
+						open.push_back(neighbor);
+					}
+				}
+			}
+			else
+			{
+				if (!neighbor->GetPassable() || find(closed.begin(), closed.end(), neighbor) != closed.end())
+					; //Skip
+				else if (newPathLength < CheckPathLength(neighbor, 0) || find(open.begin(), open.end(), neighbor) == open.end())
+				{
+					neighbor->SetPathValues(newPathLength, GetDistanceCost(neighbor, targetNode));
+					//if (newPathLength == CheckPathLength(neighbor, 0)) Put a random chance on this to create more random Paths.
+					neighbor->SetPathParent(current);
+
+					if (find(open.begin(), open.end(), neighbor) == open.end())
+					{
+						open.push_back(neighbor);
+					}
+				}
+			}
+		}
+	}
+
+	vector<PathNode*> path;
 	if (failed)
 	{
+		if (!part)
+			cout << "No Possible Path!" << endl;
+		else
+			cout << "No Part Path!" << endl;
 		for each (PathNode* n in open)
 		{
 			n->SetPathParent(nullptr);
@@ -111,7 +261,7 @@ vector<PathNode*> Pathfinder::FindPath(PathNode * startNode, PathNode * targetNo
 		return path;
 	}
 	path = current->GetPath(path);
-	cout << path.size();
+	path.push_back(current);
 
 	for each (PathNode* n in open)
 	{
@@ -123,7 +273,6 @@ vector<PathNode*> Pathfinder::FindPath(PathNode * startNode, PathNode * targetNo
 		n->SetPathParent(nullptr);
 		n->SetPathValues(0, 0);
 	}
-
 	return path;
 }
 

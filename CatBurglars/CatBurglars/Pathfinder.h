@@ -14,10 +14,12 @@ typedef vector<NodeRow> NodeMap;
 class Pathfinder
 {
 public:
+	Pathfinder();
 	Pathfinder(vector<vector<Tile*>> *tileLayer);
 	~Pathfinder();
 	void Update(vector<Entity*> *entities);
-	vector<PathNode*> FindPath(PathNode *startNode, PathNode *targetNode);
+	vector<PathNode*> FindPath(gridvector start, gridvector target);
+	vector<PathNode*> FindBlockedPath(gridvector start, gridvector target, bool part);
 	int GetDistanceCost(PathNode *tile1, PathNode *tile2);
 	int CheckPathLength(PathNode *tile, int oldLength);
 	void UpdateEntities(vector<Entity*> *entities);

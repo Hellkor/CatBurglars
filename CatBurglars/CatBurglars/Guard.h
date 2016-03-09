@@ -8,6 +8,14 @@
 #include "Soundhandler.h"
 #include "Button.h"
 #include "Pathfinder.h"
+
+struct Command
+{
+	int xPos;
+	int yPos;
+	string direction;
+};
+
 class Guard : public GameObject
 {
 	typedef vector<Tile*> TileRow;
@@ -67,7 +75,8 @@ private:
 	string mDirectory;
 
 	void loadAI(string filename);
-	std::vector<string> mCommandQueue;
+	Command mCurrentCommand;
+	std::vector<Command> mCommandQueue;
 
 	void moveForward(TileLayer *tileLayer, std::vector<Entity*> *Entities);
 	void moveBackWards(TileLayer *tileLayer, std::vector<Entity*> *Entities);

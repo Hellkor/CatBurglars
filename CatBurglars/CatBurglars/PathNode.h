@@ -16,12 +16,12 @@ struct PathValues
 class PathNode
 {
 public:
+	PathNode();
 	PathNode(gridvector position, bool basePassable);
 	~PathNode();
-	gridvector GetGridVector();
 	bool GetPassable();
+	bool GetBasePassable();
 	void SetPassable(bool passable);
-	void ClearNeighbors();
 	void SetNeighbor(PathNode *node);
 	void SetPathValues(int gCost, int hCost);
 	void SetPathParent(PathNode *parent);
