@@ -63,6 +63,7 @@ void Cat::Update(float dt){
 	}
 
 	if (mMoving){
+		mButtonPress = false;
 		if (mDashing) {
 			if (!(mDashSound.getStatus() == sf::Sound::Playing)) {
 				mDashSound.play();
@@ -74,11 +75,11 @@ void Cat::Update(float dt){
 				mAnimationhandler.animation(4, 5, sf::milliseconds(250));
 			}
 			else if (mPushing) {
-				//mAnimationhandler.animation(12, 5, sf::milliseconds(100));
+				mAnimationhandler.animation(12, 5, sf::milliseconds(100));
 				
 			}
 			else
-				mAnimationhandler.animation(1, 5, sf::milliseconds(50));
+				mAnimationhandler.animation(1, 5, sf::milliseconds(100));
 		}
 		else if (direction == 3 && mPosition.y != newPos.y) {
 			mPosition.y += (1 * mSpeed);
@@ -89,7 +90,7 @@ void Cat::Update(float dt){
 				mAnimationhandler.animation(13, 5, sf::milliseconds(100));
 			}
 			else
-				mAnimationhandler.animation(0, 5, sf::milliseconds(50));
+				mAnimationhandler.animation(0, 5, sf::milliseconds(100));
 		}
 		else if (direction == 2 && mPosition.x != newPos.x) {
 			mPosition.x -= (1 * mSpeed);
@@ -100,7 +101,7 @@ void Cat::Update(float dt){
 				mAnimationhandler.animation(14, 5, sf::milliseconds(100));
 			}
 			else
-				mAnimationhandler.animation(3, 5, sf::milliseconds(50));
+				mAnimationhandler.animation(3, 5, sf::milliseconds(100));
 			
 		}
 		else if (direction == 1 && mPosition.x != newPos.x) {
@@ -112,7 +113,7 @@ void Cat::Update(float dt){
 				mAnimationhandler.animation(15, 5, sf::milliseconds(100));
 			}
 			else
-				mAnimationhandler.animation(2, 5, sf::milliseconds(50));
+				mAnimationhandler.animation(2, 5, sf::milliseconds(100));
 		}
 		else {
 			mMoving = false;
@@ -163,16 +164,32 @@ void Cat::Update(float dt){
 	else if (canMove) // TEMP , SKA ÄNDRAS MED IDLE ANIMATION
 	{
 		if (direction == 4) {
-			//mAnimationhandler.setFrame(1, 4);
+			if (mButtonPress) {
+				mAnimationhandler.setFrame(16, 1);
+			}
+			else
+			mAnimationhandler.animation(8, 5, sf::milliseconds(100));
 		}
 		if (direction == 3) {
-			//mAnimationhandler.setFrame(0, 0);
+			if (mButtonPress) {
+				mAnimationhandler.setFrame(16, 0);
+			}
+			else
+			mAnimationhandler.animation(9, 5, sf::milliseconds(100));
 		}
 		if (direction == 2) {
-			//mAnimationhandler.setFrame(3, 0);
+			if (mButtonPress) {
+				mAnimationhandler.setFrame(16, 2);
+			}
+			else
+			mAnimationhandler.animation(10, 5, sf::milliseconds(100));
 		}
 		if (direction == 1) {
-			//mAnimationhandler.setFrame(2, 0);
+			if (mButtonPress) {
+				mAnimationhandler.setFrame(16, 3);
+			}
+			else
+			mAnimationhandler.animation(11, 5, sf::milliseconds(100));
 		}
 	}
 
@@ -190,7 +207,6 @@ void Cat::moveForward(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 		}
 		if (mGrid.isTilePassable(this, gridvector(mCoord.x, mCoord.y - 1), tileLayer, Entities)){
 			newPos.y = mPosition.y - 64;
-			mSoundHandler->PlaySound(1);
 			mMoving = true;
 		}
 	}
@@ -261,27 +277,28 @@ void Cat::interaction(Usable *usable) {
 	if (isInteracting()) {
 		if (Computer *comp = dynamic_cast<Computer*>(usable)) {
 			if (mCoord == comp->getCoords() && mID == 2) {
-				if (comp->getFace() == "N") {
-					mAnimationhandler.playAnimation(2, 6, sf::milliseconds(3000 / 6));
+				if (comp->getFace() == "S") {
+					mAnimationhandler.playAnimation(4, 6, sf::milliseconds(1000 / 6));
 				}
 				else if (comp->getFace() == "E") {
-					mAnimationhandler.playAnimation(2, 6, sf::milliseconds(3000 / 6));
+					mAnimationhandler.playAnimation(6, 6, sf::milliseconds(1000 / 6));
 				}
 				else if (comp->getFace() == "W") {
-					mAnimationhandler.playAnimation(2, 6, sf::milliseconds(3000 / 6));
+					mAnimationhandler.playAnimation(5, 6, sf::milliseconds(1000 / 6));
 				}
 				
 				comp->playSound();
 				canMove = false;
 				interactionClock.restart();
-				interactionTime = sf::seconds(3);
-				comp->Activate(sf::seconds(3));
+				interactionTime = sf::seconds(1);
+				comp->Activate(sf::seconds(1));
 			}
 		}
 	}
 	if (Button *butt = dynamic_cast<Button*>(usable)) {
 		if (mCoord == butt->getCoords()) {
 			butt->Activate(sf::seconds(1));
+			mButtonPress = true;
 		}
 	}
 	

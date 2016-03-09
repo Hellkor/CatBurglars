@@ -21,7 +21,7 @@ void SoundHandler::Initialize()
 	mShadowDashB.loadFromFile("Resources/Sounds/dash.wav");
 
 
-	mSnowHaxB.loadFromFile("Resources/Sounds/Tangent.ogg");
+	mSnowHaxB.loadFromFile("Resources/Sounds/Tangent.wav");
 
 
 	mCratePushB.loadFromFile("Resources/Sounds/crate.wav");

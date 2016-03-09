@@ -99,6 +99,7 @@ Game::~Game()
 }
 
 void Game::Run(){
+	bool isFocused = true;
 	//moviehandler.PlayMovie(0);
 	while (window->isOpen())
 	{
@@ -107,15 +108,24 @@ void Game::Run(){
 		{
 			if (event.type == sf::Event::Closed)
 				window->close();
-		}
 
+			//Pauses the game if not focused
+			if (event.type == sf::Event::LostFocus) {
+				isFocused = false;
+			}
+			if(event.type == sf::Event::GainedFocus){
+				isFocused = true;
+			}
+		}
 		// Update (the events are handled in the actualizar function)
 		loops = 0;
 
 		while (miReloj.getElapsedTime().asMilliseconds() > proximo_tick && loops < MAX_SALTEO_FRAMES) {
 
-			Update(interpolacion);
-			
+
+			if (isFocused) {
+				Update(interpolacion);
+			}
 			
 			proximo_tick += SALTEO_TICKS;
 			++loops;
