@@ -18,7 +18,7 @@
 #include "Controller.h"
 using namespace std;
 
-bool IMMORTALITY_MODE = true;
+bool IMMORTALITY_MODE = false;
 
 static TextureHandler	textures;
 static SoundHandler		soundhandler;
@@ -78,9 +78,6 @@ Level::Level(string level_directory) :
 	// Initialize GUI View
 	guiView.setViewport(sf::FloatRect(0, 0, 1, 1));
 
-	//Initialize textures
-	//textures.Initialize();
-	//soundhandler.Initialize();
 
 	
 	
@@ -110,7 +107,7 @@ Level::Level(string level_directory) :
 	light.setTextureRect(sf::IntRect(0, 0, 1024, 1024)); // Set where on the image we will take the sprite (X position, Y position, Width, Height)
 	light.setOrigin(512.f, 512.f); // This will offset where we draw our ligts so the center of the light is right over where we want our light to be
 
-	lights.push_back(new Light(sf::Vector2f(200, 200), sf::Vector2f(0.1f, 0.1f), sf::Color(255, 180, 130, 255)));
+	
 	//--------------------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -645,9 +642,11 @@ void Level::generateLevel(string name){
 		if (objectID == 7) {
 			if (range == 0) {
 				mEntities.push_back(new Computer(channel, textures.GetTexture(14), gridvector(xPos, yPos), false, hold,&soundhandler,facing));
+				lights.push_back(new Light(sf::Vector2f(xPos*64 +32, yPos*64 +32), sf::Vector2f(0.08f, 0.08f), sf::Color(255, 180, 130, 255)));
 			}
 			else if (range == 1) {
 				mEntities.push_back(new Computer(channel, textures.GetTexture(14), gridvector(xPos, yPos), true, hold, &soundhandler, facing));
+				lights.push_back(new Light(sf::Vector2f(xPos * 64 +32, yPos * 64 +32), sf::Vector2f(0.08f, 0.08f), sf::Color(255, 180, 130, 255)));
 			}
 			
 		}

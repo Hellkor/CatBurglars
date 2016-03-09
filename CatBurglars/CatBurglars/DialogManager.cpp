@@ -143,7 +143,7 @@ void DialogManager::update() {
 }
 void DialogManager::initialize(sf::View view) { // Initialize portrait and dialogbox positions
 	PORTRAIT_ONE_POS = view.getCenter() + sf::Vector2f(-450, 0);
-	PORTRAIT_TWO_POS = view.getCenter() + sf::Vector2f(450, 0);
+	PORTRAIT_TWO_POS = view.getCenter() + sf::Vector2f( 450, 0);
 
 	mDialogBox.setOrigin(sf::Vector2f(mDialogBox.getTexture()->getSize().x / 2, mDialogBox.getTexture()->getSize().y / 2));
 	mDialogBox.setPosition(sf::Vector2f(view.getCenter().x, view.getCenter().y + (view.getCenter().y/2)));
@@ -153,7 +153,7 @@ void DialogManager::initialize(sf::View view) { // Initialize portrait and dialo
 void DialogManager::render(sf::RenderWindow *window,sf::View view) {
 
 	mPortrait.setOrigin(mPortrait.getTexture()->getSize().x / 2, mPortrait.getTexture()->getSize().y / 2);
-	mPortrait2.setOrigin(mPortrait2.getTexture()->getSize().x / 2, mPortrait2.getTexture()->getSize().y / 2);
+	mPortrait2.setOrigin(mPortrait2.getTexture()->getSize().x / 2, mPortrait2.getTexture()->getSize().y /2);
 	
 	
 
