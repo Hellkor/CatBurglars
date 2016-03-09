@@ -283,218 +283,171 @@ void DialogManager::setPortrait(Character character, Mood mood) {
 	switch (character) {
 	case SOCKS:
 		mPortrait.setTexture(*mTextureHandler->GetTexture(25));
-		mPortrait.setScale(sf::Vector2f(-1.0f, 1.0f));
+		//mPortrait.setScale(sf::Vector2f(-1.0f, 1.0f));
 		switch (mood) {
-			case ANGRY:
-			break;
-			case SAD:
-			break;
-			case NEUTRAL:
-			break;
-			case HAPPY:
-			break;
-			case EMBARESSED:
-			break;
-			case CONFUSED:
+		case CRYING:
+			mPortrait.setTextureRect(sf::IntRect(0, 0, 320, 180));
 			break;
 		}
 		break;
 	case SCOOTER:
-		switch (mood) {
-			case ANGRY:
-			break;
-			case SAD:
-			break;
-			case NEUTRAL:
-			break;
-			case HAPPY:
-			break;
-			case EMBARESSED:
-				break;
-			case CONFUSED:
-				break;
-		}
 		break;
 	case SNOW:
-		mPortrait.setScale(sf::Vector2f(-4.0f, 4.0f));
 		mPortrait.setTexture(*mTextureHandler->GetTexture(27));
+		//mPortrait.setScale(sf::Vector2f(-4.0f, 4.0f));
 		switch (mood) {
-			case ANGRY:
+		case WORRIED:
+			mPortrait.setTextureRect(sf::IntRect(0, 0, 320, 180));
 			break;
-			case SAD:
+		case SIGH:
+			mPortrait.setTextureRect(sf::IntRect(0, 0, 320, 180));
 			break;
-			case NEUTRAL:
-			break;
-			case HAPPY:
-			break;
-			case EMBARESSED:
-				break;
-			case CONFUSED:
-				break;
 		}
 		break;
 	case SHADOW:
-		mPortrait.setScale(sf::Vector2f(-4.0f, 4.0f));
 		mPortrait.setTexture(*mTextureHandler->GetTexture(26));
+		//mPortrait.setScale(sf::Vector2f(-4.0f, 4.0f));
 		switch (mood) {
-			case ANGRY:
+		case PANTING:
+			mPortrait.setTextureRect(sf::IntRect(0, 0, 320, 180));
 			break;
-			case SAD:
+		case EMBARESSED:
+			mPortrait.setTextureRect(sf::IntRect(0, 0, 320, 180));
 			break;
-			case NEUTRAL:
-			break;
-			case HAPPY:
-			break;
-			case EMBARESSED:
-				break;
-			case CONFUSED:
-				break;
 		}
 		break;
 	case ALEX:
 		mPortrait.setTexture(*mTextureHandler->GetTexture(28));
-		mPortrait.setScale(sf::Vector2f(-4.0f, 4.0f));
+		//mPortrait.setScale(sf::Vector2f(-4.0f, 4.0f));
 		switch (mood) {
-			case ANGRY:
+		case SAD:
+			mPortrait.setTextureRect(sf::IntRect(0, 0, 320, 180));
 			break;
-			case SAD:
+		case THINKING:
+			mPortrait.setTextureRect(sf::IntRect(0, 0, 320, 180));
 			break;
-			case NEUTRAL:
+		case SMIRK:
+			mPortrait.setTextureRect(sf::IntRect(0, 0, 320, 180));
 			break;
-			case HAPPY:
+		case PAPER:
+			mPortrait.setTextureRect(sf::IntRect(0, 0, 320, 180));
 			break;
-			case EMBARESSED:
-				break;
-			case CONFUSED:
-				break;
+		case KEY:
+			mPortrait.setTextureRect(sf::IntRect(0, 0, 320, 180));
+			break;
 		}
 		break;
 	case DOUGLAS:
-		switch (mood) {
-			case ANGRY:
-			break;
-			case SAD:
-			break;
-			case NEUTRAL:
-			break;
-			case HAPPY:
-			break;
-			case EMBARESSED:
-				break;
-			case CONFUSED:
-				break;
-		}
+		break;
+	}
+	mPortrait.setScale(sf::Vector2f(-4.0f, 4.0f));
+	switch (mood) {
+	case NEUTRAL:
+		mPortrait.setTextureRect(sf::IntRect(0, 0, 320, 180));
+		break;
+	case ANGRY:
+		mPortrait.setTextureRect(sf::IntRect(0, 0, 320, 180));
+		break;
+	case HAPPY:
+		mPortrait.setTextureRect(sf::IntRect(0, 0, 320, 180));
+		break;
+	case PANICKED:
+		mPortrait.setTextureRect(sf::IntRect(0, 0, 320, 180));
+		break;
+	case RESOLUTE:
+		mPortrait.setTextureRect(sf::IntRect(0, 0, 320, 180));
+		break;
+	case CONFUSED:
+		mPortrait.setTextureRect(sf::IntRect(0, 0, 320, 180));
+		break;
+	case LAUGHING:
+		mPortrait.setTextureRect(sf::IntRect(0, 0, 320, 180));
 		break;
 	}
 }
 void DialogManager::setPortrait2(Character character, Mood mood) {
 	switch (character) {
 	case SOCKS:
-		mPortrait2.setTexture(*mTextureHandler->GetTexture(25));
-		mPortrait2.setScale(sf::Vector2f(4.0f, 4.0f));
+		mPortrait.setTexture(*mTextureHandler->GetTexture(25));
+		//mPortrait.setScale(sf::Vector2f(-1.0f, 1.0f));
 		switch (mood) {
-		case ANGRY:
-			
-			break;
-		case SAD:
-			break;
-		case NEUTRAL:
-			
-			break;
-		case HAPPY:
-			
-			break;
-		case EMBARESSED:
-			break;
-		case CONFUSED:
+		case CRYING:
+			mPortrait2.setTextureRect(sf::IntRect(0, 0, 320, 180));
 			break;
 		}
 		break;
 	case SCOOTER:
-		switch (mood) {
-		case ANGRY:
-			break;
-		case SAD:
-			break;
-		case NEUTRAL:
-			break;
-		case HAPPY:
-			break;
-		case EMBARESSED:
-			break;
-		case CONFUSED:
-			break;
-		}
 		break;
 	case SNOW:
-		mPortrait2.setTexture(*mTextureHandler->GetTexture(27));
-		mPortrait2.setScale(sf::Vector2f(4.0f, 4.0f));
+		mPortrait.setTexture(*mTextureHandler->GetTexture(27));
+		//mPortrait.setScale(sf::Vector2f(-4.0f, 4.0f));
 		switch (mood) {
-		case ANGRY:
+		case WORRIED:
+			mPortrait2.setTextureRect(sf::IntRect(0, 0, 320, 180));
 			break;
-		case SAD:
-			break;
-		case NEUTRAL:
-			break;
-		case HAPPY:
-			break;
-		case EMBARESSED:
-			break;
-		case CONFUSED:
+		case SIGH:
+			mPortrait2.setTextureRect(sf::IntRect(0, 0, 320, 180));
 			break;
 		}
 		break;
 	case SHADOW:
 		mPortrait2.setTexture(*mTextureHandler->GetTexture(26));
-		mPortrait2.setScale(sf::Vector2f(4.0f, 4.0f));
+		//mPortrait.setScale(sf::Vector2f(-4.0f, 4.0f));
 		switch (mood) {
-		case ANGRY:
-			break;
-		case SAD:
-			break;
-		case NEUTRAL:
-			break;
-		case HAPPY:
+		case PANTING:
+			mPortrait2.setTextureRect(sf::IntRect(0, 0, 320, 180));
 			break;
 		case EMBARESSED:
-			break;
-		case CONFUSED:
+			mPortrait2.setTextureRect(sf::IntRect(0, 0, 320, 180));
 			break;
 		}
 		break;
 	case ALEX:
 		mPortrait2.setTexture(*mTextureHandler->GetTexture(28));
-		mPortrait2.setScale(sf::Vector2f(4.0f, 4.0f));
+		//mPortrait.setScale(sf::Vector2f(-4.0f, 4.0f));
 		switch (mood) {
-		case ANGRY:
-			break;
 		case SAD:
+			mPortrait2.setTextureRect(sf::IntRect(0, 0, 320, 180));
 			break;
-		case NEUTRAL:
+		case THINKING:
+			mPortrait2.setTextureRect(sf::IntRect(0, 0, 320, 180));
 			break;
-		case HAPPY:
+		case SMIRK:
+			mPortrait2.setTextureRect(sf::IntRect(0, 0, 320, 180));
 			break;
-		case EMBARESSED:
+		case PAPER:
+			mPortrait2.setTextureRect(sf::IntRect(0, 0, 320, 180));
 			break;
-		case CONFUSED:
+		case KEY:
+			mPortrait2.setTextureRect(sf::IntRect(0, 0, 320, 180));
 			break;
 		}
 		break;
 	case DOUGLAS:
-		switch (mood) {
-		case ANGRY:
-			break;
-		case SAD:
-			break;
-		case NEUTRAL:
-			break;
-		case HAPPY:
-			break;
-		case EMBARESSED:
-			break;
-		case CONFUSED:
-			break;
-		}
+		break;
+	}
+	mPortrait2.setScale(sf::Vector2f(4.0f, 4.0f));
+	switch (mood) {
+	case NEUTRAL:
+		mPortrait2.setTextureRect(sf::IntRect(0, 0, 320, 180));
+		break;
+	case ANGRY:
+		mPortrait2.setTextureRect(sf::IntRect(0, 0, 320, 180));
+		break;
+	case HAPPY:
+		mPortrait2.setTextureRect(sf::IntRect(0, 0, 320, 180));
+		break;
+	case PANICKED:
+		mPortrait2.setTextureRect(sf::IntRect(0, 0, 320, 180));
+		break;
+	case RESOLUTE:
+		mPortrait2.setTextureRect(sf::IntRect(0, 0, 320, 180));
+		break;
+	case CONFUSED:
+		mPortrait2.setTextureRect(sf::IntRect(0, 0, 320, 180));
+		break;
+	case LAUGHING:
+		mPortrait2.setTextureRect(sf::IntRect(0, 0, 320, 180));
 		break;
 	}
 }

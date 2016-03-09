@@ -246,6 +246,7 @@ void Game::Render()
 		break;
 	case Pause:
 		moviehandler.getMovie()->update();
+		window->clear();
 		break;
 
 
