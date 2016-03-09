@@ -75,6 +75,7 @@ private:
 	bool mColliding = false;
 	bool mDashing = false;
 	bool mPushing = false;
+	bool mButtonPress = false;
 	Grid mGrid;
 
 
