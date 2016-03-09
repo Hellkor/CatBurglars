@@ -7,6 +7,9 @@ Controller::Controller(CONTROLLER_TYPE controllertype):
 C_TYPE(controllertype){
 	assignKeys();
 	
+	if (C_TYPE == GamepadOne) {
+		//isConnect();
+	}
 }
 
 Controller::~Controller(){
@@ -15,22 +18,20 @@ Controller::~Controller(){
 
 
 
-float joyX = sf::Joystick::getAxisPosition(0, sf::Joystick::X);
-float joyY = sf::Joystick::getAxisPosition(0, sf::Joystick::Y);
-//float joyX1 = sf::Joystick::getAxisPosition(1, sf::Joystick::X);
-//float joyY1 = sf::Joystick::getAxisPosition(1, sf::Joystick::Y);
+
+
 
 void Controller::isConnect() {
 
 	using namespace sf;
-	RenderWindow window;
+//	RenderWindow window;
 
 	
-	if (Joystick::isConnected(0||1||2||3||4||5||6||7)) {
+	if (Joystick::isConnected(0)) {
 		Joystick::Identification id = Joystick::getIdentification(0);
 		std::cout << "\nnVendor ID: " << id.productId << std::endl;
 		String controller("Joystick Use: " + id.name);
-		window.setTitle(controller);
+	//	window.setTitle(controller);
 		unsigned int buttonCount = Joystick::getButtonCount(0);
 		bool hasZ = Joystick::hasAxis(0, Joystick::Z);
 		std::cout << "Button count: " << buttonCount << std::endl;
@@ -97,16 +98,28 @@ void Controller::nextDialog(DialogManager *dialogmanager) {
 				dialogmanager->nextDialog();
 			}
 		}
-		
+	case GamepadOne:
+		dialogmanager->setSkipText("X-Butt");
+		if (sf::Joystick::isButtonPressed(0, 2))
+		{
+			if (dialogClock.getElapsedTime().asSeconds() >= dialogCooldown.asSeconds()) {
+				dialogClock.restart();
+				dialogmanager->nextDialog();
+			}
+		}
 	}
 }
+
 
 
 //Change position of cat with keyboard
 void Controller::move(Cat *cat, TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 	switch (C_TYPE) {
+
+		#pragma region"KB1"
+
 		//Keyboard One (WASD)
-		/*
+	
 	case KeyboardOne:
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::E))
 		{
@@ -136,6 +149,10 @@ void Controller::move(Cat *cat, TileLayer *tileLayer, std::vector<Entity*> *Enti
 			cat->mInteracting = false;
 		}
 		break;
+	
+		#pragma endregion
+
+		#pragma region "KB2"
 		
 		//Keyboard Two (Arrows)
 	case KeyboardTwo:
@@ -167,35 +184,42 @@ void Controller::move(Cat *cat, TileLayer *tileLayer, std::vector<Entity*> *Enti
 			cat->mInteracting = false;
 		}
 		break;
-		*/
+		#pragma endregion
+
+		#pragma region "GP1"
+
 	case GamepadOne:
 
-
-		isConnect();
+	
+		float joyX = sf::Joystick::getAxisPosition(0, sf::Joystick::X);
+		float joyY = sf::Joystick::getAxisPosition(0, sf::Joystick::Y);
+		
 
 		if (sf::Joystick::isButtonPressed(0, 0))
 		{				//kolla knappN
 			cat->useAbility(tileLayer, Entities);
 		}
-
-
-		if (joyY > 0.f)
+		if (joyY > 30.f)
 		{
 			cat->moveBackWards(tileLayer, Entities);
+			
 		}
-		if (joyY < 0.f)
+		if (joyY < -30.f)
 		{
 			cat->moveForward(tileLayer, Entities);
+		
 		}
-		if (joyX < 0.f)
+		if (joyX < -30.f)
 		{
 			cat->moveLeft(tileLayer, Entities);
+		
 		}
-		if (joyX > 0.f)
+		if (joyX > 30.f)
 		{
 			cat->moveRight(tileLayer, Entities);
+		
 		}
-		if (sf::Joystick::isButtonPressed(0, 3))
+		if (sf::Joystick::isButtonPressed(0, 4))
 		{
 			cat->mInteracting = true;
 		}
@@ -204,8 +228,16 @@ void Controller::move(Cat *cat, TileLayer *tileLayer, std::vector<Entity*> *Enti
 			cat->mInteracting = false;
 		}
 		break;
-/*
-	case GamepadTwo:
+		#pragma endregion
+
+		#pragma region "GP2"
+
+/*	case GamepadTwo:
+
+		float joyX1 = sf::Joystick::getAxisPosition(1, sf::Joystick::X);
+		float joyY1 = sf::Joystick::getAxisPosition(1, sf::Joystick::Y);
+	
+
 		if (sf::Joystick::isButtonPressed(1, 1))
 		{				//kolla knappN
 			cat->useAbility(tileLayer, Entities);
@@ -234,7 +266,8 @@ void Controller::move(Cat *cat, TileLayer *tileLayer, std::vector<Entity*> *Enti
 		{
 			cat->mInteracting = false;
 		}
-		break;*/
+		break;	*/
+		#pragma endregion 
+		
 	}
-
-		}
+}
