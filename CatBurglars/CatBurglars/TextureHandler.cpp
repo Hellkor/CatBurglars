@@ -4,7 +4,7 @@
 std::string PORTRAITS_DIRECTORY = "Resources/Portraits/";
 
 static sf::Texture mTileTexture, mPropTileTexture, mSidebarTexture, mSelectorTexture, mSaveTexture, mShadow, mCrate, mButton, mDoor, mBars, mGuard, mArea, mCamera, mComputer, mSnow,
-mSocksPortrait, mShadowPortrait, mScooterPortrait, mSnowPortrait, mAlexPortrait;
+mSocksPortrait, mShadowPortrait, mScooterPortrait, mSnowPortrait, mAlexPortrait, mDouglasPortrait;
 
 TextureHandler::TextureHandler()
 {
@@ -30,11 +30,12 @@ void TextureHandler::Initialize()
 	mCamera.loadFromFile("Resources/camerasheet.png");
 	mComputer.loadFromFile("Resources/computer.png");
 	mSnow.loadFromFile("Resources/snow_spritesheet.png");
-	mSocksPortrait.loadFromFile(PORTRAITS_DIRECTORY+  "Sockskon_neutral.png");
-	mShadowPortrait.loadFromFile(PORTRAITS_DIRECTORY + "Shadowkon_neutral.png");
-	mSnowPortrait.loadFromFile(PORTRAITS_DIRECTORY + "snowkgoggles_neutral.png");
-	mAlexPortrait.loadFromFile(PORTRAITS_DIRECTORY + "Alexkon_neutral.png");
-	
+	mSocksPortrait.loadFromFile(PORTRAITS_DIRECTORY+  "SocksKon.png");
+	mShadowPortrait.loadFromFile(PORTRAITS_DIRECTORY + "ShadowKon.png");
+	mSnowPortrait.loadFromFile(PORTRAITS_DIRECTORY + "SnowKon.png");
+	mAlexPortrait.loadFromFile(PORTRAITS_DIRECTORY + "AlexKon.png");
+	mScooterPortrait.loadFromFile(PORTRAITS_DIRECTORY + "ScooterKon.png");
+	mDouglasPortrait.loadFromFile(PORTRAITS_DIRECTORY + "DouglasKon.png");
 
 	mPropTileTexture.loadFromFile("Resources/tileset_props.png");
 	
@@ -72,7 +73,11 @@ sf::Texture* TextureHandler::GetTexture(int ID)
 	if (ID == 27)
 		return &mSnowPortrait;
 	if (ID == 28)
+		return &mScooterPortrait;
+	if (ID == 29)
 		return &mAlexPortrait;
+	if (ID == 30)
+		return &mDouglasPortrait;
 	if (ID == 99)
 		return &mArea;
 }
