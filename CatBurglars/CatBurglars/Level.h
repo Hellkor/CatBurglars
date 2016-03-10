@@ -31,6 +31,7 @@ private:
 
 	void generateLevel(string filename);
 	string mFile;
+	string mLevelType;
 
 	TileRow mTileRow;
 	TileRow mTileTopRow;
