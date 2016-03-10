@@ -107,6 +107,14 @@ void Controller::nextDialog(DialogManager *dialogmanager) {
 				dialogmanager->nextDialog();
 			}
 		}
+	case GamepadTwo:
+		dialogmanager->setSkipText("X-Butt");
+		if (sf::Joystick::isButtonPressed(0, 2))
+		{
+			if (dialogClock.getElapsedTime().asSeconds() >= dialogCooldown.asSeconds()) {
+				dialogClock.restart();
+				dialogmanager->nextDialog();
+
 	}
 }
 
@@ -232,33 +240,33 @@ void Controller::move(Cat *cat, TileLayer *tileLayer, std::vector<Entity*> *Enti
 
 		#pragma region "GP2"
 
-/*	case GamepadTwo:
+		case GamepadTwo:
 
 		float joyX1 = sf::Joystick::getAxisPosition(1, sf::Joystick::X);
 		float joyY1 = sf::Joystick::getAxisPosition(1, sf::Joystick::Y);
 	
 
-		if (sf::Joystick::isButtonPressed(1, 1))
+		if (sf::Joystick::isButtonPressed(1, 0))
 		{				//kolla knappN
 			cat->useAbility(tileLayer, Entities);
 		}
-		if (joyY1 > 0)
+		if (joyY1 > -30.f)
 		{
 			cat->moveBackWards(tileLayer, Entities);
 		}
-		if (joyY1 < 0)
+		if (joyY1 < 30.f)
 		{
 			cat->moveForward(tileLayer, Entities);
 		}
-		if (joyX1 < 0)
+		if (joyX1 < -30.f)
 		{
 			cat->moveLeft(tileLayer, Entities);
 		}
-		if (joyX1 > 0)
+		if (joyX1 > 30.f)
 		{
 			cat->moveRight(tileLayer, Entities);
 		}
-		if (sf::Joystick::isButtonPressed(1, 2))
+		if (sf::Joystick::isButtonPressed(1, 3))
 		{
 			cat->mInteracting = true;
 		}
@@ -266,7 +274,7 @@ void Controller::move(Cat *cat, TileLayer *tileLayer, std::vector<Entity*> *Enti
 		{
 			cat->mInteracting = false;
 		}
-		break;	*/
+		break;	
 		#pragma endregion 
 		
 	}

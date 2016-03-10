@@ -70,7 +70,9 @@ std::vector<Light*> lights; // Contains all the lights
 Level::Level(string level_directory) :
 	mFile(level_directory),
 	mLoaded(false),
+
 	p1Controller(Controller(GamepadOne)),
+
 	p2Controller(Controller(KeyboardTwo)){
 
 
