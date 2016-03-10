@@ -164,7 +164,7 @@ void Cat::Update(float dt){
 			//mAnimationhandler.reset(direction);
 		}
 	}
-	else if (canMove) // TEMP , SKA ÄNDRAS MED IDLE ANIMATION
+	else if (canMove&& !mPushing) // TEMP , SKA ÄNDRAS MED IDLE ANIMATION
 	{
 		if (direction == 4) {
 			if (mButtonPress) {

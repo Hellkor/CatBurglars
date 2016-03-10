@@ -26,8 +26,6 @@ private:
 	void Render();
 	GameObject *mGameObjectives;
 	
-	
-
 	EntityVector mEntities;
 };
 

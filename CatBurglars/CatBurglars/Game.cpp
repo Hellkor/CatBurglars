@@ -61,6 +61,8 @@ Game::Game() {
 	SPLASH_SPRITE.setOrigin(sf::Vector2f(SPLASH_SCREEN.getSize().x/2, SPLASH_SCREEN.getSize().y/2));
 	SPLASH_SPRITE.setPosition(GuiView.getCenter());
 
+	
+
 	TextureHandler::Initialize();
 	SoundHandler::Initialize();
 
@@ -248,6 +250,7 @@ void Game::Render()
 		break;
 	case Pause:
 		moviehandler.getMovie()->update();
+		window->clear();
 		break;
 
 
