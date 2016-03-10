@@ -266,14 +266,6 @@ void Guard::AImovement(TileLayer *tiles, std::vector<Entity*> *entities, Pathfin
 	if (!mMoving && mClock.getElapsedTime() >= sf::seconds(1) && mQueuePos < mCommandQueue.size())
 	{
 		if (mCommandQueue[mQueuePos].direction != "WAIT")
-			if (mCoords == gridvector(mCommandQueue[mQueuePos].xPos, mCommandQueue[mQueuePos].yPos) && mFace == mCommandQueue[mQueuePos].direction)
-			{
-				mQueuePos += 1;
-				if (mQueuePos >= mCommandQueue.size())
-					mQueuePos = 0;
-			}
-
-		if (mCommandQueue[mQueuePos].direction != "WAIT")
 		{
 			gridvector startNode, targetNode;
 			startNode = mCoords;
@@ -294,6 +286,9 @@ void Guard::AImovement(TileLayer *tiles, std::vector<Entity*> *entities, Pathfin
 			else
 			{
 				setVision(mCommandQueue[mQueuePos].direction, tiles, entities);
+				mQueuePos += 1;
+				if (mQueuePos >= mCommandQueue.size())
+					mQueuePos = 0;
 			}
 		}
 		else
