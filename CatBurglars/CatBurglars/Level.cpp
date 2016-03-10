@@ -16,6 +16,7 @@
 #include <SFML\Graphics\BlendMode.hpp>;
 #include "DialogManager.h"
 #include "Controller.h"
+#include "Pathfinder.h"
 using namespace std;
 
 bool IMMORTALITY_MODE = false;
@@ -64,7 +65,8 @@ Light				*l2		= new Light(sf::Vector2f(0, 0), sf::Vector2f(0.9f, 0.9f), sf::Colo
 
 std::vector<Light*> lights; // Contains all the lights
 
-
+// Pathfinder
+Pathfinder pathfinder;
 
 // Skapar en level från en textfil
 Level::Level(string level_directory) :
@@ -280,6 +282,7 @@ void Level::update(float dt){
 		if (!dialogManager.isDialogActive()) {
 
 			Channels::update();
+			pathfinder.Update(&mEntities);
 			for each (Entity *e in mEntities) {
 
 				e->Update(dt);
@@ -288,7 +291,7 @@ void Level::update(float dt){
 
 					if (Guard *guard = dynamic_cast<Guard*>(obj)) {
 
-						guard->AImovement(&mWallTileLayer, &mEntities);
+						guard->AImovement(&mWallTileLayer, &mEntities, &pathfinder);
 					}
 
 
@@ -484,6 +487,8 @@ void Level::generateLevel(string name){
 	string input;
 	inputFile >> input;
 	cout << "Version: " + input << endl;
+	inputFile >> mLevelType;
+	cout << "Level Type: " + mLevelType << endl;
 	inputFile >> input;
 	mMapSizeX = stoi(input);
 	cout << "Map width: " << mMapSizeX << endl;
@@ -498,7 +503,11 @@ void Level::generateLevel(string name){
 		{
 			inputFile >> input;
 			int ID = stoi(input);
-			Tile *tile = new Tile(gridvector( x , y ), ID, 0, &textures);
+			Tile *tile;
+			if (mLevelType == "Prison1")
+				tile = new Tile(gridvector( x , y ), ID, 0, &textures);
+			else
+				tile = new Tile(gridvector(x, y), ID, 2, &textures);
 			mTileRow.push_back(tile);
 			
 
@@ -528,6 +537,10 @@ void Level::generateLevel(string name){
 		}
 		mWallTileLayer.push_back(mTileTopRow);
 	}
+
+	// PATHFINDER
+	pathfinder = Pathfinder(&mWallTileLayer);
+
 	//Top layer tiles
 	for (int y = 0; y < mMapSizeY; y++)
 	{

@@ -7,6 +7,15 @@
 #include "AnimationHandler.h"
 #include "Soundhandler.h"
 #include "Button.h"
+#include "Pathfinder.h"
+
+struct Command
+{
+	int xPos;
+	int yPos;
+	string direction;
+};
+
 class Guard : public GameObject
 {
 	typedef vector<Tile*> TileRow;
@@ -20,7 +29,7 @@ public:
 	virtual sf::Vector2i GetPosition();
 	virtual gridvector getCoords();
 
-	void AImovement(TileLayer *tiles, std::vector<Entity*> *entities);
+	void AImovement(TileLayer *tiles, std::vector<Entity*> *entities, Pathfinder *pathfinder);
 
 	bool mInteracting = false;
 
@@ -66,7 +75,8 @@ private:
 	string mDirectory;
 
 	void loadAI(string filename);
-	std::vector<string> mCommandQueue;
+	Command mCurrentCommand;
+	std::vector<Command> mCommandQueue;
 
 	void moveForward(TileLayer *tileLayer, std::vector<Entity*> *Entities);
 	void moveBackWards(TileLayer *tileLayer, std::vector<Entity*> *Entities);
@@ -77,6 +87,8 @@ private:
 	SoundHandler* mSoundHandler;
 
 	sf::Sound mWalkSound;
+
+	Pathfinder *mPathfinder;
 };
 
 #endif

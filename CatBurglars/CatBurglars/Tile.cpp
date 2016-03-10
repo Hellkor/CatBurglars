@@ -15,7 +15,7 @@ Tile::Tile(gridvector coords, int ID, int textureID, TextureHandler *textures)
 
 	textureHandler = textures;
 	if (mID >= 1000) {
-		texture = textureHandler->GetTexture(textureID + 1);
+		texture = textureHandler->GetTexture(1);
 		mSprite.setTexture(*texture, true);
 		mSprite.setTextureRect(sf::IntRect(((ID-1000) % 3) * width, floor((ID - 1000) / 3) * height, width, height));
 	}
