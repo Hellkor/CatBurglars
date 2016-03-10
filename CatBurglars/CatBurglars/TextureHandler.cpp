@@ -3,6 +3,9 @@
 
 std::string PORTRAITS_DIRECTORY = "Resources/Portraits/";
 
+static sf::Texture mTileTexture, mPropTileTexture, mSidebarTexture, mSelectorTexture, mSaveTexture, mShadow, mCrate, mButton, mDoor, mBars, mGuard, mArea, mCamera, mComputer, mSnow,
+mSocksPortrait, mShadowPortrait, mScooterPortrait, mSnowPortrait, mAlexPortrait, mDouglasPortrait;
+
 TextureHandler::TextureHandler()
 {
 
@@ -17,20 +20,22 @@ TextureHandler::~TextureHandler()
 void TextureHandler::Initialize()
 {
 	mTileTexture.loadFromFile("Resources/TileMap.png");
-	mCat1Texture.loadFromFile("Resources/shadow_spritesheet.png");
+	mShadow.loadFromFile("Resources/shadow_spritesheet.png");
 	mCrate.loadFromFile("Resources/Crate.png");	
 	mButton.loadFromFile("Resources/Button.png");
 	mDoor.loadFromFile("Resources/Door.png");
-	mGuard.loadFromFile("Resources/vakt_walk_spritesheet.png");
+	mBars.loadFromFile("Resources/Bars.png");
+	mGuard.loadFromFile("Resources/vakt1.png");
 	mArea.loadFromFile("Resources/area.png");
 	mCamera.loadFromFile("Resources/camerasheet.png");
 	mComputer.loadFromFile("Resources/computer.png");
 	mSnow.loadFromFile("Resources/snow_spritesheet.png");
-	mSocksPortrait.loadFromFile(PORTRAITS_DIRECTORY+  "Sockskon_neutral.png");
-	mShadowPortrait.loadFromFile(PORTRAITS_DIRECTORY + "Shadowkon_neutral.png");
-	mSnowPortrait.loadFromFile(PORTRAITS_DIRECTORY + "snowkgoggles_neutral.png");
-	mAlexPortrait.loadFromFile(PORTRAITS_DIRECTORY + "Alexkon_neutral.png");
-	
+	mSocksPortrait.loadFromFile(PORTRAITS_DIRECTORY+  "SocksKon.png");
+	mShadowPortrait.loadFromFile(PORTRAITS_DIRECTORY + "ShadowKon.png");
+	mSnowPortrait.loadFromFile(PORTRAITS_DIRECTORY + "SnowKon.png");
+	mAlexPortrait.loadFromFile(PORTRAITS_DIRECTORY + "AlexKon.png");
+	mScooterPortrait.loadFromFile(PORTRAITS_DIRECTORY + "ScooterKon.png");
+	mDouglasPortrait.loadFromFile(PORTRAITS_DIRECTORY + "DouglasKon.png");
 
 	mPropTileTexture.loadFromFile("Resources/tileset_props.png");
 	
@@ -50,7 +55,7 @@ sf::Texture* TextureHandler::GetTexture(int ID)
 	if (ID == 9)
 		return &mSnow;
 	if (ID == 10)
-		return &mCat1Texture;
+		return &mShadow;
 	if (ID == 11)
 		return &mDoor;
 	if (ID == 12)
@@ -59,6 +64,8 @@ sf::Texture* TextureHandler::GetTexture(int ID)
 		return &mCamera;
 	if (ID == 14)
 		return &mComputer;
+	if (ID == 15)
+		return &mBars;
 	if (ID == 25)
 		return &mSocksPortrait;
 	if (ID == 26)
@@ -66,7 +73,11 @@ sf::Texture* TextureHandler::GetTexture(int ID)
 	if (ID == 27)
 		return &mSnowPortrait;
 	if (ID == 28)
+		return &mScooterPortrait;
+	if (ID == 29)
 		return &mAlexPortrait;
+	if (ID == 30)
+		return &mDouglasPortrait;
 	if (ID == 99)
 		return &mArea;
 }

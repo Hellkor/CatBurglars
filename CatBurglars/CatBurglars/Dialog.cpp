@@ -26,25 +26,57 @@ void Dialog::setMood(string mood) {
 		char *c = &inputMood[i];
 		*c = toupper(*c);
 	}
+	if (inputMood == "NEUTRAL") {
+		mMood = NEUTRAL;
+	}
 	if (inputMood == "ANGRY") {
 		mMood = ANGRY;
-	}
-	if (inputMood == "SAD") {
-		mMood = SAD;
 	}
 	if (inputMood == "HAPPY") {
 		mMood = HAPPY;
 	}
-	if (inputMood == "NEUTRAL") {
-		mMood = NEUTRAL;
+	if (inputMood == "PANICKED") {
+		mMood = PANICKED;
+	}
+	if (inputMood == "RESOLUTE") {
+		mMood = RESOLUTE;
 	}
 	if (inputMood == "CONFUSED") {
 		mMood = CONFUSED;
 	}
+	if (inputMood == "LAUGHING") {
+		mMood = LAUGHING;
+	}
+	if (inputMood == "SAD") {
+		mMood = SAD;
+	}
+	if (inputMood == "THINKING") {
+		mMood = THINKING;
+	}
+	if (inputMood == "SMIRK") {
+		mMood = SMIRK;
+	}
+	if (inputMood == "PAPER") {
+		mMood = PAPER;
+	}
+	if (inputMood == "KEY") {
+		mMood = KEY;
+	}
+	if (inputMood == "PANTING") {
+		mMood = PANTING;
+	}
 	if (inputMood == "EMBARESSED") {
 		mMood = EMBARESSED;
 	}
-
+	if (inputMood == "WORRIED") {
+		mMood = WORRIED;
+	}
+	if (inputMood == "SIGH") {
+		mMood = SIGH;
+	}
+	if (inputMood == "CRYING") {
+		mMood = CRYING;
+	}
 }
 void Dialog::setWinDialog(bool willWin) {
 	mWin = willWin;
@@ -96,17 +128,56 @@ void Dialog::setMood2(string mood) {
 		char *c = &inputMood[i];
 		*c = toupper(*c);
 	}
+	if (inputMood == "NEUTRAL") {
+		mMood2 = NEUTRAL;
+	}
 	if (inputMood == "ANGRY") {
 		mMood2 = ANGRY;
-	}
-	if (inputMood == "SAD") {
-		mMood2 = SAD;
 	}
 	if (inputMood == "HAPPY") {
 		mMood2 = HAPPY;
 	}
-	if (inputMood == "NEUTRAL") {
-		mMood2 = NEUTRAL;
+	if (inputMood == "PANICKED") {
+		mMood2 = PANICKED;
+	}
+	if (inputMood == "RESOLUTE") {
+		mMood2 = RESOLUTE;
+	}
+	if (inputMood == "CONFUSED") {
+		mMood2 = CONFUSED;
+	}
+	if (inputMood == "LAUGHING") {
+		mMood2 = LAUGHING;
+	}
+	if (inputMood == "SAD") {
+		mMood2 = SAD;
+	}
+	if (inputMood == "THINKING") {
+		mMood2 = THINKING;
+	}
+	if (inputMood == "SMIRK") {
+		mMood2 = SMIRK;
+	}
+	if (inputMood == "PAPER") {
+		mMood2 = PAPER;
+	}
+	if (inputMood == "KEY") {
+		mMood2 = KEY;
+	}
+	if (inputMood == "PANTING") {
+		mMood2 = PANTING;
+	}
+	if (inputMood == "EMBARESSED") {
+		mMood2 = EMBARESSED;
+	}
+	if (inputMood == "WORRIED") {
+		mMood2 = WORRIED;
+	}
+	if (inputMood == "SIGH") {
+		mMood2 = SIGH;
+	}
+	if (inputMood == "CRYING") {
+		mMood2 = CRYING;
 	}
 
 }

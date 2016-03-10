@@ -64,6 +64,7 @@ private:
 	int mPlayerIndex;
 
 	SoundHandler* mSoundHandler;
+	sf::Sound mDashSound;
 
 	sf::Vector2i newPos;
 
@@ -74,6 +75,7 @@ private:
 	bool mColliding = false;
 	bool mDashing = false;
 	bool mPushing = false;
+	bool mButtonPress = false;
 	Grid mGrid;
 
 

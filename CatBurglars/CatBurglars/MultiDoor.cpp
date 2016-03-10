@@ -1,10 +1,12 @@
 #include "MultiDoor.h"
 #include "Channels.h"
 
-MultiDoor::MultiDoor(int channel, int numberofchannels, gridvector coords, sf::Texture *texture) :
+MultiDoor::MultiDoor(int channel, int numberofchannels, gridvector coords, sf::Texture *texture,string face, SoundHandler *soundhandler) :
 mChannel(channel),
 mCoords(coords),
-mSolid(true){
+mSolid(true),
+mFace(face),
+mSoundHandler(soundhandler){
 
 	mPosition.x = mCoords.x * 64;
 	mPosition.y = mCoords.y * 64;
@@ -12,9 +14,21 @@ mSolid(true){
 	mSprite.setTexture(*texture);
 	mSprite.setPosition(sf::Vector2f(mPosition.x, mPosition.y - 64));
 
+	if (mFace == "N" || mFace == "S") {
+		mSprite.setTextureRect(sf::IntRect(0, 0, 64, 128));
+	}
+	if (mFace == "W") {
+		mSprite.setTextureRect(sf::IntRect(64, 0, 64, 128));
+	}
+	if (mFace == "E") {
+		mSprite.setTextureRect(sf::IntRect(128, 0, 64, 128));
+	}
+
 	for (int i = 0; i <= numberofchannels; i++){
 		mChannels.push_back(mChannel + i);
 	}
+
+	mSound.setBuffer(*mSoundHandler->getSound(5));
 }
 
 void MultiDoor::Update(float dt){
@@ -22,9 +36,17 @@ void MultiDoor::Update(float dt){
 
 	//ifall någon kanal är inaktiv så är dörren stängd
 	if (checkChannels()){
+		if (!hasPlayed && mSound.getStatus() != sf::Sound::Playing) {
+			mSound.setVolume(mSoundHandler->distanceSound(this));
+			mSound.play();
+			hasPlayed = true;
+		}
 		mSolid = false;
 	}
-	else mSolid = true;
+	else {
+		hasPlayed = false;
+		mSolid = true;
+	}
 }
 
 bool MultiDoor::checkChannels(){
@@ -64,5 +86,5 @@ bool MultiDoor::isInteracting(){
 }
 
 Layer MultiDoor::getLayer() {
-	return FRONT;
+	return DOORS;
 }

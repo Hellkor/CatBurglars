@@ -1,6 +1,7 @@
 #include "DialogManager.h"
 #include <fstream>
 #include <iostream>
+#include "LevelManager.h"
 sf::Texture DIALOG_BOX_TEXTURE;
 
 sf::Vector2f PORTRAIT_ONE_POS;
@@ -18,11 +19,9 @@ DialogManager::DialogManager(string filename,TextureHandler *handler, sf::Vector
 	mDialogBox.setTexture(DIALOG_BOX_TEXTURE);
 	
 	mFont.loadFromFile("Resources/Fonts/arial.ttf");
-	
+	mSkipText.setFont(mFont);
+	mSkipText.setCharacterSize(24);
 	readFile();
-
-	//setPortrait(SOCKS, ANGRY);
-	//setPortrait2(SOCKS, ANGRY);
 	
 }
 
@@ -116,11 +115,14 @@ void DialogManager::readFile() {
 	}
 	
 }
+void DialogManager::nextDialog() {
+	mShowDialog = false;
+}
+void DialogManager::setSkipText(string skipkey) {
+	mSkipString = skipkey;
+}
 void DialogManager::update() {
 	
-	if (mClock.getElapsedTime().asSeconds() > mTimer.asSeconds()) {
-		mShowDialog = false;
-	}
 	
 	if (mCurrentConversationDialogID > -1 && mCurrentConversationDialogID <= mNumberOfDialogs) {
 		if (!mShowDialog) {
@@ -131,8 +133,9 @@ void DialogManager::update() {
 	}
 	else {
 		if (mWin) {
+			LevelManager::nextLevel();
+			mShowDialog = false;
 			mWin = false;
-			// WIN
 		}
 		mCurrentConversationDialogID = -1;
 	}
@@ -140,7 +143,7 @@ void DialogManager::update() {
 }
 void DialogManager::initialize(sf::View view) { // Initialize portrait and dialogbox positions
 	PORTRAIT_ONE_POS = view.getCenter() + sf::Vector2f(-450, 0);
-	PORTRAIT_TWO_POS = view.getCenter() + sf::Vector2f(450, 0);
+	PORTRAIT_TWO_POS = view.getCenter() + sf::Vector2f( 450, 0);
 
 	mDialogBox.setOrigin(sf::Vector2f(mDialogBox.getTexture()->getSize().x / 2, mDialogBox.getTexture()->getSize().y / 2));
 	mDialogBox.setPosition(sf::Vector2f(view.getCenter().x, view.getCenter().y + (view.getCenter().y/2)));
@@ -149,37 +152,44 @@ void DialogManager::initialize(sf::View view) { // Initialize portrait and dialo
 }
 void DialogManager::render(sf::RenderWindow *window,sf::View view) {
 
-	mPortrait.setOrigin(mPortrait.getTexture()->getSize().x / 2, mPortrait.getTexture()->getSize().y / 2);
-	mPortrait2.setOrigin(mPortrait2.getTexture()->getSize().x / 2, mPortrait2.getTexture()->getSize().y / 2);
+	mPortrait.setOrigin(mPortrait.getTextureRect().width / 2, mPortrait.getTextureRect().height / 2);
+	mPortrait2.setOrigin(mPortrait2.getTextureRect().width / 2, mPortrait2.getTextureRect().height / 2);
 	
 	
 
 	if (mShowDialog) {
+		
+
+		mPortrait.setPosition(PORTRAIT_ONE_POS);
+		mPortrait2.setPosition(PORTRAIT_TWO_POS);
+
 		sf::RenderTexture rtext;
 		rtext.create(200, 200);
 		rtext.clear(sf::Color(150, 150, 150, 0));
 		sf::RectangleShape rect;
-		rect.setSize(sf::Vector2f((mPortrait.getTexture()->getSize().x)*4,( mPortrait.getTexture()->getSize().y)*4));
+		rect.setSize(sf::Vector2f((mPortrait.getTexture()->getSize().x)* mPortrait.getScale().y, (mPortrait.getTexture()->getSize().y)* mPortrait.getScale().y));
 		rect.setTexture(&rtext.getTexture());
+		sf::RectangleShape rect2;
+		rect2.setSize(sf::Vector2f((mPortrait2.getTexture()->getSize().x) * mPortrait2.getScale().y, (mPortrait2.getTexture()->getSize().y) *mPortrait2.getScale().y));
+		rect2.setTexture(&rtext.getTexture());
 
 
 		rect.setOrigin(rect.getSize().x / 2, rect.getSize().y / 2);
+		rect2.setOrigin(rect2.getSize().x / 2, rect2.getSize().y / 2);
 
-		mPortrait.setPosition(PORTRAIT_ONE_POS);
-		mPortrait2.setPosition(PORTRAIT_TWO_POS);
+		rect.setPosition(mPortrait.getPosition());
+		rect2.setPosition(mPortrait2.getPosition());
 
 		switch (mHighLighted)
 		{
 		case ONE:
 			
 			window->draw(mPortrait2);
-			rect.setPosition(mPortrait2.getPosition());
-			window->draw(rect, sf::BlendMultiply);
+			window->draw(rect2, sf::BlendMultiply);
 			window->draw(mPortrait);
 			break;
 		case TWO:
 			window->draw(mPortrait);
-			rect.setPosition(mPortrait.getPosition());
 			window->draw(rect, sf::BlendMultiply);
 			window->draw(mPortrait2);
 			break;
@@ -189,14 +199,21 @@ void DialogManager::render(sf::RenderWindow *window,sf::View view) {
 
 		
 		window->draw(mDialogBox);
+
 		for each (sf::Text t in TextRows) {
 			t.setFont(mFont);
 			t.setCharacterSize(FONT_SIZE);
 			window->draw(t);
 		}
 		
+	    
 		
-
+		string skipstring = "Press: " + mSkipString + " to skip!";
+		mSkipText.setPosition(sf::Vector2f((view.getCenter().x)   - (mSkipText.getCharacterSize()* (skipstring.size()/4)),
+										   (view.getCenter().y) + ((view.getSize().y/2)-mSkipText.getCharacterSize())));
+		mSkipText.setString(skipstring);
+		mSkipText.setColor(sf::Color::Red);
+		window->draw(mSkipText);
 		
 		
 		
@@ -246,14 +263,13 @@ void DialogManager::showDialog(int ID,float time_as_seconds) {
 		row.clear();
 	}
 	
-	mHighLighted = mDialogList[ID]->getSelectedCharacter();
+	
 	
 	setPortrait(mDialogList[ID]->getCharacter(), mDialogList[ID]->getMood());
 	setPortrait2(mDialogList[ID]->getCharacter2(), mDialogList[ID]->getMood2());
+	mHighLighted = mDialogList[ID]->getSelectedCharacter();
 	mShowDialog = true;
 	mWin = mDialogList[ID]->isAWinDialog();
-	mClock.restart();
-	mTimer = sf::seconds(time_as_seconds);
 }
 void DialogManager::setPosition(sf::Vector2f v) {
 	mPosition = v;
@@ -267,218 +283,175 @@ void DialogManager::setPortrait(Character character, Mood mood) {
 	switch (character) {
 	case SOCKS:
 		mPortrait.setTexture(*mTextureHandler->GetTexture(25));
-		mPortrait.setScale(sf::Vector2f(-1.0f, 1.0f));
+		//mPortrait.setScale(sf::Vector2f(-1.0f, 1.0f));
 		switch (mood) {
-			case ANGRY:
-			break;
-			case SAD:
-			break;
-			case NEUTRAL:
-			break;
-			case HAPPY:
-			break;
-			case EMBARESSED:
-			break;
-			case CONFUSED:
+		case CRYING:
+			mPortrait.setTextureRect(sf::IntRect(6 * 320, 0, 320, 180));
 			break;
 		}
 		break;
 	case SCOOTER:
-		switch (mood) {
-			case ANGRY:
-			break;
-			case SAD:
-			break;
-			case NEUTRAL:
-			break;
-			case HAPPY:
-			break;
-			case EMBARESSED:
-				break;
-			case CONFUSED:
-				break;
-		}
+		mPortrait.setTexture(*mTextureHandler->GetTexture(28));
 		break;
 	case SNOW:
-		mPortrait.setScale(sf::Vector2f(-4.0f, 4.0f));
 		mPortrait.setTexture(*mTextureHandler->GetTexture(27));
+		//mPortrait.setScale(sf::Vector2f(-4.0f, 4.0f));
 		switch (mood) {
-			case ANGRY:
+		case WORRIED:
+			mPortrait.setTextureRect(sf::IntRect(5 * 320, 0, 320, 180));
 			break;
-			case SAD:
+		case SIGH:
+			mPortrait.setTextureRect(sf::IntRect(6 * 320, 0, 320, 180));
 			break;
-			case NEUTRAL:
-			break;
-			case HAPPY:
-			break;
-			case EMBARESSED:
-				break;
-			case CONFUSED:
-				break;
 		}
 		break;
 	case SHADOW:
-		mPortrait.setScale(sf::Vector2f(-4.0f, 4.0f));
 		mPortrait.setTexture(*mTextureHandler->GetTexture(26));
+		//mPortrait.setScale(sf::Vector2f(-4.0f, 4.0f));
 		switch (mood) {
-			case ANGRY:
+		case PANTING:
+			mPortrait.setTextureRect(sf::IntRect(6 * 320, 0, 320, 180));
 			break;
-			case SAD:
+		case EMBARESSED:
+			mPortrait.setTextureRect(sf::IntRect(7 * 320, 0, 320, 180));
 			break;
-			case NEUTRAL:
-			break;
-			case HAPPY:
-			break;
-			case EMBARESSED:
-				break;
-			case CONFUSED:
-				break;
 		}
 		break;
 	case ALEX:
-		mPortrait.setTexture(*mTextureHandler->GetTexture(28));
-		mPortrait.setScale(sf::Vector2f(-4.0f, 4.0f));
+		mPortrait.setTexture(*mTextureHandler->GetTexture(29));
+		//mPortrait.setScale(sf::Vector2f(-4.0f, 4.0f));
 		switch (mood) {
-			case ANGRY:
+		case SAD:
+			mPortrait.setTextureRect(sf::IntRect(7 * 320, 0, 320, 180));
 			break;
-			case SAD:
+		case THINKING:
+			mPortrait.setTextureRect(sf::IntRect(8 * 320, 0, 320, 180));
 			break;
-			case NEUTRAL:
+		case SMIRK:
+			mPortrait.setTextureRect(sf::IntRect(9 * 320, 0, 320, 180));
 			break;
-			case HAPPY:
+		case PAPER:
+			mPortrait.setTextureRect(sf::IntRect(10 * 320, 0, 320, 180));
 			break;
-			case EMBARESSED:
-				break;
-			case CONFUSED:
-				break;
+		case KEY:
+			mPortrait.setTextureRect(sf::IntRect(11 * 320, 0, 320, 180));
+			break;
 		}
 		break;
 	case DOUGLAS:
-		switch (mood) {
-			case ANGRY:
-			break;
-			case SAD:
-			break;
-			case NEUTRAL:
-			break;
-			case HAPPY:
-			break;
-			case EMBARESSED:
-				break;
-			case CONFUSED:
-				break;
-		}
+		mPortrait2.setTexture(*mTextureHandler->GetTexture(30));
 		break;
 	}
+	switch (mood) {
+	case NEUTRAL:
+		mPortrait.setTextureRect(sf::IntRect(0, 0, 320, 180));
+		break;
+	case ANGRY:
+		mPortrait.setTextureRect(sf::IntRect(1 * 320, 0, 320, 180));
+		break;
+	case HAPPY:
+		mPortrait.setTextureRect(sf::IntRect(2 * 320, 0, 320, 180));
+		break;
+	case PANICKED:
+		mPortrait.setTextureRect(sf::IntRect(3 * 320, 0, 320, 180));
+		break;
+	case RESOLUTE:
+		mPortrait.setTextureRect(sf::IntRect(4 * 320, 0, 320, 180));
+		break;
+	case CONFUSED:
+		mPortrait.setTextureRect(sf::IntRect(3 * 320, 0, 320, 180));
+		break;
+	case LAUGHING:
+		mPortrait.setTextureRect(sf::IntRect(5 * 320, 0, 320, 180));
+		break;
+	}
+	mPortrait.setScale(sf::Vector2f(-4.0f, 4.0f));
 }
 void DialogManager::setPortrait2(Character character, Mood mood) {
 	switch (character) {
 	case SOCKS:
 		mPortrait2.setTexture(*mTextureHandler->GetTexture(25));
-		mPortrait2.setScale(sf::Vector2f(-4.0f, 4.0f));
+		//mPortrait.setScale(sf::Vector2f(-1.0f, 1.0f));
 		switch (mood) {
-		case ANGRY:
-			
-			break;
-		case SAD:
-			break;
-		case NEUTRAL:
-			
-			break;
-		case HAPPY:
-			
-			break;
-		case EMBARESSED:
-			break;
-		case CONFUSED:
+		case CRYING:
+			mPortrait2.setTextureRect(sf::IntRect(6 * 320, 0, 320, 180));
 			break;
 		}
 		break;
 	case SCOOTER:
-		switch (mood) {
-		case ANGRY:
-			break;
-		case SAD:
-			break;
-		case NEUTRAL:
-			break;
-		case HAPPY:
-			break;
-		case EMBARESSED:
-			break;
-		case CONFUSED:
-			break;
-		}
+		mPortrait2.setTexture(*mTextureHandler->GetTexture(28));
 		break;
 	case SNOW:
 		mPortrait2.setTexture(*mTextureHandler->GetTexture(27));
-		mPortrait2.setScale(sf::Vector2f(-4.0f, 4.0f));
+		//mPortrait.setScale(sf::Vector2f(-4.0f, 4.0f));
 		switch (mood) {
-		case ANGRY:
+		case WORRIED:
+			mPortrait2.setTextureRect(sf::IntRect(5 * 320, 0, 320, 180));
 			break;
-		case SAD:
-			break;
-		case NEUTRAL:
-			break;
-		case HAPPY:
-			break;
-		case EMBARESSED:
-			break;
-		case CONFUSED:
+		case SIGH:
+			mPortrait2.setTextureRect(sf::IntRect(6 * 320, 0, 320, 180));
 			break;
 		}
 		break;
 	case SHADOW:
 		mPortrait2.setTexture(*mTextureHandler->GetTexture(26));
-		mPortrait2.setScale(sf::Vector2f(-4.0f, 4.0f));
+		//mPortrait.setScale(sf::Vector2f(-4.0f, 4.0f));
 		switch (mood) {
-		case ANGRY:
-			break;
-		case SAD:
-			break;
-		case NEUTRAL:
-			break;
-		case HAPPY:
+		case PANTING:
+			mPortrait2.setTextureRect(sf::IntRect(6 * 320, 0, 320, 180));
 			break;
 		case EMBARESSED:
-			break;
-		case CONFUSED:
+			mPortrait2.setTextureRect(sf::IntRect(7 * 320, 0, 320, 180));
 			break;
 		}
 		break;
 	case ALEX:
-		mPortrait2.setTexture(*mTextureHandler->GetTexture(28));
-		mPortrait2.setScale(sf::Vector2f(-4.0f, 4.0f));
+		mPortrait2.setTexture(*mTextureHandler->GetTexture(29));
+		//mPortrait.setScale(sf::Vector2f(-4.0f, 4.0f));
 		switch (mood) {
-		case ANGRY:
-			break;
 		case SAD:
+			mPortrait2.setTextureRect(sf::IntRect(6 * 320, 0, 320, 180));
 			break;
-		case NEUTRAL:
+		case THINKING:
+			mPortrait2.setTextureRect(sf::IntRect(7 * 320, 0, 320, 180));
 			break;
-		case HAPPY:
+		case SMIRK:
+			mPortrait2.setTextureRect(sf::IntRect(8 * 320, 0, 320, 180));
 			break;
-		case EMBARESSED:
+		case PAPER:
+			mPortrait2.setTextureRect(sf::IntRect(9 * 320, 0, 320, 180));
 			break;
-		case CONFUSED:
+		case KEY:
+			mPortrait2.setTextureRect(sf::IntRect(10 * 320, 0, 320, 180));
 			break;
 		}
 		break;
 	case DOUGLAS:
-		switch (mood) {
-		case ANGRY:
-			break;
-		case SAD:
-			break;
-		case NEUTRAL:
-			break;
-		case HAPPY:
-			break;
-		case EMBARESSED:
-			break;
-		case CONFUSED:
-			break;
-		}
+		mPortrait2.setTexture(*mTextureHandler->GetTexture(30));
 		break;
 	}
+	switch (mood) {
+	case NEUTRAL:
+		mPortrait2.setTextureRect(sf::IntRect(0, 0, 320, 180));
+		break;
+	case ANGRY:
+		mPortrait2.setTextureRect(sf::IntRect(1 * 320, 0, 320, 180));
+		break;
+	case HAPPY:
+		mPortrait2.setTextureRect(sf::IntRect(2 * 320, 0, 320, 180));
+		break;
+	case PANICKED:
+		mPortrait2.setTextureRect(sf::IntRect(3 * 320, 0, 320, 180));
+		break;
+	case RESOLUTE:
+		mPortrait2.setTextureRect(sf::IntRect(4 * 320, 0, 320, 180));
+		break;
+	case CONFUSED:
+		mPortrait2.setTextureRect(sf::IntRect(3 * 320, 0, 320, 180));
+		break;
+	case LAUGHING:
+		mPortrait2.setTextureRect(sf::IntRect(5 * 320, 0, 320, 180));
+		break;
+	}
+	mPortrait2.setScale(sf::Vector2f(4.0f, 4.0f));
 }

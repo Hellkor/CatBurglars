@@ -9,7 +9,7 @@ MovieHandler::~MovieHandler() {
 }
 
 void MovieHandler::Initialize() {
-	mMovieTest.openFromFile("Resources/Videos/spacetestSMALL.wmv");
+	mMovieTest.openFromFile("Resources/Videos/prolog.wmv");
 	mMovieTest.fit(0, 0, (float)1280, (float)720);
 }
 

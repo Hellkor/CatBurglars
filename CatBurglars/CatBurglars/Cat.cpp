@@ -24,6 +24,7 @@ canPushCrate(true){
 	if (mID == 1){
 		mSpeed = 2;
 		mSprite.setTexture(*texturehandler->GetTexture(10), true);
+		mDashSound.setBuffer(*mSoundHandler->getSound(2));
 	}
 	if (mID == 2){
 		mSpeed = 2;
@@ -62,17 +63,23 @@ void Cat::Update(float dt){
 	}
 
 	if (mMoving){
+		mButtonPress = false;
+		if (mDashing) {
+			if (!(mDashSound.getStatus() == sf::Sound::Playing)) {
+				mDashSound.play();
+			}
+		}
 		if (direction == 4 && mPosition.y != newPos.y) {
 			mPosition.y -= (1 * mSpeed);
 			if (mDashing == true){
 				mAnimationhandler.animation(4, 5, sf::milliseconds(250));
 			}
 			else if (mPushing) {
-				//mAnimationhandler.animation(12, 5, sf::milliseconds(100));
+				mAnimationhandler.animation(12, 5, sf::milliseconds(100));
 				
 			}
 			else
-				mAnimationhandler.animation(1, 5, sf::milliseconds(50));
+				mAnimationhandler.animation(1, 5, sf::milliseconds(100));
 		}
 		else if (direction == 3 && mPosition.y != newPos.y) {
 			mPosition.y += (1 * mSpeed);
@@ -83,7 +90,7 @@ void Cat::Update(float dt){
 				mAnimationhandler.animation(13, 5, sf::milliseconds(100));
 			}
 			else
-				mAnimationhandler.animation(0, 5, sf::milliseconds(50));
+				mAnimationhandler.animation(0, 5, sf::milliseconds(100));
 		}
 		else if (direction == 2 && mPosition.x != newPos.x) {
 			mPosition.x -= (1 * mSpeed);
@@ -94,7 +101,7 @@ void Cat::Update(float dt){
 				mAnimationhandler.animation(14, 5, sf::milliseconds(100));
 			}
 			else
-				mAnimationhandler.animation(3, 5, sf::milliseconds(50));
+				mAnimationhandler.animation(3, 5, sf::milliseconds(100));
 			
 		}
 		else if (direction == 1 && mPosition.x != newPos.x) {
@@ -106,7 +113,7 @@ void Cat::Update(float dt){
 				mAnimationhandler.animation(15, 5, sf::milliseconds(100));
 			}
 			else
-				mAnimationhandler.animation(2, 5, sf::milliseconds(50));
+				mAnimationhandler.animation(2, 5, sf::milliseconds(100));
 		}
 		else {
 			mMoving = false;
@@ -154,19 +161,35 @@ void Cat::Update(float dt){
 			//mAnimationhandler.reset(direction);
 		}
 	}
-	else if (canMove) // TEMP , SKA ÄNDRAS MED IDLE ANIMATION
+	else if (canMove&& !mPushing) // TEMP , SKA ÄNDRAS MED IDLE ANIMATION
 	{
 		if (direction == 4) {
-			//mAnimationhandler.setFrame(1, 4);
+			if (mButtonPress) {
+				mAnimationhandler.setFrame(16, 1);
+			}
+			else
+			mAnimationhandler.animation(8, 5, sf::milliseconds(100));
 		}
 		if (direction == 3) {
-			//mAnimationhandler.setFrame(0, 0);
+			if (mButtonPress) {
+				mAnimationhandler.setFrame(16, 0);
+			}
+			else
+			mAnimationhandler.animation(9, 5, sf::milliseconds(100));
 		}
 		if (direction == 2) {
-			//mAnimationhandler.setFrame(3, 0);
+			if (mButtonPress) {
+				mAnimationhandler.setFrame(16, 2);
+			}
+			else
+			mAnimationhandler.animation(10, 5, sf::milliseconds(100));
 		}
 		if (direction == 1) {
-			//mAnimationhandler.setFrame(2, 0);
+			if (mButtonPress) {
+				mAnimationhandler.setFrame(16, 3);
+			}
+			else
+			mAnimationhandler.animation(11, 5, sf::milliseconds(100));
 		}
 	}
 
@@ -176,13 +199,14 @@ void Cat::Update(float dt){
 void Cat::moveForward(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 	if (!mMoving && canMove) {
 		direction = 4;
-		if (mGrid.moveCrate(this, gridvector(mCoord.x, mCoord.y - 1), tileLayer, Entities)) {
-			mAnimationhandler.playAnimation(12, 5, sf::milliseconds(100));
-			mPushing = true;
+		if (canPushCrate) {
+			if (mGrid.moveCrate(this, gridvector(mCoord.x, mCoord.y - 1), tileLayer, Entities)) {
+				mAnimationhandler.playAnimation(12, 5, sf::milliseconds(100));
+				mPushing = true;
+			}
 		}
 		if (mGrid.isTilePassable(this, gridvector(mCoord.x, mCoord.y - 1), tileLayer, Entities)){
 			newPos.y = mPosition.y - 64;
-			mSoundHandler->PlaySound(1);
 			mMoving = true;
 		}
 	}
@@ -191,8 +215,10 @@ void Cat::moveBackWards(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 	if (!mMoving && canMove) {
 		direction = 3;
 
-		if (mGrid.moveCrate(this, gridvector(mCoord.x, mCoord.y + 1), tileLayer, Entities)) {
-			mPushing = true;
+		if (canPushCrate) {
+			if (mGrid.moveCrate(this, gridvector(mCoord.x, mCoord.y + 1), tileLayer, Entities)) {
+				mPushing = true;
+			}
 		}
 
 		if (mGrid.isTilePassable(this, gridvector(mCoord.x, mCoord.y + 1), tileLayer, Entities)){
@@ -204,8 +230,10 @@ void Cat::moveBackWards(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 void Cat::moveLeft(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 	if (!mMoving && canMove) {
 		direction = 2;
-		if (mGrid.moveCrate(this, gridvector(mCoord.x - 1, mCoord.y), tileLayer, Entities)) {
-			mPushing = true;
+		if (canPushCrate) {
+			if (mGrid.moveCrate(this, gridvector(mCoord.x - 1, mCoord.y), tileLayer, Entities)) {
+				mPushing = true;
+			}
 		}
 		if (mGrid.isTilePassable(this, gridvector(mCoord.x - 1, mCoord.y), tileLayer, Entities)){
 			newPos.x = mPosition.x - 64;
@@ -216,8 +244,10 @@ void Cat::moveLeft(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 void Cat::moveRight(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 	if (!mMoving && canMove) {
 		direction = 1;
-		if (mGrid.moveCrate(this, gridvector(mCoord.x + 1, mCoord.y), tileLayer, Entities)) {
-			mPushing = true;
+		if (canPushCrate) {
+			if (mGrid.moveCrate(this, gridvector(mCoord.x + 1, mCoord.y), tileLayer, Entities)) {
+				mPushing = true;
+			}
 		}
 		if (mGrid.isTilePassable(this, gridvector(mCoord.x + 1, mCoord.y), tileLayer, Entities)){
 			newPos.x = mPosition.x + 64;
@@ -246,28 +276,29 @@ bool Cat::isSolid(){
 void Cat::interaction(Usable *usable) {
 	if (isInteracting()) {
 		if (Computer *comp = dynamic_cast<Computer*>(usable)) {
-			if (mCoord == comp->getCoords()) {
-				if (comp->getFace() == "N") {
-					mAnimationhandler.playAnimation(2, 6, sf::milliseconds(3000 / 6));
+			if (mCoord == comp->getCoords() && mID == 2) {
+				if (comp->getFace() == "S") {
+					mAnimationhandler.playAnimation(4, 6, sf::milliseconds(1000 / 6));
 				}
 				else if (comp->getFace() == "E") {
-					mAnimationhandler.playAnimation(2, 6, sf::milliseconds(3000 / 6));
+					mAnimationhandler.playAnimation(6, 6, sf::milliseconds(1000 / 6));
 				}
 				else if (comp->getFace() == "W") {
-					mAnimationhandler.playAnimation(2, 6, sf::milliseconds(3000 / 6));
+					mAnimationhandler.playAnimation(5, 6, sf::milliseconds(1000 / 6));
 				}
 				
 				comp->playSound();
 				canMove = false;
 				interactionClock.restart();
-				interactionTime = sf::seconds(3);
-				comp->Activate(sf::seconds(3));
+				interactionTime = sf::seconds(1);
+				comp->Activate(sf::seconds(1));
 			}
 		}
 	}
 	if (Button *butt = dynamic_cast<Button*>(usable)) {
 		if (mCoord == butt->getCoords()) {
 			butt->Activate(sf::seconds(1));
+			mButtonPress = true;
 		}
 	}
 	
@@ -306,8 +337,7 @@ void Cat::shadowDash(TileLayer *tileLayer, std::vector<Entity*> *Entities, int d
 	int position = 0;
 	int positionY = 0;
 	int positionX = 0;
-//	int newPosition = 0;
-//	int newCoord = 0;
+
 	std::cout << "DASH!" << std::endl;
 	if (mAbilityClock.getElapsedTime()>=mAbilityTime && !mMoving){
 		if (direc == 1) {
@@ -326,19 +356,6 @@ void Cat::shadowDash(TileLayer *tileLayer, std::vector<Entity*> *Entities, int d
 			positiveNegative = -1;
 			positionY = -1;
 		}
-		/*if (direc == 1 || direc == 3) {
-			positiveNegative = 1;
-		}
-		else {
-			positiveNegative = -1;
-		}
-
-		if (direc == 1 || direc == 2) {
-			position = mPosition.x;
-		}
-		else {
-			position = mPosition.y;
-		}*/
 
 		std::cout << positionX << std::endl;
 		std::cout << positionY << std::endl;
@@ -359,20 +376,15 @@ void Cat::shadowDash(TileLayer *tileLayer, std::vector<Entity*> *Entities, int d
 			mSpeed = mSpeed * 4;
 			position += (256 * positiveNegative);
 			positiveNegative *= 3;
-		//	newPos.x = mPosition.x + (256 * positiveNegative);
-		//	mCoord.x + positiveNegative;
 			mDashing = true;
 			mMoving = true;
 			mAbilityClock.restart();
-			//mSoundHandler->PlaySound(2);
 		}
 		else if ((mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX), mCoord.y + (positionY)), tileLayer, Entities)) && (mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX*2), mCoord.y + (positionY*2)), tileLayer, Entities)) && (mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX*3), mCoord.y + (positionY*3)), tileLayer, Entities))) {
 			std::cout << "3 Tile dash" << std::endl;
 			mSpeed = mSpeed * 4;
 			position += (192 * positiveNegative);
 			positiveNegative *= 2;
-		//	newPos.x = mPosition.x + (192 * positiveNegative);
-		//	mCoord.x + positiveNegative;
 			mDashing = true;
 			mMoving = true;
 			mAbilityClock.restart();
@@ -382,8 +394,6 @@ void Cat::shadowDash(TileLayer *tileLayer, std::vector<Entity*> *Entities, int d
 			mSpeed = mSpeed * 4;
 			position += (128 * positiveNegative);
 			positiveNegative *= 1;
-		//	newPos.x = mPosition.x + (128 * positiveNegative);
-		//	mCoord.x + positiveNegative;
 			mDashing = true;
 			mMoving = true;
 			mAbilityClock.restart();
@@ -391,48 +401,7 @@ void Cat::shadowDash(TileLayer *tileLayer, std::vector<Entity*> *Entities, int d
 		else {
 			positiveNegative = 0;
 		}
-		/*else if ((mGrid.isTilePassable(mCoord, gridvector(mCoord.x + (positionX), mCoord.y +(positionY)), tileLayer, Entities))) {
-			mSpeed = mSpeed * 4;
-			position += (64 * positiveNegative);
-		//	newPos.x = mPosition.x + (64 * positiveNegative);
-		//	mCoord.x + positiveNegative;
-			mDashing = true;
-			mMoving = true;
-			mAbilityClock.restart();
-		}*/
-	/*	if (direction == 1 && (mGrid.isTilePassable(mCoord, gridvector(mCoord.x + 1, mCoord.y), tileLayer, Entities)) && (mGrid.isTilePassable(mCoord, gridvector(mCoord.x + 2, mCoord.y), tileLayer, Entities))){
-			mSpeed = mSpeed * 4;
-			newPos.x = mPosition.x + 128;
-			mCoord.x++;
-			mDashing = true;
-			mMoving = true;
-			mAbilityClock.restart();
-		}
-		if (direction == 2 && (mGrid.isTilePassable(mCoord, gridvector(mCoord.x - 1, mCoord.y), tileLayer, Entities)) && (mGrid.isTilePassable(mCoord, gridvector(mCoord.x - 2, mCoord.y), tileLayer, Entities))){
-			mSpeed = mSpeed * 4;
-			newPos.x = mPosition.x - 128;
-			mCoord.x--;
-			mDashing = true;
-			mMoving = true;
-			mAbilityClock.restart();
-		}
-		if (direction == 3 && (mGrid.isTilePassable(mCoord, gridvector(mCoord.x, mCoord.y + 1), tileLayer, Entities)) && (mGrid.isTilePassable(mCoord, gridvector(mCoord.x, mCoord.y + 2), tileLayer, Entities))){
-			mSpeed = mSpeed * 4;
-			newPos.y = mPosition.y + 128;
-			mCoord.y++;
-			mDashing = true;
-			mMoving = true;
-			mAbilityClock.restart();
-		}
-		if (direction == 4 && (mGrid.isTilePassable(mCoord, gridvector(mCoord.x, mCoord.y - 1), tileLayer, Entities)) && (mGrid.isTilePassable(mCoord, gridvector(mCoord.x, mCoord.y - 2), tileLayer, Entities))){
-			mSpeed = mSpeed * 4;
-			newPos.y = mPosition.y - 128;
-			mCoord.y--;
-			mDashing = true;
-			mMoving = true;
-			mAbilityClock.restart();
-		}
-		*/
+
 		std::cout << position << std::endl;
 		std::cout << positiveNegative << std::endl;
 		if (direc == 1 || direc == 2) {

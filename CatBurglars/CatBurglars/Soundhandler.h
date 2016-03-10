@@ -11,9 +11,9 @@ public:
 
 	~SoundHandler();
 
-	void Initialize();
+	static void Initialize();
 	void PlaySound(int ID);
-	void startMusic(int ID);
+	void startMusic(string ID);
 	void stopMusic();
 	void setMusicVolume(int volume);
 	void setSoundVolume(int volume);
@@ -21,11 +21,11 @@ public:
 	void initializeCat2(GameObject *cat2);
 	sf::SoundBuffer* getSound(int ID);
 	int distanceSound(GameObject *gameobject);
+	float changeIndiVolume(float change);
 private:
 	int mMusicVolume = 100;
 	int mSoundVolume = 100;
-	sf::SoundBuffer mVaktGårB, mShadowDashB, mSnowHaxB, mCratePushB, mDoorOpenB;
-	sf::Sound mVaktGår, mShadowDash, mSnowHax, mCratePush, mDoorOpen;
+	
 	sf::Music mMusic;
 
 	GameObject *mCat1;

@@ -4,7 +4,7 @@
 
 class MultiDoor : public Recievers{
 public:
-	MultiDoor(int channel,int numberofchannels, gridvector coords, sf::Texture *texture);
+	MultiDoor(int channel,int numberofchannels, gridvector coords, sf::Texture *texture,string face, SoundHandler *soundhandler);
 
 	virtual void connectToChannel(int channelID);
 
@@ -25,5 +25,9 @@ private:
 	gridvector mCoords;
 	sf::Sprite mSprite;
 
+	string mFace;
+	SoundHandler* mSoundHandler;
+	sf::Sound mSound;
+	bool hasPlayed = false;
 	
 };

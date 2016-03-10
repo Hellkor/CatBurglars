@@ -19,7 +19,7 @@
 #include "Pathfinder.h"
 using namespace std;
 
-bool IMMORTALITY_MODE = true;
+bool IMMORTALITY_MODE = false;
 
 static TextureHandler	textures;
 static SoundHandler		soundhandler;
@@ -78,12 +78,8 @@ Level::Level(string level_directory) :
 
 	
 	// Initialize GUI View
-	//guiView.setSize(1024, 720);
 	guiView.setViewport(sf::FloatRect(0, 0, 1, 1));
 
-	//Initialize textures
-	textures.Initialize();
-	soundhandler.Initialize();
 
 	
 	
@@ -113,7 +109,7 @@ Level::Level(string level_directory) :
 	light.setTextureRect(sf::IntRect(0, 0, 1024, 1024)); // Set where on the image we will take the sprite (X position, Y position, Width, Height)
 	light.setOrigin(512.f, 512.f); // This will offset where we draw our ligts so the center of the light is right over where we want our light to be
 
-	lights.push_back(new Light(sf::Vector2f(200, 200), sf::Vector2f(0.1f, 0.1f), sf::Color(255, 180, 130, 255)));
+	
 	//--------------------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -133,69 +129,14 @@ void Level::InitializeGuiView(sf::RenderWindow *window) {
 // Renderar level
 void Level::render(sf::RenderWindow *window){
 	
-	if (mPlayers > 1) {
-		mPlayer1View.setSize(sf::Vector2f(window->getSize().x / 2, window->getSize().y));
-	}
-	else {
-		mPlayer1View.setSize(sf::Vector2f(window->getSize().x , window->getSize().y));
-	}
-	window->setView(mPlayer1View);
-	for (TileLayer::size_type y = 0; y < mBottomTileLayer.size(); y++)
-	{
-		for (TileRow::size_type x = 0; x < mBottomTileLayer[y].size(); x++)
-		{
-			mBottomTileLayer[y][x]->Render(window);
+	if (mLoaded) {
+		if (mPlayers > 1) {
+			mPlayer1View.setSize(sf::Vector2f(window->getSize().x / 2, window->getSize().y));
 		}
-	}
-	for each (Entity *e in mEntities){
-		if (e->getLayer() == BACK) {
-			e->Render(window);
+		else {
+			mPlayer1View.setSize(sf::Vector2f(window->getSize().x, window->getSize().y));
 		}
-	}
-	for each (Entity *e in mEntities) {
-		if (e->getLayer() == MIDDLE) {
-			e->Render(window);
-		}
-	}
-	for (TileLayer::size_type y = 0; y < mBottomTileLayer.size(); y++)
-	{
-		for (TileRow::size_type x = 0; x < mBottomTileLayer[y].size(); x++)
-		{
-			mWallTileLayer[y][x]->Render(window);
-		}
-	}
-
-	
-	for each (Entity *e in mEntities) {
-		if (e->getLayer() == OnWallUsables) {
-			e->Render(window);
-		}
-	}
-	for each (Entity *e in mEntities) {
-		if (e->getLayer() == FRONT) {
-			e->Render(window);
-		}
-	}
-	for each (Entity *e in mEntities) {
-		if (e->getLayer() == DOORS) {
-			e->Render(window);
-		}
-	}
-	for (TileLayer::size_type y = 0; y < mTopTileLayer.size(); y++)
-	{
-		for (TileRow::size_type x = 0; x < mTopTileLayer[y].size(); x++)
-		{
-			mTopTileLayer[y][x]->Render(window);
-		}
-	}
-	
-	renderLight(window);
-	renderPlayerFOV(window, 1);
-	
-	
-	if (mPlayers == 2){
-		mPlayer2View.setSize(sf::Vector2f(window->getSize().x / 2, window->getSize().y));
-		window->setView(mPlayer2View); 
+		window->setView(mPlayer1View);
 		for (TileLayer::size_type y = 0; y < mBottomTileLayer.size(); y++)
 		{
 			for (TileRow::size_type x = 0; x < mBottomTileLayer[y].size(); x++)
@@ -220,7 +161,8 @@ void Level::render(sf::RenderWindow *window){
 				mWallTileLayer[y][x]->Render(window);
 			}
 		}
-		
+
+
 		for each (Entity *e in mEntities) {
 			if (e->getLayer() == OnWallUsables) {
 				e->Render(window);
@@ -244,23 +186,79 @@ void Level::render(sf::RenderWindow *window){
 			}
 		}
 
-		
 		renderLight(window);
-		renderPlayerFOV(window, 2);
+		renderPlayerFOV(window, 1);
 
-		
-		
-	}
 
-	// Draw gui objects
-	guiView.setSize(sf::Vector2f(window->getSize()));
-	window->setView(guiView);
-	if (mPlayers == 2 && !dialogManager.isDialogActive()) {
-		DIVIDER_SPRITE.setPosition(guiView.getCenter());
-		window->draw(DIVIDER_SPRITE);
-	}
-	if (dialogManager.isDialogActive()) {
-		dialogManager.render(window, guiView);
+		if (mPlayers == 2) {
+			mPlayer2View.setSize(sf::Vector2f(window->getSize().x / 2, window->getSize().y));
+			window->setView(mPlayer2View);
+			for (TileLayer::size_type y = 0; y < mBottomTileLayer.size(); y++)
+			{
+				for (TileRow::size_type x = 0; x < mBottomTileLayer[y].size(); x++)
+				{
+					mBottomTileLayer[y][x]->Render(window);
+				}
+			}
+			for each (Entity *e in mEntities) {
+				if (e->getLayer() == BACK) {
+					e->Render(window);
+				}
+			}
+			for each (Entity *e in mEntities) {
+				if (e->getLayer() == MIDDLE) {
+					e->Render(window);
+				}
+			}
+			for (TileLayer::size_type y = 0; y < mBottomTileLayer.size(); y++)
+			{
+				for (TileRow::size_type x = 0; x < mBottomTileLayer[y].size(); x++)
+				{
+					mWallTileLayer[y][x]->Render(window);
+				}
+			}
+
+			for each (Entity *e in mEntities) {
+				if (e->getLayer() == OnWallUsables) {
+					e->Render(window);
+				}
+			}
+			for each (Entity *e in mEntities) {
+				if (e->getLayer() == FRONT) {
+					e->Render(window);
+				}
+			}
+			for each (Entity *e in mEntities) {
+				if (e->getLayer() == DOORS) {
+					e->Render(window);
+				}
+			}
+			for (TileLayer::size_type y = 0; y < mTopTileLayer.size(); y++)
+			{
+				for (TileRow::size_type x = 0; x < mTopTileLayer[y].size(); x++)
+				{
+					mTopTileLayer[y][x]->Render(window);
+				}
+			}
+
+
+			renderLight(window);
+			renderPlayerFOV(window, 2);
+
+
+
+		}
+
+		// Draw gui objects
+		guiView.setSize(sf::Vector2f(window->getSize()));
+		window->setView(guiView);
+		if (mPlayers == 2 && !dialogManager.isDialogActive()) {
+			DIVIDER_SPRITE.setPosition(guiView.getCenter());
+			window->draw(DIVIDER_SPRITE);
+		}
+		if (dialogManager.isDialogActive()) {
+			dialogManager.render(window, guiView);
+		}
 	}
 	
 }
@@ -291,12 +289,6 @@ void Level::update(float dt){
 					if (Guard *guard = dynamic_cast<Guard*>(obj)) {
 
 						guard->AImovement(&mWallTileLayer, &mEntities, &pathfinder);
-					}
-					for each (Entity *ent in mEntities) {
-
-						//if (Usable *u = dynamic_cast<Usable*>(ent)) {
-						//	u->getInteraction(obj);
-						//}
 					}
 
 
@@ -372,6 +364,9 @@ void Level::update(float dt){
 
 			}
 		}
+		else if (dialogManager.isDialogActive()) {
+			p1Controller.nextDialog(&dialogManager);
+		}
 
 
 		if (test && !IMMORTALITY_MODE) {
@@ -385,7 +380,7 @@ void Level::renderLight(sf::RenderWindow *window) {
 	// -----------------------------------------------------------------------------------------------------------------------------------------------------
 
 	// Clear the buffer where we draw the lights, this color could be changed depending on the time of day in the game to show a night/daytime cycle
-	lightMapTexture.clear(sf::Color(150, 150, 150, 0));
+	lightMapTexture.clear(sf::Color(170, 170, 170, 0));
 
 	// Loop over the lights in the vector
 	for (std::size_t i = 0; i < lights.size(); ++i)
@@ -450,8 +445,8 @@ void Level::load(){
 		Channels::addChannel(Channel(i));
 	}
 
-	soundhandler.startMusic(2);
-
+	//Starts the music for a level
+	soundhandler.startMusic(mFile);
 
 	generateLevel(mFile);
 	
@@ -643,7 +638,7 @@ void Level::generateLevel(string name){
 		
 		if (objectID == 3){
 
-			mEntities.push_back(new Door(channel, gridvector(xPos, yPos), textures.GetTexture(11), &soundhandler));
+			mEntities.push_back(new Door(channel, gridvector(xPos, yPos), textures.GetTexture(15), &soundhandler));
 		}
 		if (objectID == 4){
 			mEntities.push_back(new Guard(&textures, gridvector(xPos, yPos), 1, script, &soundhandler,mFile));
@@ -653,15 +648,17 @@ void Level::generateLevel(string name){
 		}
 		if (objectID == 7) {
 			if (range == 0) {
-				mEntities.push_back(new Computer(channel, textures.GetTexture(13), gridvector(xPos, yPos), false, hold,&soundhandler,facing));
+				mEntities.push_back(new Computer(channel, textures.GetTexture(14), gridvector(xPos, yPos), false, hold,&soundhandler,facing));
+				lights.push_back(new Light(sf::Vector2f(xPos*64 +32, yPos*64 +32), sf::Vector2f(0.08f, 0.08f), sf::Color(255, 180, 130, 255)));
 			}
 			else if (range == 1) {
 				mEntities.push_back(new Computer(channel, textures.GetTexture(14), gridvector(xPos, yPos), true, hold, &soundhandler, facing));
+				lights.push_back(new Light(sf::Vector2f(xPos * 64 +32, yPos * 64 +32), sf::Vector2f(0.08f, 0.08f), sf::Color(255, 180, 130, 255)));
 			}
 			
 		}
 		if (objectID == 8) {
-			mEntities.push_back(new MultiDoor(channel, range, gridvector(xPos, yPos), textures.GetTexture(11)));
+			mEntities.push_back(new MultiDoor(channel, range, gridvector(xPos, yPos), textures.GetTexture(11),facing, &soundhandler));
 		}
 		if (objectID == 9) {
 			mEntities.push_back(new Crate(textures.GetTexture(4), gridvector(xPos, yPos), 1, &soundhandler, false));

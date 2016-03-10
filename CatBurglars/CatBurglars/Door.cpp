@@ -10,14 +10,22 @@ Door::Door(int channel, gridvector coords, sf::Texture *texture, SoundHandler *s
 
 	mSprite.setTexture(*texture);
 	mSprite.setPosition(sf::Vector2f(mPosition.x,mPosition.y - 64));
+
 }
 
 void Door::Update(float dt){
 
 	if (Channels::isChannelActive(mChannel)){
+		/*if (!hasPlayed && mSound.getStatus() != sf::Sound::Playing) {
+			mSound.play();
+			hasPlayed = true;
+		}*/
 		mSolid = false;
 	}
-	else mSolid = true;
+	else {
+		//hasPlayed = false;
+		mSolid = true;
+	}
 }
 Layer Door::getLayer() {
 	return DOORS;
