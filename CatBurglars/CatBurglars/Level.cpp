@@ -479,6 +479,8 @@ void Level::generateLevel(string name){
 	string input;
 	inputFile >> input;
 	cout << "Version: " + input << endl;
+	inputFile >> mLevelType;
+	cout << "Level Type: " + mLevelType << endl;
 	inputFile >> input;
 	mMapSizeX = stoi(input);
 	cout << "Map width: " << mMapSizeX << endl;
@@ -493,7 +495,11 @@ void Level::generateLevel(string name){
 		{
 			inputFile >> input;
 			int ID = stoi(input);
-			Tile *tile = new Tile(gridvector( x , y ), ID, 0, &textures);
+			Tile *tile;
+			if (mLevelType == "Prison1")
+				tile = new Tile(gridvector( x , y ), ID, 0, &textures);
+			else
+				tile = new Tile(gridvector(x, y), ID, 2, &textures);
 			mTileRow.push_back(tile);
 			
 
