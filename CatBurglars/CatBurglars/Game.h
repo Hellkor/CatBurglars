@@ -13,6 +13,9 @@
 #include "LevelManager.h"
 #include "Channel.h"
 #include "Channels.h"
+#include "MenuSystem.h"
+#include "MenuButton.h"
+#include "MenuPage.h"
 
 class Game
 {
@@ -27,6 +30,20 @@ private:
 	GameObject *mGameObjectives;
 	
 	EntityVector mEntities;
+
+	MenuSystem MainMenuSystem;
+
+	MenuButton *Continue;
+	MenuButton *NewGame;
+	MenuButton *Options;
+	MenuButton *Catopedia;
+	MenuButton *Exit;
+
+	MenuButton *ToggleFullscreen;
+	MenuButton *ToggleSound;
+
+	MenuPage *page2;
+	MenuPage *page1;
 };
 
 #endif
