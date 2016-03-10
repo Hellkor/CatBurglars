@@ -69,7 +69,7 @@ Game::Game() {
 	TextureHandler::Initialize();
 	SoundHandler::Initialize();
 
-	/*Level *Level0 = new Level("1_1");
+	Level *Level0 = new Level("1_1");
 	Level *level1 = new Level("1_2");
 	Level *level2 = new Level("1_3");
 	Level *level3 = new Level("1_4");
@@ -82,11 +82,11 @@ Game::Game() {
 	LevelManager::addLevel(level2);
 	LevelManager::addLevel(level3);
 	LevelManager::addLevel(level4); 
-	LevelManager::addLevel(level5);*/
+	LevelManager::addLevel(level5);
 
-	Level *leveltest = new Level("Pathfind_Test");
+	//Level *leveltest = new Level("Pathfind_Test");
 
-	LevelManager::addLevel(leveltest);
+	//LevelManager::addLevel(leveltest);
 
 	LevelManager::load();
 	LevelManager::addCollectible();
@@ -94,7 +94,7 @@ Game::Game() {
 
 	LevelManager::loadLevel(0);
 	
-	moviehandler.Initialize();
+	//moviehandler.Initialize();
 
 	
 	page1 = new MenuPage(sf::Vector2f(200, 200), "Main");
@@ -384,7 +384,7 @@ void Game::Render()
 		LevelManager::render(window);
 		break;
 	case Pause:
-		moviehandler.getMovie()->update();
+		//moviehandler.getMovie()->update();
 		window->clear();
 		break;
 
@@ -393,6 +393,6 @@ void Game::Render()
 	
 
 	
-	window->draw(*moviehandler.getMovie());
+	//window->draw(*moviehandler.getMovie());
 	window->display();
 }

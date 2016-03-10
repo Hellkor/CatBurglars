@@ -429,7 +429,7 @@ void Level::renderPlayerFOV(sf::RenderWindow *window, int player) {
 
 void Level::load(){
 
-	
+	lights.clear();
 	mLoaded = false;
 
 	mEntities.clear();
