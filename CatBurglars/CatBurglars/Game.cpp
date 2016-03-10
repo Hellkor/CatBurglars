@@ -64,7 +64,7 @@ Game::Game() {
 	TextureHandler::Initialize();
 	SoundHandler::Initialize();
 
-	Level *Level0 = new Level("1_1");
+	/*Level *Level0 = new Level("1_1");
 	Level *level1 = new Level("1_2");
 	Level *level2 = new Level("1_3");
 	Level *level3 = new Level("1_4");
@@ -77,9 +77,11 @@ Game::Game() {
 	LevelManager::addLevel(level2);
 	LevelManager::addLevel(level3);
 	LevelManager::addLevel(level4); 
-	LevelManager::addLevel(level5);
+	LevelManager::addLevel(level5);*/
 
-	
+	Level *leveltest = new Level("Pathfind_Test");
+
+	LevelManager::addLevel(leveltest);
 
 	LevelManager::load();
 	LevelManager::addCollectible();
