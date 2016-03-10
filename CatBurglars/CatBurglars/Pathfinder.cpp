@@ -51,9 +51,9 @@ void Pathfinder::Update(vector<Entity*> *entities)
 		if (GameObject *o = dynamic_cast<GameObject*>(e))
 		{
 			gridvector pos = o->getCoords();
-			/*if (GameObject *c = dynamic_cast<Cat*>(o))
+			if (GameObject *c = dynamic_cast<Cat*>(o))
 				mNodeMap[pos.y][pos.x]->SetPassable(true);
-			else*/
+			else
 				mNodeMap[pos.y][pos.x]->SetPassable(!o->isSolid());
 		}
 	}
