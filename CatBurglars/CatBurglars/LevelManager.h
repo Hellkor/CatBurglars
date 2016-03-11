@@ -21,6 +21,10 @@ public:
 	
 	static void load();
 	static void save();
+
+	static void loadLastSavedLevel();
+
+	static void reloadLevel();
 	
 private:
 	static void loadGame();
