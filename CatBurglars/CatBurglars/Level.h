@@ -20,7 +20,7 @@ public:
 
 	void addPlayer(Cat *cat, int player);
 	void load();
-
+	void Clear();
 
 	void InitializeGuiView(sf::RenderWindow *window);
 private:

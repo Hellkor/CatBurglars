@@ -5,7 +5,7 @@
 class Recievers : public GameObject{
 public:
 	Recievers(){ }
-	~Recievers(){ }
+	virtual ~Recievers(){ }
 	virtual void connectToChannel(int channelID) = 0;
 	virtual void Update(float dt) = 0;
 	virtual void Render(sf::RenderWindow *window) = 0;

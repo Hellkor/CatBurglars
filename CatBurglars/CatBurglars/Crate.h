@@ -8,7 +8,7 @@ class Crate : public GameObject{
 public:
 
 	Crate(sf::Texture *texture, gridvector v, int ID, SoundHandler *soundhandler, bool movable);
-	~Crate();
+	virtual ~Crate();
 	virtual void Render(sf::RenderWindow *mainWindow);
 	virtual void Update(float dt);
 	virtual sf::Vector2i GetPosition();

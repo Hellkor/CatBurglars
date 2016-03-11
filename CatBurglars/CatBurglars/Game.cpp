@@ -50,7 +50,7 @@ sf::Time fadeTime = sf::milliseconds(10);
 float SPLASH_ALPHA = 0;
 
 enum GameState_  { Menu, RunGame, Pause , Splash };
-GameState_ GameState = Splash;
+GameState_ GameState = RunGame;
 
 Game::Game() {
 	//Creates the main window

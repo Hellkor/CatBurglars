@@ -120,7 +120,10 @@ mFace(face){
 	mConvex.setTexture(textures.GetTexture(99));
 }
 secuCam::~secuCam(){
-	mVision.clear();
+	while (!mVision.empty()) {
+		delete mVision.back();
+		mVision.pop_back();
+	}
 }
 bool secuCam::checkChannels() {
 	for each (int channel in mChannels) {

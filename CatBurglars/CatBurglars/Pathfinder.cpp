@@ -120,7 +120,6 @@ vector<PathNode*> Pathfinder::FindPath(gridvector start, gridvector target)
 	vector<PathNode*> path;
 	if (failed)
 	{
-		cout << "No Path!" << endl;
 		for each (PathNode* n in open)
 		{
 			n->SetPathParent(nullptr);
@@ -244,10 +243,6 @@ vector<PathNode*> Pathfinder::FindBlockedPath(gridvector start, gridvector targe
 	vector<PathNode*> path;
 	if (failed)
 	{
-		if (!part)
-			cout << "No Possible Path!" << endl;
-		else
-			cout << "No Part Path!" << endl;
 		for each (PathNode* n in open)
 		{
 			n->SetPathParent(nullptr);

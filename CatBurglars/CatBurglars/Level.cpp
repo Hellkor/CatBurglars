@@ -432,12 +432,31 @@ void Level::load(){
 	lights.clear();
 	mLoaded = false;
 
-	for (vector<Entity*>::size_type i = 0; i < mEntities.size(); i++)
-	{
+	Clear();
+
+	dialogManager.initialize(guiView);
+
+	for (int i = 0; i <= 100; i++) {
+
+		Channels::addChannel(Channel(i));
+	}
+
+	//Starts the music for a level
+	soundhandler.startMusic(mFile);
+
+	generateLevel(mFile);
+	
+	
+
+}
+
+void Level::Clear(){
+
+	while (!mEntities.empty()) {
 		delete mEntities.back();
 		mEntities.pop_back();
-		i--;
 	}
+
 	for (TileLayer::size_type y = 0; y < mBottomTileLayer.size(); y++)
 	{
 		for (TileRow::size_type x = 0; x < mBottomTileLayer.back().size(); x++)
@@ -472,22 +491,8 @@ void Level::load(){
 		y--;
 	}
 	Channels::clearChannels();
-
-	dialogManager.initialize(guiView);
-
-	for (int i = 0; i <= 100; i++) {
-
-		Channels::addChannel(Channel(i));
-	}
-
-	//Starts the music for a level
-	soundhandler.startMusic(mFile);
-
-	generateLevel(mFile);
-	
-	
-
 }
+
 void Level::generateView(){
 
 	if (mPlayers == 1){

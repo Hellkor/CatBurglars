@@ -31,6 +31,10 @@ mSoundHandler(soundhandler){
 	mSound.setBuffer(*mSoundHandler->getSound(5));
 }
 
+MultiDoor::~MultiDoor()
+{
+}
+
 void MultiDoor::Update(float dt){
 
 

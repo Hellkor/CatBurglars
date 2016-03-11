@@ -14,6 +14,10 @@ EventPad::EventPad(EVENT_TYPE eventtype, gridvector coords, int dialogID, int di
 
 }
 
+EventPad::~EventPad()
+{
+}
+
 bool EventPad::getInteraction(GameObject *g){
 
 	if (Cat *c = dynamic_cast<Cat*>(g)){
