@@ -45,14 +45,17 @@ canPushCrate(true){
 Cat::~Cat(){
 	cout << "CAT !!!Deleted" << endl;
 }
+
 //Render sprite on screen
 void Cat::Render(sf::RenderWindow *mainWindow){
 	mSprite.setPosition((sf::Vector2f)mPosition);
 	mainWindow->draw(mSprite);
 }
+
 int Cat::getPlayerIndex(){
 	return mPlayerIndex;
 }
+
 void Cat::Update(float dt){
 	
 

@@ -1,10 +1,10 @@
-#ifndef INCLUDED_GAME
-#define INCLUDE_GAME
+#pragma once
 
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <vector>
 
+#include "Screens.h"
 #include "GameObject.h"
 #include "Cat.h"
 #include "Controller.h"
@@ -46,4 +46,3 @@ private:
 	MenuPage *page1;
 };
 
-#endif

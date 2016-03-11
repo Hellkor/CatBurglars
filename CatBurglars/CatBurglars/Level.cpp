@@ -45,6 +45,12 @@ sf::Sprite				lightmap;
 
 DialogManager dialogManager("dialog", &textures,sf::Vector2f(1280,720));
 
+
+Controller p1Controller = Controller(GamepadOne);
+Controller p2Controller = Controller(GamepadTwo);
+
+
+
 // LIGHT STRUCTURE FOR BOTH LIGHT AND FOV LIGHT
 struct Light
 {
@@ -71,10 +77,8 @@ Pathfinder pathfinder;
 // Skapar en level från en textfil
 Level::Level(string level_directory) :
 	mFile(level_directory),
-	mLoaded(false),
-	p1Controller(Controller(KeyboardOne)),
-	p2Controller(Controller(KeyboardTwo)){
-
+	mLoaded(false)
+{
 
 	
 	// Initialize GUI View
@@ -268,6 +272,8 @@ void Level::addPlayer(Cat *cat , int player){
 
 
 }
+
+
 void Level::update(float dt){
 	bool test = false;
 
@@ -314,16 +320,32 @@ void Level::update(float dt){
 
 				if (Cat *cat = dynamic_cast<Cat*>(e)) {
 
+
+
+
 					if (cat->getPlayerIndex() == 1) {
 						l1->position.x = cat->GetPosition().x + 32;
 						l1->position.y = cat->GetPosition().y + 32;
+						
+						//p1Joystick.move(cat, &mWallTileLayer, &mEntities);
+						
+						
+						
 						p1Controller.move(cat, &mWallTileLayer, &mEntities);
+								
 						mPlayer1View.setCenter((sf::Vector2f)cat->GetPosition());
 					}
 					if (cat->getPlayerIndex() == 2) {
 						l2->position.x = cat->GetPosition().x + 32;
 						l2->position.y = cat->GetPosition().y + 32;
-						p2Controller.move(cat, &mWallTileLayer, &mEntities);
+						
+							
+							//	p2Joystick.move(cat, &mWallTileLayer, &mEntities);
+							
+						
+							
+								p2Controller.move(cat, &mWallTileLayer, &mEntities);
+							
 						mPlayer2View.setCenter((sf::Vector2f)cat->GetPosition());
 					}
 
@@ -498,6 +520,7 @@ void Level::generateView(){
 	if (mPlayers == 1){
 		//mPlayer1View.setSize(1024, 720);
 		mPlayer1View.setViewport(sf::FloatRect(0, 0, 1, 1));
+
 		
 	}
 	else if (mPlayers == 2){
@@ -507,6 +530,8 @@ void Level::generateView(){
 		//mPlayer2View.setSize(512, 720);
 		mPlayer2View.setViewport(sf::FloatRect(0.5, 0, 0.5f, 1));
 		mPlayer2View.zoom(1.5f);
+
+
 	}
 }
 void Level::updateViews(){

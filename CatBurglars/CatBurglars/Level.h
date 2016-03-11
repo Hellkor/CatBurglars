@@ -49,8 +49,7 @@ private:
 	sf::View mPlayer2View;
 	sf::View guiView;
 	
-	Controller p1Controller;
-	Controller p2Controller;
+	
 
 	int mPlayers;
 

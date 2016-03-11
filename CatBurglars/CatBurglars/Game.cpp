@@ -54,6 +54,8 @@ GameState_ GameState = RunGame;
 
 Game::Game() {
 	//Creates the main window
+	sf::Joystick::update();
+
 	window = new sf::RenderWindow(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "CatBurglars", sf::Style::Close);
 	GuiView.setSize(sf::Vector2f(WINDOW_WIDTH, WINDOW_HEIGHT));
 	//window->setFramerateLimit(60);
