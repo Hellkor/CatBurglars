@@ -124,6 +124,7 @@ Level::Level(string level_directory) :
 	DIVIDER_TEXTURE.loadFromFile("Resources/split_divider.png");
 	DIVIDER_SPRITE.setTexture(DIVIDER_TEXTURE);
 	DIVIDER_SPRITE.setOrigin(DIVIDER_TEXTURE.getSize().x / 2, DIVIDER_TEXTURE.getSize().y / 2);
+	DIVIDER_SPRITE.setScale(sf::Vector2f(1.0, 2.0));
 
 	
 }
@@ -294,103 +295,108 @@ void Level::update(float dt){
 			Channels::update();
 			pathfinder.Update(&mEntities);
 			for each (Entity *e in mEntities) {
+				if (!mEntities.empty()) {
 
-				e->Update(dt);
+					e->Update(dt);
 
-				if (GameObject *obj = dynamic_cast<GameObject*>(e)) {
+					if (GameObject *obj = dynamic_cast<GameObject*>(e)) {
 
-					if (Guard *guard = dynamic_cast<Guard*>(obj)) {
+						if (Guard *guard = dynamic_cast<Guard*>(obj)) {
 
-						guard->AImovement(&mWallTileLayer, &mEntities, &pathfinder);
-					}
-
-
-				}
-				if (Guard *guard = dynamic_cast<Guard*>(e)) {
-					for each (Entity *entity in mEntities) {
-						
-						if (Usable *u = dynamic_cast<Usable*>(entity)) {
-							guard->interaction(u);
+							guard->AImovement(&mWallTileLayer, &mEntities, &pathfinder);
 						}
 
-					}
-				}
-				if (Crate *crate = dynamic_cast<Crate*>(e)) {
-					for each (Entity *entity in mEntities) {
 
-						if (Usable *u = dynamic_cast<Usable*>(entity)) {
-							crate->interaction(u);
+					}
+					if (Guard *guard = dynamic_cast<Guard*>(e)) {
+						for each (Entity *entity in mEntities) {
+
+							if (Usable *u = dynamic_cast<Usable*>(entity)) {
+								guard->interaction(u);
+							}
+
 						}
-
 					}
-				}
+					if (Crate *crate = dynamic_cast<Crate*>(e)) {
+						for each (Entity *entity in mEntities) {
 
-				if (Cat *cat = dynamic_cast<Cat*>(e)) {
+							if (Usable *u = dynamic_cast<Usable*>(entity)) {
+								crate->interaction(u);
+							}
 
-
-
-
-					if (cat->getPlayerIndex() == 1) {
-						l1->position.x = cat->GetPosition().x + 32;
-						l1->position.y = cat->GetPosition().y + 32;
-						
-						//p1Joystick.move(cat, &mWallTileLayer, &mEntities);
-						
-						
-						
-						p1Controller.move(cat, &mWallTileLayer, &mEntities);
-								
-						mPlayer1View.setCenter((sf::Vector2f)cat->GetPosition());
+						}
 					}
-					if (cat->getPlayerIndex() == 2) {
-						l2->position.x = cat->GetPosition().x + 32;
-						l2->position.y = cat->GetPosition().y + 32;
-						
-							
+
+					if (Cat *cat = dynamic_cast<Cat*>(e)) {
+
+
+
+
+						if (cat->getPlayerIndex() == 1) {
+							l1->position.x = cat->GetPosition().x + 32;
+							l1->position.y = cat->GetPosition().y + 32;
+
+							//p1Joystick.move(cat, &mWallTileLayer, &mEntities);
+
+
+
+							p1Controller.move(cat, &mWallTileLayer, &mEntities);
+
+							mPlayer1View.setCenter((sf::Vector2f)cat->GetPosition());
+						}
+						if (cat->getPlayerIndex() == 2) {
+							l2->position.x = cat->GetPosition().x + 32;
+							l2->position.y = cat->GetPosition().y + 32;
+
+
 							//	p2Joystick.move(cat, &mWallTileLayer, &mEntities);
-							
-						
-							
-								p2Controller.move(cat, &mWallTileLayer, &mEntities);
-							
-						mPlayer2View.setCenter((sf::Vector2f)cat->GetPosition());
+
+
+
+							p2Controller.move(cat, &mWallTileLayer, &mEntities);
+
+							mPlayer2View.setCenter((sf::Vector2f)cat->GetPosition());
+						}
+
+						for each (Entity *entity in mEntities) {
+							if (!mEntities.empty()) {
+
+
+								//Pick up Collectible
+								if (Collectible *collectible = dynamic_cast<Collectible*>(entity)) {
+									if (collectible->getInteraction(cat)) {
+
+									}
+								}
+
+								if (secuCam *cam = dynamic_cast<secuCam*>(entity)) {
+									if (cam->getIntersection(cat) && !(cat->getDashing())) {
+										//dialogManager.startConversation(0, 0, 5);
+										test = true;
+									}
+								}
+								if (Guard *guard = dynamic_cast<Guard*>(entity)) {
+									if (guard->getIntersection(cat) && !(cat->getDashing())) {
+
+										test = true;
+									}
+								}
+								if (Usable *u = dynamic_cast<Usable*>(entity)) {
+									cat->interaction(u);
+								}
+								//Interaction with eventpad
+								if (EventPad *eventpad = dynamic_cast<EventPad*>(entity)) {
+									eventpad->getInteraction(cat);
+								}
+							}
+
+						}
+
+
 					}
 
-
-					for each (Entity *entity in mEntities) {
-
-						if (Usable *u = dynamic_cast<Usable*>(entity)) {
-							cat->interaction(u);
-						}
-
-						//Pick up Collectible
-						if (Collectible *collectible = dynamic_cast<Collectible*>(entity)) {
-							if (collectible->getInteraction(cat)) {
-
-							}
-						}
-						//Interaction with eventpad
-						if (EventPad *eventpad = dynamic_cast<EventPad*>(entity)) {
-							eventpad->getInteraction(cat);
-						}
-						if (secuCam *cam = dynamic_cast<secuCam*>(entity)) {
-							if (cam->getIntersection(cat) && !(cat->getDashing())) {
-								//dialogManager.startConversation(0, 0, 5);
-								test = true;
-							}
-						}
-						if (Guard *guard = dynamic_cast<Guard*>(entity)) {
-							if (guard->getIntersection(cat) && !(cat->getDashing())) {
-
-								test = true;
-							}
-						}
-
-					}
 
 				}
-
-
 			}
 		}
 		else if (dialogManager.isDialogActive()) {
@@ -527,16 +533,17 @@ void Level::generateView(){
 	if (mPlayers == 1){
 		//mPlayer1View.setSize(1024, 720);
 		mPlayer1View.setViewport(sf::FloatRect(0, 0, 1, 1));
-
+		mPlayer1View.zoom(2.5f);
+		
 		
 	}
 	else if (mPlayers == 2){
 		//mPlayer1View.setSize(512, 720);
 		mPlayer1View.setViewport(sf::FloatRect(0, 0, 0.5f, 1));
-		mPlayer1View.zoom(1.5f);
+		mPlayer1View.zoom(2.5f);
 		//mPlayer2View.setSize(512, 720);
 		mPlayer2View.setViewport(sf::FloatRect(0.5, 0, 0.5f, 1));
-		mPlayer2View.zoom(1.5f);
+		mPlayer2View.zoom(2.5f);
 
 
 	}

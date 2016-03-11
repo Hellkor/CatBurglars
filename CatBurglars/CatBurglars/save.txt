@@ -1,2 +1,2 @@
 Collectibles: 1
-Level: 0
+Level: 3

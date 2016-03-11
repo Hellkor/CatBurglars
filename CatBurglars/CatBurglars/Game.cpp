@@ -16,8 +16,8 @@ MovieHandler moviehandler;
 
 sf::View GuiView;
 
-int WINDOW_WIDTH = 1280;
-int WINDOW_HEIGHT = 720;
+int WINDOW_WIDTH = 1920;
+int WINDOW_HEIGHT = 1080;
 
 
 
@@ -58,9 +58,8 @@ Game::Game() {
 
 	window = new sf::RenderWindow(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "CatBurglars", sf::Style::Close);
 	GuiView.setSize(sf::Vector2f(WINDOW_WIDTH, WINDOW_HEIGHT));
-	//window->setFramerateLimit(60);
 	//window->setVerticalSyncEnabled(true);
-
+	//window->setFramerateLimit(60);
 	SPLASH_SCREEN.loadFromFile("Resources/splash.png");
 	SPLASH_SPRITE.setTexture(SPLASH_SCREEN);
 	SPLASH_SPRITE.setOrigin(sf::Vector2f(SPLASH_SCREEN.getSize().x/2, SPLASH_SCREEN.getSize().y/2));
@@ -285,10 +284,10 @@ void changeScreenMode() {
 
 
 	if (Fullscreen) {
-		window->create(sf::VideoMode(1280, 720, 32), "MenuTest", sf::Style::Fullscreen);
+		window->create(sf::VideoMode(1920, 1080, 32), "MenuTest", sf::Style::Fullscreen);
 	}
 	else if (!Fullscreen) {
-		window->create(sf::VideoMode(1280, 720, 32), "MenuTest", sf::Style::Close);
+		window->create(sf::VideoMode(1920, 1080, 32), "MenuTest", sf::Style::Close);
 	}
 }
 void Game::Update(float dt){
