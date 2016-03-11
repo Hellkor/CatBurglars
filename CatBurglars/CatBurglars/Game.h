@@ -42,7 +42,6 @@ private:
 
 	MenuPage *page2;
 	MenuButton *ToggleFullscreen;
-	MenuButton *ToggleSound;
 	MenuButton *BackButton;
 
 	

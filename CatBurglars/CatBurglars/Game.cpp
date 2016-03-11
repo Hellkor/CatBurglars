@@ -50,7 +50,7 @@ sf::Time fadeTime = sf::milliseconds(10);
 float SPLASH_ALPHA = 0;
 
 enum GameState_  { Menu, RunGame, Pause , Splash };
-GameState_ GameState = RunGame;
+GameState_ GameState = Splash;
 
 Game::Game() {
 	//Creates the main window
@@ -159,7 +159,6 @@ Game::Game() {
 	
 
 	ToggleFullscreen = new MenuButton();
-	ToggleSound = new MenuButton();
 	BackButton = new MenuButton();
 
 
@@ -167,16 +166,11 @@ Game::Game() {
 
 	sf::Texture Fullscreen;
 	sf::Texture FullscreenS;
-	sf::Texture Sound;
-	sf::Texture SoundS;
 	sf::Texture Back;
 	sf::Texture BackS;
 
-	Sound.loadFromFile("Resources/Menu/NewGameo.png");
-	SoundS.loadFromFile("Resources/Menu/NewGamen.png");
-
-	Fullscreen.loadFromFile("Resources/Menu/Continue.png");
-	FullscreenS.loadFromFile("Resources/Menu/Continuen.png");
+	Fullscreen.loadFromFile("Resources/Menu/FullscreenO.png");
+	FullscreenS.loadFromFile("Resources/Menu/FullscreenN.png");
 
 	Back.loadFromFile("Resources/Menu/BackO.png");
 	BackS.loadFromFile("Resources/Menu/BackN.png");
@@ -184,14 +178,11 @@ Game::Game() {
 	ToggleFullscreen->setTexture(&Fullscreen);
 	ToggleFullscreen->setTextureSelected(&FullscreenS);
 
-	ToggleSound->setTexture(&Sound);
-	ToggleSound->setTextureSelected(&SoundS);
 
 	BackButton->setTexture(&Back);
 	BackButton->setTextureSelected(&BackS);
 
 	page2->addMenuButton(ToggleFullscreen);
-	page2->addMenuButton(ToggleSound);
 	page2->addMenuButton(BackButton);
 
 
@@ -371,9 +362,6 @@ void Game::Update(float dt){
 			}
 			if (Catopedia->isButtonPushed()) {
 				cout << "Catopedia" << endl;
-			}
-			if (ToggleSound->isButtonPushed()) {
-				cout << "Sound toggled!" << endl;
 			}
 			if (ToggleFullscreen->isButtonPushed()) {
 				changeScreenMode();

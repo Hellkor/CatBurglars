@@ -285,7 +285,7 @@ void Level::update(float dt){
 	bool test = false;
 
 	dialogManager.update();
-
+	hintManager.Update();
 
 	if (mLoaded) {
 
@@ -771,13 +771,13 @@ void Level::generateLevel(string name){
 		
 		
 		if (range == 0) {
-			mEntities.push_back(new EventPad(DIALOG, gridvector(xPos, yPos), channel, hold, &dialogManager));
+			mEntities.push_back(new EventPad(DIALOG, gridvector(xPos, yPos), channel, hold, &dialogManager, &hintManager));
 		}
 		else if (range == 1) {
-			mEntities.push_back(new EventPad(WIN, gridvector(xPos, yPos), channel, hold, &dialogManager));
+			mEntities.push_back(new EventPad(WIN, gridvector(xPos, yPos), channel, hold, &dialogManager, &hintManager));
 		}
 		else if (range == 2) {
-			mEntities.push_back(new EventPad(HINT, gridvector(xPos, yPos), channel, hold, &dialogManager));
+			mEntities.push_back(new EventPad(HINT, gridvector(xPos, yPos), channel, hold, &dialogManager, &hintManager));
 		}
 		else if (range == 3) {
 			//add Checkpoint
