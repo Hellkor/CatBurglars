@@ -271,6 +271,9 @@ void Level::addPlayer(Cat *cat , int player){
 
 
 }
+
+sf::Event event;
+
 void Level::update(float dt){
 	bool test = false;
 
@@ -317,18 +320,33 @@ void Level::update(float dt){
 
 				if (Cat *cat = dynamic_cast<Cat*>(e)) {
 
+
+
+
 					if (cat->getPlayerIndex() == 1) {
 						l1->position.x = cat->GetPosition().x + 32;
 						l1->position.y = cat->GetPosition().y + 32;
-					//	p1Controller.move(cat, &mWallTileLayer, &mEntities);
-						p1Joystick.move(cat, &mWallTileLayer, &mEntities);
+						if (event.type == sf::Event::JoystickConnected) 
+							{
+								p1Joystick.move(cat, &mWallTileLayer, &mEntities);
+							}
+						else
+							{	
+								p1Controller.move(cat, &mWallTileLayer, &mEntities);
+							}	
 						mPlayer1View.setCenter((sf::Vector2f)cat->GetPosition());
 					}
 					if (cat->getPlayerIndex() == 2) {
 						l2->position.x = cat->GetPosition().x + 32;
 						l2->position.y = cat->GetPosition().y + 32;
-					p2Controller.move(cat, &mWallTileLayer, &mEntities);
-				//		p2Joystick.move(cat, &mWallTileLayer, &mEntities);
+						if (event.type == sf::Event::JoystickConnected)
+							{
+								p2Joystick.move(cat, &mWallTileLayer, &mEntities);
+							}
+						else
+							{
+								p2Controller.move(cat, &mWallTileLayer, &mEntities);
+							}
 						mPlayer2View.setCenter((sf::Vector2f)cat->GetPosition());
 					}
 
