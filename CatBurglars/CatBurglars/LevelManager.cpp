@@ -40,7 +40,6 @@ void LevelManager::update(float dt){
 }
 
 void LevelManager::loadLevel(int i){
-
 	mCurrentLevel = i;
 	mLevels[mCurrentLevel]->load();
 
@@ -51,6 +50,7 @@ void LevelManager::loadLevel(int i){
 void LevelManager::nextLevel(){
 	if (mCurrentLevel != mLevels.size()-1){
 		std::cout << "Changing to next level" << std::endl;
+		mLevels[mCurrentLevel]->Clear();
 		mCurrentLevel++;
 		loadLevel(mCurrentLevel);
 		

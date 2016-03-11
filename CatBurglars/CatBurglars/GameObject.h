@@ -10,7 +10,7 @@ class GameObject : public Entity
 {
 public:
 	GameObject();
-	~GameObject();
+	virtual ~GameObject();
 	virtual void Render(sf::RenderWindow *mainWindow);
 	virtual void Update(float dt);
 	virtual sf::Vector2i GetPosition() = 0;

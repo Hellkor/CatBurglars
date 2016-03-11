@@ -5,7 +5,7 @@
 class MultiDoor : public Recievers{
 public:
 	MultiDoor(int channel,int numberofchannels, gridvector coords, sf::Texture *texture,string face, SoundHandler *soundhandler);
-
+	virtual ~MultiDoor();
 	virtual void connectToChannel(int channelID);
 
 	virtual void Update(float dt);

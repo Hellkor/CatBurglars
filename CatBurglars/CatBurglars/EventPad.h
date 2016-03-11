@@ -11,6 +11,7 @@ class EventPad : public Usable{
 public:
 
 	EventPad(EVENT_TYPE eventtype, gridvector coords, int dialogID, int dialogRange, DialogManager *dialogmanager, HintManager *hintManager);
+	virtual ~EventPad();
 	virtual void Render(sf::RenderWindow *mainWindow);
 	virtual void Update(float dt);
 	virtual sf::Vector2i GetPosition();

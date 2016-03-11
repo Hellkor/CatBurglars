@@ -13,6 +13,10 @@ Door::Door(int channel, gridvector coords, sf::Texture *texture, SoundHandler *s
 
 }
 
+Door::~Door()
+{
+}
+
 void Door::Update(float dt){
 
 	if (Channels::isChannelActive(mChannel)){

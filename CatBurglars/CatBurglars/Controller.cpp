@@ -1,27 +1,46 @@
 #include "Controller.h"
 #include <iostream>
+#include <SFML/Window.hpp>
+
+bool Keyboard1Occupied = false;
+bool Keyboard2Occupied = false;
+
+sf::Event event;
 
 Controller::Controller(CONTROLLER_TYPE controllertype):
 C_TYPE(controllertype){
 	assignKeys();
+	
 }
 
 Controller::~Controller(){
 
 }
 
-//Not used, delete if not needed
-void Controller::assignController(int player, Cat *cat){
-	if (player == 1)
-	{
-		mCat = cat;
+
+
+
+
+
+bool Controller::isConnect(int i) {
+	if (i == 0) {
+		if (sf::Joystick::isConnected(0)) {
+			return true;
+		}
+		else return false;
 	}
+	if (i == 1) {
+		if (sf::Joystick::isConnected(1)) {
+			return true;
+		}
+		else return false;
+	}
+	
+	return false;
+	
 }
 
-float joyX = sf::Joystick::getAxisPosition(0, sf::Joystick::X);
-float joyY = sf::Joystick::getAxisPosition(0, sf::Joystick::Y);
-float joyX1 = sf::Joystick::getAxisPosition(1, sf::Joystick::X);
-float joyY1 = sf::Joystick::getAxisPosition(1, sf::Joystick::Y);
+
 
 
 
@@ -44,10 +63,12 @@ void Controller::assignKeys() {
 		break;
 	}
 }
+
 void Controller::nextDialog(DialogManager *dialogmanager) {
 
 
 	switch (C_TYPE) {
+
 		//Keyboard One (WASD)
 	case KeyboardOne:
 		dialogmanager->setSkipText("Space");
@@ -58,11 +79,11 @@ void Controller::nextDialog(DialogManager *dialogmanager) {
 				dialogmanager->nextDialog();
 			}
 		}
-		
+
 		break;
 		//Keyboard Two (Arrows)
 	case KeyboardTwo:
-		dialogmanager->setSkipText("LControl");
+		dialogmanager->setSkipText("RControl");
 		if (sf::Keyboard::isKeyPressed(InteractionKey))
 		{
 			if (dialogClock.getElapsedTime().asSeconds() >= dialogCooldown.asSeconds()) {
@@ -70,13 +91,37 @@ void Controller::nextDialog(DialogManager *dialogmanager) {
 				dialogmanager->nextDialog();
 			}
 		}
-		
+	case GamepadOne:
+		dialogmanager->setSkipText("X-Butt");
+		if (sf::Joystick::isButtonPressed(0, 2))
+		{
+			if (dialogClock.getElapsedTime().asSeconds() >= dialogCooldown.asSeconds()) {
+				dialogClock.restart();
+				dialogmanager->nextDialog();
+			}
+		}
+	case GamepadTwo:
+		dialogmanager->setSkipText("X-Butt");
+		if (sf::Joystick::isButtonPressed(1, 2))
+		{
+			if (dialogClock.getElapsedTime().asSeconds() >= dialogCooldown.asSeconds()) {
+				dialogClock.restart();
+				dialogmanager->nextDialog();
+			}
+		}
 	}
 }
+
+
+
 //Change position of cat with keyboard
 void Controller::move(Cat *cat, TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 	switch (C_TYPE) {
+
+#pragma region"KB1"
+
 		//Keyboard One (WASD)
+
 	case KeyboardOne:
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::E))
 		{
@@ -106,6 +151,11 @@ void Controller::move(Cat *cat, TileLayer *tileLayer, std::vector<Entity*> *Enti
 			cat->mInteracting = false;
 		}
 		break;
+
+#pragma endregion
+
+#pragma region "KB2"
+
 		//Keyboard Two (Arrows)
 	case KeyboardTwo:
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::RShift))
@@ -136,27 +186,40 @@ void Controller::move(Cat *cat, TileLayer *tileLayer, std::vector<Entity*> *Enti
 			cat->mInteracting = false;
 		}
 		break;
+#pragma endregion
+
+#pragma region "GP1"
+
+
 
 	case GamepadOne:
-		if (sf::Joystick::isButtonPressed(0, 1))
+	{
+		float joyX = sf::Joystick::getAxisPosition(0, sf::Joystick::X);
+		float joyY = sf::Joystick::getAxisPosition(0, sf::Joystick::Y);
+
+		if (sf::Joystick::isButtonPressed(0, 0))
 		{				//kolla knappN
 			cat->useAbility(tileLayer, Entities);
 		}
-		if (joyY > 0)
+		if (joyY > 30.f)
 		{
 			cat->moveBackWards(tileLayer, Entities);
+
 		}
-		if (joyY < 0)
+		else if (joyY < -30.f)
 		{
 			cat->moveForward(tileLayer, Entities);
+
 		}
-		if (joyX < 0)
+		else if (joyX < -30.f)
 		{
 			cat->moveLeft(tileLayer, Entities);
+
 		}
-		if (joyX > 0)
+		else if (joyX > 30.f)
 		{
 			cat->moveRight(tileLayer, Entities);
+
 		}
 		if (sf::Joystick::isButtonPressed(0, 2))
 		{
@@ -167,25 +230,36 @@ void Controller::move(Cat *cat, TileLayer *tileLayer, std::vector<Entity*> *Enti
 			cat->mInteracting = false;
 		}
 		break;
+	}
+#pragma endregion
+
+#pragma region "GP2"
+
+		
 
 	case GamepadTwo:
-		if (sf::Joystick::isButtonPressed(1, 1))
+	{
+		float joyX1 = sf::Joystick::getAxisPosition(1, sf::Joystick::X);
+		float joyY1 = sf::Joystick::getAxisPosition(1, sf::Joystick::Y);
+
+
+		if (sf::Joystick::isButtonPressed(1, 0))
 		{				//kolla knappN
 			cat->useAbility(tileLayer, Entities);
 		}
-		if (joyY1 > 0)
+		if (joyY1 > 30.f)
 		{
 			cat->moveBackWards(tileLayer, Entities);
 		}
-		if (joyY1 < 0)
+		else if (joyY1 < -30.f)
 		{
 			cat->moveForward(tileLayer, Entities);
 		}
-		if (joyX1 < 0)
+		else if (joyX1 < -30.f)
 		{
 			cat->moveLeft(tileLayer, Entities);
 		}
-		if (joyX1 > 0)
+		else if (joyX1 > 30.f)
 		{
 			cat->moveRight(tileLayer, Entities);
 		}
@@ -199,4 +273,9 @@ void Controller::move(Cat *cat, TileLayer *tileLayer, std::vector<Entity*> *Enti
 		}
 		break;
 	}
+
+#pragma endregion 
+
+	}
 }
+

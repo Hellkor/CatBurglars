@@ -18,7 +18,7 @@ class Cat : public GameObject
 	typedef vector<TileRow> TileLayer;
 public:
 	Cat(TextureHandler *texturehandler, gridvector v, int ID, SoundHandler *soundhandler,int player);
-	~Cat();
+	virtual ~Cat();
 	virtual void Render(sf::RenderWindow *mainWindow);
 	virtual void Update(float dt);
 	virtual sf::Vector2i GetPosition();

@@ -204,7 +204,10 @@ void Guard::UpdateConePos() {
 	}
 }
 Guard::~Guard(){
-
+	while (!mVision.empty()) {
+		delete mVision.back();
+		mVision.pop_back();
+	}
 }
 //Render sprite on screen
 void Guard::Render(sf::RenderWindow *mainWindow){

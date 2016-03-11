@@ -31,6 +31,9 @@ mFace(face){
 	mSprite.setTexture(*texture);
 
 }
+Computer::~Computer()
+{
+}
 bool Computer::isSolid(){
 	return false;
 }

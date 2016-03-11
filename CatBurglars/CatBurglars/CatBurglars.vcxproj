@@ -44,11 +44,11 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Users\Rasmus\Downloads\SFML-2.3.2-windows-vc14-32-bit\SFML-2.3.2\include;\\hsnas6\StudentHome\2014\a14rasli\Documents\SFML-2.3.2-windows-vc14-32-bit\SFML-2.3.2\include;\\hsnas6\StudentHome\2014\a14rasli\Documents\sfeMovie files, and test file\sfeMovie-Debug-2.0.0-win32\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>\\hsnas6\StudentHome\2015\a15samwe\Documents\sfeMovie-Debug-2.0.0-win32\include;\\hsnas6\StudentHome\2015\a15samwe\Documents\SFML-2.3.2\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\Rasmus\Downloads\SFML-2.3.2-windows-vc14-32-bit\SFML-2.3.2\lib;\\hsnas6\StudentHome\2014\a14rasli\Documents\SFML-2.3.2-windows-vc14-32-bit\SFML-2.3.2\lib;\\hsnas6\StudentHome\2014\a14rasli\Documents\sfeMovie files, and test file\sfeMovie-Debug-2.0.0-win32\lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>\\hsnas6\StudentHome\2015\a15samwe\Documents\sfeMovie-Debug-2.0.0-win32\lib;\\hsnas6\StudentHome\2015\a15samwe\Documents\SFML-2.3.2\lib</AdditionalLibraryDirectories>
       <AdditionalDependencies>sfml-system-d.lib;sfml-window-d.lib;sfml-graphics-d.lib;sfml-network-d.lib;sfml-audio-d.lib;sfeMovie-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -92,6 +92,10 @@
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="LevelManager.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="MenuButton.cpp" />
+    <ClCompile Include="MenuPage.cpp" />
+    <ClCompile Include="MenuSystem.cpp" />
+    <ClCompile Include="Screens.cpp" />
     <ClCompile Include="MovieHandler.cpp" />
     <ClCompile Include="MultiDoor.cpp" />
     <ClCompile Include="Pathfinder.cpp" />
@@ -126,6 +130,10 @@
     <ClInclude Include="HintManager.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="LevelManager.h" />
+    <ClInclude Include="MenuButton.h" />
+    <ClInclude Include="MenuPage.h" />
+    <ClInclude Include="MenuSystem.h" />
+    <ClInclude Include="Screens.h" />
     <ClInclude Include="MovieHandler.h" />
     <ClInclude Include="MultiDoor.h" />
     <ClInclude Include="Pathfinder.h" />

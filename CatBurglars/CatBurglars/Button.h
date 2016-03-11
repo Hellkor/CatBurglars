@@ -8,6 +8,7 @@ class Button : public Usable{
 public:
 
 	Button(int ID, sf::Texture *texture, gridvector coords,bool toggle,float holdlength);
+	virtual ~Button();
 	virtual void Render(sf::RenderWindow *mainWindow);
 	virtual void Update(float dt);
 	virtual sf::Vector2i GetPosition();

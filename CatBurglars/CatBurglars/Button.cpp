@@ -17,6 +17,9 @@ Button::Button(int channel, sf::Texture *texture, gridvector coords, bool toggle
 	mSprite.setTexture(*texture);
 	
 }
+Button::~Button()
+{
+}
 bool Button::isSolid(){
 	return false;
 }

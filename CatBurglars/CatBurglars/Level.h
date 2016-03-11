@@ -20,7 +20,7 @@ public:
 
 	void addPlayer(Cat *cat, int player);
 	void load();
-
+	void Clear();
 
 	void InitializeGuiView(sf::RenderWindow *window);
 private:
@@ -49,8 +49,7 @@ private:
 	sf::View mPlayer2View;
 	sf::View guiView;
 	
-	Controller p1Controller;
-	Controller p2Controller;
+	
 
 	int mPlayers;
 
