@@ -4,6 +4,7 @@
 class Door : public Recievers{
 public:
 	Door(int channel, gridvector coords, sf::Texture *texture, SoundHandler *soundhandler);
+	virtual ~Door();
 	virtual void connectToChannel(int channelID);
 	virtual void Update(float dt);
 	virtual void Render(sf::RenderWindow *window);

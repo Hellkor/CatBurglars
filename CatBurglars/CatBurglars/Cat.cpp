@@ -43,7 +43,7 @@ canPushCrate(true){
 	mPosition = sf::Vector2i(mCoord.x * 64, mCoord.y * 64);
 }
 Cat::~Cat(){
-
+	cout << "CAT !!!Deleted" << endl;
 }
 
 //Render sprite on screen
