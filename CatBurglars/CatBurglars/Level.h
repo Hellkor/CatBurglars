@@ -49,10 +49,7 @@ private:
 	sf::View mPlayer2View;
 	sf::View guiView;
 	
-	Controller p1Controller;
-	Controller p2Controller;
-	Controller p1Joystick;
-	Controller p2Joystick;
+	
 
 	int mPlayers;
 

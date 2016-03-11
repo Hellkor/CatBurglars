@@ -12,7 +12,7 @@ class Controller{
 public:
 	Controller(CONTROLLER_TYPE controllertype);
 	~Controller();
-	void assignController(int player, Cat *cat);
+	
 	void move(Cat *cat, TileLayer *TileLayer, std::vector<Entity*> *Entities);
 
 	void nextDialog(DialogManager *dialogManager);
@@ -28,7 +28,7 @@ private:
 	sf::Time dialogCooldown = sf::seconds(0.5);
 
 	void assignKeys();
-	void isConnect();
+	bool isConnect(int i);
 
 	sf::Keyboard::Key InteractionKey;
 	

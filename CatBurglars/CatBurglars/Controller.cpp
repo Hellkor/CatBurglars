@@ -2,14 +2,15 @@
 #include <iostream>
 #include <SFML/Window.hpp>
 
+bool Keyboard1Occupied = false;
+bool Keyboard2Occupied = false;
+
+sf::Event event;
 
 Controller::Controller(CONTROLLER_TYPE controllertype):
 C_TYPE(controllertype){
 	assignKeys();
 	
-	if (C_TYPE == GamepadOne) {
-		//isConnect();
-	}
 }
 
 Controller::~Controller(){
@@ -21,35 +22,25 @@ Controller::~Controller(){
 
 
 
-void Controller::isConnect() {
-
-	using namespace sf;
-//	RenderWindow window;
-
+bool Controller::isConnect(int i) {
+	if (i == 0) {
+		if (sf::Joystick::isConnected(0)) {
+			return true;
+		}
+		else return false;
+	}
+	if (i == 1) {
+		if (sf::Joystick::isConnected(1)) {
+			return true;
+		}
+		else return false;
+	}
 	
-	if (Joystick::isConnected(0)) {
-		Joystick::Identification id = Joystick::getIdentification(0);
-		std::cout << "\nnVendor ID: " << id.productId << std::endl;
-		String controller("Joystick Use: " + id.name);
-	//	window.setTitle(controller);
-		unsigned int buttonCount = Joystick::getButtonCount(0);
-		bool hasZ = Joystick::hasAxis(0, Joystick::Z);
-		std::cout << "Button count: " << buttonCount << std::endl;
-		std::cout << "Has a z-axis: " << hasZ << std::endl;
-	}
-	else {
-		std::cout << "connect controlla\n";
-	}
+	return false;
+	
 }
 
 
-//Not used, delete if not needed
-void Controller::assignController(int player, Cat *cat){
-	if (player == 1)
-	{
-		mCat = cat;
-	}
-}
 
 
 
@@ -203,11 +194,8 @@ void Controller::move(Cat *cat, TileLayer *tileLayer, std::vector<Entity*> *Enti
 
 	case GamepadOne:
 	{
-
 		float joyX = sf::Joystick::getAxisPosition(0, sf::Joystick::X);
 		float joyY = sf::Joystick::getAxisPosition(0, sf::Joystick::Y);
-
-
 
 		if (sf::Joystick::isButtonPressed(0, 0))
 		{				//kolla knappN
@@ -233,7 +221,7 @@ void Controller::move(Cat *cat, TileLayer *tileLayer, std::vector<Entity*> *Enti
 			cat->moveRight(tileLayer, Entities);
 
 		}
-		if (sf::Joystick::isButtonPressed(0, 4))
+		if (sf::Joystick::isButtonPressed(0, 2))
 		{
 			cat->mInteracting = true;
 		}
@@ -241,8 +229,8 @@ void Controller::move(Cat *cat, TileLayer *tileLayer, std::vector<Entity*> *Enti
 		{
 			cat->mInteracting = false;
 		}
-	}
 		break;
+	}
 #pragma endregion
 
 #pragma region "GP2"
@@ -275,7 +263,7 @@ void Controller::move(Cat *cat, TileLayer *tileLayer, std::vector<Entity*> *Enti
 		{
 			cat->moveRight(tileLayer, Entities);
 		}
-		if (sf::Joystick::isButtonPressed(1, 3))
+		if (sf::Joystick::isButtonPressed(1, 2))
 		{
 			cat->mInteracting = true;
 		}
@@ -283,8 +271,8 @@ void Controller::move(Cat *cat, TileLayer *tileLayer, std::vector<Entity*> *Enti
 		{
 			cat->mInteracting = false;
 		}
-	}
 		break;
+	}
 
 #pragma endregion 
 

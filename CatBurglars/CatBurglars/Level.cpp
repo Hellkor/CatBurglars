@@ -45,6 +45,12 @@ sf::Sprite				lightmap;
 
 DialogManager dialogManager("dialog", &textures,sf::Vector2f(1280,720));
 
+
+Controller p1Controller = Controller(GamepadOne);
+Controller p2Controller = Controller(GamepadTwo);
+
+
+
 // LIGHT STRUCTURE FOR BOTH LIGHT AND FOV LIGHT
 struct Light
 {
@@ -71,12 +77,7 @@ Pathfinder pathfinder;
 // Skapar en level från en textfil
 Level::Level(string level_directory) :
 	mFile(level_directory),
-	mLoaded(false),
-
-	p1Controller(Controller(KeyboardOne)),
-	p2Controller(Controller(KeyboardTwo)),
-	p1Joystick(Controller(GamepadOne)),
-	p2Joystick(Controller(GamepadTwo))
+	mLoaded(false)
 {
 
 	
@@ -272,7 +273,6 @@ void Level::addPlayer(Cat *cat , int player){
 
 }
 
-sf::Event event;
 
 void Level::update(float dt){
 	bool test = false;
@@ -326,27 +326,26 @@ void Level::update(float dt){
 					if (cat->getPlayerIndex() == 1) {
 						l1->position.x = cat->GetPosition().x + 32;
 						l1->position.y = cat->GetPosition().y + 32;
-						if (event.type == sf::Event::JoystickConnected) 
-							{
-								p1Joystick.move(cat, &mWallTileLayer, &mEntities);
-							}
-						else
-							{	
-								p1Controller.move(cat, &mWallTileLayer, &mEntities);
-							}	
+						
+						//p1Joystick.move(cat, &mWallTileLayer, &mEntities);
+						
+						
+						
+						p1Controller.move(cat, &mWallTileLayer, &mEntities);
+								
 						mPlayer1View.setCenter((sf::Vector2f)cat->GetPosition());
 					}
 					if (cat->getPlayerIndex() == 2) {
 						l2->position.x = cat->GetPosition().x + 32;
 						l2->position.y = cat->GetPosition().y + 32;
-						if (event.type == sf::Event::JoystickConnected)
-							{
-								p2Joystick.move(cat, &mWallTileLayer, &mEntities);
-							}
-						else
-							{
+						
+							
+							//	p2Joystick.move(cat, &mWallTileLayer, &mEntities);
+							
+						
+							
 								p2Controller.move(cat, &mWallTileLayer, &mEntities);
-							}
+							
 						mPlayer2View.setCenter((sf::Vector2f)cat->GetPosition());
 					}
 
