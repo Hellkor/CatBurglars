@@ -108,13 +108,7 @@
     <ClCompile Include="PathNode.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MenuButton.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="MenuPage.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="MenuSystem.cpp">
+    <ClCompile Include="HintManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -212,13 +206,7 @@
     <ClInclude Include="PathNode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MenuButton.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MenuPage.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MenuSystem.h">
+    <ClInclude Include="HintManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
