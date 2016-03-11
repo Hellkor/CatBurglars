@@ -33,16 +33,23 @@ private:
 
 	MenuSystem MainMenuSystem;
 
+	MenuPage *page1;
 	MenuButton *Continue;
 	MenuButton *NewGame;
 	MenuButton *Options;
 	MenuButton *Catopedia;
 	MenuButton *Exit;
 
+	MenuPage *page2;
 	MenuButton *ToggleFullscreen;
 	MenuButton *ToggleSound;
+	MenuButton *BackButton;
 
-	MenuPage *page2;
-	MenuPage *page1;
+	
+	
+	MenuPage *PausePage;
+	MenuButton *ResumeButton;
+	MenuButton *RestartButton;
+	MenuButton *QuitButton;
 };
 

@@ -1,12 +1,13 @@
 #include "EventPad.h"
 #include "LevelManager.h"
 
-EventPad::EventPad(EVENT_TYPE eventtype, gridvector coords, int dialogID, int dialogRange, DialogManager *dialogmanager):
+EventPad::EventPad(EVENT_TYPE eventtype, gridvector coords, int dialogID, int dialogRange, DialogManager *dialogmanager, HintManager *hintManager):
 	mEventType(eventtype),
 	mCoords(coords),
 	mDialogID(dialogID),
 	mDialogManager(dialogmanager),
-	mDialogRange(dialogRange){
+	mDialogRange(dialogRange),
+	mHintManager(hintManager){
 
 	isActivated = false;
 	mPosition.x = mCoords.x * 64;
@@ -29,6 +30,14 @@ bool EventPad::getInteraction(GameObject *g){
 			if (mEventType == DIALOG){
 				mDialogManager->startConversation(mDialogID, mDialogRange, 5);
 			}
+			if (mEventType == HINT)
+			{
+				mHintManager->ShowHint(mDialogID);
+			}
+			if (mEventType == CHECKPOINT)
+			{
+
+			}
 			isActivated = true;
 			return true;
 		}
@@ -45,8 +54,21 @@ bool playSound() {
 void EventPad::Update(float dt){
 
 }
-void EventPad::Render(sf::RenderWindow *window){
-
+void EventPad::Render(sf::RenderWindow *window)
+{
+	if (mEventType == HINT)
+	{
+		sf::RectangleShape shape1, shape2;
+		sf::Color color = sf::Color(255, 0, 0, 191);
+		shape1.setFillColor(color);
+		shape2.setFillColor(color);
+		shape1.setSize(sf::Vector2f(8, 32));
+		shape2.setSize(sf::Vector2f(8, 8));
+		shape1.setPosition(mPosition.x + 28, mPosition.y + 14);
+		shape2.setPosition(mPosition.x + 28, mPosition.y + 50);
+		window->draw(shape1);
+		window->draw(shape2);
+	}
 }
 int EventPad::getChannelID(){
 	return mChannelID;

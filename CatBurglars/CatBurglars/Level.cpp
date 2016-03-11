@@ -45,6 +45,9 @@ sf::Sprite				lightmap;
 
 DialogManager dialogManager("dialog", &textures,sf::Vector2f(1280,720));
 
+// HINT MANAGER
+
+HintManager hintManager("hints");
 
 Controller p1Controller = Controller(GamepadOne);
 Controller p2Controller = Controller(GamepadTwo);
@@ -262,6 +265,10 @@ void Level::render(sf::RenderWindow *window){
 		}
 		if (dialogManager.isDialogActive()) {
 			dialogManager.render(window, guiView);
+		}
+		if (hintManager.IsHintActive())
+		{
+			hintManager.Render(window, guiView);
 		}
 	}
 	
@@ -764,13 +771,16 @@ void Level::generateLevel(string name){
 		
 		
 		if (range == 0) {
-			mEntities.push_back(new EventPad(DIALOG, gridvector(xPos, yPos),channel,hold, &dialogManager));
+			mEntities.push_back(new EventPad(DIALOG, gridvector(xPos, yPos), channel, hold, &dialogManager));
 		}
 		else if (range == 1) {
-			mEntities.push_back(new EventPad(WIN, gridvector(xPos, yPos),channel,hold,&dialogManager));
+			mEntities.push_back(new EventPad(WIN, gridvector(xPos, yPos), channel, hold, &dialogManager));
 		}
 		else if (range == 2) {
-			//add hintpad
+			mEntities.push_back(new EventPad(HINT, gridvector(xPos, yPos), channel, hold, &dialogManager));
+		}
+		else if (range == 3) {
+			//add Checkpoint
 		}
 		
 

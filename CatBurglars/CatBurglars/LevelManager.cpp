@@ -45,7 +45,12 @@ void LevelManager::loadLevel(int i){
 
 
 }
-
+void LevelManager::reloadLevel() {
+	mLevels[mCurrentLevel]->load();
+}
+void LevelManager::loadLastSavedLevel() {
+	loadLevel(mLevelProgression);
+}
 // Byter level till nästa i listan. 
 void LevelManager::nextLevel(){
 	if (mCurrentLevel != mLevels.size()-1){
@@ -54,7 +59,7 @@ void LevelManager::nextLevel(){
 		mCurrentLevel++;
 		loadLevel(mCurrentLevel);
 		
-		
+		saveGame();
 	}
 }
 
@@ -135,6 +140,10 @@ void readFile(){
 void LevelManager::saveGame(){
 	readFile();
 	ofstream fileStream(FILENAME);
+
+	if (mCurrentLevel > mLevelProgression) {
+		mLevelProgression = mCurrentLevel;
+	}
 
 	if (loadedCollectibles < mCollectibles){
 		fileStream << COLLECT;

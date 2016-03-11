@@ -91,10 +91,9 @@ Game::Game() {
 	//LevelManager::addLevel(leveltest);
 
 	LevelManager::load();
-	LevelManager::addCollectible();
-	LevelManager::save();
+	//LevelManager::addCollectible();
 
-	LevelManager::loadLevel(0);
+	//LevelManager::loadLevel(0);
 	
 	//moviehandler.Initialize();
 
@@ -157,16 +156,21 @@ Game::Game() {
 	page1->addMenuButton(Exit);
 
 	page2 = new MenuPage(sf::Vector2f(200, 200), "Options");
+	
 
 	ToggleFullscreen = new MenuButton();
 	ToggleSound = new MenuButton();
+	BackButton = new MenuButton();
 
 
+	
 
 	sf::Texture Fullscreen;
 	sf::Texture FullscreenS;
 	sf::Texture Sound;
 	sf::Texture SoundS;
+	sf::Texture Back;
+	sf::Texture BackS;
 
 	Sound.loadFromFile("Resources/Menu/NewGameo.png");
 	SoundS.loadFromFile("Resources/Menu/NewGamen.png");
@@ -174,20 +178,63 @@ Game::Game() {
 	Fullscreen.loadFromFile("Resources/Menu/Continue.png");
 	FullscreenS.loadFromFile("Resources/Menu/Continuen.png");
 
+	Back.loadFromFile("Resources/Menu/BackO.png");
+	BackS.loadFromFile("Resources/Menu/BackN.png");
+
 	ToggleFullscreen->setTexture(&Fullscreen);
 	ToggleFullscreen->setTextureSelected(&FullscreenS);
 
 	ToggleSound->setTexture(&Sound);
 	ToggleSound->setTextureSelected(&SoundS);
 
+	BackButton->setTexture(&Back);
+	BackButton->setTextureSelected(&BackS);
+
 	page2->addMenuButton(ToggleFullscreen);
 	page2->addMenuButton(ToggleSound);
+	page2->addMenuButton(BackButton);
+
+
+	PausePage = new MenuPage(sf::Vector2f(200, 200), "Pause");
+	sf::Texture Resume;
+	sf::Texture ResumeS;
+	sf::Texture Restart;
+	sf::Texture RestartS;
+	sf::Texture Quit;
+	sf::Texture QuitS;
+
+
+	ResumeButton = new MenuButton();
+	QuitButton = new MenuButton();
+	RestartButton = new MenuButton();
+	Resume.loadFromFile("Resources/Menu/ResumeO.png");
+	ResumeS.loadFromFile("Resources/Menu/ResumeN.png");
+
+	Restart.loadFromFile("Resources/Menu/RestartO.png");
+	RestartS.loadFromFile("Resources/Menu/RestartN.png");
+
+	Quit.loadFromFile("Resources/Menu/QuitGameO.png");
+	QuitS.loadFromFile("Resources/Menu/QuitGameN.png");
+
+	ResumeButton->setTexture(&Resume);
+	ResumeButton->setTextureSelected(&ResumeS);
+
+	RestartButton->setTexture(&Restart);
+	RestartButton->setTextureSelected(&RestartS);
+
+	QuitButton->setTexture(&Quit);
+	QuitButton->setTextureSelected(&QuitS);
+
+	PausePage->addMenuButton(ResumeButton);
+	PausePage->addMenuButton(RestartButton);
+	PausePage->addMenuButton(QuitButton);
 
 	MainMenuSystem = MenuSystem();
 
 
 	MainMenuSystem.addPage(page1);
 	MainMenuSystem.addPage(page2);
+	MainMenuSystem.addPage(PausePage);
 
 	MainMenuSystem.setPage("Main");
 
@@ -310,9 +357,11 @@ void Game::Update(float dt){
 			MainMenuSystem.UpdateNavigation();
 
 			if (NewGame->isButtonPushed()) {
+				LevelManager::loadLevel(0);
 				GameState = RunGame;
 			}
 			if (Continue->isButtonPushed()) {
+				LevelManager::loadLastSavedLevel();
 				GameState = RunGame;
 			}
 			if (Options->isButtonPushed()) {
@@ -329,9 +378,13 @@ void Game::Update(float dt){
 			if (ToggleFullscreen->isButtonPushed()) {
 				changeScreenMode();
 			}
+			if (BackButton->isButtonPushed()) {
+				MainMenuSystem.setPage("Main");
+			}
 			if (Exit->isButtonPushed()) {
 				window->close();
 			}
+			
 
 			break;
 
@@ -348,10 +401,27 @@ void Game::Update(float dt){
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::P)) {
 				LevelManager::nextLevel();
 			}
+
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
+				GameState = Pause;
+				MainMenuSystem.setPage("Pause");
+			}
 			break;
 
 
 		case Pause:
+			MainMenuSystem.UpdateNavigation();
+			if (ResumeButton->isButtonPushed()) {
+				GameState = RunGame;
+			}
+			if (RestartButton->isButtonPushed()) {
+				GameState = RunGame;
+			    LevelManager::reloadLevel();
+			}
+			if (QuitButton->isButtonPushed()) {
+				GameState = Menu;
+				MainMenuSystem.setPage("Main");
+			}
 			break;
 
 
@@ -386,8 +456,9 @@ void Game::Render()
 		LevelManager::render(window);
 		break;
 	case Pause:
-		//moviehandler.getMovie()->update();
 		window->clear();
+		LevelManager::render(window);
+		MainMenuSystem.render(window);
 		break;
 
 

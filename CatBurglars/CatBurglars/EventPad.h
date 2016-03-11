@@ -4,12 +4,13 @@
 #include "Usable.h"
 #include "gridvector.h"
 #include "DialogManager.h"
-enum EVENT_TYPE { WIN, DIALOG };
+#include "HintManager.h"
+enum EVENT_TYPE { WIN, DIALOG, HINT, CHECKPOINT };
 class EventPad : public Usable{
 	
 public:
 
-	EventPad(EVENT_TYPE eventtype, gridvector coords, int dialogID,int dialogRange,DialogManager *dialogmanager);
+	EventPad(EVENT_TYPE eventtype, gridvector coords, int dialogID, int dialogRange, DialogManager *dialogmanager, HintManager *hintManager);
 	virtual ~EventPad();
 	virtual void Render(sf::RenderWindow *mainWindow);
 	virtual void Update(float dt);
@@ -32,6 +33,7 @@ private:
 	bool isActivated;
 	EVENT_TYPE mEventType;
 	DialogManager *mDialogManager;
+	HintManager *mHintManager;
 	int mDialogRange;
 	
 };
