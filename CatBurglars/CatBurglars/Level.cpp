@@ -454,10 +454,45 @@ void Level::load(){
 	lights.clear();
 	mLoaded = false;
 
-	mEntities.clear();
-	mBottomTileLayer.clear();
-	mWallTileLayer.clear();
-	mTopTileLayer.clear();
+	for (vector<Entity*>::size_type i = 0; i < mEntities.size(); i++)
+	{
+		delete mEntities.back();
+		mEntities.pop_back();
+		i--;
+	}
+	for (TileLayer::size_type y = 0; y < mBottomTileLayer.size(); y++)
+	{
+		for (TileRow::size_type x = 0; x < mBottomTileLayer.back().size(); x++)
+		{
+			delete mBottomTileLayer.back().back();
+			mBottomTileLayer.back().pop_back();
+			x--;
+		}
+		mBottomTileLayer.pop_back();
+		y--;
+	}
+	for (TileLayer::size_type y = 0; y < mWallTileLayer.size(); y++)
+	{
+		for (TileRow::size_type x = 0; x < mWallTileLayer.back().size(); x++)
+		{
+			delete mWallTileLayer.back().back();
+			mWallTileLayer.back().pop_back();
+			x--;
+		}
+		mWallTileLayer.pop_back();
+		y--;
+	}
+	for (TileLayer::size_type y = 0; y < mTopTileLayer.size(); y++)
+	{
+		for (TileRow::size_type x = 0; x < mTopTileLayer.back().size(); x++)
+		{
+			delete mTopTileLayer.back().back();
+			mTopTileLayer.back().pop_back();
+			x--;
+		}
+		mTopTileLayer.pop_back();
+		y--;
+	}
 	Channels::clearChannels();
 
 	dialogManager.initialize(guiView);
