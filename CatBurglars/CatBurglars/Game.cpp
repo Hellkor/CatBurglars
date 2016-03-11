@@ -96,7 +96,7 @@ Game::Game() {
 
 	LevelManager::loadLevel(0);
 	
-	moviehandler.Initialize();
+	//moviehandler.Initialize();
 
 	
 	page1 = new MenuPage(sf::Vector2f(200, 200), "Main");
@@ -386,7 +386,7 @@ void Game::Render()
 		LevelManager::render(window);
 		break;
 	case Pause:
-		moviehandler.getMovie()->update();
+		//moviehandler.getMovie()->update();
 		window->clear();
 		break;
 
@@ -395,6 +395,6 @@ void Game::Render()
 	
 
 	
-	window->draw(*moviehandler.getMovie());
+	//window->draw(*moviehandler.getMovie());
 	window->display();
 }
