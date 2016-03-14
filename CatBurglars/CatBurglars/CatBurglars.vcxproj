@@ -95,7 +95,6 @@
     <ClCompile Include="MenuButton.cpp" />
     <ClCompile Include="MenuPage.cpp" />
     <ClCompile Include="MenuSystem.cpp" />
-    <ClCompile Include="Screens.cpp" />
     <ClCompile Include="MovieHandler.cpp" />
     <ClCompile Include="MultiDoor.cpp" />
     <ClCompile Include="Pathfinder.cpp" />
@@ -133,7 +132,6 @@
     <ClInclude Include="MenuButton.h" />
     <ClInclude Include="MenuPage.h" />
     <ClInclude Include="MenuSystem.h" />
-    <ClInclude Include="Screens.h" />
     <ClInclude Include="MovieHandler.h" />
     <ClInclude Include="MultiDoor.h" />
     <ClInclude Include="Pathfinder.h" />

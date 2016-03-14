@@ -423,27 +423,24 @@ void Game::Update(float dt){
 
 void Game::Render()
 {
-	
+	window->clear();
 	//window->clear();
 	switch (GameState){
 	case Splash:
-		window->clear();
+		
 		window->setView(GuiView);
 		window->draw(SPLASH_SPRITE);
 		
 		break;
 	case Menu:
-		window->clear();
 		window->setView(GuiView);
 		MainMenuSystem.render(window);
 		break;
 		// Main Game Case
 	case RunGame:
-		window->clear();
 		LevelManager::render(window);
 		break;
 	case Pause:
-		window->clear();
 		LevelManager::render(window);
 		MainMenuSystem.render(window);
 		break;
