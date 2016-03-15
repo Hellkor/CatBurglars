@@ -208,19 +208,19 @@ void Controller::move(Cat *cat, TileLayer *tileLayer, std::vector<Entity*> *Enti
 		}
 		
 		
-		if (joyY > 15.f || joyDPY < -15.f)
+		if (joyY > 20.f || joyDPY < -15.f)
 			{
 				cat->moveBackWards(tileLayer, Entities);
 			}
-		else if (joyY < -15.f || joyDPY >15.f)
+		else if (joyY < -20.f || joyDPY >15.f)
 			{
 				cat->moveForward(tileLayer, Entities);
 			}
-		else if (joyX < -15.f || joyDPX < -15.f)
+		else if (joyX < -20.f || joyDPX < -15.f)
 			{
 				cat->moveLeft(tileLayer, Entities);
 			}
-		else if (joyX > 15.f || joyDPX > 15.f )
+		else if (joyX > 20.f || joyDPX > 15.f )
 			{
 				cat->moveRight(tileLayer, Entities);
 			}
@@ -253,19 +253,19 @@ void Controller::move(Cat *cat, TileLayer *tileLayer, std::vector<Entity*> *Enti
 		{				//kolla knappN
 			cat->useAbility(tileLayer, Entities);
 		}
-		if (joyY1 > 15.f || joyDPY1 < -15.f)
+		if (joyY1 > 20.f || joyDPY1 < -15.f)
 		{
 			cat->moveBackWards(tileLayer, Entities);
 		}
-		else if (joyY1 < -15.f || joyDPY1 > 15.f)
+		else if (joyY1 < -20.f || joyDPY1 > 15.f)
 		{
 			cat->moveForward(tileLayer, Entities);
 		}
-		else if (joyX1 < -15.f || joyDPX1<-15.f)
+		else if (joyX1 < -20.f || joyDPX1<-15.f)
 		{
 			cat->moveLeft(tileLayer, Entities);
 		}
-		else if (joyX1 > 15.f || joyDPX1 >15.f)
+		else if (joyX1 > 20.f || joyDPX1 >15.f)
 		{
 			cat->moveRight(tileLayer, Entities);
 		}

@@ -17,8 +17,10 @@
 #include "DialogManager.h"
 #include "Controller.h"
 #include "Pathfinder.h"
+#include "Lazer.h"
 #include "MovieHandler.h"
 #include "LevelManager.h"
+
 using namespace std;
 
 bool IMMORTALITY_MODE = false;
@@ -550,11 +552,14 @@ void Level::load(){
 
 		for (int i = 0; i <= 100; i++) {
 
-			Channels::addChannel(Channel(i));
-		}
+		Channels::addChannel(Channel(i));
+			}
+
+			
 
 		//Starts the music for a level
 		soundhandler.startMusic(mFile);
+
 
 		generateLevel(mFile);
 

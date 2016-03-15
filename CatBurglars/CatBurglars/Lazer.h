@@ -3,6 +3,7 @@
 #include "Channels.h" 
 #include "Recievers.h"
 #include <SFML/Graphics.hpp>
+#include "TextureHandler.h"
 
 class Lazer : public Recievers {
 
