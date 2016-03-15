@@ -20,7 +20,6 @@ canPushCrate(true){
 	}
 	if (player == 2) {
 		mSoundHandler->initializeCat2(this);
-		mID = 3;
 	}
 	if (mID == 1){
 		mSpeed = 2;

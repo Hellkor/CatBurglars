@@ -82,7 +82,7 @@ Game::Game() {
 	Level *level5 = new Level("1_6");
 	
 	Level *movie1 = new Level(1);
-
+	Level *movie2 = new Level(1);
 	LevelManager::addLevel(movie1);
 	LevelManager::addLevel(Level0);
 	LevelManager::addLevel(level1);
@@ -90,7 +90,7 @@ Game::Game() {
 	LevelManager::addLevel(level3);
 	LevelManager::addLevel(level4); 
 	LevelManager::addLevel(level5);
-
+	LevelManager::addLevel(movie2);
 	//Level *leveltest = new Level("Pathfind_Test");
 
 	//LevelManager::addLevel(leveltest);

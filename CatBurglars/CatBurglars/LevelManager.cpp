@@ -15,10 +15,10 @@ static int mCollectibles;
 static int loadedLevel;
 static int loadedCollectibles;
 
-
 // Lägger till ny level i hanterarens lista
 void LevelManager::addLevel(Level *level){
 	mLevels.push_back(level);
+	cout << "Added level" << endl;
 }
 // Rensar bort alla inlagda levels 
 void LevelManager::clearLevels(){
@@ -34,13 +34,12 @@ Level LevelManager::getLevel(){
 */
 
 void LevelManager::update(float dt){
-		mLevels[mCurrentLevel]->update(dt);
+	mLevels[mCurrentLevel]->update(dt);
 }
 
 void LevelManager::loadLevel(int i){
 	mCurrentLevel = i;
-		mLevels[mCurrentLevel]->load();
-
+	mLevels[mCurrentLevel]->load();
 }
 void LevelManager::reloadLevel() {
 	mLevels[mCurrentLevel]->load();

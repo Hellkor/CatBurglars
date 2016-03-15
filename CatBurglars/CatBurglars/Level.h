@@ -70,6 +70,8 @@ private:
 	bool lost = false;
 	sf::Time deathDelay;
 	sf::Clock deathClock;
+
+	bool win = false;
 };
 
 

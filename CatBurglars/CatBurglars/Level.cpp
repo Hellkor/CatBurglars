@@ -331,7 +331,7 @@ void Level::update(float dt){
 		}
 		break;
 	case GameStage:
-
+		
 		dialogManager.update();
 		hintManager.Update();
 
@@ -339,7 +339,6 @@ void Level::update(float dt){
 		if (mLoaded) {
 			if (!lost) {
 				if (!dialogManager.isDialogActive()) {
-
 					//Channels::update();
 					pathfinder.Update(&mEntities);
 					bool socks = false;
@@ -450,7 +449,9 @@ void Level::update(float dt){
 										}
 										//Interaction with eventpad
 										if (EventPad *eventpad = dynamic_cast<EventPad*>(entity)) {
-											eventpad->getInteraction(cat);
+											if (eventpad->getInteraction(cat)) {
+												win = true;
+											}
 										}
 									}
 
@@ -479,6 +480,10 @@ void Level::update(float dt){
 		break;
 	default:
 		break;
+	}
+
+	if (win == true) {
+		LevelManager::nextLevel();
 	}
 }
 
@@ -542,11 +547,12 @@ void Level::load(){
 		moviehandler.PlayMovie(mMovieID);
 		break;
 	case GameStage:
+		win = false;
 		lost = false;
 		lights.clear();
 		mLoaded = false;
 
-		Clear();
+		//Clear();
 
 		dialogManager.initialize(guiView);
 
@@ -574,45 +580,54 @@ void Level::load(){
 
 void Level::Clear(){
 
-	while (!mEntities.empty()) {
-		delete mEntities.back();
-		mEntities.pop_back();
-	}
-
-	for (TileLayer::size_type y = 0; y < mBottomTileLayer.size(); y++)
+	switch (mType)
 	{
-		for (TileRow::size_type x = 0; x < mBottomTileLayer.back().size(); x++)
-		{
-			delete mBottomTileLayer.back().back();
-			mBottomTileLayer.back().pop_back();
-			x--;
+	case Cutscene:
+		moviehandler.getMovie(mMovieID)->stop();
+		break;
+	case GameStage:
+		while (!mEntities.empty()) {
+			delete mEntities.back();
+			mEntities.pop_back();
 		}
-		mBottomTileLayer.pop_back();
-		y--;
-	}
-	for (TileLayer::size_type y = 0; y < mWallTileLayer.size(); y++)
-	{
-		for (TileRow::size_type x = 0; x < mWallTileLayer.back().size(); x++)
+		for (TileLayer::size_type y = 0; y < mBottomTileLayer.size(); y++)
 		{
-			delete mWallTileLayer.back().back();
-			mWallTileLayer.back().pop_back();
-			x--;
+			for (TileRow::size_type x = 0; x < mBottomTileLayer.back().size(); x++)
+			{
+				delete mBottomTileLayer.back().back();
+				mBottomTileLayer.back().pop_back();
+				x--;
+			}
+			mBottomTileLayer.pop_back();
+			y--;
 		}
-		mWallTileLayer.pop_back();
-		y--;
-	}
-	for (TileLayer::size_type y = 0; y < mTopTileLayer.size(); y++)
-	{
-		for (TileRow::size_type x = 0; x < mTopTileLayer.back().size(); x++)
+		for (TileLayer::size_type y = 0; y < mWallTileLayer.size(); y++)
 		{
-			delete mTopTileLayer.back().back();
-			mTopTileLayer.back().pop_back();
-			x--;
+			for (TileRow::size_type x = 0; x < mWallTileLayer.back().size(); x++)
+			{
+				delete mWallTileLayer.back().back();
+				mWallTileLayer.back().pop_back();
+				x--;
+			}
+			mWallTileLayer.pop_back();
+			y--;
 		}
-		mTopTileLayer.pop_back();
-		y--;
+		for (TileLayer::size_type y = 0; y < mTopTileLayer.size(); y++)
+		{
+			for (TileRow::size_type x = 0; x < mTopTileLayer.back().size(); x++)
+			{
+				delete mTopTileLayer.back().back();
+				mTopTileLayer.back().pop_back();
+				x--;
+			}
+			mTopTileLayer.pop_back();
+			y--;
+		}
+		Channels::clearChannels();
+		break;
+	default:
+		break;
 	}
-	Channels::clearChannels();
 }
 
 void Level::generateView(){
