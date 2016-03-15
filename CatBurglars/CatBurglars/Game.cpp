@@ -65,7 +65,10 @@ Game::Game() {
 	SPLASH_SPRITE.setOrigin(sf::Vector2f(SPLASH_SCREEN.getSize().x/2, SPLASH_SCREEN.getSize().y/2));
 	SPLASH_SPRITE.setPosition(GuiView.getCenter());
 
-	
+	menuBackground.loadFromFile("Resources/Menu/background.png");
+	menuBackgroundSprite.setTexture(menuBackground);
+	menuBackgroundSprite.setOrigin(sf::Vector2f(menuBackground.getSize().x / 2, menuBackground.getSize().y / 2));
+	menuBackgroundSprite.setPosition(GuiView.getCenter());
 
 	TextureHandler::Initialize();
 	SoundHandler::Initialize();
@@ -439,6 +442,7 @@ void Game::Render()
 		
 		break;
 	case Menu:
+		window->draw(menuBackgroundSprite);
 		window->setView(GuiView);
 		MainMenuSystem.render(window);
 		break;

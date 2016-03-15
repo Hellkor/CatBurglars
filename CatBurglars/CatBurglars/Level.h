@@ -23,6 +23,11 @@ public:
 	void Clear();
 
 	void InitializeGuiView(sf::RenderWindow *window);
+
+	void fadeOut();
+	void fadeIn();
+
+	bool fade(int i);
 private:
 	bool mLoaded;
 	void renderLight(sf::RenderWindow *window);
@@ -55,6 +60,12 @@ private:
 
 	void generateView();
 	void updateViews();
+
+	bool lost = false;
+	sf::Time deathDelay;
+	sf::Clock deathClock;
+
+
 
 };
 
