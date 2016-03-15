@@ -55,6 +55,9 @@ void MenuPage::releaseButton() {
 void MenuPage::resetPage() {
 	mDelayClock.restart();
 	releaseButton();
+	MenuIndex = 0;
+	selectMenuButton(0);
+
 }
 void MenuPage::UpdatedMenuNavigation() {
 
