@@ -51,7 +51,9 @@ public:
 	bool snowHax();
 
 	void SocksDistract();
+	void SetSocksDistract(bool distract);
 	bool GetDistract() { return mSocksDistract; }
+	bool GetSocksMoved() { return socksMoved; }
 
 	int getPlayerIndex();
 	virtual Layer getLayer();
@@ -85,6 +87,7 @@ private:
 	bool mButtonPress = false;
 	bool mSocksDistract = false;
 	bool mCooldown = false;
+	bool socksMoved = true;
 	Grid mGrid;
 
 

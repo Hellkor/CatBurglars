@@ -231,7 +231,7 @@ void Cat::Update(float dt){
 void Cat::moveForward(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 	if (!mMoving && canMove) {
 		if (mID == 3)
-			mSocksDistract = false;
+			socksMoved = true;
 		direction = 4;
 		if (canPushCrate) {
 			if (mGrid.moveCrate(this, gridvector(mCoord.x, mCoord.y - 1), tileLayer, Entities)) {
@@ -248,7 +248,7 @@ void Cat::moveForward(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 void Cat::moveBackWards(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 	if (!mMoving && canMove) {
 		if (mID == 3)
-			mSocksDistract = false;
+			socksMoved = true;
 		direction = 3;
 
 		if (canPushCrate) {
@@ -266,7 +266,7 @@ void Cat::moveBackWards(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 void Cat::moveLeft(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 	if (!mMoving && canMove) {
 		if (mID == 3)
-			mSocksDistract = false;
+			socksMoved = true;
 		direction = 2;
 		if (canPushCrate) {
 			if (mGrid.moveCrate(this, gridvector(mCoord.x - 1, mCoord.y), tileLayer, Entities)) {
@@ -282,7 +282,7 @@ void Cat::moveLeft(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 void Cat::moveRight(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 	if (!mMoving && canMove) {
 		if (mID == 3)
-			mSocksDistract = false;
+			socksMoved = true;
 		direction = 1;
 		if (canPushCrate) {
 			if (mGrid.moveCrate(this, gridvector(mCoord.x + 1, mCoord.y), tileLayer, Entities)) {
@@ -483,8 +483,15 @@ bool Cat::snowHax(){
 
 void Cat::SocksDistract()
 {
+	socksMoved = false;
 	mSocksDistract = true;
 }
+
+void Cat::SetSocksDistract(bool distract)
+{
+	mSocksDistract = distract;
+}
+
 Layer Cat::getLayer() {
 	return FRONT;
 }
