@@ -34,15 +34,12 @@ Level LevelManager::getLevel(){
 */
 
 void LevelManager::update(float dt){
-
-	mLevels[mCurrentLevel]->update(dt);
-
+		mLevels[mCurrentLevel]->update(dt);
 }
 
 void LevelManager::loadLevel(int i){
 	mCurrentLevel = i;
-	mLevels[mCurrentLevel]->load();
-
+		mLevels[mCurrentLevel]->load();
 
 }
 void LevelManager::reloadLevel() {

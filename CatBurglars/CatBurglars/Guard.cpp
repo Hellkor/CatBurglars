@@ -37,6 +37,10 @@ mDirectory(directory){
 
 }
 void Guard::setVision(string face, TileLayer *tiles, std::vector<Entity*> *entities) {
+	while (!mVision.empty()) {
+		delete mVision.back();
+		mVision.pop_back();
+	}
 	mVision.clear();
 	int range = mRange;
 	width = 1;
@@ -68,7 +72,7 @@ void Guard::setVision(string face, TileLayer *tiles, std::vector<Entity*> *entit
 				else
 					leftVision = false;
 				}
-			width++;
+			width = 2;
 		}
 		sf::Vector2f conePos(mPosition.x + 32, mPosition.y + 32);
 		// define the points
@@ -98,7 +102,7 @@ void Guard::setVision(string face, TileLayer *tiles, std::vector<Entity*> *entit
 					else
 						leftVision = false;
 				}
-			width++;
+			width = 2;
 
 		}
 		sf::Vector2f conePos(mPosition.x + 32, mPosition.y + 32);
@@ -130,7 +134,7 @@ void Guard::setVision(string face, TileLayer *tiles, std::vector<Entity*> *entit
 				else
 					leftVision = false;
 			}
-			width++;
+			width = 2;
 		}
 
 		sf::Vector2f conePos(mPosition.x + 32, mPosition.y + 32);
@@ -161,7 +165,7 @@ void Guard::setVision(string face, TileLayer *tiles, std::vector<Entity*> *entit
 				else
 					leftVision = false;
 			}
-			width++;
+			width = 2;
 		}
 		sf::Vector2f conePos(mPosition.x + 32, mPosition.y + 32);
 		// define the points
@@ -169,6 +173,7 @@ void Guard::setVision(string face, TileLayer *tiles, std::vector<Entity*> *entit
 		mConvex.setPoint(1, sf::Vector2f(conePos.x - 32 - range * 64, conePos.y + 32 + (width - 2) * 64));
 		mConvex.setPoint(2, sf::Vector2f(conePos.x - 32 - range * 64, conePos.y - 32 - (width - 2) * 64));
 	}
+	
 }
 void Guard::UpdateConePos() {
 	int range = mRange;

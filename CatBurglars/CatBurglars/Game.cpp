@@ -12,7 +12,7 @@ bool Fullscreen = false;
 
 static sf::RenderWindow *window;
 static TextureHandler textures;
-MovieHandler moviehandler;
+static MovieHandler moviehandler;
 
 sf::View GuiView;
 
@@ -65,10 +65,14 @@ Game::Game() {
 	SPLASH_SPRITE.setOrigin(sf::Vector2f(SPLASH_SCREEN.getSize().x/2, SPLASH_SCREEN.getSize().y/2));
 	SPLASH_SPRITE.setPosition(GuiView.getCenter());
 
-	
+	menuBackground.loadFromFile("Resources/Menu/background.png");
+	menuBackgroundSprite.setTexture(menuBackground);
+	menuBackgroundSprite.setOrigin(sf::Vector2f(menuBackground.getSize().x / 2, menuBackground.getSize().y / 2));
+	menuBackgroundSprite.setPosition(GuiView.getCenter());
 
 	TextureHandler::Initialize();
 	SoundHandler::Initialize();
+	MovieHandler::Initialize();
 
 	Level *Level0 = new Level("1_1");
 	Level *level1 = new Level("1_2");
@@ -77,7 +81,9 @@ Game::Game() {
 	Level *level4 = new Level("1_5");
 	Level *level5 = new Level("1_6");
 	
+	Level *movie1 = new Level(1);
 
+	LevelManager::addLevel(movie1);
 	LevelManager::addLevel(Level0);
 	LevelManager::addLevel(level1);
 	LevelManager::addLevel(level2);
@@ -237,9 +243,10 @@ Game::~Game()
 
 }
 
-void Game::Run(){
+
+
+void Game::Run() {
 	bool isFocused = true;
-	//moviehandler.PlayMovie(0);
 	while (window->isOpen())
 	{
 		sf::Event event;
@@ -252,10 +259,11 @@ void Game::Run(){
 			if (event.type == sf::Event::LostFocus) {
 				isFocused = false;
 			}
-			if(event.type == sf::Event::GainedFocus){
+			if (event.type == sf::Event::GainedFocus) {
 				isFocused = true;
 			}
 		}
+
 		// Update (the events are handled in the actualizar function)
 		loops = 0;
 
@@ -265,29 +273,32 @@ void Game::Run(){
 			if (isFocused) {
 				Update(interpolacion);
 			}
-			
+
 			proximo_tick += SALTEO_TICKS;
 			++loops;
 
 		}
 
-		
+
 		interpolacion = static_cast <float> (miReloj.getElapsedTime().asMilliseconds() + SALTEO_TICKS - proximo_tick) / static_cast <float> (SALTEO_TICKS);
 
-		
+
 
 		Render();
 	}
 }
+
 void changeScreenMode() {
 	Fullscreen = !Fullscreen;
 
 
 	if (Fullscreen) {
 		window->create(sf::VideoMode(1920, 1080, 32), "MenuTest", sf::Style::Fullscreen);
+		window->setMouseCursorVisible(false);
 	}
 	else if (!Fullscreen) {
 		window->create(sf::VideoMode(1920, 1080, 32), "MenuTest", sf::Style::Close);
+		window->setMouseCursorVisible(true);
 	}
 }
 void Game::Update(float dt){
@@ -394,7 +405,9 @@ void Game::Update(float dt){
 				MainMenuSystem.setPage("Pause");
 			}
 			break;
+		
 
+			
 
 		case Pause:
 			MainMenuSystem.UpdateNavigation();
@@ -424,7 +437,7 @@ void Game::Update(float dt){
 void Game::Render()
 {
 	window->clear();
-	//window->clear();
+
 	switch (GameState){
 	case Splash:
 		
@@ -433,6 +446,7 @@ void Game::Render()
 		
 		break;
 	case Menu:
+		window->draw(menuBackgroundSprite);
 		window->setView(GuiView);
 		MainMenuSystem.render(window);
 		break;
@@ -450,6 +464,5 @@ void Game::Render()
 	
 
 	
-	//window->draw(*moviehandler.getMovie());
 	window->display();
 }

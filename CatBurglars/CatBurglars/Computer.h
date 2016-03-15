@@ -45,6 +45,17 @@ private:
 
 	sf::Sound mInteractedSound;
 
+
+	sf::Time mChannelHold;
+	sf::Clock ChannelClock;
+	bool channelActive;
+
+	sf::Font mFont;
+	sf::Text timerText;
+
+
+	int spriteposy;
+	int spriteposx;
 };
 
 
