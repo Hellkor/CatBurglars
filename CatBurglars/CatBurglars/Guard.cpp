@@ -301,7 +301,10 @@ void Guard::AImovement(TileLayer *tiles, std::vector<Entity*> *entities, Pathfin
 		else
 		{
 			mClock.restart();
-			mQueuePos += 1;
+			if (mCommandQueue[mQueuePos].temporary)
+				mCommandQueue.erase(mCommandQueue.begin() + mQueuePos);
+			else
+				mQueuePos += 1;
 			if (mQueuePos >= mCommandQueue.size())
 				mQueuePos = 0;
 		}
@@ -417,19 +420,16 @@ void Guard::interaction(Usable *usable) {
 
 }
 
-void Guard::SetSocksSight(bool sighted)
-{
-	mSeesSocks = sighted;
-}
-
-bool Guard::GetSocksSight()
-{
-	return mSeesSocks;
-}
-
 void Guard::SetDistraction(gridvector pos)
 {
 	Command distractionCommand;
+	distractionCommand.xPos = pos.x;
+	distractionCommand.yPos = pos.y;
+	distractionCommand.direction = "N"; // for now
+	distractionCommand.temporary = true;
+	if (mCommandQueue[mQueuePos].temporary == true)
+		mCommandQueue.erase(mCommandQueue.begin() + mQueuePos);
+	mCommandQueue.insert(mCommandQueue.begin() + mQueuePos, distractionCommand);
 }
 
 bool Guard::getIntersection(GameObject *obj) {

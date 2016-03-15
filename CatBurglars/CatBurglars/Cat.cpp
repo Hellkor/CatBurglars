@@ -203,6 +203,8 @@ void Cat::Update(float dt){
 
 void Cat::moveForward(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 	if (!mMoving && canMove) {
+		if (mID == 3)
+			mSocksDistract = false;
 		direction = 4;
 		if (canPushCrate) {
 			if (mGrid.moveCrate(this, gridvector(mCoord.x, mCoord.y - 1), tileLayer, Entities)) {
@@ -218,6 +220,8 @@ void Cat::moveForward(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 }
 void Cat::moveBackWards(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 	if (!mMoving && canMove) {
+		if (mID == 3)
+			mSocksDistract = false;
 		direction = 3;
 
 		if (canPushCrate) {
@@ -234,6 +238,8 @@ void Cat::moveBackWards(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 }
 void Cat::moveLeft(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 	if (!mMoving && canMove) {
+		if (mID == 3)
+			mSocksDistract = false;
 		direction = 2;
 		if (canPushCrate) {
 			if (mGrid.moveCrate(this, gridvector(mCoord.x - 1, mCoord.y), tileLayer, Entities)) {
@@ -248,6 +254,8 @@ void Cat::moveLeft(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 }
 void Cat::moveRight(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 	if (!mMoving && canMove) {
+		if (mID == 3)
+			mSocksDistract = false;
 		direction = 1;
 		if (canPushCrate) {
 			if (mGrid.moveCrate(this, gridvector(mCoord.x + 1, mCoord.y), tileLayer, Entities)) {
@@ -271,7 +279,7 @@ void Cat::useAbility(TileLayer *tileLayer, std::vector<Entity*> *Entities){
 	//Socks
 	if (mID == 3)
 	{
-		SocksDistract(Entities);
+		SocksDistract();
 	}
 }
 
@@ -443,15 +451,9 @@ bool Cat::snowHax(){
 
 // Socks \\
 
-void Cat::SocksDistract(std::vector<Entity*> *Entities)
+void Cat::SocksDistract()
 {
-	for each (Entity *e in *Entities)
-	{
-		if (Guard *guard = dynamic_cast<Guard*>(e))
-		{
-
-		}
-	}
+	mSocksDistract = true;
 }
 Layer Cat::getLayer() {
 	return FRONT;

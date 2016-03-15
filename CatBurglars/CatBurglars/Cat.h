@@ -48,7 +48,8 @@ public:
 
 	bool snowHax();
 
-	void SocksDistract(std::vector<Entity*> *Entities);
+	void SocksDistract();
+	bool GetDistract() { return mSocksDistract; }
 
 	int getPlayerIndex();
 	virtual Layer getLayer();
@@ -78,6 +79,7 @@ private:
 	bool mDashing = false;
 	bool mPushing = false;
 	bool mButtonPress = false;
+	bool mSocksDistract = false;
 	Grid mGrid;
 
 

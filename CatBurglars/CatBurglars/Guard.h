@@ -47,9 +47,6 @@ public:
 
 	void interaction(Usable *usable);
 
-	void SetSocksSight(bool sighted);
-	bool GetSocksSight();
-
 	void SetDistraction(gridvector pos);
 
 private:
@@ -95,8 +92,6 @@ private:
 	sf::Sound mWalkSound;
 
 	Pathfinder *mPathfinder;
-
-	bool mSeesSocks = false;
 };
 
 #endif

@@ -299,10 +299,27 @@ void Level::update(float dt){
 
 					e->Update(dt);
 
+					bool socks = false;
+					gridvector socksPosition;
 					if (GameObject *obj = dynamic_cast<GameObject*>(e)) {
+						if (Cat *cat = dynamic_cast<Cat*>(obj))
+						{
+							socks = cat->GetDistract();
+							if (socks)
+							{
+								socksPosition = cat->getCoords;
+							}
+						}
 
 						if (Guard *guard = dynamic_cast<Guard*>(obj)) {
-
+							if (socks)
+							{
+								if (guard->getCoords().x <= socksPosition.x + 3 && guard->getCoords().x >= socksPosition.x - 3 &&
+									guard->getCoords().y <= socksPosition.y + 3 && guard->getCoords().y >= socksPosition.y - 3)
+								{
+									guard->SetDistraction(socksPosition);
+								}
+							}
 							guard->AImovement(&mWallTileLayer, &mEntities, &pathfinder);
 						}
 
@@ -551,6 +568,12 @@ void Level::generateView(){
 void Level::updateViews(){
 	
 }
+
+void Distraction(Guard *guard)
+{
+
+}
+
 // Laddar in leveln från sparfilen
 void Level::generateLevel(string name){
 	mPlayers = 0;
