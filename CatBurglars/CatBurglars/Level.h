@@ -27,10 +27,6 @@ public:
 
 	void InitializeGuiView(sf::RenderWindow *window);
 
-	void fadeOut();
-	void fadeIn();
-
-	bool fade(int i);
 
 private:
 	StageType mType;

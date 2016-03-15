@@ -5,10 +5,12 @@
 #include <SFML/Graphics.hpp>
 #include "TextureHandler.h"
 
+enum LaserType {Interval,ChannelBound};
 class Lazer : public Recievers {
 
 public:
 	Lazer(int channel, int channelRange, gridvector coords, sf::Texture *texture, int range, string direction);
+	Lazer(gridvector coords, sf::Texture *texture, int range, string direction, float interval);
 	virtual ~Lazer();
 	virtual void connectToChannel(int channelID);
 	virtual void Update(float dt);
@@ -23,6 +25,8 @@ public:
 	virtual bool isSolid();
 
 private:
+
+	LaserType mLaserType;
 	sf::ConvexShape mConvex;
 	std::vector<gridvector*> mVision;
 	int mChannel;
@@ -41,5 +45,9 @@ private:
 	bool checkChannels();
 	int mActiveChannels;
 
+
+
+	sf::Time laserActiveTime;
+	sf::Clock laserActiveClock;
 
 };

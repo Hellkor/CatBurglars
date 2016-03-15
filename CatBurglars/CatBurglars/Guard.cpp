@@ -425,7 +425,7 @@ void Guard::interaction(Usable *usable) {
 
 }
 
-void Guard::SetDistraction(gridvector pos)
+void Guard::SetDistraction(gridvector pos, int distractSeconds)
 {
 	Command distractionCommand;
 	distractionCommand.xPos = pos.x;
@@ -434,7 +434,26 @@ void Guard::SetDistraction(gridvector pos)
 	distractionCommand.temporary = true;
 	if (mCommandQueue[mQueuePos].temporary == true)
 		mCommandQueue.erase(mCommandQueue.begin() + mQueuePos);
+	for (int i = 0; i < distractSeconds; i++)
+	{
+		Command distractWaitCommand;
+		distractWaitCommand.direction = "WAIT";
+		distractWaitCommand.temporary = true;
+		mCommandQueue.insert(mCommandQueue.begin() + mQueuePos, distractWaitCommand);
+	}
 	mCommandQueue.insert(mCommandQueue.begin() + mQueuePos, distractionCommand);
+}
+
+void Guard::RemoveTemporaryWaits()
+{
+	for (std::vector<Command>::size_type i = 0; i < mCommandQueue.size(); i++)
+	{
+		if (mCommandQueue[i].direction == "WAIT" && mCommandQueue[i].temporary)
+		{
+			mCommandQueue.erase(mCommandQueue.begin() + i);
+			i--;
+		}
+	}
 }
 
 bool Guard::getIntersection(GameObject *obj) {
@@ -449,7 +468,7 @@ bool Guard::isInteracting(){
 	return mInteracting;
 }
 bool Guard::isSolid(){
-	return true;
+	return false;
 }
 
 //Returns position of sprite

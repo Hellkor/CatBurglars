@@ -63,11 +63,71 @@ Lazer::Lazer(int channel, int channelRange, gridvector coords, sf::Texture *text
 				mVision.push_back(new gridvector(mCoords.x - i, mCoords.y));
 
 				}
-			}
+		}
 
 
-mConvex.setTexture(textures.GetTexture(99));
+		mLaserType = ChannelBound;
+}
+
+Lazer::Lazer(gridvector coords, sf::Texture *texture, int range, string face, float interval) : 
+	mCoords(coords),
+	mFace(face){
+	mLaserType = Interval;
+
+	laserActiveTime = sf::seconds(interval);
+
+	mPosition.x = mCoords.x * 64;
+	mPosition.y = mCoords.y * 64;
+	int direction;
+	if (mFace == "N") {
+		direction = 1;
 	}
+	if (mFace == "S") {
+		direction = 2;
+	}
+	if (mFace == "E") {
+		direction = 3;
+	}
+	if (mFace == "W") {
+		direction = 4;
+	}
+	TextureHandler textures;
+	mSprite.setTexture(*texture);
+	mSprite.setTextureRect(sf::IntRect((direction - 1) * 64, 0, 64, 64));
+	mSprite.setPosition((sf::Vector2f)mPosition);
+	textures.Initialize();
+
+	mHitboxSprite.setTexture(*textures.GetTexture(99));
+
+
+	int width = 1;
+	int height = 0;
+
+	if (mFace == "N") {
+		for (int i = 0; i <= range; i++) {
+			mVision.push_back(new gridvector(mCoords.x, mCoords.y - i));
+		}
+	}
+	if (mFace == "S") {
+		for (int i = 0; i <= range; i++) {
+
+			mVision.push_back(new gridvector(mCoords.x, mCoords.y + i));
+		}
+	}
+	if (mFace == "E") {
+		for (int i = 0; i <= range; i++) {
+
+			mVision.push_back(new gridvector(mCoords.x + i, mCoords.y));
+		}
+	}
+	if (mFace == "W") {
+		for (int i = 0; i <= range; i++) {
+
+			mVision.push_back(new gridvector(mCoords.x - i, mCoords.y));
+
+		}
+	}
+}
 	
 
 
@@ -88,11 +148,44 @@ bool Lazer::checkChannels() {
 
 void Lazer::Update(float dt) {
 
-	//ifall någon kanal är inaktiv så är dörren stängd
-	if (checkChannels()) {
-		isOn = false;
+	switch (mLaserType)
+	{
+	case Interval:
+
+		if (isOn) {
+
+			if (laserActiveClock.getElapsedTime().asSeconds() >= laserActiveTime.asSeconds()) {
+				isOn = false;
+				laserActiveClock.restart();
+			}
+
+		}
+		if (!isOn) {
+
+			if (laserActiveClock.getElapsedTime().asSeconds() >= laserActiveTime.asSeconds()) {
+				isOn = true;
+				laserActiveClock.restart();
+			}
+
+		}
+
+
+
+
+		break;
+	case ChannelBound:
+
+		//ifall någon kanal är inaktiv så är dörren stängd
+		if (checkChannels()) {
+			isOn = false;
+		}
+		else isOn = true;
+
+		break;
+	default:
+		break;
 	}
-	else isOn = true;
+	
 }
 
 void Lazer::connectToChannel(int channel) {

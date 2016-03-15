@@ -54,8 +54,8 @@ DialogManager dialogManager("dialog", &textures,sf::Vector2f(1280,720));
 
 HintManager hintManager("hints");
 
-Controller p1Controller = Controller(KeyboardOne);
-Controller p2Controller = Controller(KeyboardTwo);
+Controller p1Controller = Controller(GamepadOne);
+Controller p2Controller = Controller(KeyboardOne);
 
 
 
@@ -341,7 +341,7 @@ void Level::update(float dt){
 				if (!dialogManager.isDialogActive()) {
 					//Channels::update();
 					pathfinder.Update(&mEntities);
-					bool socks = false;
+					bool socks = false, socksMoved = false;
 					gridvector socksPosition;
 					for each (Entity *e in mEntities) {
 						if (!mEntities.empty()) {
@@ -350,10 +350,14 @@ void Level::update(float dt){
 								if (Cat *cat = dynamic_cast<Cat*>(obj))
 								{
 									if (cat->getID() == 3)
+									{
 										socks = cat->GetDistract();
+										socksMoved = cat->GetSocksMoved();
+									}
 									if (socks)
 									{
 										socksPosition = cat->getCoords();
+										cat->SetSocksDistract(false);
 									}
 								}
 								if (Guard *guard = dynamic_cast<Guard*>(obj)) {
@@ -362,9 +366,11 @@ void Level::update(float dt){
 										if (guard->getCoords().x <= socksPosition.x + 3 && guard->getCoords().x >= socksPosition.x - 3 &&
 											guard->getCoords().y <= socksPosition.y + 3 && guard->getCoords().y >= socksPosition.y - 3)
 										{
-											guard->SetDistraction(socksPosition);
+											guard->SetDistraction(socksPosition, 4);
 										}
 									}
+									if (socksMoved)
+										guard->RemoveTemporaryWaits();
 									guard->AImovement(&mWallTileLayer, &mEntities, &pathfinder);
 								}
 
@@ -469,12 +475,13 @@ void Level::update(float dt){
 				}
 
 			}
-			if (lost && !IMMORTALITY_MODE) {
+		
+				}	
+				if (lost && !IMMORTALITY_MODE) {
 
-				if (deathClock.getElapsedTime().asSeconds() >= deathDelay.asSeconds()) {
+					if (deathClock.getElapsedTime().asSeconds() >= deathDelay.asSeconds()) {
 
 					load();
-				}
 			}
 		}
 		break;
@@ -558,10 +565,10 @@ void Level::load(){
 
 		for (int i = 0; i <= 100; i++) {
 
-		Channels::addChannel(Channel(i));
-			}
+			Channels::addChannel(Channel(i));
+		}
 
-			
+		
 
 		//Starts the music for a level
 		soundhandler.startMusic(mFile);
@@ -856,7 +863,14 @@ void Level::generateLevel(string name){
 		if (objectID == 9) {
 			mEntities.push_back(new Crate(textures.GetTexture(4), gridvector(xPos, yPos), 1, &soundhandler, false));
 		}
-
+		if (objectID == 10) {
+			if (script == "interval") {
+				mEntities.push_back(new Lazer(gridvector(xPos, yPos), textures.GetTexture(13), range, facing, hold));
+			}
+			if (script == "toggle") {
+				mEntities.push_back(new Lazer(channel, hold, gridvector(xPos, yPos), textures.GetTexture(13), range, facing));
+			}
+		}
 	}
 
 	inputFile >> input;
@@ -903,5 +917,6 @@ void Level::generateLevel(string name){
 	mPlayers = playernum;
 	generateView();
 	mLoaded = true;
+	
 
 }
