@@ -6,9 +6,8 @@ class MovieHandler {
 public:
 	MovieHandler();
 	~MovieHandler();
-	void Initialize();
+	static void Initialize();
 	void PlayMovie(int ID);
-	sfe::Movie* getMovie();
+	sfe::Movie* getMovie(int ID);
 private:
-	sfe::Movie mMovieTest;
 };

@@ -37,6 +37,10 @@ mDirectory(directory){
 
 }
 void Guard::setVision(string face, TileLayer *tiles, std::vector<Entity*> *entities) {
+	while (!mVision.empty()) {
+		delete mVision.back();
+		mVision.pop_back();
+	}
 	mVision.clear();
 	int range = mRange;
 	width = 1;
@@ -68,7 +72,7 @@ void Guard::setVision(string face, TileLayer *tiles, std::vector<Entity*> *entit
 				else
 					leftVision = false;
 				}
-			width++;
+			width = 2;
 		}
 		sf::Vector2f conePos(mPosition.x + 32, mPosition.y + 32);
 		// define the points
@@ -98,7 +102,7 @@ void Guard::setVision(string face, TileLayer *tiles, std::vector<Entity*> *entit
 					else
 						leftVision = false;
 				}
-			width++;
+			width = 2;
 
 		}
 		sf::Vector2f conePos(mPosition.x + 32, mPosition.y + 32);
@@ -130,7 +134,7 @@ void Guard::setVision(string face, TileLayer *tiles, std::vector<Entity*> *entit
 				else
 					leftVision = false;
 			}
-			width++;
+			width = 2;
 		}
 
 		sf::Vector2f conePos(mPosition.x + 32, mPosition.y + 32);
@@ -161,7 +165,7 @@ void Guard::setVision(string face, TileLayer *tiles, std::vector<Entity*> *entit
 				else
 					leftVision = false;
 			}
-			width++;
+			width = 2;
 		}
 		sf::Vector2f conePos(mPosition.x + 32, mPosition.y + 32);
 		// define the points
@@ -169,6 +173,7 @@ void Guard::setVision(string face, TileLayer *tiles, std::vector<Entity*> *entit
 		mConvex.setPoint(1, sf::Vector2f(conePos.x - 32 - range * 64, conePos.y + 32 + (width - 2) * 64));
 		mConvex.setPoint(2, sf::Vector2f(conePos.x - 32 - range * 64, conePos.y - 32 - (width - 2) * 64));
 	}
+	
 }
 void Guard::UpdateConePos() {
 	int range = mRange;
@@ -256,11 +261,12 @@ void Guard::loadAI(string filename){
 			}
 		}
 		command.direction = input;
-		
+		command.temporary = false;
+
 		mCommandQueue.push_back(command);
 	}
 	
-
+	
 }
 void Guard::AImovement(TileLayer *tiles, std::vector<Entity*> *entities, Pathfinder *pathfinder){
 
@@ -289,7 +295,10 @@ void Guard::AImovement(TileLayer *tiles, std::vector<Entity*> *entities, Pathfin
 			else
 			{
 				setVision(mCommandQueue[mQueuePos].direction, tiles, entities);
-				mQueuePos += 1;
+				if (mCommandQueue[mQueuePos].temporary)
+					mCommandQueue.erase(mCommandQueue.begin() + mQueuePos);
+				else
+					mQueuePos += 1;
 				if (mQueuePos >= mCommandQueue.size())
 					mQueuePos = 0;
 			}
@@ -297,7 +306,10 @@ void Guard::AImovement(TileLayer *tiles, std::vector<Entity*> *entities, Pathfin
 		else
 		{
 			mClock.restart();
-			mQueuePos += 1;
+			if (mCommandQueue[mQueuePos].temporary)
+				mCommandQueue.erase(mCommandQueue.begin() + mQueuePos);
+			else
+				mQueuePos += 1;
 			if (mQueuePos >= mCommandQueue.size())
 				mQueuePos = 0;
 		}
@@ -411,6 +423,18 @@ void Guard::interaction(Usable *usable) {
 		}
 	}
 
+}
+
+void Guard::SetDistraction(gridvector pos)
+{
+	Command distractionCommand;
+	distractionCommand.xPos = pos.x;
+	distractionCommand.yPos = pos.y;
+	distractionCommand.direction = "N"; // for now
+	distractionCommand.temporary = true;
+	if (mCommandQueue[mQueuePos].temporary == true)
+		mCommandQueue.erase(mCommandQueue.begin() + mQueuePos);
+	mCommandQueue.insert(mCommandQueue.begin() + mQueuePos, distractionCommand);
 }
 
 bool Guard::getIntersection(GameObject *obj) {

@@ -1,5 +1,7 @@
 #include "MovieHandler.h"
 
+static sfe::Movie mMovieTest;
+
 MovieHandler::MovieHandler() {
 
 }
@@ -10,14 +12,14 @@ MovieHandler::~MovieHandler() {
 
 void MovieHandler::Initialize() {
 	mMovieTest.openFromFile("Resources/Videos/prolog.wmv");
-	mMovieTest.fit(0, 0, (float)1280, (float)720);
 }
 
 void MovieHandler::PlayMovie(int ID) {
-	
+	if(ID == 1)
 	mMovieTest.play();
 }
 
-sfe::Movie* MovieHandler::getMovie() {
+sfe::Movie* MovieHandler::getMovie(int ID) {
+	if(ID == 1)
 	return &mMovieTest;
 }
