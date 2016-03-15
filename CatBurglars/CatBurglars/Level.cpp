@@ -54,8 +54,8 @@ DialogManager dialogManager("dialog", &textures,sf::Vector2f(1280,720));
 
 HintManager hintManager("hints");
 
-Controller p1Controller = Controller(KeyboardOne);
-Controller p2Controller = Controller(KeyboardTwo);
+Controller p1Controller = Controller(GamepadOne);
+Controller p2Controller = Controller(KeyboardOne);
 
 
 
@@ -342,7 +342,7 @@ void Level::update(float dt){
 
 					//Channels::update();
 					pathfinder.Update(&mEntities);
-					bool socks = false;
+					bool socks = false, socksMoved = false;
 					gridvector socksPosition;
 					for each (Entity *e in mEntities) {
 						if (!mEntities.empty()) {
@@ -351,10 +351,14 @@ void Level::update(float dt){
 								if (Cat *cat = dynamic_cast<Cat*>(obj))
 								{
 									if (cat->getID() == 3)
+									{
 										socks = cat->GetDistract();
+										socksMoved = cat->GetSocksMoved();
+									}
 									if (socks)
 									{
 										socksPosition = cat->getCoords();
+										cat->SetSocksDistract(false);
 									}
 								}
 								if (Guard *guard = dynamic_cast<Guard*>(obj)) {
@@ -363,9 +367,11 @@ void Level::update(float dt){
 										if (guard->getCoords().x <= socksPosition.x + 3 && guard->getCoords().x >= socksPosition.x - 3 &&
 											guard->getCoords().y <= socksPosition.y + 3 && guard->getCoords().y >= socksPosition.y - 3)
 										{
-											guard->SetDistraction(socksPosition);
+											guard->SetDistraction(socksPosition, 4);
 										}
 									}
+									if (socksMoved)
+										guard->RemoveTemporaryWaits();
 									guard->AImovement(&mWallTileLayer, &mEntities, &pathfinder);
 								}
 
@@ -468,12 +474,13 @@ void Level::update(float dt){
 				}
 
 			}
-			if (lost && !IMMORTALITY_MODE) {
+		
+				}	
+				if (lost && !IMMORTALITY_MODE) {
 
-				if (deathClock.getElapsedTime().asSeconds() >= deathDelay.asSeconds()) {
+					if (deathClock.getElapsedTime().asSeconds() >= deathDelay.asSeconds()) {
 
 					load();
-				}
 			}
 		}
 		break;
@@ -895,5 +902,6 @@ void Level::generateLevel(string name){
 	mPlayers = playernum;
 	generateView();
 	mLoaded = true;
+	
 
 }
