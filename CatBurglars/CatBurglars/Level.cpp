@@ -17,6 +17,7 @@
 #include "DialogManager.h"
 #include "Controller.h"
 #include "Pathfinder.h"
+#include "Lazer.h"
 using namespace std;
 
 bool IMMORTALITY_MODE = false;
@@ -475,6 +476,8 @@ void Level::load(){
 
 		Channels::addChannel(Channel(i));
 	}
+	
+	mEntities.push_back(new Lazer(1, 0, gridvector(3, 3), textures.GetTexture(13), 4, "N"));
 
 	//Starts the music for a level
 	soundhandler.startMusic(mFile);
