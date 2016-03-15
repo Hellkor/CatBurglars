@@ -552,10 +552,10 @@ void Level::load(){
 
 		for (int i = 0; i <= 100; i++) {
 
-		Channels::addChannel(Channel(i));
-			}
+			Channels::addChannel(Channel(i));
+		}
 
-			
+		
 
 		//Starts the music for a level
 		soundhandler.startMusic(mFile);
@@ -841,7 +841,14 @@ void Level::generateLevel(string name){
 		if (objectID == 9) {
 			mEntities.push_back(new Crate(textures.GetTexture(4), gridvector(xPos, yPos), 1, &soundhandler, false));
 		}
-
+		if (objectID == 10) {
+			if (script == "interval") {
+				mEntities.push_back(new Lazer(gridvector(xPos, yPos), textures.GetTexture(13), range, facing, hold));
+			}
+			if (script == "toggle") {
+				mEntities.push_back(new Lazer(channel, hold, gridvector(xPos, yPos), textures.GetTexture(13), range, facing));
+			}
+		}
 	}
 
 	inputFile >> input;

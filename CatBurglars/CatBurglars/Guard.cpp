@@ -449,7 +449,7 @@ bool Guard::isInteracting(){
 	return mInteracting;
 }
 bool Guard::isSolid(){
-	return true;
+	return false;
 }
 
 //Returns position of sprite
