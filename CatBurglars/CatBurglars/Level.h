@@ -60,7 +60,7 @@ private:
 	sf::View mPlayer2View;
 	sf::View guiView;
 	
-	
+	int mMovieID;
 
 	int mPlayers;
 
