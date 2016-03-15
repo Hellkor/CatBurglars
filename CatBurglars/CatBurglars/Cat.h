@@ -24,6 +24,8 @@ public:
 	virtual sf::Vector2i GetPosition();
 	virtual gridvector getCoords();
 
+	void RenderGUI(sf::RenderWindow *mainWindow);
+
 	void moveForward(TileLayer *tileLayer, std::vector<Entity*> *Entities);
 	void moveBackWards(TileLayer *tileLayer, std::vector<Entity*> *Entities);
 	void moveLeft(TileLayer *tileLayer, std::vector<Entity*> *Entities);
@@ -56,7 +58,7 @@ public:
 private:
 	void CompleteInteraction(GameObject *object);
 	float mSpeed;
-	sf::Sprite mSprite;
+	sf::Sprite mSprite, mAbilitySprite;
 	int mID;
 	sf::Vector2i mPosition;
 	gridvector mCoord;
@@ -76,6 +78,7 @@ private:
 	bool mDashing = false;
 	bool mPushing = false;
 	bool mButtonPress = false;
+	bool mCooldown = false;
 	Grid mGrid;
 
 

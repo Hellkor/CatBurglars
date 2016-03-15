@@ -4,7 +4,7 @@
 std::string PORTRAITS_DIRECTORY = "Resources/Portraits/";
 
 static sf::Texture mTileTexture, mTileTexture2 ,mPropTileTexture, mSidebarTexture, mSelectorTexture, mSaveTexture, mShadow, mCrate, mButton, mDoor, mBars, mGuard, mArea, mCamera, mComputer, mSnow,
-mSocksPortrait, mShadowPortrait, mScooterPortrait, mSnowPortrait, mAlexPortrait, mDouglasPortrait;
+mSocksPortrait, mShadowPortrait, mScooterPortrait, mSnowPortrait, mAlexPortrait, mDouglasPortrait, mCoolDownDash;
 
 TextureHandler::TextureHandler()
 {
@@ -39,7 +39,7 @@ void TextureHandler::Initialize()
 	mDouglasPortrait.loadFromFile(PORTRAITS_DIRECTORY + "DouglasKon.png");
 
 	mPropTileTexture.loadFromFile("Resources/tileset_props.png");
-	
+	mCoolDownDash.loadFromFile("Resources/cooldownTest.png");
 }
 
 //Retrun a texture
@@ -81,6 +81,8 @@ sf::Texture* TextureHandler::GetTexture(int ID)
 		return &mAlexPortrait;
 	if (ID == 30)
 		return &mDouglasPortrait;
+	if (ID == 50)
+		return &mCoolDownDash;
 	if (ID == 99)
 		return &mArea;
 }

@@ -11,10 +11,13 @@ using namespace std;
 
 typedef vector<Tile*> TileRow;
 typedef vector<TileRow> TileLayer;
+enum StageType { Cutscene, GameStage };
 
 class Level{
+	
 public:
 	Level(string filename);
+	Level(int movieID);
 	void update(float dt);
 	void render(sf::RenderWindow *window);
 
@@ -23,7 +26,10 @@ public:
 	void Clear();
 
 	void InitializeGuiView(sf::RenderWindow *window);
+
 private:
+	StageType mType;
+
 	bool mLoaded;
 	void renderLight(sf::RenderWindow *window);
 
@@ -56,6 +62,7 @@ private:
 	void generateView();
 	void updateViews();
 
+	int mMovieID = 0;
 };
 
 
