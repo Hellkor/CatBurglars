@@ -91,7 +91,6 @@ bool Grid::isTilePassable(GameObject *gameobject, gridvector position, TileLayer
 	TileLayer mTiles = *Tiles;
 	std::vector<Entity*> mEntities = *Entities;
 	
-	return true;
 	//////////////////// ÄNDRA SÅ ALLA KATTER EJ KAN PUTTA
 	
 	
