@@ -2,6 +2,7 @@
 #include <iostream>
 #include <SFML/Window.hpp>
 
+
 bool Keyboard1Occupied = false;
 bool Keyboard2Occupied = false;
 
@@ -194,6 +195,8 @@ void Controller::move(Cat *cat, TileLayer *tileLayer, std::vector<Entity*> *Enti
 
 	case GamepadOne:
 	{
+
+
 		float joyX = sf::Joystick::getAxisPosition(0, sf::Joystick::X);
 		float joyY = sf::Joystick::getAxisPosition(0, sf::Joystick::Y);
 		float joyDPX = sf::Joystick::getAxisPosition(0, sf::Joystick::PovX);
@@ -203,27 +206,24 @@ void Controller::move(Cat *cat, TileLayer *tileLayer, std::vector<Entity*> *Enti
 		{				//kolla knappN
 			cat->useAbility(tileLayer, Entities);
 		}
-
-		if (joyY > 15.f|| joyDPY < -15.f)
-		{
-			cat->moveBackWards(tileLayer, Entities);
-
-		}
-		else if (joyY < -15.f||joyDPY > 15.f)
-		{
-			cat->moveForward(tileLayer, Entities);
-
-		}
-		else if (joyX < -15.f||joyDPX<-15.f )
-		{
-			cat->moveLeft(tileLayer, Entities);
-
-		}
-		else if (joyX > 15.f || joyDPX >15.f)
-		{
-			cat->moveRight(tileLayer, Entities);
-
-		}
+		
+		
+		if (joyY > 15.f || joyDPY < -15.f)
+			{
+				cat->moveBackWards(tileLayer, Entities);
+			}
+		else if (joyY < -15.f || joyDPY >15.f)
+			{
+				cat->moveForward(tileLayer, Entities);
+			}
+		else if (joyX < -15.f || joyDPX < -15.f)
+			{
+				cat->moveLeft(tileLayer, Entities);
+			}
+		else if (joyX > 15.f || joyDPX > 15.f )
+			{
+				cat->moveRight(tileLayer, Entities);
+			}
 		if (sf::Joystick::isButtonPressed(0, 2))
 		{
 			cat->mInteracting = true;
@@ -232,6 +232,7 @@ void Controller::move(Cat *cat, TileLayer *tileLayer, std::vector<Entity*> *Enti
 		{
 			cat->mInteracting = false;
 		}
+		
 		break;
 	}
 #pragma endregion
@@ -242,6 +243,7 @@ void Controller::move(Cat *cat, TileLayer *tileLayer, std::vector<Entity*> *Enti
 
 	case GamepadTwo:
 	{
+		
 		float joyX1 = sf::Joystick::getAxisPosition(1, sf::Joystick::X);
 		float joyY1 = sf::Joystick::getAxisPosition(1, sf::Joystick::Y);
 		float joyDPX1 = sf::Joystick::getAxisPosition(1, sf::Joystick::PovX);
@@ -275,6 +277,7 @@ void Controller::move(Cat *cat, TileLayer *tileLayer, std::vector<Entity*> *Enti
 		{
 			cat->mInteracting = false;
 		}
+		
 		break;
 	}
 

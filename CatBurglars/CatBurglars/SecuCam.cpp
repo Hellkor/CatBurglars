@@ -1,5 +1,6 @@
 #include "secuCam.h"
-#include "TextureHandler.h"
+
+
 TextureHandler textures;
 
 secuCam::secuCam(int channel, int channelRange, gridvector coords, sf::Texture *texture, int range, string face) :

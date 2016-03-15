@@ -89,6 +89,7 @@
     <ClCompile Include="Grid.cpp" />
     <ClCompile Include="Guard.cpp" />
     <ClCompile Include="HintManager.cpp" />
+    <ClCompile Include="Lazer.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="LevelManager.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -127,6 +128,7 @@
     <ClInclude Include="gridvector.h" />
     <ClInclude Include="Guard.h" />
     <ClInclude Include="HintManager.h" />
+    <ClInclude Include="Lazer.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="LevelManager.h" />
     <ClInclude Include="MenuButton.h" />
