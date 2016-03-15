@@ -1,7 +1,9 @@
 #include "Computer.h"
 #include "Channels.h"
 #include "Cat.h"
-
+#include <string>
+#include <sstream>
+#include <iomanip>
 int COMPUTER_INTERACTION_RADIUS = 20;
 
 
@@ -12,23 +14,39 @@ mCoords(coords),
 mToggle(toggle),
 mHoldlength(holdlength),
 mSoundHandler(soundhandler),
-mFace(face){
+mFace(face)
+{
+
+	mFont.loadFromFile("Resources/Fonts/arial.ttf");
+	timerText.setFont(mFont);
+	timerText.setCharacterSize(24);
+
 	mInteractedSound.setBuffer(*mSoundHandler->getSound(3));
 	mPosition.x = mCoords.x * 64;
 	mPosition.y = mCoords.y * 64;
 	if (mFace == "S") {
-		mSprite.setTextureRect(sf::IntRect(0 * 64, 0 * 64, 64, 128));
+		spriteposx = 0;
+		spriteposy = 0;
+		//mSprite.setTextureRect(sf::IntRect(0 * 64, 0 * 64, 64, 128));
+		timerText.setPosition(sf::Vector2f(mPosition.x + 32, mPosition.y - 64));
 	}
 	if (mFace == "E") {
-		mSprite.setTextureRect(sf::IntRect(1 * 64, 0 * 64, 64, 128));
+		spriteposx = 1;
+		spriteposy = 0;
+		//mSprite.setTextureRect(sf::IntRect(1 * 64, 0 * 64, 64, 128));
+		timerText.setPosition(sf::Vector2f(mPosition.x - 32, mPosition.y - 32));
 	}
 	if (mFace == "W") {
-		mSprite.setTextureRect(sf::IntRect(2 * 64, 0 * 64, 64, 128));
+		spriteposx = 2;
+		spriteposy = 0;
+		//mSprite.setTextureRect(sf::IntRect(2 * 64, 0 * 64, 64, 128));
+		timerText.setPosition(sf::Vector2f(mPosition.x + 32, mPosition.y - 32));
 	}
-
+	mChannelHold = sf::seconds(holdlength);
 	
 	mSprite.setPosition(sf::Vector2f(mPosition.x,mPosition.y - 64));
 	mSprite.setTexture(*texture);
+	
 
 }
 Computer::~Computer()
@@ -37,7 +55,6 @@ Computer::~Computer()
 bool Computer::isSolid(){
 	return false;
 }
-
 int Computer::getChannelID(){
 	return mChannelID;
 }
@@ -52,18 +69,7 @@ int computerLength(sf::Vector2i v1, sf::Vector2i v2){
 }
 
 bool Computer::getInteraction(GameObject *g){
-	if (Cat *cat = dynamic_cast<Cat*>(g)){
-		if (cat->snowHax()){
-			if (computerLength(mPosition, g->GetPosition()) < COMPUTER_INTERACTION_RADIUS && g->isInteracting()){
-				// activate channel
-				//mSoundHandler->PlaySound(3);
-				//mInteractedSound.play(); 
-				Channels::setActive(mChannelID, mToggle, mHoldlength);
-				// play sound
-				return true;
-			}
-		}
-	}
+	return false;
 }
 string Computer::getFace() {
 	return mFace;
@@ -85,7 +91,9 @@ bool Computer::playSound() {
 	return true;
 }
 void Computer::activateChannel() {
-	Channels::setActive(mChannelID, mToggle, mHoldlength);
+	Channels::activate(mChannelID);
+	//change sheet
+	channelActive = true;
 }
 Layer Computer::getLayer() {
 	return OnWallUsables;
@@ -95,15 +103,63 @@ sf::Vector2i Computer::GetPosition(){
 }
 
 void Computer::Render(sf::RenderWindow *window){
+	if (channelActive) {
+		spriteposy = 1;
+	}
+	else if (!channelActive) {
+		spriteposy = 0;
+	}
+	mSprite.setTextureRect(sf::IntRect(spriteposx * 64, spriteposy * 128, 64, 128));
+	if (!mToggle && channelActive) {
+		double time = (int)mChannelHold.asSeconds() + 1 - activateClock.getElapsedTime().asSeconds();
+		
+		stringstream stream;
+		stream << fixed << setprecision(0) << time;
+		string s = stream.str();
+		timerText.setString(s);
 
+		window->draw(timerText);
+	}
+	
 	window->draw(mSprite);
 }
 void Computer::Update(float dt){
-	if (gettingHacked) {
-		if (activateClock.getElapsedTime().asSeconds() > activateDelay.asSeconds()) {
-			gettingHacked = false;
-			activateChannel();
+	if (!mToggle) {
+		if (gettingHacked) {
+			if (activateClock.getElapsedTime().asSeconds() > activateDelay.asSeconds()) {
+				gettingHacked = false;
+				Channels::activate(mChannelID);
+				ChannelClock.restart();
+				channelActive = true;
+			}
 		}
+		if (channelActive) {
+			if (ChannelClock.getElapsedTime().asSeconds() >= mChannelHold.asSeconds()) {
+				Channels::deactivate(mChannelID);
+				channelActive = false;
+			}
+		}
+	}
+	else if (mToggle) {
+		if (gettingHacked) {
+			if (activateClock.getElapsedTime().asSeconds() > activateDelay.asSeconds()) {
+				
+					gettingHacked = false;
+					if (channelActive) {
+						Channels::deactivate(mChannelID);
+						channelActive = false;
+					}
+					else if (!channelActive) {
+						Channels::activate(mChannelID);
+						channelActive = true;
+					}
+					
+					//channelActive = !channelActive;
+				
+			}
+			
+		}
+		
 	}
 }
 bool Computer::isInteracting(){

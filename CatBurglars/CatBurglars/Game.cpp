@@ -65,7 +65,10 @@ Game::Game() {
 	SPLASH_SPRITE.setOrigin(sf::Vector2f(SPLASH_SCREEN.getSize().x/2, SPLASH_SCREEN.getSize().y/2));
 	SPLASH_SPRITE.setPosition(GuiView.getCenter());
 
-	
+	menuBackground.loadFromFile("Resources/Menu/background.png");
+	menuBackgroundSprite.setTexture(menuBackground);
+	menuBackgroundSprite.setOrigin(sf::Vector2f(menuBackground.getSize().x / 2, menuBackground.getSize().y / 2));
+	menuBackgroundSprite.setPosition(GuiView.getCenter());
 
 	TextureHandler::Initialize();
 	SoundHandler::Initialize();
@@ -240,7 +243,9 @@ Game::~Game()
 
 }
 
-void Game::Run(){
+
+
+void Game::Run() {
 	bool isFocused = true;
 	while (window->isOpen())
 	{
@@ -254,10 +259,11 @@ void Game::Run(){
 			if (event.type == sf::Event::LostFocus) {
 				isFocused = false;
 			}
-			if(event.type == sf::Event::GainedFocus){
+			if (event.type == sf::Event::GainedFocus) {
 				isFocused = true;
 			}
 		}
+
 		// Update (the events are handled in the actualizar function)
 		loops = 0;
 
@@ -267,20 +273,21 @@ void Game::Run(){
 			if (isFocused) {
 				Update(interpolacion);
 			}
-			
+
 			proximo_tick += SALTEO_TICKS;
 			++loops;
 
 		}
 
-		
+
 		interpolacion = static_cast <float> (miReloj.getElapsedTime().asMilliseconds() + SALTEO_TICKS - proximo_tick) / static_cast <float> (SALTEO_TICKS);
 
-		
+
 
 		Render();
 	}
 }
+
 void changeScreenMode() {
 	Fullscreen = !Fullscreen;
 
@@ -398,7 +405,9 @@ void Game::Update(float dt){
 				MainMenuSystem.setPage("Pause");
 			}
 			break;
+		
 
+			
 
 		case Pause:
 			MainMenuSystem.UpdateNavigation();
@@ -437,6 +446,7 @@ void Game::Render()
 		
 		break;
 	case Menu:
+		window->draw(menuBackgroundSprite);
 		window->setView(GuiView);
 		MainMenuSystem.render(window);
 		break;

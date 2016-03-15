@@ -16,6 +16,9 @@
 #include "MenuButton.h"
 #include "MenuPage.h"
 
+
+
+
 class Game
 {
 public:
@@ -49,5 +52,8 @@ private:
 	MenuButton *ResumeButton;
 	MenuButton *RestartButton;
 	MenuButton *QuitButton;
+
+	sf::Texture menuBackground;
+	sf::Sprite menuBackgroundSprite;
 };
 

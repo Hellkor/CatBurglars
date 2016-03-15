@@ -11,6 +11,8 @@ Button::Button(int channel, sf::Texture *texture, gridvector coords, bool toggle
 	mToggle(toggle),
 	mHoldlength(holdlength){
 
+
+	mChannelHold = sf::seconds(holdlength);
 	mPosition.x = mCoords.x * 64;
 	mPosition.y = mCoords.y * 64;
 	mSprite.setPosition(sf::Vector2f(mPosition));
@@ -41,23 +43,22 @@ bool Button::getInteraction(GameObject *g){
 
 		if (length(mPosition, g->GetPosition()) < INTERACTION_RADIUS && g->isInteracting()){
 					// activate channel
-					Channels::setActive(mChannelID, mToggle, mHoldlength);
-					// play sound
-					return true;
+					
 		}
+
+
+		return false;
 		
 }
 bool Button::Activate(sf::Time time) {
-	//activateChannel();
-	Channels::setActive(mChannelID, mToggle, mHoldlength);
+	Channels::activate(mChannelID);
+	channelActive = true;
+	ChannelClock.restart();
 	return true;
 }
 bool Button::playSound() {
 	//play sound
 	return true;
-}
-void Button::activateChannel() {
-	Channels::setActive(mChannelID, mToggle, mHoldlength);
 }
 sf::Vector2i Button::GetPosition(){
 	return mPosition;
@@ -68,7 +69,14 @@ void Button::Render(sf::RenderWindow *window){
 	window->draw(mSprite);
 }
 void Button::Update(float dt){
-
+	if (!mToggle) {
+		if (channelActive) {
+			if (ChannelClock.getElapsedTime().asSeconds() >= mChannelHold.asSeconds()) {
+				Channels::deactivate(mChannelID);
+				channelActive = false;
+			}
+		}
+	}
 }
 bool Button::isInteracting(){
 	return false;

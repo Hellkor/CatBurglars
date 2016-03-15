@@ -40,7 +40,12 @@ private:
 	sf::Time mButtonPressTime;
 
 
+	sf::Time mChannelHold;
+	sf::Clock ChannelClock;
+	bool channelActive;
 
+	sf::Font mFont;
+	sf::Text timerText;
 
 
 };
