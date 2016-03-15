@@ -14,6 +14,7 @@ struct Command
 	int xPos;
 	int yPos;
 	string direction;
+	bool temporary;
 };
 
 class Guard : public GameObject
@@ -45,6 +46,8 @@ public:
 	virtual bool isSolid();
 
 	void interaction(Usable *usable);
+
+	void SetDistraction(gridvector pos);
 
 private:
 	float mSpeed;

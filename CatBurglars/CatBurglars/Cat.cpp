@@ -35,6 +35,9 @@ canPushCrate(true){
 		canPushCrate = false;
 	}
 	if (mID == 3){
+		mSpeed = 2;
+		mSprite.setTexture(*texturehandler->GetTexture(16), true);
+		canPushCrate = false;
 		mAbilitySprite.setTexture(*texturehandler->GetTexture(10), true);
 	}
 	if (mID == 4){
@@ -222,6 +225,8 @@ void Cat::Update(float dt){
 
 void Cat::moveForward(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 	if (!mMoving && canMove) {
+		if (mID == 3)
+			mSocksDistract = false;
 		direction = 4;
 		if (canPushCrate) {
 			if (mGrid.moveCrate(this, gridvector(mCoord.x, mCoord.y - 1), tileLayer, Entities)) {
@@ -237,6 +242,8 @@ void Cat::moveForward(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 }
 void Cat::moveBackWards(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 	if (!mMoving && canMove) {
+		if (mID == 3)
+			mSocksDistract = false;
 		direction = 3;
 
 		if (canPushCrate) {
@@ -253,6 +260,8 @@ void Cat::moveBackWards(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 }
 void Cat::moveLeft(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 	if (!mMoving && canMove) {
+		if (mID == 3)
+			mSocksDistract = false;
 		direction = 2;
 		if (canPushCrate) {
 			if (mGrid.moveCrate(this, gridvector(mCoord.x - 1, mCoord.y), tileLayer, Entities)) {
@@ -267,6 +276,8 @@ void Cat::moveLeft(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 }
 void Cat::moveRight(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 	if (!mMoving && canMove) {
+		if (mID == 3)
+			mSocksDistract = false;
 		direction = 1;
 		if (canPushCrate) {
 			if (mGrid.moveCrate(this, gridvector(mCoord.x + 1, mCoord.y), tileLayer, Entities)) {
@@ -286,6 +297,11 @@ void Cat::useAbility(TileLayer *tileLayer, std::vector<Entity*> *Entities){
 	if (mID == 1)
 	{
 		shadowDash(tileLayer,Entities, direction);
+	}
+	//Socks
+	if (mID == 3)
+	{
+		SocksDistract();
 	}
 }
 
@@ -456,6 +472,13 @@ bool Cat::snowHax(){
 	}
 	else
 		return false;
+}
+
+// Socks \\
+
+void Cat::SocksDistract()
+{
+	mSocksDistract = true;
 }
 Layer Cat::getLayer() {
 	return FRONT;

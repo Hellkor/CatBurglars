@@ -50,6 +50,9 @@ public:
 
 	bool snowHax();
 
+	void SocksDistract();
+	bool GetDistract() { return mSocksDistract; }
+
 	int getPlayerIndex();
 	virtual Layer getLayer();
 
@@ -78,6 +81,7 @@ private:
 	bool mDashing = false;
 	bool mPushing = false;
 	bool mButtonPress = false;
+	bool mSocksDistract = false;
 	bool mCooldown = false;
 	Grid mGrid;
 

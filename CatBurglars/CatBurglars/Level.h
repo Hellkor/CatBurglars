@@ -60,6 +60,7 @@ private:
 	sf::View mPlayer2View;
 	sf::View guiView;
 	
+	void Distraction(Guard *guard);
 	int mMovieID;
 
 	int mPlayers;
