@@ -58,6 +58,8 @@ public:
 
 	void interaction(Usable *object);
 
+	int getID();
+
 private:
 	void CompleteInteraction(GameObject *object);
 	float mSpeed;
