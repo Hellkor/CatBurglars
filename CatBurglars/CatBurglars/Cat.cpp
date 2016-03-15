@@ -195,28 +195,28 @@ void Cat::Update(float dt){
 				mAnimationhandler.setFrame(16, 1);
 			}
 			else
-			mAnimationhandler.animation(8, 5, sf::milliseconds(100));
+			mAnimationhandler.animation(8, 5, sf::milliseconds(250));
 		}
 		if (direction == 3) {
 			if (mButtonPress) {
 				mAnimationhandler.setFrame(16, 0);
 			}
 			else
-			mAnimationhandler.animation(9, 5, sf::milliseconds(100));
+			mAnimationhandler.animation(9, 5, sf::milliseconds(250));
 		}
 		if (direction == 2) {
 			if (mButtonPress) {
 				mAnimationhandler.setFrame(16, 2);
 			}
 			else
-			mAnimationhandler.animation(11, 5, sf::milliseconds(100));
+			mAnimationhandler.animation(11, 5, sf::milliseconds(250));
 		}
 		if (direction == 1) {
 			if (mButtonPress) {
 				mAnimationhandler.setFrame(16, 3);
 			}
 			else
-			mAnimationhandler.animation(10, 5, sf::milliseconds(100));
+			mAnimationhandler.animation(10, 5, sf::milliseconds(250));
 		}
 	}
 
