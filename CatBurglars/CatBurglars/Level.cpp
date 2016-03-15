@@ -54,8 +54,8 @@ DialogManager dialogManager("dialog", &textures,sf::Vector2f(1280,720));
 
 HintManager hintManager("hints");
 
-Controller p1Controller = Controller(KeyboardOne);
-Controller p2Controller = Controller(KeyboardTwo);
+Controller p1Controller = Controller(GamepadOne);
+Controller p2Controller = Controller(KeyboardOne);
 
 
 
@@ -468,12 +468,13 @@ void Level::update(float dt){
 				}
 
 			}
-			if (lost && !IMMORTALITY_MODE) {
+		
+				}	
+				if (lost && !IMMORTALITY_MODE) {
 
-				if (deathClock.getElapsedTime().asSeconds() >= deathDelay.asSeconds()) {
+					if (deathClock.getElapsedTime().asSeconds() >= deathDelay.asSeconds()) {
 
 					load();
-				}
 			}
 		}
 		break;
@@ -888,5 +889,6 @@ void Level::generateLevel(string name){
 	mPlayers = playernum;
 	generateView();
 	mLoaded = true;
+	
 
 }
