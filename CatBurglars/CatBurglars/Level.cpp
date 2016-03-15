@@ -342,18 +342,19 @@ void Level::update(float dt){
 
 					//Channels::update();
 					pathfinder.Update(&mEntities);
+					bool socks = false;
+					gridvector socksPosition;
 					for each (Entity *e in mEntities) {
 						if (!mEntities.empty()) {
 							e->Update(dt);
-							bool socks = false;
-							gridvector socksPosition;
 							if (GameObject *obj = dynamic_cast<GameObject*>(e)) {
 								if (Cat *cat = dynamic_cast<Cat*>(obj))
 								{
-									socks = cat->GetDistract();
+									if (cat->getID() == 3)
+										socks = cat->GetDistract();
 									if (socks)
 									{
-										socksPosition = cat->getCoords;
+										socksPosition = cat->getCoords();
 									}
 								}
 								if (Guard *guard = dynamic_cast<Guard*>(obj)) {
@@ -436,7 +437,7 @@ void Level::update(float dt){
 										if (Guard *guard = dynamic_cast<Guard*>(entity)) {
 											if (guard->getIntersection(cat) && !(cat->getDashing())) {
 
-												if (!lost) {
+												if (!lost && cat->getID()!=3) {
 
 													lost = true;
 													deathClock.restart();
@@ -466,13 +467,12 @@ void Level::update(float dt){
 					p1Controller.nextDialog(&dialogManager);
 				}
 
+			}
+			if (lost && !IMMORTALITY_MODE) {
 
-				if (lost && !IMMORTALITY_MODE) {
+				if (deathClock.getElapsedTime().asSeconds() >= deathDelay.asSeconds()) {
 
-					if (deathClock.getElapsedTime().asSeconds() >= deathDelay.asSeconds()) {
-
-						load();
-					}
+					load();
 				}
 			}
 		}

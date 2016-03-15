@@ -20,6 +20,7 @@ canPushCrate(true){
 	}
 	if (player == 2) {
 		mSoundHandler->initializeCat2(this);
+		mID = 3;
 	}
 	if (mID == 1){
 		mSpeed = 2;
@@ -36,7 +37,7 @@ canPushCrate(true){
 	}
 	if (mID == 3){
 		mSpeed = 2;
-		mSprite.setTexture(*texturehandler->GetTexture(16), true);
+		mSprite.setTexture(*texturehandler->GetTexture(9), true);
 		canPushCrate = false;
 		mAbilitySprite.setTexture(*texturehandler->GetTexture(10), true);
 	}
@@ -76,6 +77,10 @@ void Cat::RenderGUI(sf::RenderWindow *mainWindow) {
 
 int Cat::getPlayerIndex(){
 	return mPlayerIndex;
+}
+
+int Cat::getID() {
+	return mID;
 }
 
 void Cat::Update(float dt){
