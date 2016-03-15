@@ -256,11 +256,12 @@ void Guard::loadAI(string filename){
 			}
 		}
 		command.direction = input;
-		
+		command.temporary = false;
+
 		mCommandQueue.push_back(command);
 	}
 	
-
+	
 }
 void Guard::AImovement(TileLayer *tiles, std::vector<Entity*> *entities, Pathfinder *pathfinder){
 
@@ -289,7 +290,10 @@ void Guard::AImovement(TileLayer *tiles, std::vector<Entity*> *entities, Pathfin
 			else
 			{
 				setVision(mCommandQueue[mQueuePos].direction, tiles, entities);
-				mQueuePos += 1;
+				if (mCommandQueue[mQueuePos].temporary)
+					mCommandQueue.erase(mCommandQueue.begin() + mQueuePos);
+				else
+					mQueuePos += 1;
 				if (mQueuePos >= mCommandQueue.size())
 					mQueuePos = 0;
 			}
@@ -411,6 +415,21 @@ void Guard::interaction(Usable *usable) {
 		}
 	}
 
+}
+
+void Guard::SetSocksSight(bool sighted)
+{
+	mSeesSocks = sighted;
+}
+
+bool Guard::GetSocksSight()
+{
+	return mSeesSocks;
+}
+
+void Guard::SetDistraction(gridvector pos)
+{
+	Command distractionCommand;
 }
 
 bool Guard::getIntersection(GameObject *obj) {

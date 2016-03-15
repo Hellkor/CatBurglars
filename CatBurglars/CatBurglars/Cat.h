@@ -48,6 +48,8 @@ public:
 
 	bool snowHax();
 
+	void SocksDistract(std::vector<Entity*> *Entities);
+
 	int getPlayerIndex();
 	virtual Layer getLayer();
 

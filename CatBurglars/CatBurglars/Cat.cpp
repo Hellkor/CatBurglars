@@ -32,7 +32,9 @@ canPushCrate(true){
 		canPushCrate = false;
 	}
 	if (mID == 3){
-
+		mSpeed = 2;
+		mSprite.setTexture(*texturehandler->GetTexture(16), true);
+		canPushCrate = false;
 	}
 	if (mID == 4){
 
@@ -266,6 +268,11 @@ void Cat::useAbility(TileLayer *tileLayer, std::vector<Entity*> *Entities){
 	{
 		shadowDash(tileLayer,Entities, direction);
 	}
+	//Socks
+	if (mID == 3)
+	{
+		SocksDistract(Entities);
+	}
 }
 
 bool Cat::isInteracting(){
@@ -432,6 +439,19 @@ bool Cat::snowHax(){
 	}
 	else
 		return false;
+}
+
+// Socks \\
+
+void Cat::SocksDistract(std::vector<Entity*> *Entities)
+{
+	for each (Entity *e in *Entities)
+	{
+		if (Guard *guard = dynamic_cast<Guard*>(e))
+		{
+
+		}
+	}
 }
 Layer Cat::getLayer() {
 	return FRONT;
