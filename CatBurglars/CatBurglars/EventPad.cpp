@@ -24,10 +24,13 @@ bool EventPad::getInteraction(GameObject *g){
 	if (Cat *c = dynamic_cast<Cat*>(g)){
 		if (g->getCoords() == mCoords  && !isActivated){
 
-			if (mEventType == WIN){
-				LevelManager::nextLevel();
+			if (mEventType == WIN ){
+				isActivated = true;
+				//LevelManager::nextLevel();
+				return true;
 			}
 			if (mEventType == DIALOG){
+				isActivated = true;
 				mDialogManager->startConversation(mDialogID, mDialogRange, 5);
 			}
 			if (mEventType == HINT)
@@ -38,8 +41,7 @@ bool EventPad::getInteraction(GameObject *g){
 			{
 
 			}
-			isActivated = true;
-			return true;
+			
 		}
 		else return false;
 	}

@@ -4,7 +4,6 @@
 #include <iostream>
 #include <vector>
 
-#include "Screens.h"
 #include "GameObject.h"
 #include "Cat.h"
 #include "Controller.h"
@@ -16,6 +15,9 @@
 #include "MenuSystem.h"
 #include "MenuButton.h"
 #include "MenuPage.h"
+
+
+
 
 class Game
 {
@@ -42,7 +44,6 @@ private:
 
 	MenuPage *page2;
 	MenuButton *ToggleFullscreen;
-	MenuButton *ToggleSound;
 	MenuButton *BackButton;
 
 	
@@ -51,5 +52,8 @@ private:
 	MenuButton *ResumeButton;
 	MenuButton *RestartButton;
 	MenuButton *QuitButton;
+
+	sf::Texture menuBackground;
+	sf::Sprite menuBackgroundSprite;
 };
 

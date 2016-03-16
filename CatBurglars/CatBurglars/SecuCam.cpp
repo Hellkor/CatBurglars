@@ -1,6 +1,7 @@
 #include "secuCam.h"
-#include "TextureHandler.h"
-TextureHandler textures;
+
+
+
 
 secuCam::secuCam(int channel, int channelRange, gridvector coords, sf::Texture *texture, int range, string face) :
 mChannel(channel),
@@ -30,7 +31,7 @@ mFace(face){
 	if (mFace == "W") {
 		direction = 4;
 	}
-	
+	TextureHandler textures;
 	mSprite.setTexture(*texture);
 	mSprite.setTextureRect(sf::IntRect((direction-1) * 64, 0, 64, 64));
 	mSprite.setPosition((sf::Vector2f)mPosition);
@@ -119,11 +120,9 @@ mFace(face){
 	
 	mConvex.setTexture(textures.GetTexture(99));
 }
+
 secuCam::~secuCam(){
-	while (!mVision.empty()) {
-		delete mVision.back();
-		mVision.pop_back();
-	}
+	
 }
 bool secuCam::checkChannels() {
 	for each (int channel in mChannels) {

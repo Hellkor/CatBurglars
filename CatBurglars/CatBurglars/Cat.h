@@ -24,6 +24,8 @@ public:
 	virtual sf::Vector2i GetPosition();
 	virtual gridvector getCoords();
 
+	void RenderGUI(sf::RenderWindow *mainWindow);
+
 	void moveForward(TileLayer *tileLayer, std::vector<Entity*> *Entities);
 	void moveBackWards(TileLayer *tileLayer, std::vector<Entity*> *Entities);
 	void moveLeft(TileLayer *tileLayer, std::vector<Entity*> *Entities);
@@ -48,15 +50,22 @@ public:
 
 	bool snowHax();
 
+	void SocksDistract();
+	void SetSocksDistract(bool distract);
+	bool GetDistract() { return mSocksDistract; }
+	bool GetSocksMoved() { return socksMoved; }
+
 	int getPlayerIndex();
 	virtual Layer getLayer();
 
 	void interaction(Usable *object);
 
+	int getID();
+
 private:
 	void CompleteInteraction(GameObject *object);
 	float mSpeed;
-	sf::Sprite mSprite;
+	sf::Sprite mSprite, mAbilitySprite;
 	int mID;
 	sf::Vector2i mPosition;
 	gridvector mCoord;
@@ -76,6 +85,9 @@ private:
 	bool mDashing = false;
 	bool mPushing = false;
 	bool mButtonPress = false;
+	bool mSocksDistract = false;
+	bool mCooldown = false;
+	bool socksMoved = true;
 	Grid mGrid;
 
 

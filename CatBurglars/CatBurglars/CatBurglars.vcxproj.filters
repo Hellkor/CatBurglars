@@ -102,9 +102,6 @@
     <ClCompile Include="MovieHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Screens.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Pathfinder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -112,6 +109,18 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="HintManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuButton.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuPage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuSystem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Lazer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -203,9 +212,6 @@
     <ClInclude Include="MovieHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Screens.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Pathfinder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -213,6 +219,18 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="HintManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuButton.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuPage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuSystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Lazer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

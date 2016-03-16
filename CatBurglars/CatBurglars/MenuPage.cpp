@@ -55,21 +55,26 @@ void MenuPage::releaseButton() {
 void MenuPage::resetPage() {
 	mDelayClock.restart();
 	releaseButton();
+	MenuIndex = 0;
+	selectMenuButton(0);
+
 }
 void MenuPage::UpdatedMenuNavigation() {
-	
+
+	float joyY = sf::Joystick::getAxisPosition(0, sf::Joystick::Y);
+	float joyDPY = sf::Joystick::getAxisPosition(0, sf::Joystick::PovY);
 	releaseButton();
 
 	if (mDelayClock.getElapsedTime().asMilliseconds() >= mCoolDown.asMilliseconds()) {
 		
-		if (sf::Keyboard::isKeyPressed(mKeyUp)) {
+		if (sf::Keyboard::isKeyPressed(mKeyUp)||joyY < -15.f || joyDPY > 15.f) {
 			mDelayClock.restart();
 			if (MenuIndex > 0) {
 				MenuIndex--;
 				selectMenuButton(MenuIndex);
 			}
 		}
-		else if (sf::Keyboard::isKeyPressed(mkeyDown)) {
+		else if (sf::Keyboard::isKeyPressed(mkeyDown)|| joyY > 15.f || joyDPY < -15.f) {
 			mDelayClock.restart();
 			if (MenuIndex < Buttons.size() -1) {
 				MenuIndex++;
@@ -77,7 +82,7 @@ void MenuPage::UpdatedMenuNavigation() {
 			}
 
 		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)||sf::Joystick::isButtonPressed(0,0)) {
 			activateButton();
 			mDelayClock.restart();
 		}

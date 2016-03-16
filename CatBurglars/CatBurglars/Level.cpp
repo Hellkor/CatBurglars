@@ -17,12 +17,17 @@
 #include "DialogManager.h"
 #include "Controller.h"
 #include "Pathfinder.h"
+#include "Lazer.h"
+#include "MovieHandler.h"
+#include "LevelManager.h"
+
 using namespace std;
 
 bool IMMORTALITY_MODE = false;
 
 static TextureHandler	textures;
 static SoundHandler		soundhandler;
+static MovieHandler     moviehandler;
 
 // SPLIT SCREEN BORDER
 sf::Texture				DIVIDER_TEXTURE;
@@ -49,8 +54,8 @@ DialogManager dialogManager("dialog", &textures,sf::Vector2f(1280,720));
 
 HintManager hintManager("hints");
 
-Controller p1Controller = Controller(GamepadOne);
-Controller p2Controller = Controller(GamepadTwo);
+Controller p1Controller = Controller(KeyboardOne);
+Controller p2Controller = Controller(KeyboardTwo);
 
 
 
@@ -82,13 +87,13 @@ Level::Level(string level_directory) :
 	mFile(level_directory),
 	mLoaded(false)
 {
-
+	mType = GameStage;
 	
 	// Initialize GUI View
 	guiView.setViewport(sf::FloatRect(0, 0, 1, 1));
 
 
-	
+	deathDelay = sf::seconds(0.8);
 	
 
 	// FOV LIGHT ------------------------------------------------------------------------------------------------------------------------------------
@@ -124,8 +129,14 @@ Level::Level(string level_directory) :
 	DIVIDER_TEXTURE.loadFromFile("Resources/split_divider.png");
 	DIVIDER_SPRITE.setTexture(DIVIDER_TEXTURE);
 	DIVIDER_SPRITE.setOrigin(DIVIDER_TEXTURE.getSize().x / 2, DIVIDER_TEXTURE.getSize().y / 2);
+	DIVIDER_SPRITE.setScale(sf::Vector2f(1.0, 2.0));
 
 	
+}
+
+Level::Level(int movieID) :
+mMovieID(movieID){
+	mType = Cutscene;
 }
 
 void Level::InitializeGuiView(sf::RenderWindow *window) {
@@ -135,71 +146,27 @@ void Level::InitializeGuiView(sf::RenderWindow *window) {
 
 // Renderar level
 void Level::render(sf::RenderWindow *window){
-	
-	if (mLoaded) {
-		if (mPlayers > 1) {
-			mPlayer1View.setSize(sf::Vector2f(window->getSize().x / 2, window->getSize().y));
-		}
-		else {
-			mPlayer1View.setSize(sf::Vector2f(window->getSize().x, window->getSize().y));
-		}
-		window->setView(mPlayer1View);
-		for (TileLayer::size_type y = 0; y < mBottomTileLayer.size(); y++)
-		{
-			for (TileRow::size_type x = 0; x < mBottomTileLayer[y].size(); x++)
-			{
-				mBottomTileLayer[y][x]->Render(window);
-			}
-		}
-		for each (Entity *e in mEntities) {
-			if (e->getLayer() == BACK) {
-				e->Render(window);
-			}
-		}
-		for each (Entity *e in mEntities) {
-			if (e->getLayer() == MIDDLE) {
-				e->Render(window);
-			}
-		}
-		for (TileLayer::size_type y = 0; y < mBottomTileLayer.size(); y++)
-		{
-			for (TileRow::size_type x = 0; x < mBottomTileLayer[y].size(); x++)
-			{
-				mWallTileLayer[y][x]->Render(window);
-			}
-		}
+
+	switch (mType)
+	{
+	case Cutscene:
+		moviehandler.getMovie(mMovieID)->fit(0, 0, window->getSize().x, window->getSize().y);
+		moviehandler.getMovie(mMovieID)->setOrigin(window->getSize().x / 2, window->getSize().y / 2);
+		moviehandler.getMovie(mMovieID)->setPosition(guiView.getCenter());
+
+		window->draw(*moviehandler.getMovie(mMovieID));
+		break;
+	case GameStage:
+		if (mLoaded) {
 
 
-		for each (Entity *e in mEntities) {
-			if (e->getLayer() == OnWallUsables) {
-				e->Render(window);
+			if (mPlayers > 1) {
+				mPlayer1View.setSize(sf::Vector2f(window->getSize().x / 2, window->getSize().y));
 			}
-		}
-		for each (Entity *e in mEntities) {
-			if (e->getLayer() == FRONT) {
-				e->Render(window);
+			else {
+				mPlayer1View.setSize(sf::Vector2f(window->getSize().x, window->getSize().y));
 			}
-		}
-		for each (Entity *e in mEntities) {
-			if (e->getLayer() == DOORS) {
-				e->Render(window);
-			}
-		}
-		for (TileLayer::size_type y = 0; y < mTopTileLayer.size(); y++)
-		{
-			for (TileRow::size_type x = 0; x < mTopTileLayer[y].size(); x++)
-			{
-				mTopTileLayer[y][x]->Render(window);
-			}
-		}
-
-		renderLight(window);
-		renderPlayerFOV(window, 1);
-
-
-		if (mPlayers == 2) {
-			mPlayer2View.setSize(sf::Vector2f(window->getSize().x / 2, window->getSize().y));
-			window->setView(mPlayer2View);
+			window->setView(mPlayer1View);
 			for (TileLayer::size_type y = 0; y < mBottomTileLayer.size(); y++)
 			{
 				for (TileRow::size_type x = 0; x < mBottomTileLayer[y].size(); x++)
@@ -225,6 +192,7 @@ void Level::render(sf::RenderWindow *window){
 				}
 			}
 
+
 			for each (Entity *e in mEntities) {
 				if (e->getLayer() == OnWallUsables) {
 					e->Render(window);
@@ -248,29 +216,100 @@ void Level::render(sf::RenderWindow *window){
 				}
 			}
 
-
 			renderLight(window);
-			renderPlayerFOV(window, 2);
+			renderPlayerFOV(window, 1);
+
+
+			if (mPlayers == 2) {
+				mPlayer2View.setSize(sf::Vector2f(window->getSize().x / 2, window->getSize().y));
+				window->setView(mPlayer2View);
+				for (TileLayer::size_type y = 0; y < mBottomTileLayer.size(); y++)
+				{
+					for (TileRow::size_type x = 0; x < mBottomTileLayer[y].size(); x++)
+					{
+						mBottomTileLayer[y][x]->Render(window);
+					}
+				}
+				for each (Entity *e in mEntities) {
+					if (e->getLayer() == BACK) {
+						e->Render(window);
+					}
+				}
+				for each (Entity *e in mEntities) {
+					if (e->getLayer() == MIDDLE) {
+						e->Render(window);
+					}
+				}
+				for (TileLayer::size_type y = 0; y < mBottomTileLayer.size(); y++)
+				{
+					for (TileRow::size_type x = 0; x < mBottomTileLayer[y].size(); x++)
+					{
+						mWallTileLayer[y][x]->Render(window);
+					}
+				}
+
+				for each (Entity *e in mEntities) {
+					if (e->getLayer() == OnWallUsables) {
+						e->Render(window);
+					}
+				}
+				for each (Entity *e in mEntities) {
+					if (e->getLayer() == FRONT) {
+						e->Render(window);
+					}
+				}
+				for each (Entity *e in mEntities) {
+					if (e->getLayer() == DOORS) {
+						e->Render(window);
+					}
+				}
+				for (TileLayer::size_type y = 0; y < mTopTileLayer.size(); y++)
+				{
+					for (TileRow::size_type x = 0; x < mTopTileLayer[y].size(); x++)
+					{
+						mTopTileLayer[y][x]->Render(window);
+					}
+				}
+
+
+				renderLight(window);
+				renderPlayerFOV(window, 2);
 
 
 
+			}
+
+			// Draw gui objects
+			guiView.setSize(sf::Vector2f(window->getSize()));
+			window->setView(guiView);
+			if (mPlayers == 2 && !dialogManager.isDialogActive()) {
+				DIVIDER_SPRITE.setPosition(guiView.getCenter());
+				window->draw(DIVIDER_SPRITE);
+			}
+			for each(Entity *e in mEntities) {
+				if (Cat *cat = dynamic_cast<Cat*>(e)) {
+					cat->RenderGUI(window);
+				}
+			}
+			if (dialogManager.isDialogActive()) {
+				dialogManager.render(window, guiView);
+			}
+			if (hintManager.IsHintActive())
+			{
+				hintManager.Render(window, guiView);
+			}
 		}
 
-		// Draw gui objects
-		guiView.setSize(sf::Vector2f(window->getSize()));
-		window->setView(guiView);
-		if (mPlayers == 2 && !dialogManager.isDialogActive()) {
-			DIVIDER_SPRITE.setPosition(guiView.getCenter());
-			window->draw(DIVIDER_SPRITE);
+		if (lost && !IMMORTALITY_MODE) {
+
+			//drawdeathscreen
 		}
-		if (dialogManager.isDialogActive()) {
-			dialogManager.render(window, guiView);
-		}
-		if (hintManager.IsHintActive())
-		{
-			hintManager.Render(window, guiView);
-		}
+		break;
+	default:
+		break;
 	}
+	
+	
 	
 }
 
@@ -283,127 +322,178 @@ void Level::addPlayer(Cat *cat , int player){
 
 void Level::update(float dt){
 	bool test = false;
-
-	dialogManager.update();
-
-
-	if (mLoaded) {
-
-		if (!dialogManager.isDialogActive()) {
-
-			Channels::update();
-			pathfinder.Update(&mEntities);
-			for each (Entity *e in mEntities) {
-
-				e->Update(dt);
-
-				if (GameObject *obj = dynamic_cast<GameObject*>(e)) {
-
-					if (Guard *guard = dynamic_cast<Guard*>(obj)) {
-
-						guard->AImovement(&mWallTileLayer, &mEntities, &pathfinder);
-					}
+	switch (mType)
+	{
+	case Cutscene:
+		moviehandler.getMovie(mMovieID)->update();
+		if (moviehandler.getMovie(mMovieID)->getStatus() != sfe::Playing) {
+			LevelManager::nextLevel();
+		}
+		break;
+	case GameStage:
+		
+		dialogManager.update();
+		hintManager.Update();
 
 
-				}
-				if (Guard *guard = dynamic_cast<Guard*>(e)) {
-					for each (Entity *entity in mEntities) {
-						
-						if (Usable *u = dynamic_cast<Usable*>(entity)) {
-							guard->interaction(u);
-						}
+		if (mLoaded) {
+			if (!lost) {
+				if (!dialogManager.isDialogActive()) {
+					//Channels::update();
+					pathfinder.Update(&mEntities);
+					bool socks = false, socksMoved = false;
+					gridvector socksPosition;
+					for each (Entity *e in mEntities) {
+						if (!mEntities.empty()) {
+							e->Update(dt);
+							if (GameObject *obj = dynamic_cast<GameObject*>(e)) {
+								if (Cat *cat = dynamic_cast<Cat*>(obj))
+								{
+									if (cat->getID() == 3)
+									{
+										socks = cat->GetDistract();
+										socksMoved = cat->GetSocksMoved();
+									}
+									if (socks)
+									{
+										socksPosition = cat->getCoords();
+										cat->SetSocksDistract(false);
+									}
+								}
+								if (Guard *guard = dynamic_cast<Guard*>(obj)) {
+									if (socks)
+									{
+										if (guard->getCoords().x <= socksPosition.x + 3 && guard->getCoords().x >= socksPosition.x - 3 &&
+											guard->getCoords().y <= socksPosition.y + 3 && guard->getCoords().y >= socksPosition.y - 3)
+										{
+											guard->SetDistraction(socksPosition, 4);
+										}
+									}
+									if (socksMoved)
+										guard->RemoveTemporaryWaits();
+									guard->AImovement(&mWallTileLayer, &mEntities, &pathfinder);
+								}
 
-					}
-				}
-				if (Crate *crate = dynamic_cast<Crate*>(e)) {
-					for each (Entity *entity in mEntities) {
-
-						if (Usable *u = dynamic_cast<Usable*>(entity)) {
-							crate->interaction(u);
-						}
-
-					}
-				}
-
-				if (Cat *cat = dynamic_cast<Cat*>(e)) {
-
-
-
-
-					if (cat->getPlayerIndex() == 1) {
-						l1->position.x = cat->GetPosition().x + 32;
-						l1->position.y = cat->GetPosition().y + 32;
-						
-						//p1Joystick.move(cat, &mWallTileLayer, &mEntities);
-						
-						
-						
-						p1Controller.move(cat, &mWallTileLayer, &mEntities);
-								
-						mPlayer1View.setCenter((sf::Vector2f)cat->GetPosition());
-					}
-					if (cat->getPlayerIndex() == 2) {
-						l2->position.x = cat->GetPosition().x + 32;
-						l2->position.y = cat->GetPosition().y + 32;
-						
-							
-							//	p2Joystick.move(cat, &mWallTileLayer, &mEntities);
-							
-						
-							
-								p2Controller.move(cat, &mWallTileLayer, &mEntities);
-							
-						mPlayer2View.setCenter((sf::Vector2f)cat->GetPosition());
-					}
-
-
-					for each (Entity *entity in mEntities) {
-
-						if (Usable *u = dynamic_cast<Usable*>(entity)) {
-							cat->interaction(u);
-						}
-
-						//Pick up Collectible
-						if (Collectible *collectible = dynamic_cast<Collectible*>(entity)) {
-							if (collectible->getInteraction(cat)) {
 
 							}
-						}
-						//Interaction with eventpad
-						if (EventPad *eventpad = dynamic_cast<EventPad*>(entity)) {
-							eventpad->getInteraction(cat);
-						}
-						if (secuCam *cam = dynamic_cast<secuCam*>(entity)) {
-							if (cam->getIntersection(cat) && !(cat->getDashing())) {
-								//dialogManager.startConversation(0, 0, 5);
-								test = true;
-							}
-						}
-						if (Guard *guard = dynamic_cast<Guard*>(entity)) {
-							if (guard->getIntersection(cat) && !(cat->getDashing())) {
+							if (Guard *guard = dynamic_cast<Guard*>(e)) {
+								for each (Entity *entity in mEntities) {
 
-								test = true;
-							}
-						}
+									if (Usable *u = dynamic_cast<Usable*>(entity)) {
+										guard->interaction(u);
+									}
 
+								}
+							}
+							if (Crate *crate = dynamic_cast<Crate*>(e)) {
+								for each (Entity *entity in mEntities) {
+
+									if (Usable *u = dynamic_cast<Usable*>(entity)) {
+										crate->interaction(u);
+									}
+
+								}
+							}
+
+
+							if (Cat *cat = dynamic_cast<Cat*>(e)) {
+
+
+								if (cat->getPlayerIndex() == 1) {
+									l1->position.x = cat->GetPosition().x + 32;
+									l1->position.y = cat->GetPosition().y + 32;
+
+
+									p1Controller.move(cat, &mWallTileLayer, &mEntities);
+
+									mPlayer1View.setCenter((sf::Vector2f)cat->GetPosition());
+								}
+								if (cat->getPlayerIndex() == 2) {
+									l2->position.x = cat->GetPosition().x + 32;
+									l2->position.y = cat->GetPosition().y + 32;
+
+
+									p2Controller.move(cat, &mWallTileLayer, &mEntities);
+
+									mPlayer2View.setCenter((sf::Vector2f)cat->GetPosition());
+								}
+
+								for each (Entity *entity in mEntities) {
+									if (!mEntities.empty()) {
+
+
+										//Pick up Collectible
+										if (Collectible *collectible = dynamic_cast<Collectible*>(entity)) {
+											if (collectible->getInteraction(cat)) {
+
+											}
+										}
+
+										if (secuCam *cam = dynamic_cast<secuCam*>(entity)) {
+											if (cam->getIntersection(cat) && !(cat->getDashing())) {
+
+												if (!lost) {
+													lost = true;
+													deathClock.restart();
+												}
+
+											}
+										}
+										if (Guard *guard = dynamic_cast<Guard*>(entity)) {
+											if (guard->getIntersection(cat) && !(cat->getDashing())) {
+
+												if (!lost && cat->getID()!=3) {
+
+													lost = true;
+													deathClock.restart();
+
+												}
+											}
+										}
+										if (Usable *u = dynamic_cast<Usable*>(entity)) {
+											cat->interaction(u);
+										}
+										//Interaction with eventpad
+										if (EventPad *eventpad = dynamic_cast<EventPad*>(entity)) {
+											if (eventpad->getInteraction(cat)) {
+												win = true;
+											}
+										}
+									}
+
+								}
+
+
+							}
+
+
+						}
 					}
-
 				}
-
+				else if (dialogManager.isDialogActive()) {
+					p1Controller.nextDialog(&dialogManager);
+				}
 
 			}
-		}
-		else if (dialogManager.isDialogActive()) {
-			p1Controller.nextDialog(&dialogManager);
-		}
+		
+				}	
+				if (lost && !IMMORTALITY_MODE) {
 
+					if (deathClock.getElapsedTime().asSeconds() >= deathDelay.asSeconds()) {
 
-		if (test && !IMMORTALITY_MODE) {
-			load();
+					load();
+			}
 		}
+		break;
+	default:
+		break;
 	}
 
+	if (win == true) {
+		LevelManager::nextLevel();
+	}
 }
+
 void Level::renderLight(sf::RenderWindow *window) {
 	// ------------------------------------------------- Render Light ---------------------------------------------------------------------------------------
 	// -----------------------------------------------------------------------------------------------------------------------------------------------------
@@ -458,22 +548,38 @@ void Level::renderPlayerFOV(sf::RenderWindow *window, int player) {
 
 void Level::load(){
 
-	lights.clear();
-	mLoaded = false;
+	switch (mType)
+	{
+	case Cutscene:
+		moviehandler.PlayMovie(mMovieID);
+		break;
+	case GameStage:
+		win = false;
+		lost = false;
+		lights.clear();
+		mLoaded = false;
 
-	Clear();
+		//Clear();
 
-	dialogManager.initialize(guiView);
+		dialogManager.initialize(guiView);
 
-	for (int i = 0; i <= 100; i++) {
+		for (int i = 0; i <= 100; i++) {
 
-		Channels::addChannel(Channel(i));
+			Channels::addChannel(Channel(i));
+		}
+
+		
+
+		//Starts the music for a level
+		soundhandler.startMusic(mFile);
+
+
+		generateLevel(mFile);
+
+		break;
+	default:
+		break;
 	}
-
-	//Starts the music for a level
-	soundhandler.startMusic(mFile);
-
-	generateLevel(mFile);
 	
 	
 
@@ -481,45 +587,54 @@ void Level::load(){
 
 void Level::Clear(){
 
-	while (!mEntities.empty()) {
-		delete mEntities.back();
-		mEntities.pop_back();
-	}
-
-	for (TileLayer::size_type y = 0; y < mBottomTileLayer.size(); y++)
+	switch (mType)
 	{
-		for (TileRow::size_type x = 0; x < mBottomTileLayer.back().size(); x++)
-		{
-			delete mBottomTileLayer.back().back();
-			mBottomTileLayer.back().pop_back();
-			x--;
+	case Cutscene:
+		moviehandler.getMovie(mMovieID)->stop();
+		break;
+	case GameStage:
+		while (!mEntities.empty()) {
+			delete mEntities.back();
+			mEntities.pop_back();
 		}
-		mBottomTileLayer.pop_back();
-		y--;
-	}
-	for (TileLayer::size_type y = 0; y < mWallTileLayer.size(); y++)
-	{
-		for (TileRow::size_type x = 0; x < mWallTileLayer.back().size(); x++)
+		for (TileLayer::size_type y = 0; y < mBottomTileLayer.size(); y++)
 		{
-			delete mWallTileLayer.back().back();
-			mWallTileLayer.back().pop_back();
-			x--;
+			for (TileRow::size_type x = 0; x < mBottomTileLayer.back().size(); x++)
+			{
+				delete mBottomTileLayer.back().back();
+				mBottomTileLayer.back().pop_back();
+				x--;
+			}
+			mBottomTileLayer.pop_back();
+			y--;
 		}
-		mWallTileLayer.pop_back();
-		y--;
-	}
-	for (TileLayer::size_type y = 0; y < mTopTileLayer.size(); y++)
-	{
-		for (TileRow::size_type x = 0; x < mTopTileLayer.back().size(); x++)
+		for (TileLayer::size_type y = 0; y < mWallTileLayer.size(); y++)
 		{
-			delete mTopTileLayer.back().back();
-			mTopTileLayer.back().pop_back();
-			x--;
+			for (TileRow::size_type x = 0; x < mWallTileLayer.back().size(); x++)
+			{
+				delete mWallTileLayer.back().back();
+				mWallTileLayer.back().pop_back();
+				x--;
+			}
+			mWallTileLayer.pop_back();
+			y--;
 		}
-		mTopTileLayer.pop_back();
-		y--;
+		for (TileLayer::size_type y = 0; y < mTopTileLayer.size(); y++)
+		{
+			for (TileRow::size_type x = 0; x < mTopTileLayer.back().size(); x++)
+			{
+				delete mTopTileLayer.back().back();
+				mTopTileLayer.back().pop_back();
+				x--;
+			}
+			mTopTileLayer.pop_back();
+			y--;
+		}
+		Channels::clearChannels();
+		break;
+	default:
+		break;
 	}
-	Channels::clearChannels();
 }
 
 void Level::generateView(){
@@ -527,16 +642,17 @@ void Level::generateView(){
 	if (mPlayers == 1){
 		//mPlayer1View.setSize(1024, 720);
 		mPlayer1View.setViewport(sf::FloatRect(0, 0, 1, 1));
-
+		mPlayer1View.zoom(2.5f);
+		
 		
 	}
 	else if (mPlayers == 2){
 		//mPlayer1View.setSize(512, 720);
 		mPlayer1View.setViewport(sf::FloatRect(0, 0, 0.5f, 1));
-		mPlayer1View.zoom(1.5f);
+		mPlayer1View.zoom(2.5f);
 		//mPlayer2View.setSize(512, 720);
 		mPlayer2View.setViewport(sf::FloatRect(0.5, 0, 0.5f, 1));
-		mPlayer2View.zoom(1.5f);
+		mPlayer2View.zoom(2.5f);
 
 
 	}
@@ -544,6 +660,12 @@ void Level::generateView(){
 void Level::updateViews(){
 	
 }
+
+void Distraction(Guard *guard)
+{
+
+}
+
 // Laddar in leveln från sparfilen
 void Level::generateLevel(string name){
 	mPlayers = 0;
@@ -741,7 +863,14 @@ void Level::generateLevel(string name){
 		if (objectID == 9) {
 			mEntities.push_back(new Crate(textures.GetTexture(4), gridvector(xPos, yPos), 1, &soundhandler, false));
 		}
-
+		if (objectID == 10) {
+			if (script == "interval") {
+				mEntities.push_back(new Lazer(gridvector(xPos, yPos), textures.GetTexture(13), range, facing, hold));
+			}
+			if (script == "toggle") {
+				mEntities.push_back(new Lazer(channel, hold, gridvector(xPos, yPos), textures.GetTexture(13), range, facing));
+			}
+		}
 	}
 
 	inputFile >> input;
@@ -771,13 +900,13 @@ void Level::generateLevel(string name){
 		
 		
 		if (range == 0) {
-			mEntities.push_back(new EventPad(DIALOG, gridvector(xPos, yPos), channel, hold, &dialogManager));
+			mEntities.push_back(new EventPad(DIALOG, gridvector(xPos, yPos), channel, hold, &dialogManager, &hintManager));
 		}
 		else if (range == 1) {
-			mEntities.push_back(new EventPad(WIN, gridvector(xPos, yPos), channel, hold, &dialogManager));
+			mEntities.push_back(new EventPad(WIN, gridvector(xPos, yPos), channel, hold, &dialogManager, &hintManager));
 		}
 		else if (range == 2) {
-			mEntities.push_back(new EventPad(HINT, gridvector(xPos, yPos), channel, hold, &dialogManager));
+			mEntities.push_back(new EventPad(HINT, gridvector(xPos, yPos), channel, hold, &dialogManager, &hintManager));
 		}
 		else if (range == 3) {
 			//add Checkpoint
@@ -788,5 +917,6 @@ void Level::generateLevel(string name){
 	mPlayers = playernum;
 	generateView();
 	mLoaded = true;
+	
 
 }

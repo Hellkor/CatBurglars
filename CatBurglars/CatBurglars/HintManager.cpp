@@ -6,7 +6,9 @@ HintManager::HintManager(string filename)
 	mFont.loadFromFile("Resources/Fonts/arial.ttf");
 	mText.setFont(mFont);
 	mText.setCharacterSize(24);
-	mText.setPosition(200, 400);
+	mText.setColor(sf::Color::Red);
+	mText.setPosition(0, 700);
+	
 	ReadFile();
 }
 
@@ -47,11 +49,12 @@ bool HintManager::IsHintActive()
 void HintManager::ReadFile()
 {
 	ifstream inputFile(mFilename + ".txt");
-	string input;
+	
 	int ID;
 
 	while (!inputFile.eof())
 	{
+		string input;
 		inputFile >> input;
 		Hint hint;
 		ID = stoi(input);

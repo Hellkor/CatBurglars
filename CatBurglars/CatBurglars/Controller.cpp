@@ -2,6 +2,7 @@
 #include <iostream>
 #include <SFML/Window.hpp>
 
+
 bool Keyboard1Occupied = false;
 bool Keyboard2Occupied = false;
 
@@ -92,7 +93,7 @@ void Controller::nextDialog(DialogManager *dialogmanager) {
 			}
 		}
 	case GamepadOne:
-		dialogmanager->setSkipText("X-Butt");
+		dialogmanager->setSkipText("X-Button");
 		if (sf::Joystick::isButtonPressed(0, 2))
 		{
 			if (dialogClock.getElapsedTime().asSeconds() >= dialogCooldown.asSeconds()) {
@@ -101,7 +102,7 @@ void Controller::nextDialog(DialogManager *dialogmanager) {
 			}
 		}
 	case GamepadTwo:
-		dialogmanager->setSkipText("X-Butt");
+		dialogmanager->setSkipText("X-Button");
 		if (sf::Joystick::isButtonPressed(1, 2))
 		{
 			if (dialogClock.getElapsedTime().asSeconds() >= dialogCooldown.asSeconds()) {
@@ -194,33 +195,35 @@ void Controller::move(Cat *cat, TileLayer *tileLayer, std::vector<Entity*> *Enti
 
 	case GamepadOne:
 	{
+
+
 		float joyX = sf::Joystick::getAxisPosition(0, sf::Joystick::X);
 		float joyY = sf::Joystick::getAxisPosition(0, sf::Joystick::Y);
+		float joyDPX = sf::Joystick::getAxisPosition(0, sf::Joystick::PovX);
+		float joyDPY = sf::Joystick::getAxisPosition(0, sf::Joystick::PovY);
 
 		if (sf::Joystick::isButtonPressed(0, 0))
 		{				//kolla knappN
 			cat->useAbility(tileLayer, Entities);
 		}
-		if (joyY > 30.f)
-		{
-			cat->moveBackWards(tileLayer, Entities);
-
-		}
-		else if (joyY < -30.f)
-		{
-			cat->moveForward(tileLayer, Entities);
-
-		}
-		else if (joyX < -30.f)
-		{
-			cat->moveLeft(tileLayer, Entities);
-
-		}
-		else if (joyX > 30.f)
-		{
-			cat->moveRight(tileLayer, Entities);
-
-		}
+		
+		
+		if (joyY > 20.f || joyDPY < -15.f)
+			{
+				cat->moveBackWards(tileLayer, Entities);
+			}
+		else if (joyY < -20.f || joyDPY >15.f)
+			{
+				cat->moveForward(tileLayer, Entities);
+			}
+		else if (joyX < -20.f || joyDPX < -15.f)
+			{
+				cat->moveLeft(tileLayer, Entities);
+			}
+		else if (joyX > 20.f || joyDPX > 15.f )
+			{
+				cat->moveRight(tileLayer, Entities);
+			}
 		if (sf::Joystick::isButtonPressed(0, 2))
 		{
 			cat->mInteracting = true;
@@ -229,6 +232,7 @@ void Controller::move(Cat *cat, TileLayer *tileLayer, std::vector<Entity*> *Enti
 		{
 			cat->mInteracting = false;
 		}
+		
 		break;
 	}
 #pragma endregion
@@ -239,27 +243,29 @@ void Controller::move(Cat *cat, TileLayer *tileLayer, std::vector<Entity*> *Enti
 
 	case GamepadTwo:
 	{
+		
 		float joyX1 = sf::Joystick::getAxisPosition(1, sf::Joystick::X);
 		float joyY1 = sf::Joystick::getAxisPosition(1, sf::Joystick::Y);
-
+		float joyDPX1 = sf::Joystick::getAxisPosition(1, sf::Joystick::PovX);
+		float joyDPY1 = sf::Joystick::getAxisPosition(1, sf::Joystick::PovY);
 
 		if (sf::Joystick::isButtonPressed(1, 0))
 		{				//kolla knappN
 			cat->useAbility(tileLayer, Entities);
 		}
-		if (joyY1 > 30.f)
+		if (joyY1 > 20.f || joyDPY1 < -15.f)
 		{
 			cat->moveBackWards(tileLayer, Entities);
 		}
-		else if (joyY1 < -30.f)
+		else if (joyY1 < -20.f || joyDPY1 > 15.f)
 		{
 			cat->moveForward(tileLayer, Entities);
 		}
-		else if (joyX1 < -30.f)
+		else if (joyX1 < -20.f || joyDPX1<-15.f)
 		{
 			cat->moveLeft(tileLayer, Entities);
 		}
-		else if (joyX1 > 30.f)
+		else if (joyX1 > 20.f || joyDPX1 >15.f)
 		{
 			cat->moveRight(tileLayer, Entities);
 		}
@@ -271,6 +277,7 @@ void Controller::move(Cat *cat, TileLayer *tileLayer, std::vector<Entity*> *Enti
 		{
 			cat->mInteracting = false;
 		}
+		
 		break;
 	}
 

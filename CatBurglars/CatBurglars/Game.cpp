@@ -12,12 +12,12 @@ bool Fullscreen = false;
 
 static sf::RenderWindow *window;
 static TextureHandler textures;
-MovieHandler moviehandler;
+static MovieHandler moviehandler;
 
 sf::View GuiView;
 
-int WINDOW_WIDTH = 1280;
-int WINDOW_HEIGHT = 720;
+int WINDOW_WIDTH = 1920;
+int WINDOW_HEIGHT = 1080;
 
 
 
@@ -50,7 +50,7 @@ sf::Time fadeTime = sf::milliseconds(10);
 float SPLASH_ALPHA = 0;
 
 enum GameState_  { Menu, RunGame, Pause , Splash };
-GameState_ GameState = RunGame;
+GameState_ GameState = Splash;
 
 Game::Game() {
 	//Creates the main window
@@ -58,18 +58,21 @@ Game::Game() {
 
 	window = new sf::RenderWindow(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "CatBurglars", sf::Style::Close);
 	GuiView.setSize(sf::Vector2f(WINDOW_WIDTH, WINDOW_HEIGHT));
-	//window->setFramerateLimit(60);
 	//window->setVerticalSyncEnabled(true);
-
+	//window->setFramerateLimit(60);
 	SPLASH_SCREEN.loadFromFile("Resources/splash.png");
 	SPLASH_SPRITE.setTexture(SPLASH_SCREEN);
 	SPLASH_SPRITE.setOrigin(sf::Vector2f(SPLASH_SCREEN.getSize().x/2, SPLASH_SCREEN.getSize().y/2));
 	SPLASH_SPRITE.setPosition(GuiView.getCenter());
 
-	
+	menuBackground.loadFromFile("Resources/Menu/background.png");
+	menuBackgroundSprite.setTexture(menuBackground);
+	menuBackgroundSprite.setOrigin(sf::Vector2f(menuBackground.getSize().x / 2, menuBackground.getSize().y / 2));
+	menuBackgroundSprite.setPosition(GuiView.getCenter());
 
 	TextureHandler::Initialize();
 	SoundHandler::Initialize();
+	MovieHandler::Initialize();
 
 	Level *Level0 = new Level("1_1");
 	Level *level1 = new Level("1_2");
@@ -78,14 +81,16 @@ Game::Game() {
 	Level *level4 = new Level("1_5");
 	Level *level5 = new Level("1_6");
 	
-
+	Level *movie1 = new Level(1);
+	Level *movie2 = new Level(1);
+	LevelManager::addLevel(movie1);
 	LevelManager::addLevel(Level0);
 	LevelManager::addLevel(level1);
 	LevelManager::addLevel(level2);
 	LevelManager::addLevel(level3);
 	LevelManager::addLevel(level4); 
 	LevelManager::addLevel(level5);
-
+	LevelManager::addLevel(movie2);
 	//Level *leveltest = new Level("Pathfind_Test");
 
 	//LevelManager::addLevel(leveltest);
@@ -159,7 +164,6 @@ Game::Game() {
 	
 
 	ToggleFullscreen = new MenuButton();
-	ToggleSound = new MenuButton();
 	BackButton = new MenuButton();
 
 
@@ -167,16 +171,11 @@ Game::Game() {
 
 	sf::Texture Fullscreen;
 	sf::Texture FullscreenS;
-	sf::Texture Sound;
-	sf::Texture SoundS;
 	sf::Texture Back;
 	sf::Texture BackS;
 
-	Sound.loadFromFile("Resources/Menu/NewGameo.png");
-	SoundS.loadFromFile("Resources/Menu/NewGamen.png");
-
-	Fullscreen.loadFromFile("Resources/Menu/Continue.png");
-	FullscreenS.loadFromFile("Resources/Menu/Continuen.png");
+	Fullscreen.loadFromFile("Resources/Menu/FullscreenO.png");
+	FullscreenS.loadFromFile("Resources/Menu/FullscreenN.png");
 
 	Back.loadFromFile("Resources/Menu/BackO.png");
 	BackS.loadFromFile("Resources/Menu/BackN.png");
@@ -184,14 +183,11 @@ Game::Game() {
 	ToggleFullscreen->setTexture(&Fullscreen);
 	ToggleFullscreen->setTextureSelected(&FullscreenS);
 
-	ToggleSound->setTexture(&Sound);
-	ToggleSound->setTextureSelected(&SoundS);
 
 	BackButton->setTexture(&Back);
 	BackButton->setTextureSelected(&BackS);
 
 	page2->addMenuButton(ToggleFullscreen);
-	page2->addMenuButton(ToggleSound);
 	page2->addMenuButton(BackButton);
 
 
@@ -247,9 +243,10 @@ Game::~Game()
 
 }
 
-void Game::Run(){
+
+
+void Game::Run() {
 	bool isFocused = true;
-	//moviehandler.PlayMovie(0);
 	while (window->isOpen())
 	{
 		sf::Event event;
@@ -262,10 +259,11 @@ void Game::Run(){
 			if (event.type == sf::Event::LostFocus) {
 				isFocused = false;
 			}
-			if(event.type == sf::Event::GainedFocus){
+			if (event.type == sf::Event::GainedFocus) {
 				isFocused = true;
 			}
 		}
+
 		// Update (the events are handled in the actualizar function)
 		loops = 0;
 
@@ -275,29 +273,32 @@ void Game::Run(){
 			if (isFocused) {
 				Update(interpolacion);
 			}
-			
+
 			proximo_tick += SALTEO_TICKS;
 			++loops;
 
 		}
 
-		
+
 		interpolacion = static_cast <float> (miReloj.getElapsedTime().asMilliseconds() + SALTEO_TICKS - proximo_tick) / static_cast <float> (SALTEO_TICKS);
 
-		
+
 
 		Render();
 	}
 }
+
 void changeScreenMode() {
 	Fullscreen = !Fullscreen;
 
 
 	if (Fullscreen) {
-		window->create(sf::VideoMode(1280, 720, 32), "MenuTest", sf::Style::Fullscreen);
+		window->create(sf::VideoMode(1920, 1080, 32), "MenuTest", sf::Style::Fullscreen);
+		window->setMouseCursorVisible(false);
 	}
 	else if (!Fullscreen) {
-		window->create(sf::VideoMode(1280, 720, 32), "MenuTest", sf::Style::Close);
+		window->create(sf::VideoMode(1920, 1080, 32), "MenuTest", sf::Style::Close);
+		window->setMouseCursorVisible(true);
 	}
 }
 void Game::Update(float dt){
@@ -372,9 +373,6 @@ void Game::Update(float dt){
 			if (Catopedia->isButtonPushed()) {
 				cout << "Catopedia" << endl;
 			}
-			if (ToggleSound->isButtonPushed()) {
-				cout << "Sound toggled!" << endl;
-			}
 			if (ToggleFullscreen->isButtonPushed()) {
 				changeScreenMode();
 			}
@@ -407,7 +405,9 @@ void Game::Update(float dt){
 				MainMenuSystem.setPage("Pause");
 			}
 			break;
+		
 
+			
 
 		case Pause:
 			MainMenuSystem.UpdateNavigation();
@@ -436,27 +436,25 @@ void Game::Update(float dt){
 
 void Game::Render()
 {
-	
-	//window->clear();
+	window->clear();
+
 	switch (GameState){
 	case Splash:
-		window->clear();
+		
 		window->setView(GuiView);
 		window->draw(SPLASH_SPRITE);
 		
 		break;
 	case Menu:
-		window->clear();
+		window->draw(menuBackgroundSprite);
 		window->setView(GuiView);
 		MainMenuSystem.render(window);
 		break;
 		// Main Game Case
 	case RunGame:
-		window->clear();
 		LevelManager::render(window);
 		break;
 	case Pause:
-		window->clear();
 		LevelManager::render(window);
 		MainMenuSystem.render(window);
 		break;
@@ -466,6 +464,5 @@ void Game::Render()
 	
 
 	
-	//window->draw(*moviehandler.getMovie());
 	window->display();
 }
