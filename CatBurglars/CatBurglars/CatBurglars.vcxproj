@@ -44,11 +44,11 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>\\hsnas6\StudentHome\2014\a14rasli\Documents\SFML-2.3.2-windows-vc14-32-bit\SFML-2.3.2\include;\\hsnas6\StudentHome\2015\a15samwe\Documents\sfeMovie-Debug-2.0.0-win32\include;\\hsnas6\StudentHome\2015\a15samwe\Documents\SFML-2.3.2\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>\\hsnas6\StudentHome\2015\a15axeka\Documents\sfeMovie-Debug-2.0.0-win32\include;\\hsnas6\StudentHome\2015\a15axeka\Documents\SFML VS 14\SFML-2.3.2\include;\\hsnas6\StudentHome\2014\a14rasli\Documents\SFML-2.3.2-windows-vc14-32-bit\SFML-2.3.2\include;\\hsnas6\StudentHome\2015\a15samwe\Documents\sfeMovie-Debug-2.0.0-win32\include;\\hsnas6\StudentHome\2015\a15samwe\Documents\SFML-2.3.2\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>\\hsnas6\StudentHome\2014\a14rasli\Documents\SFML-2.3.2-windows-vc14-32-bit\SFML-2.3.2\lib;\\hsnas6\StudentHome\2015\a15samwe\Documents\sfeMovie-Debug-2.0.0-win32\lib;\\hsnas6\StudentHome\2015\a15samwe\Documents\SFML-2.3.2\lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>\\hsnas6\StudentHome\2015\a15axeka\Documents\sfeMovie-Debug-2.0.0-win32\lib;\\hsnas6\StudentHome\2015\a15axeka\Documents\SFML VS 14\SFML-2.3.2\lib;\\hsnas6\StudentHome\2014\a14rasli\Documents\SFML-2.3.2-windows-vc14-32-bit\SFML-2.3.2\lib;\\hsnas6\StudentHome\2015\a15samwe\Documents\sfeMovie-Debug-2.0.0-win32\lib;\\hsnas6\StudentHome\2015\a15samwe\Documents\SFML-2.3.2\lib</AdditionalLibraryDirectories>
       <AdditionalDependencies>sfml-system-d.lib;sfml-window-d.lib;sfml-graphics-d.lib;sfml-network-d.lib;sfml-audio-d.lib;sfeMovie-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -89,6 +89,7 @@
     <ClCompile Include="Grid.cpp" />
     <ClCompile Include="Guard.cpp" />
     <ClCompile Include="HintManager.cpp" />
+    <ClCompile Include="Lazer.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="LevelManager.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -127,6 +128,7 @@
     <ClInclude Include="gridvector.h" />
     <ClInclude Include="Guard.h" />
     <ClInclude Include="HintManager.h" />
+    <ClInclude Include="Lazer.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="LevelManager.h" />
     <ClInclude Include="MenuButton.h" />

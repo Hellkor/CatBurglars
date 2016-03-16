@@ -4,7 +4,7 @@
 #include <stdio.h>
 string DIRECTORY = "Resources/AI/";
 
-Guard::Guard(TextureHandler *textures, gridvector position, int ID,string AIscript, SoundHandler *soundhandler , string directory) : GameObject(),
+Guard::Guard(TextureHandler *textures, gridvector position, int ID,string AIscript, SoundHandler *soundhandler , string directory,string leveltype) : GameObject(),
 mID(ID),
 mCoords(position),
 mSpeed(1),
@@ -13,7 +13,13 @@ mAnimationhandler(64, 128, &mSprite),
 mSoundHandler(soundhandler),
 mRange(3),
 mDirectory(directory){
-	mSprite.setTexture(*textures->GetTexture(5), true);
+	if (leveltype == "Prison1") {
+		mSprite.setTexture(*textures->GetTexture(5), true);
+	}
+	if (leveltype == "Museum") {
+		mSprite.setTexture(*textures->GetTexture(6), true);
+	}
+	
 	mSprite.setTextureRect(sf::IntRect(1*64, 3*128, 64, 128));
 	//Starting position
 	mPosition = sf::Vector2i(mCoords.x * 64, mCoords.y * 64);

@@ -3,7 +3,8 @@
 
 std::string PORTRAITS_DIRECTORY = "Resources/Portraits/";
 
-static sf::Texture mTileTexture, mTileTexture2 ,mPropTileTexture, mSidebarTexture, mSelectorTexture, mSaveTexture, mShadow, mCrate, mButton, mDoor, mBars, mGuard, mArea, mCamera, mComputer, mSnow,
+static sf::Texture mTileTexture, mTileTexture2, mPropTileTexture,mMuseumProps, mSidebarTexture, mSelectorTexture, mSaveTexture, mShadow, mCrate, mButton, mDoor, mBars, mGuard,mGuardMuseum,mDouglas, mArea, mCamera, mComputer, mSnow,
+mLaserTexture,
 
 mSocksPortrait, mShadowPortrait, mScooterPortrait, mSnowPortrait, mAlexPortrait, mDouglasPortrait, mSocks, mCoolDownDash;
 
@@ -21,13 +22,15 @@ TextureHandler::~TextureHandler()
 void TextureHandler::Initialize()
 {
 	mTileTexture.loadFromFile("Resources/TileMap.png");
-	mTileTexture2.loadFromFile("Resources/TileMap_Museum.png");
+	mTileTexture2.loadFromFile("Resources/Tilemap_Museum.png");
 	mShadow.loadFromFile("Resources/shadow_spritesheet.png");
 	mCrate.loadFromFile("Resources/Crate.png");	
 	mButton.loadFromFile("Resources/Button.png");
 	mDoor.loadFromFile("Resources/Door.png");
 	mBars.loadFromFile("Resources/Bars.png");
 	mGuard.loadFromFile("Resources/vakt1.png");
+	mGuardMuseum.loadFromFile("Resources/vakt2.png");
+	mDouglas.loadFromFile("Resources/Douglas.png");
 	mArea.loadFromFile("Resources/area.png");
 	mCamera.loadFromFile("Resources/camerasheet.png");
 	mComputer.loadFromFile("Resources/computer.png");
@@ -42,6 +45,9 @@ void TextureHandler::Initialize()
 
 	mPropTileTexture.loadFromFile("Resources/tileset_props.png");
 	mCoolDownDash.loadFromFile("Resources/cooldownTest.png");
+
+	mLaserTexture.loadFromFile("Resources/laser.png");
+	mMuseumProps.loadFromFile("Resources/museum_props.png");
 }
 
 //Retrun a texture
@@ -53,10 +59,16 @@ sf::Texture* TextureHandler::GetTexture(int ID)
 		return &mPropTileTexture;
 	if (ID == 2)
 		return &mTileTexture2;
+	if (ID == 3)
+		return &mMuseumProps;
 	if (ID == 4)
 		return &mCrate;
 	if (ID == 5)
 		return &mGuard;
+	if (ID == 6)
+		return &mGuardMuseum;
+	if (ID == 7)
+		return &mDouglas;
 	if (ID == 9)
 		return &mSnow;
 	if (ID == 10)
@@ -73,6 +85,8 @@ sf::Texture* TextureHandler::GetTexture(int ID)
 		return &mBars;
 	if (ID == 16)
 		return &mSocks;
+	if (ID == 17)
+		return &mLaserTexture;
 	if (ID == 25)
 		return &mSocksPortrait;
 	if (ID == 26)

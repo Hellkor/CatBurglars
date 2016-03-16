@@ -30,39 +30,47 @@ Lazer::Lazer(int channel, int channelRange, gridvector coords, sf::Texture *text
 		}
 		TextureHandler textures;
 		mSprite.setTexture(*texture);
-		mSprite.setTextureRect(sf::IntRect((direction - 1) * 64, 0, 64, 64));
 		mSprite.setPosition((sf::Vector2f)mPosition);
 		textures.Initialize();
 
-		mHitboxSprite.setTexture(*textures.GetTexture(99));
+		mHitboxSprite.setTexture(*textures.GetTexture(17));
 
 
 		int width = 1;
 		int height = 0;
 
 		if (mFace == "N") {
+			mSprite.setTextureRect(sf::IntRect((0) * 64, 3 * 64, 64, 64));
+			mHitboxSprite.setTextureRect(sf::IntRect((1) * 64, 3 * 64, 64, 64));
 			for (int i = 0; i <= range; i++) {
+
 				mVision.push_back(new gridvector(mCoords.x, mCoords.y - i));
 			}
 		}
 		if (mFace == "S") {
+			mSprite.setTextureRect(sf::IntRect((0) * 64, 3 * 64, 64, 64));
+			mHitboxSprite.setTextureRect(sf::IntRect((1) * 64, 3 * 64, 64, 64));
 			for (int i = 0; i <= range; i++) {
 
 				mVision.push_back(new gridvector(mCoords.x, mCoords.y + i));
 			}
 		}
 		if (mFace == "E") {
+			mSprite.setTextureRect(sf::IntRect((0) * 64, 0, 64, 64));
+			mHitboxSprite.setTextureRect(sf::IntRect((1) * 64, 0 * 64, 64, 64));
 			for (int i = 0; i <= range; i++) {
 
 				mVision.push_back(new gridvector(mCoords.x + i, mCoords.y));
 			}
 		}
 		if (mFace == "W") {
+			mSprite.setTextureRect(sf::IntRect((0) * 64, 1 * 64, 64, 64));
+			mHitboxSprite.setTextureRect(sf::IntRect((1) * 64, 1 * 64, 64, 64));
 			for (int i = 0; i <= range; i++) {
 
 				mVision.push_back(new gridvector(mCoords.x - i, mCoords.y));
 
-				}
+			}
 		}
 
 
@@ -93,36 +101,44 @@ Lazer::Lazer(gridvector coords, sf::Texture *texture, int range, string face, fl
 	}
 	TextureHandler textures;
 	mSprite.setTexture(*texture);
-	mSprite.setTextureRect(sf::IntRect((direction - 1) * 64, 0, 64, 64));
 	mSprite.setPosition((sf::Vector2f)mPosition);
 	textures.Initialize();
 
-	mHitboxSprite.setTexture(*textures.GetTexture(99));
+	mHitboxSprite.setTexture(*textures.GetTexture(17));
 
 
 	int width = 1;
 	int height = 0;
 
 	if (mFace == "N") {
+		mSprite.setTextureRect(sf::IntRect((0) * 64, 3 * 64, 64, 64));
+		mHitboxSprite.setTextureRect(sf::IntRect((1) * 64, 3 * 64, 64, 64));
 		for (int i = 0; i <= range; i++) {
+			
 			mVision.push_back(new gridvector(mCoords.x, mCoords.y - i));
 		}
 	}
 	if (mFace == "S") {
+		mSprite.setTextureRect(sf::IntRect((0) * 64, 3 * 64, 64, 64));
+		mHitboxSprite.setTextureRect(sf::IntRect((1) * 64, 3 * 64, 64, 64));
 		for (int i = 0; i <= range; i++) {
-
+			
 			mVision.push_back(new gridvector(mCoords.x, mCoords.y + i));
 		}
 	}
 	if (mFace == "E") {
+		mSprite.setTextureRect(sf::IntRect((0) * 64, 0, 64, 64));
+		mHitboxSprite.setTextureRect(sf::IntRect((1) * 64, 0 * 64, 64, 64));
 		for (int i = 0; i <= range; i++) {
-
+			
 			mVision.push_back(new gridvector(mCoords.x + i, mCoords.y));
 		}
 	}
 	if (mFace == "W") {
+		mSprite.setTextureRect(sf::IntRect((0) * 64, 1 * 64, 64, 64));
+		mHitboxSprite.setTextureRect(sf::IntRect((1) * 64, 1 * 64, 64, 64));
 		for (int i = 0; i <= range; i++) {
-
+			
 			mVision.push_back(new gridvector(mCoords.x - i, mCoords.y));
 
 		}

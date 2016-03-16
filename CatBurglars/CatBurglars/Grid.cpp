@@ -134,15 +134,29 @@ bool Grid::isTilePassable(GameObject *gameobject, gridvector position, TileLayer
 		}
 	}
 	
-	
-	if (position.x > -1 && position.y > -1 && position.x < mTiles[1].size() && position.y < mTiles.size()){
-		if (mTiles[position.y][position.x]->GetID() > 0){
-		  return false;
-		}
-		else return true;
+	if (Cat *cat = dynamic_cast<Cat*>(gameobject)) {
+		if (cat->getID() == 3) {
+			if (position.x > -1 && position.y > -1 && position.x < mTiles[1].size() && position.y < mTiles.size()) {
+				if (mTiles[position.y][position.x]->GetID() > 0 && mTiles[position.y][position.x]->GetID() != 1020 && mTiles[position.y][position.x]->GetID() != 47) {
+					return false;
+				}
+				else return true;
 
+			}
+			else return false;
+		}
+		else {
+			if (position.x > -1 && position.y > -1 && position.x < mTiles[1].size() && position.y < mTiles.size()) {
+				if (mTiles[position.y][position.x]->GetID() > 0) {
+					return false;
+				}
+				else return true;
+
+			}
+			else return false;
+		}
 	}
-	else return false; 
+	
 }
 
 bool Grid::canCatDash(gridvector originalpos, gridvector position, TileLayer *Tiles, std::vector<Entity*> *Entities) {
