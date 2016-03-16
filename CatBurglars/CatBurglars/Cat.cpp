@@ -388,7 +388,7 @@ void Cat::shadowDash(TileLayer *tileLayer, std::vector<Entity*> *Entities, int d
 	int correctionMinusX = 64 + (mPosition.x % 64);
 
 	std::cout << "DASH!" << std::endl;
-	if (!mCooldown  && !mMoving){
+	if (!mCooldown  ){//&& !mMoving
 	
 		if (direc == 1) {
 			positiveNegative = 1;
@@ -439,7 +439,20 @@ void Cat::shadowDash(TileLayer *tileLayer, std::vector<Entity*> *Entities, int d
 			if (direc == 4) {
 				position += (correctionPlusY + 256 * positiveNegative);
 			}
-			*/positiveNegative *= 3;
+			*/
+					bott
+					if (positionX > mPosition.x) {
+						positionX += correctionPlusX;	}
+					if (positionX < mPosition.x) {
+						positionX += correctionMinusX ;
+						}
+					if (positionY > mPosition.y) {
+						positionY += correctionPlusY;
+					}
+					if (positionY < mPosition.y) {
+						positionY += correctionMinusY;
+					}
+			positiveNegative *= 3;
 			mDashing = true;
 			mMoving = true;
 			mCooldown = true;
@@ -449,6 +462,18 @@ void Cat::shadowDash(TileLayer *tileLayer, std::vector<Entity*> *Entities, int d
 			std::cout << "3 Tile dash" << std::endl;
 			mSpeed = mSpeed * 4;
 			position += (192 * positiveNegative );
+			if (positionX > mPosition.x) {
+				positionX += correctionPlusX;
+			}
+			if (positionX < mPosition.x) {
+				positionX += correctionMinusX;
+			}
+			if (positionY > mPosition.y) {
+				positionY += correctionPlusY;
+			}
+			if (positionY < mPosition.y) {
+				positionY += correctionMinusY;
+			}
 			positiveNegative *= 2;
 			mDashing = true;
 			mMoving = true;
@@ -459,6 +484,18 @@ void Cat::shadowDash(TileLayer *tileLayer, std::vector<Entity*> *Entities, int d
 			std::cout << "2 Tile dash" << std::endl;
 			mSpeed = mSpeed * 4;
 			position += (128 * positiveNegative);
+			if (positionX > mPosition.x) {
+				positionX += correctionPlusX;
+			}
+			if (positionX < mPosition.x) {
+				positionX += correctionMinusX;
+			}
+			if (positionY > mPosition.y) {
+				positionY += correctionPlusY;
+			}
+			if (positionY < mPosition.y) {
+				positionY += correctionMinusY;
+			}
 			positiveNegative *= 1;
 			mDashing = true;
 			mMoving = true;

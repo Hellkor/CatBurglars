@@ -554,6 +554,7 @@ void Level::load(){
 		moviehandler.PlayMovie(mMovieID);
 		break;
 	case GameStage:
+		Clear();
 		win = false;
 		lost = false;
 		lights.clear();
