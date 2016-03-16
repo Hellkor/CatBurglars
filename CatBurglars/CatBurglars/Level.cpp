@@ -355,23 +355,29 @@ void Level::update(float dt){
 									{
 										socks = cat->GetDistract();
 										socksMoved = cat->GetSocksMoved();
-									}
-									if (socks)
-									{
-										socksPosition = cat->getCoords();
-										cat->SetSocksDistract(false);
+
+										if (socks)
+										{
+											cout << "New cat position" << endl;
+											socksPosition = cat->getCoords();
+											cout << cat->getCoords().x << endl;
+											cat->SetSocksDistract(false);
+										}
 									}
 									if (cat->getID() == 4) {
 										scooter = cat->getScooterThrow();
-									}
-									if (scooter) {
-										scooterThrow = cat->getThrowPosition();
-										cat->SetScooterThrow(false);
+
+										if (scooter) {
+											scooterThrow = cat->getThrowPosition();
+											cat->SetScooterThrow(false);
+										}
 									}
 								}
 								if (Guard *guard = dynamic_cast<Guard*>(obj)) {
 									if (socks)
 									{
+										cout << guard->getCoords().x << "x " << socksPosition.x + 3 << " " << socksPosition.x - 3 << endl;
+										cout << guard->getCoords().y << "y " << socksPosition.y + 3 << " " << socksPosition.y - 3 << endl;
 										if (guard->getCoords().x <= socksPosition.x + 3 && guard->getCoords().x >= socksPosition.x - 3 &&
 											guard->getCoords().y <= socksPosition.y + 3 && guard->getCoords().y >= socksPosition.y - 3)
 										{

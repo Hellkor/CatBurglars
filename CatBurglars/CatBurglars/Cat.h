@@ -70,7 +70,7 @@ public:
 private:
 	void CompleteInteraction(GameObject *object);
 	float mSpeed;
-	sf::Sprite mSprite, mAbilitySprite;
+	sf::Sprite mSprite, mAbilitySprite, mThrowSprite;
 	int mID;
 	sf::Vector2i mPosition;
 	gridvector mCoord;

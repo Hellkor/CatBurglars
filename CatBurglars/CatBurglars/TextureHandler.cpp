@@ -5,7 +5,7 @@ std::string PORTRAITS_DIRECTORY = "Resources/Portraits/";
 
 static sf::Texture mTileTexture, mTileTexture2 ,mPropTileTexture, mSidebarTexture, mSelectorTexture, mSaveTexture, mShadow, mCrate, mButton, mDoor, mBars, mGuard, mArea, mCamera, mComputer, mSnow,
 
-mSocksPortrait, mShadowPortrait, mScooterPortrait, mSnowPortrait, mAlexPortrait, mDouglasPortrait, mSocks, mCoolDownDash;
+mSocksPortrait, mShadowPortrait, mScooterPortrait, mSnowPortrait, mAlexPortrait, mDouglasPortrait, mSocks, mScooter , mCoolDownDash;
 
 TextureHandler::TextureHandler()
 {
@@ -39,7 +39,7 @@ void TextureHandler::Initialize()
 	mScooterPortrait.loadFromFile(PORTRAITS_DIRECTORY + "ScooterKon.png");
 	mDouglasPortrait.loadFromFile(PORTRAITS_DIRECTORY + "DouglasKon.png");
 	mSocks.loadFromFile("Resources/socks_spritesheet.png");
-
+	mScooter.loadFromFile("Resources/scooter_spritesheet.png");
 	mPropTileTexture.loadFromFile("Resources/tileset_props.png");
 	mCoolDownDash.loadFromFile("Resources/cooldownTest.png");
 }
@@ -73,6 +73,8 @@ sf::Texture* TextureHandler::GetTexture(int ID)
 		return &mBars;
 	if (ID == 16)
 		return &mSocks;
+	if (ID == 17)
+		return &mScooter;
 	if (ID == 25)
 		return &mSocksPortrait;
 	if (ID == 26)

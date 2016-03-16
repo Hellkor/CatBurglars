@@ -17,9 +17,11 @@ canPushCrate(true){
 
 	if (player == 1) {
 		mSoundHandler->initializeCat1(this);
+		mID = 3;
 	}
 	if (player == 2) {
 		mSoundHandler->initializeCat2(this);
+		mID = 4;
 	}
 	if (mID == 1){
 		mSpeed = 2;
@@ -36,15 +38,16 @@ canPushCrate(true){
 	}
 	if (mID == 3){
 		mSpeed = 2;
-		mSprite.setTexture(*texturehandler->GetTexture(9), true);
+		mSprite.setTexture(*texturehandler->GetTexture(16), true);
 		canPushCrate = false;
 		mAbilitySprite.setTexture(*texturehandler->GetTexture(50), true);
 	}
 	if (mID == 4){
 		mSpeed = 2;
-		mSprite.setTexture(*texturehandler->GetTexture(9), true);
+		mThrowSprite.setTexture(*texturehandler->GetTexture(17), true);
+		mSprite.setTexture(*texturehandler->GetTexture(17), true);
 		mAbilitySprite.setTexture(*texturehandler->GetTexture(50), true);
-		mAbilityTime = sf::seconds(5);
+		mAbilityTime = sf::seconds(15);
 	}
 	
 	mSprite.setTextureRect(sf::IntRect(1*64, 1*64, 64, 64));
@@ -196,31 +199,43 @@ void Cat::Update(float dt){
 			//mAnimationhandler.reset(direction);
 		}
 	}
-	else if (canMove&& !mPushing) // TEMP , SKA ÄNDRAS MED IDLE ANIMATION
+	else if (canMove && !mPushing) // TEMP , SKA ÄNDRAS MED IDLE ANIMATION
 	{
 		if (direction == 4) {
-			if (mButtonPress) {
+			if (socksMoved == false) {
+				mAnimationhandler.animation(4, 5, sf::milliseconds(250));
+			}
+			else if (mButtonPress) {
 				mAnimationhandler.setFrame(16, 1);
 			}
 			else
 			mAnimationhandler.animation(8, 5, sf::milliseconds(250));
 		}
 		if (direction == 3) {
-			if (mButtonPress) {
+			if (socksMoved == false) {
+				mAnimationhandler.animation(5, 5, sf::milliseconds(250));
+			}
+			else if (mButtonPress) {
 				mAnimationhandler.setFrame(16, 0);
 			}
 			else
 			mAnimationhandler.animation(9, 5, sf::milliseconds(250));
 		}
 		if (direction == 2) {
-			if (mButtonPress) {
+			if (socksMoved == false) {
+				mAnimationhandler.animation(7, 5, sf::milliseconds(250));
+			}
+			else if (mButtonPress) {
 				mAnimationhandler.setFrame(16, 2);
 			}
 			else
 			mAnimationhandler.animation(11, 5, sf::milliseconds(250));
 		}
 		if (direction == 1) {
-			if (mButtonPress) {
+			if (socksMoved == false) {
+				mAnimationhandler.animation(6, 5, sf::milliseconds(250));
+			}
+			else if (mButtonPress) {
 				mAnimationhandler.setFrame(16, 3);
 			}
 			else
@@ -238,7 +253,6 @@ void Cat::moveForward(TileLayer *tileLayer, std::vector<Entity*> *Entities) {
 		direction = 4;
 		if (canPushCrate) {
 			if (mGrid.moveCrate(this, gridvector(mCoord.x, mCoord.y - 1), tileLayer, Entities)) {
-				mAnimationhandler.playAnimation(12, 5, sf::milliseconds(100));
 				mPushing = true;
 			}
 		}
@@ -532,27 +546,26 @@ void Cat::ScooterThrow(TileLayer *tileLayer, std::vector<Entity*> *Entities, int
 	int positionX = 0;
 	std::cout << "Throw!" << std::endl;
 	if (!mCooldown  && !mMoving) {
-		mThrow = mCoord;
-		if (direc == 1) {
+		if (direction == 1) {
 			positiveNegative = 1;
 			positionX = 1;
-
 		}
-		if (direc == 2) {
+		else if (direction == 2) {
 			positiveNegative = -1;
 			positionX = -1;
 		}
-		if (direc == 3) {
+		else if (direction == 3) {
 			positiveNegative = 1;
 			positionY = 1;
 		}
-		if (direc == 4) {
+		else if (direction == 4) {
 			positiveNegative = -1;
 			positionY = -1;
 		}
+		mThrow = mCoord;
 		if ((mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX), mCoord.y + (positionY)), tileLayer, Entities)) && (mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX * 2), mCoord.y + (positionY * 2)), tileLayer, Entities)) && (mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX * 3), mCoord.y + (positionY * 3)), tileLayer, Entities)) && (mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX * 4), mCoord.y + (positionY * 4)), tileLayer, Entities)) && (mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX * 5), mCoord.y + (positionY * 5)), tileLayer, Entities)) && (mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX * 6), mCoord.y + (positionY * 6)), tileLayer, Entities)) && (mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX * 7), mCoord.y + (positionY * 7)), tileLayer, Entities))) {
 			std::cout << "7 Tile throw" << std::endl;
-			position += (256 * positiveNegative);
+			position += (448 * positiveNegative);
 			positiveNegative *= 7;
 			mScooterDistract = true;
 			mCooldown = true;
@@ -560,7 +573,7 @@ void Cat::ScooterThrow(TileLayer *tileLayer, std::vector<Entity*> *Entities, int
 		}
 		else if ((mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX), mCoord.y + (positionY)), tileLayer, Entities)) && (mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX * 2), mCoord.y + (positionY * 2)), tileLayer, Entities)) && (mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX * 3), mCoord.y + (positionY * 3)), tileLayer, Entities)) && (mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX * 4), mCoord.y + (positionY * 4)), tileLayer, Entities)) && (mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX * 5), mCoord.y + (positionY * 5)), tileLayer, Entities)) && (mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX * 6), mCoord.y + (positionY * 6)), tileLayer, Entities))) {
 			std::cout << "6 Tile throw" << std::endl;
-			position += (256 * positiveNegative);
+			position += (384 * positiveNegative);
 			positiveNegative *= 6;
 			mScooterDistract = true;
 			mCooldown = true;
@@ -568,7 +581,7 @@ void Cat::ScooterThrow(TileLayer *tileLayer, std::vector<Entity*> *Entities, int
 		}
 		else if ((mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX), mCoord.y + (positionY)), tileLayer, Entities)) && (mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX * 2), mCoord.y + (positionY * 2)), tileLayer, Entities)) && (mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX * 3), mCoord.y + (positionY * 3)), tileLayer, Entities)) && (mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX * 4), mCoord.y + (positionY * 4)), tileLayer, Entities)) && (mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX * 5), mCoord.y + (positionY * 5)), tileLayer, Entities))) {
 			std::cout << "5 Tile throw" << std::endl;
-			position += (256 * positiveNegative);
+			position += (320 * positiveNegative);
 			positiveNegative *= 5;
 			mScooterDistract = true;
 			mCooldown = true;
@@ -601,8 +614,24 @@ void Cat::ScooterThrow(TileLayer *tileLayer, std::vector<Entity*> *Entities, int
 		else {
 			positiveNegative = 0;
 		}
-
-		std::cout << position << std::endl;
+		if (mCooldown == true) {
+			canMove = false;
+			interactionClock.restart();
+			interactionTime = sf::seconds(1.1);
+			if (direction == 1) {
+				mAnimationhandler.playAnimation(6, 6, sf::milliseconds(1000 / 6));
+			}
+			else if (direction == 2) {
+				mAnimationhandler.playAnimation(7, 6, sf::milliseconds(1000 / 6));
+			}
+			else if (direction == 3) {
+				mAnimationhandler.playAnimation(5, 5, sf::milliseconds(1000 / 5));
+			}
+			else if (direction == 4) {
+				mAnimationhandler.playAnimation(4, 5, sf::milliseconds(1000 / 5));
+			}
+		}
+		//std::cout << position << std::endl;
 		std::cout << positiveNegative << std::endl;
 		if (direc == 1 || direc == 2) {
 			mThrow.x += positiveNegative;
