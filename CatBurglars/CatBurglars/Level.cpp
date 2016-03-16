@@ -334,8 +334,6 @@ void Level::update(float dt){
 		
 		dialogManager.update();
 		hintManager.Update();
-
-
 		if (mLoaded) {
 			if (!lost) {
 				if (!dialogManager.isDialogActive()) {
@@ -461,6 +459,14 @@ void Level::update(float dt){
 
 											}
 										}
+										if (Lazer *laser = dynamic_cast<Lazer*>(entity)) {
+											if (laser->getIntersection(cat)) {
+												if (!lost && cat->getID()) {
+													lost = true;
+													deathClock.restart();
+												}
+											}
+										}
 										if (Guard *guard = dynamic_cast<Guard*>(entity)) {
 											if (guard->getIntersection(cat) && !(cat->getDashing())) {
 
@@ -576,6 +582,9 @@ void Level::load(){
 		moviehandler.PlayMovie(mMovieID);
 		break;
 	case GameStage:
+
+		Clear();
+
 		win = false;
 		lost = false;
 		lights.clear();
@@ -586,11 +595,8 @@ void Level::load(){
 		dialogManager.initialize(guiView);
 
 		for (int i = 0; i <= 100; i++) {
-
 			Channels::addChannel(Channel(i));
 		}
-
-		
 
 		//Starts the music for a level
 		soundhandler.startMusic(mFile);
@@ -713,9 +719,9 @@ void Level::generateLevel(string name){
 			int ID = stoi(input);
 			Tile *tile;
 			if (mLevelType == "Prison1")
-				tile = new Tile(gridvector( x , y ), ID, 0, &textures);
+				tile = new Tile(gridvector( x , y ), ID, 0, &textures,mLevelType);
 			else
-				tile = new Tile(gridvector(x, y), ID, 2, &textures);
+				tile = new Tile(gridvector(x, y), ID, 2, &textures, mLevelType);
 			mTileRow.push_back(tile);
 			
 
@@ -732,11 +738,11 @@ void Level::generateLevel(string name){
 			inputFile >> input;
 			int ID = stoi(input);
 			if (ID != 24) {
-				Tile *tile = new Tile(gridvector(x, y), ID, 0, &textures);
+				Tile *tile = new Tile(gridvector(x, y), ID, 0, &textures, mLevelType);
 				mTileTopRow.push_back(tile);
 			}
 			else {
-				Tile *tile = new Tile(gridvector(x, y), 0, 0, &textures);
+				Tile *tile = new Tile(gridvector(x, y), 0, 0, &textures, mLevelType);
 				mTileTopRow.push_back(tile);
 			}
 			
@@ -758,12 +764,12 @@ void Level::generateLevel(string name){
 			inputFile >> input;
 			int ID = stoi(input);
 			if (ID != 24) {
-				Tile *tile = new Tile(gridvector(x, y), ID, 0, &textures);
+				Tile *tile = new Tile(gridvector(x, y), ID, 0, &textures, mLevelType);
 
 				mTileTopRow.push_back(tile);
 			}
 			else {
-				Tile *tile = new Tile(gridvector(x, y), 0, 0, &textures);
+				Tile *tile = new Tile(gridvector(x, y), 0, 0, &textures, mLevelType);
 				mTileTopRow.push_back(tile);
 			}
 		}
@@ -863,7 +869,7 @@ void Level::generateLevel(string name){
 			mEntities.push_back(new Door(channel, gridvector(xPos, yPos), textures.GetTexture(15), &soundhandler));
 		}
 		if (objectID == 4){
-			mEntities.push_back(new Guard(&textures, gridvector(xPos, yPos), 1, script, &soundhandler,mFile));
+			mEntities.push_back(new Guard(&textures, gridvector(xPos, yPos), 1, script, &soundhandler,mFile,mLevelType));
 		}
 		if (objectID == 6) {
 			mEntities.push_back(new secuCam(channel,hold, gridvector(xPos, yPos), textures.GetTexture(13), range, facing));

@@ -8,7 +8,7 @@
 class Tile : public Entity
 {
 public:
-	Tile(gridvector coords, int ID, int textureID, TextureHandler *textures);
+	Tile(gridvector coords, int ID, int textureID, TextureHandler *textures, string leveltype);
 	~Tile();
 	void Render(sf::RenderWindow *mainWindow);
 	void Update(float dt);
