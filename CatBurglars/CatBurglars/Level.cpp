@@ -54,7 +54,7 @@ DialogManager dialogManager("dialog", &textures,sf::Vector2f(1280,720));
 
 HintManager hintManager("hints");
 
-Controller p1Controller = Controller(KeyboardOne);
+Controller p1Controller = Controller(GamepadOne);
 Controller p2Controller = Controller(KeyboardTwo);
 
 

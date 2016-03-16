@@ -426,20 +426,20 @@ void Cat::shadowDash(TileLayer *tileLayer, std::vector<Entity*> *Entities, int d
 			std::cout << "4 Tile dash" << std::endl;
 			mSpeed = mSpeed * 4;
 	
-						//	if (direc == 1) {
-					position += (256 * positiveNegative);/*
-			}
+	//		if (direc == 1) {
+					position += ( 256 * positiveNegative);//correctionPlusX+
+		/*	}
 			if (direc == 2) {
-				position += (256 * positiveNegative);
+				position += (correctionMinusX + 256 * positiveNegative);
 			}
 			if (direc == 3) {
 
-				position += (256 * positiveNegative);
+				position += (correctionMinusY + 256 * positiveNegative);
 			}
 			if (direc == 4) {
-				position += (256 * positiveNegative);
-			}*/
-			positiveNegative *= 3;
+				position += (correctionPlusY + 256 * positiveNegative);
+			}
+			*/positiveNegative *= 3;
 			mDashing = true;
 			mMoving = true;
 			mCooldown = true;
