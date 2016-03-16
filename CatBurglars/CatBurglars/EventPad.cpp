@@ -32,14 +32,16 @@ bool EventPad::getInteraction(GameObject *g){
 			if (mEventType == DIALOG){
 				isActivated = true;
 				mDialogManager->startConversation(mDialogID, mDialogRange, 5);
+				return false;
 			}
 			if (mEventType == HINT)
 			{
 				mHintManager->ShowHint(mDialogID);
+				return false;
 			}
 			if (mEventType == CHECKPOINT)
 			{
-
+				return false;
 			}
 			
 		}

@@ -342,7 +342,9 @@ void Level::update(float dt){
 					//Channels::update();
 					pathfinder.Update(&mEntities);
 					bool socks = false, socksMoved = false;
+					bool scooter = false;
 					gridvector socksPosition;
+					gridvector scooterThrow;
 					for each (Entity *e in mEntities) {
 						if (!mEntities.empty()) {
 							e->Update(dt);
@@ -359,6 +361,13 @@ void Level::update(float dt){
 										socksPosition = cat->getCoords();
 										cat->SetSocksDistract(false);
 									}
+									if (cat->getID() == 4) {
+										scooter = cat->getScooterThrow();
+									}
+									if (scooter) {
+										scooterThrow = cat->getThrowPosition();
+										cat->SetScooterThrow(false);
+									}
 								}
 								if (Guard *guard = dynamic_cast<Guard*>(obj)) {
 									if (socks)
@@ -371,6 +380,13 @@ void Level::update(float dt){
 									}
 									if (socksMoved)
 										guard->RemoveTemporaryWaits();
+									if (scooter) {
+										if (guard->getCoords().x <= scooterThrow.x + 3 && guard->getCoords().x >= scooterThrow.x - 3 &&
+											guard->getCoords().y <= scooterThrow.y + 3 && guard->getCoords().y >= scooterThrow.y - 3)
+										{
+											guard->SetDistraction(scooterThrow, 4);
+										}
+									}
 									guard->AImovement(&mWallTileLayer, &mEntities, &pathfinder);
 								}
 
@@ -560,7 +576,7 @@ void Level::load(){
 		lights.clear();
 		mLoaded = false;
 
-		//Clear();
+		Clear();
 
 		dialogManager.initialize(guiView);
 

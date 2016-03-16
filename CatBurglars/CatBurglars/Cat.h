@@ -55,6 +55,11 @@ public:
 	bool GetDistract() { return mSocksDistract; }
 	bool GetSocksMoved() { return socksMoved; }
 
+	void ScooterThrow(TileLayer *tileLayer, std::vector<Entity*> *Entities, int direc);
+	gridvector getThrowPosition();
+	bool getScooterThrow();
+	void SetScooterThrow(bool Scooterthrow);
+
 	int getPlayerIndex();
 	virtual Layer getLayer();
 
@@ -69,7 +74,7 @@ private:
 	int mID;
 	sf::Vector2i mPosition;
 	gridvector mCoord;
-	
+	gridvector mThrow;
 	int mPlayerIndex;
 
 	SoundHandler* mSoundHandler;
@@ -88,6 +93,7 @@ private:
 	bool mSocksDistract = false;
 	bool mCooldown = false;
 	bool socksMoved = true;
+	bool mScooterDistract = false;
 	Grid mGrid;
 
 
