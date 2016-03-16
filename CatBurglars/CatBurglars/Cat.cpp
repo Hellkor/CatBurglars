@@ -439,19 +439,21 @@ void Cat::shadowDash(TileLayer *tileLayer, std::vector<Entity*> *Entities, int d
 			if (direc == 4) {
 				position += (correctionPlusY + 256 * positiveNegative);
 			}
+
+			if (newPos.x > mPosition.x) {
+				newPos.x += correctionPlusX;
+			}
+			if (newPos.x < mPosition.x) {
+				newPos.x += correctionMinusX;
+			}if (newPos.y > mPosition.y) {
+				newPos.y += correctionPlusY;
+			}
+			if (newPos.y< mPosition.y) {
+				newPos.y += correctionMinusY;
+			}
 			*/
-					bott
-					if (positionX > mPosition.x) {
-						positionX += correctionPlusX;	}
-					if (positionX < mPosition.x) {
-						positionX += correctionMinusX ;
-						}
-					if (positionY > mPosition.y) {
-						positionY += correctionPlusY;
-					}
-					if (positionY < mPosition.y) {
-						positionY += correctionMinusY;
-					}
+					
+					
 			positiveNegative *= 3;
 			mDashing = true;
 			mMoving = true;
@@ -462,18 +464,6 @@ void Cat::shadowDash(TileLayer *tileLayer, std::vector<Entity*> *Entities, int d
 			std::cout << "3 Tile dash" << std::endl;
 			mSpeed = mSpeed * 4;
 			position += (192 * positiveNegative );
-			if (positionX > mPosition.x) {
-				positionX += correctionPlusX;
-			}
-			if (positionX < mPosition.x) {
-				positionX += correctionMinusX;
-			}
-			if (positionY > mPosition.y) {
-				positionY += correctionPlusY;
-			}
-			if (positionY < mPosition.y) {
-				positionY += correctionMinusY;
-			}
 			positiveNegative *= 2;
 			mDashing = true;
 			mMoving = true;
@@ -484,18 +474,6 @@ void Cat::shadowDash(TileLayer *tileLayer, std::vector<Entity*> *Entities, int d
 			std::cout << "2 Tile dash" << std::endl;
 			mSpeed = mSpeed * 4;
 			position += (128 * positiveNegative);
-			if (positionX > mPosition.x) {
-				positionX += correctionPlusX;
-			}
-			if (positionX < mPosition.x) {
-				positionX += correctionMinusX;
-			}
-			if (positionY > mPosition.y) {
-				positionY += correctionPlusY;
-			}
-			if (positionY < mPosition.y) {
-				positionY += correctionMinusY;
-			}
 			positiveNegative *= 1;
 			mDashing = true;
 			mMoving = true;
@@ -508,11 +486,15 @@ void Cat::shadowDash(TileLayer *tileLayer, std::vector<Entity*> *Entities, int d
 
 		std::cout << position << std::endl;
 		std::cout << positiveNegative << std::endl;
-		if (direc == 1 || direc == 2) {
+			if (direc == 1 || direc == 2) {
 			newPos.x = mPosition.x + position;
+
+		
+			
 			mCoord.x += positiveNegative;
 		}
 		else {
+			
 			newPos.y = mPosition.y + position;
 			mCoord.y += positiveNegative;
 		}
