@@ -86,7 +86,10 @@ int Cat::getID() {
 	return mID;
 }
 
-void Cat::Update(float dt){
+void Cat::Update(float dt) {
+
+
+
 	if (mAbilityClock.getElapsedTime() >= mAbilityTime && mCooldown) {
 		mCooldown = false;
 	}
@@ -97,7 +100,7 @@ void Cat::Update(float dt){
 		}
 	}
 
-	if (mMoving){
+	if (mMoving) {
 		mButtonPress = false;
 		if (mDashing) {
 			if (!(mDashSound.getStatus() == sf::Sound::Playing)) {
@@ -106,19 +109,19 @@ void Cat::Update(float dt){
 		}
 		if (direction == 4 && mPosition.y != newPos.y) {
 			mPosition.y -= (1 * mSpeed);
-			if (mDashing == true){
+			if (mDashing == true) {
 				mAnimationhandler.animation(4, 5, sf::milliseconds(250));
 			}
 			else if (mPushing) {
 				mAnimationhandler.animation(12, 5, sf::milliseconds(100));
-				
+
 			}
 			else
 				mAnimationhandler.animation(1, 5, sf::milliseconds(100));
 		}
 		else if (direction == 3 && mPosition.y != newPos.y) {
 			mPosition.y += (1 * mSpeed);
-			if (mDashing == true){
+			if (mDashing == true) {
 				mAnimationhandler.animation(5, 5, sf::milliseconds(250));
 			}
 			else if (mPushing) {
@@ -129,7 +132,7 @@ void Cat::Update(float dt){
 		}
 		else if (direction == 2 && mPosition.x != newPos.x) {
 			mPosition.x -= (1 * mSpeed);
-			if (mDashing == true){
+			if (mDashing == true) {
 				mAnimationhandler.animation(7, 5, sf::milliseconds(250));
 			}
 			else if (mPushing) {
@@ -137,11 +140,11 @@ void Cat::Update(float dt){
 			}
 			else
 				mAnimationhandler.animation(3, 5, sf::milliseconds(100));
-			
+
 		}
 		else if (direction == 1 && mPosition.x != newPos.x) {
 			mPosition.x += (1 * mSpeed);
-			if (mDashing == true){
+			if (mDashing == true) {
 				mAnimationhandler.animation(6, 5, sf::milliseconds(250));
 			}
 			else if (mPushing) {
@@ -152,28 +155,33 @@ void Cat::Update(float dt){
 		}
 		else {
 			mMoving = false;
-			
+
 			// säkrar att den håller rätt position
 			if (direction == 4) {
 				mCoord.y--;
-				if (mPosition.y != newPos.y)
-				mPosition.y = newPos.y;
+				if (mPosition.y != newPos.y) 
+					mPosition.y = newPos.y;
+					
 			}
 			if (direction == 3) {
 				mCoord.y++;
-				if (mPosition.y != newPos.y)
-				mPosition.y = newPos.y;
+				if (mPosition.y != newPos.y) 
+						mPosition.y = newPos.y;
+					
 			}
 			if (direction == 2) {
 				mCoord.x--;
 				if (mPosition.x != newPos.x)
+					mPosition.x = newPos.x;
+			
+		}
+		if (direction == 1) {
+			mCoord.x++;
+			if (mPosition.x != newPos.x)
 				mPosition.x = newPos.x;
-			}
-			if (direction == 1) {
-				mCoord.x++;
-				if (mPosition.x != newPos.x)
-				mPosition.x = newPos.x;
-			}
+		
+	
+		}
 			if (mDashing){
 				mSpeed = 2;
 				mDashing = false;
@@ -356,6 +364,7 @@ void Cat::interaction(Usable *usable) {
 	}
 	
 }
+
 void Cat::CompleteInteraction(GameObject *object) {
 	
 }
@@ -385,18 +394,20 @@ void Cat::Collide(){
 
 // SHADOW \\
 
+
+
 void Cat::shadowDash(TileLayer *tileLayer, std::vector<Entity*> *Entities, int direc){
 	int positiveNegative = 0;
 	int position = 0;
 	int positionY = 0;
 	int positionX = 0;
-	int correctionPlusY = 64 - (mPosition.y % 64);
-	int correctionPlusX = 64-  (mPosition.x % 64);
-	int correctionMinusY =  64+ (mPosition.y % 64);
-	int correctionMinusX = 64 + (mPosition.x % 64);
+	int corrPluY = -(mPosition.y % 64);
+	int corrPluX =  -(mPosition.x % 64);
+	int corrMinY =  (mPosition.y % 64);
+	int corrMinX =  (mPosition.x % 64);
 
 	std::cout << "DASH!" << std::endl;
-	if (!mCooldown  ){//&& !mMoving
+	if (!mCooldown  ){  //&& !mMoving
 	
 		if (direc == 1) {
 			positiveNegative = 1;
@@ -430,37 +441,27 @@ void Cat::shadowDash(TileLayer *tileLayer, std::vector<Entity*> *Entities, int d
 		if ((mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX*4), mCoord.y + (positionY*4)), tileLayer, Entities))) {
 			cout << "4st tile is passable" << endl;
 		}*/
+
 		if ((mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX), mCoord.y + (positionY)), tileLayer, Entities)) && (mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX*2), mCoord.y + (positionY*2)), tileLayer, Entities)) && (mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX*3), mCoord.y + (positionY*3)), tileLayer, Entities)) && (mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX*4), mCoord.y + (positionY*4)), tileLayer, Entities))) {
 			std::cout << "4 Tile dash" << std::endl;
 			mSpeed = mSpeed * 4;
+			position += (256 * positiveNegative);
 	
-	//		if (direc == 1) {
-					position += ( 256 * positiveNegative);//correctionPlusX+
-		/*	}
-			if (direc == 2) {
-				position += (correctionMinusX + 256 * positiveNegative);
-			}
-			if (direc == 3) {
-
-				position += (correctionMinusY + 256 * positiveNegative);
-			}
-			if (direc == 4) {
-				position += (correctionPlusY + 256 * positiveNegative);
-			}
-
+			
+			/*
 			if (newPos.x > mPosition.x) {
-				newPos.x += correctionPlusX;
+			newPos.x += correctionPlusX;
 			}
 			if (newPos.x < mPosition.x) {
-				newPos.x += correctionMinusX;
-			}if (newPos.y > mPosition.y) {
-				newPos.y += correctionPlusY;
+			newPos.x += correctionMinusX;
+
+			if (newPos.y > mPosition.y) {
+			newPos.y += correctionPlusY;
 			}
-			if (newPos.y< mPosition.y) {
-				newPos.y += correctionMinusY;
+			if (newPos.y < mPosition.y) {
+			newPos.y += correctionMinusY;
 			}
 			*/
-					
 					
 			positiveNegative *= 3;
 			mDashing = true;
@@ -495,20 +496,38 @@ void Cat::shadowDash(TileLayer *tileLayer, std::vector<Entity*> *Entities, int d
 		std::cout << position << std::endl;
 		std::cout << positiveNegative << std::endl;
 			if (direc == 1 || direc == 2) {
+				if (mPosition.x % 64 == !0) {
+					if (newPos.x < mPosition.x + positionX)
+					{
+						mPosition.x += corrPluX;
+					}
+					if (newPos.x < mPosition.x + positionX)
+					{
+						mPosition.x += corrMinX;
+					}
+				}
 			newPos.x = mPosition.x + position;
-
-		
-			
-			mCoord.x += positiveNegative;
-		}
-		else {
-			
+			mCoord.x += positiveNegative ;
+				}
+			else {
+				if (mPosition.y % 64 == !0) {
+				if (newPos.y > mPosition.y + positionY)
+				{
+					mPosition.y += corrPluY;
+				}
+				if (newPos.y < mPosition.y + positionY)
+				{
+					mPosition.y += corrMinY;
+				}
+			}
 			newPos.y = mPosition.y + position;
 			mCoord.y += positiveNegative;
+				}
+			}
 		}
-	}
 
-}
+
+
 
 bool Cat::getDashing(){
 	return mDashing;
@@ -529,7 +548,8 @@ bool Cat::snowHax(){
 		return false;
 }
 
-// Socks \\
+
+// SOCKS \\
 
 void Cat::SocksDistract()
 {
@@ -542,7 +562,9 @@ void Cat::SetSocksDistract(bool distract)
 	mSocksDistract = distract;
 }
 
-// Scooter \\
+// sCooter \\
+
+#pragma region "Scooter"
 
 void Cat::ScooterThrow(TileLayer *tileLayer, std::vector<Entity*> *Entities, int direc) {
 	int positiveNegative = 0;
@@ -645,3 +667,4 @@ bool Cat::getScooterThrow() {
 void Cat::SetScooterThrow(bool Scooterthrow) {
 	mScooterDistract = Scooterthrow;
 }
+#pragma endregion
