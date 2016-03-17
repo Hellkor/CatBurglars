@@ -17,11 +17,11 @@ canPushCrate(true){
 
 	if (player == 1) {
 		mSoundHandler->initializeCat1(this);
-		mID = 3;
+		//mID = 3;
 	}
 	if (player == 2) {
 		mSoundHandler->initializeCat2(this);
-		mID = 4;
+		//mID = 4;
 	}
 	if (mID == 1){
 		mSpeed = 2;
@@ -451,7 +451,7 @@ void Cat::interaction(Usable *usable) {
 		}
 	}
 	if (Button *butt = dynamic_cast<Button*>(usable)) {
-		if (mCoord == butt->getCoords()) {
+		if (mCoord == butt->getCoords() && mID != 3) {
 			butt->Activate(sf::seconds(1));
 			mButtonPress = true;
 		}

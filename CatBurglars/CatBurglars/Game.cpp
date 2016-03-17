@@ -52,6 +52,12 @@ float SPLASH_ALPHA = 0;
 enum GameState_  { Menu, RunGame, Pause , Splash };
 GameState_ GameState = Splash;
 
+enum MenuState {MainMenu,CatopediaState,Controls};
+MenuState menuState = MainMenu;
+
+enum CatopediaPage {Start,Socks,Scooter,Shadow,Snow,Alex,Douglas};
+CatopediaPage catopediaState = Start;
+
 Game::Game() {
 	//Creates the main window
 	sf::Joystick::update();
@@ -80,7 +86,11 @@ Game::Game() {
 	Level *level3 = new Level("1_4");
 	Level *level4 = new Level("1_5");
 	Level *level5 = new Level("1_6");
+	Level *level21 = new Level("2_1");
 	Level *level22 = new Level("2_2");
+	Level *level23 = new Level("2_3");
+	Level *level24 = new Level("flee1");
+	Level *level25 = new Level("flee3");
 	
 	Level *movie1 = new Level(1);
 	Level *movie2 = new Level(1);
@@ -91,7 +101,11 @@ Game::Game() {
 	LevelManager::addLevel(level3);
 	LevelManager::addLevel(level4); 
 	LevelManager::addLevel(level5);
+	LevelManager::addLevel(level21);
 	LevelManager::addLevel(level22);
+	LevelManager::addLevel(level23);
+	LevelManager::addLevel(level24);
+	LevelManager::addLevel(level25);
 	LevelManager::addLevel(movie2);
 
 	//Level *leveltest = new Level("Pathfind_Test");
@@ -112,6 +126,7 @@ Game::Game() {
 	Options = new MenuButton();
 	Catopedia = new MenuButton();
 	Exit = new MenuButton();
+	ControlsButton = new MenuButton();
 
 
 
@@ -125,6 +140,8 @@ Game::Game() {
 	sf::Texture Catopedia2;
 	sf::Texture Exit1;
 	sf::Texture Exit2;
+	sf::Texture Controls1;
+	sf::Texture Controls2;
 
 
 	NewGame1.loadFromFile("Resources/Menu/NewGameO.png");
@@ -142,6 +159,9 @@ Game::Game() {
 	Exit1.loadFromFile("Resources/Menu/ExitGameO.png");
 	Exit2.loadFromFile("Resources/Menu/ExitGamen.png");
 
+	Controls1.loadFromFile("Resources/Menu/ControlsO.png");
+	Controls2.loadFromFile("Resources/Menu/ControlsN.png");
+
 	NewGame->setTexture(&NewGame1);
 	NewGame->setTextureSelected(&NewGame2);
 
@@ -157,11 +177,16 @@ Game::Game() {
 	Exit->setTexture(&Exit1);
 	Exit->setTextureSelected(&Exit2);
 
+	ControlsButton->setTexture(&Controls1);
+	ControlsButton->setTextureSelected(&Controls2);
+
 	page1->addMenuButton(Continue);
 	page1->addMenuButton(NewGame);
 	page1->addMenuButton(Options);
+	page1->addMenuButton(ControlsButton);
 	page1->addMenuButton(Catopedia);
 	page1->addMenuButton(Exit);
+	
 
 	page2 = new MenuPage(sf::Vector2f(200, 200), "Options");
 	
@@ -228,16 +253,122 @@ Game::Game() {
 	PausePage->addMenuButton(RestartButton);
 	PausePage->addMenuButton(QuitButton);
 
+	BackControls = new MenuButton();
+	BackControls->setTexture(&Back);
+	BackControls->setTextureSelected(&BackS);
+	Controlpage = new MenuPage(sf::Vector2f(GuiView.getCenter().x - (window->getSize().x / 2) + 10 , 910),"Controls");
+	Controlpage->addMenuButton(BackControls);
+	controlsTexture.loadFromFile("Resources/Menu/CONTROLLERS.png");
+	controlsPageSprite.setTexture(controlsTexture);
+	controlsPageSprite.setOrigin(controlsTexture.getSize().x / 2, controlsTexture.getSize().y / 2);
+	controlsPageSprite.setPosition(GuiView.getCenter());
+
+
+
+
+	CatopediaPage = new MenuPage(sf::Vector2f(GuiView.getCenter().x - (window->getSize().x / 2) + 10, GuiView.getCenter().y - (window->getSize().y / 2) + 10),"Catopedia");
+	SnowButton = new MenuButton();
+	ShadowButton = new MenuButton();
+	ScooterButton = new MenuButton();
+	SocksButton = new MenuButton();
+	AlexButton = new MenuButton();
+	DouglasButton = new MenuButton();
+	CatopediaBack = new MenuButton();
+
+	sf::Texture SnowO;
+	sf::Texture SnowN;
+	sf::Texture ScooterO;
+	sf::Texture ScooterN;
+	sf::Texture ShadowO;
+	sf::Texture ShadowN;
+	sf::Texture SocksO;
+	sf::Texture SocksN;
+
+	sf::Texture AlexO;
+	sf::Texture AlexN;
+	sf::Texture DouglasO;
+	sf::Texture DouglasN;
+
+	SnowO.loadFromFile("Resources/Menu/SnowO.png");
+	SnowN.loadFromFile("Resources/Menu/SnowN.png");
+	ScooterO.loadFromFile("Resources/Menu/ScooterO.png");
+	ScooterN.loadFromFile("Resources/Menu/ScooterN.png");
+	ShadowO.loadFromFile("Resources/Menu/ShadowO.png");
+	ShadowN.loadFromFile("Resources/Menu/ShadowN.png");
+	SocksO.loadFromFile("Resources/Menu/SocksO.png");
+	SocksN.loadFromFile("Resources/Menu/SocksN.png");
+	AlexO.loadFromFile("Resources/Menu/AlexO.png");
+	AlexN.loadFromFile("Resources/Menu/AlexN.png");
+	DouglasO.loadFromFile("Resources/Menu/DouglasO.png");
+	DouglasN.loadFromFile("Resources/Menu/DouglasN.png");
+
+	SnowButton->setTexture(&SnowO);
+	ScooterButton->setTexture(&ScooterO);
+	ShadowButton->setTexture(&ShadowO);
+	SocksButton->setTexture(&SocksO);
+	CatopediaBack->setTexture(&Back);
+	DouglasButton->setTexture(&DouglasO);
+	AlexButton->setTexture(&AlexO);
+
+	SnowButton->setTextureSelected(&SnowN);
+	ScooterButton->setTextureSelected(&ScooterN);
+	ShadowButton->setTextureSelected(&ShadowN);
+	SocksButton->setTextureSelected(&SocksN);
+	CatopediaBack->setTextureSelected(&BackS);
+	DouglasButton->setTextureSelected(&DouglasN);
+	AlexButton->setTextureSelected(&AlexN);
+
+	CatopediaPage->addMenuButton(SnowButton);
+	CatopediaPage->addMenuButton(ScooterButton);
+	CatopediaPage->addMenuButton(ShadowButton);
+	CatopediaPage->addMenuButton(SocksButton);
+	CatopediaPage->addMenuButton(AlexButton);
+	CatopediaPage->addMenuButton(DouglasButton);
+	CatopediaPage->addMenuButton(CatopediaBack);
+
 	MainMenuSystem = MenuSystem();
 
-
+	MainMenuSystem.addPage(Controlpage);
 	MainMenuSystem.addPage(page1);
 	MainMenuSystem.addPage(page2);
 	MainMenuSystem.addPage(PausePage);
+	MainMenuSystem.addPage(CatopediaPage);
 
 	MainMenuSystem.setPage("Main");
 
 	
+
+	socksPagesTexture.loadFromFile("Resources/Menu/Catopedia/Socks.png");
+	scooterPagesTexture.loadFromFile("Resources/Menu/Catopedia/Scooter.png");
+	snowPagesTexture.loadFromFile("Resources/Menu/Catopedia/Snow.png");
+	shadowPagesTexture.loadFromFile("Resources/Menu/Catopedia/Shadow.png");
+	catopediaStartTexture.loadFromFile("Resources/Menu/Catopedia/Start.png");
+	douglasPageTexture.loadFromFile("Resources/Menu/Catopedia/Douglas.png");
+	alexPageTexture.loadFromFile("Resources/Menu/Catopedia/Alex.png");
+
+	socksPageSprite.setTexture(socksPagesTexture);
+	scooterPageSprite.setTexture(scooterPagesTexture);
+	snowPageSprite.setTexture(snowPagesTexture);
+	shadowPageSprite.setTexture(shadowPagesTexture);
+	catopediaStartSprite.setTexture(catopediaStartTexture);
+	douglasPageSprite.setTexture(douglasPageTexture);
+	alexPageSprite.setTexture(alexPageTexture);
+
+	socksPageSprite.setOrigin(socksPagesTexture.getSize().x / 2, socksPagesTexture.getSize().y / 2);
+	snowPageSprite.setOrigin(snowPagesTexture.getSize().x / 2, snowPagesTexture.getSize().y / 2);
+	scooterPageSprite.setOrigin(scooterPagesTexture.getSize().x / 2, scooterPagesTexture.getSize().y / 2);
+	shadowPageSprite.setOrigin(shadowPagesTexture.getSize().x / 2, shadowPagesTexture.getSize().y / 2);
+	catopediaStartSprite.setOrigin(catopediaStartTexture.getSize().x / 2, catopediaStartTexture.getSize().y / 2);
+	douglasPageSprite.setOrigin(douglasPageTexture.getSize().x / 2, douglasPageTexture.getSize().y / 2);
+	alexPageSprite.setOrigin(alexPageTexture.getSize().x / 2, alexPageTexture.getSize().y / 2);
+
+	socksPageSprite.setPosition(GuiView.getCenter());
+	scooterPageSprite.setPosition(GuiView.getCenter());
+	snowPageSprite.setPosition(GuiView.getCenter());
+	shadowPageSprite.setPosition(GuiView.getCenter());
+	catopediaStartSprite.setPosition(GuiView.getCenter());
+	douglasPageSprite.setPosition(GuiView.getCenter());
+	alexPageSprite.setPosition(GuiView.getCenter());
 
 }
 
@@ -296,11 +427,11 @@ void changeScreenMode() {
 
 
 	if (Fullscreen) {
-		window->create(sf::VideoMode(1920, 1080, 32), "MenuTest", sf::Style::Fullscreen);
+		window->create(sf::VideoMode(1920, 1080, 32), "Kattjuvar", sf::Style::Fullscreen);
 		window->setMouseCursorVisible(false);
 	}
 	else if (!Fullscreen) {
-		window->create(sf::VideoMode(1920, 1080, 32), "MenuTest", sf::Style::Close);
+		window->create(sf::VideoMode(1920, 1080, 32), "Kattjuvar", sf::Style::Close);
 		window->setMouseCursorVisible(true);
 	}
 }
@@ -358,32 +489,83 @@ void Game::Update(float dt){
 
 			break;
 		case Menu:
-			MainMenuSystem.UpdateNavigation();
+			switch (menuState)
+			{
+			case MainMenu:
+				MainMenuSystem.UpdateNavigation();
 
-			if (NewGame->isButtonPushed()) {
-				LevelManager::loadLevel(0);
-				GameState = RunGame;
-			}
-			if (Continue->isButtonPushed()) {
-				LevelManager::loadLastSavedLevel();
-				GameState = RunGame;
-			}
-			if (Options->isButtonPushed()) {
-				cout << "Options" << endl;
-				MainMenuSystem.setPage("Options");
+				if (NewGame->isButtonPushed()) {
+					LevelManager::loadLevel(0);
+					GameState = RunGame;
+				}
+				if (Continue->isButtonPushed()) {
+					LevelManager::loadLastSavedLevel();
+					GameState = RunGame;
+				}
+				if (Options->isButtonPushed()) {
+					cout << "Options" << endl;
+					MainMenuSystem.setPage("Options");
 
-			}
-			if (Catopedia->isButtonPushed()) {
-				cout << "Catopedia" << endl;
-			}
-			if (ToggleFullscreen->isButtonPushed()) {
-				changeScreenMode();
-			}
-			if (BackButton->isButtonPushed()) {
-				MainMenuSystem.setPage("Main");
-			}
-			if (Exit->isButtonPushed()) {
-				window->close();
+				}
+				if (Catopedia->isButtonPushed()) {
+					MainMenuSystem.setPage("Catopedia");
+					menuState = CatopediaState;
+					catopediaState = Start;
+				}
+				if (ToggleFullscreen->isButtonPushed()) {
+					changeScreenMode();
+				}
+				if (BackButton->isButtonPushed()) {
+					MainMenuSystem.setPage("Main");
+				}
+				if (Exit->isButtonPushed()) {
+					window->close();
+				}
+				if (ControlsButton->isButtonPushed()) {
+					MainMenuSystem.setPage("Controls");
+					menuState = Controls;
+				}
+				
+
+				break;
+			case CatopediaState:
+				MainMenuSystem.UpdateNavigation();
+				if (CatopediaBack->isButtonPushed()) {
+					MainMenuSystem.setPage("Main");
+					catopediaState = Start;
+					menuState = MainMenu;
+				}
+				if (ShadowButton->isButtonPushed()) {
+					catopediaState = Shadow;
+				}
+				if (SocksButton->isButtonPushed()) {
+					catopediaState = Socks;
+				}
+				if (ScooterButton->isButtonPushed()) {
+					catopediaState = Scooter;
+				}
+				if (SnowButton->isButtonPushed()) {
+					catopediaState = Snow;
+				}
+				if (AlexButton->isButtonPushed()) {
+					catopediaState = Alex;
+				}
+				if (DouglasButton->isButtonPushed()) {
+					catopediaState = Douglas;
+				}
+				break;
+			case Controls:
+				MainMenuSystem.UpdateNavigation();
+				
+				if (BackControls->isButtonPushed()) {
+					MainMenuSystem.setPage("Main");
+					menuState = MainMenu;
+				}
+				
+				
+				break;
+			default:
+				break;
 			}
 			
 
@@ -449,9 +631,52 @@ void Game::Render()
 		
 		break;
 	case Menu:
-		window->draw(menuBackgroundSprite);
-		window->setView(GuiView);
-		MainMenuSystem.render(window);
+		switch (menuState)
+		{
+		case MainMenu:
+			window->draw(menuBackgroundSprite);
+			window->setView(GuiView);
+			MainMenuSystem.render(window);
+			break;
+		case CatopediaState:
+			window->setView(GuiView);
+			
+			switch (catopediaState)
+			{
+			case Start:
+				window->draw(catopediaStartSprite);
+				break;
+			case Socks:
+				window->draw(socksPageSprite);
+				break;
+			case Scooter:
+				window->draw(scooterPageSprite);
+				break;
+			case Shadow:
+				window->draw(shadowPageSprite);
+				break;
+			case Snow:
+				window->draw(snowPageSprite);
+				break;
+			case Alex:
+				window->draw(alexPageSprite);
+				break;
+			case Douglas:
+				window->draw(douglasPageSprite);
+				break;
+			default:
+				break;
+			}
+			MainMenuSystem.render(window);
+			break;
+		case Controls:
+			window->draw(controlsPageSprite);
+			MainMenuSystem.render(window);
+			break;
+		default:
+			break;
+		}
+		
 		break;
 		// Main Game Case
 	case RunGame:
@@ -465,7 +690,7 @@ void Game::Render()
 
 	}
 	
-
+	
 	
 	window->display();
 }

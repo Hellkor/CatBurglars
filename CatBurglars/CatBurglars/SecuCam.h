@@ -10,7 +10,7 @@ class secuCam : public Recievers{
 
 public:
 
-	secuCam(int channel,int channelRange, gridvector coords, sf::Texture *texture,int range,string direction);
+	secuCam(int channel,int channelRange, gridvector coords, TextureHandler *texturehandler,int range,string direction);
 	virtual ~secuCam();
 	virtual void connectToChannel(int channelID);
 	virtual void Update(float dt);
@@ -28,7 +28,6 @@ public:
 
 
 private:
-	sf::ConvexShape mConvex;
 	std::vector<gridvector*> mVision;
 	int mChannel;
 	

@@ -60,7 +60,6 @@ private:
 	bool mMoving = false;
 	Grid mGrid;
 
-	sf::ConvexShape mConvex;
 	void UpdateConePos();
 	std::vector<gridvector*> mVision;
 	int mRange;
