@@ -51,8 +51,13 @@ void Pathfinder::Update(vector<Entity*> *entities)
 		if (GameObject *o = dynamic_cast<GameObject*>(e))
 		{
 			gridvector pos = o->getCoords();
-			if (GameObject *c = dynamic_cast<Cat*>(o))
+			//Fix so Socks can't screw with AI
+			if (Cat *c = dynamic_cast<Cat*>(o)) {
+				if(c->getID() != 3)
 				mNodeMap[pos.y][pos.x]->SetPassable(true);
+				else 
+				mNodeMap[pos.y][pos.x]->SetPassable(false);
+			}
 			else
 				mNodeMap[pos.y][pos.x]->SetPassable(!o->isSolid());
 		}
