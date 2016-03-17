@@ -28,12 +28,12 @@ Lazer::Lazer(int channel, int channelRange, gridvector coords, sf::Texture *text
 		if (mFace == "W") {
 			direction = 4;
 		}
-		TextureHandler textures;
+		//TextureHandler textures;
 		mSprite.setTexture(*texture);
 		mSprite.setPosition((sf::Vector2f)mPosition);
-		textures.Initialize();
+		//textures.Initialize();
 
-		mHitboxSprite.setTexture(*textures.GetTexture(17));
+		//mHitboxSprite.setTexture(*textures.GetTexture(17));
 
 
 		int width = 1;
@@ -102,7 +102,7 @@ Lazer::Lazer(gridvector coords, sf::Texture *texture, int range, string face, fl
 	TextureHandler textures;
 	mSprite.setTexture(*texture);
 	mSprite.setPosition((sf::Vector2f)mPosition);
-	textures.Initialize();
+	//textures.Initialize();
 
 	mHitboxSprite.setTexture(*textures.GetTexture(17));
 

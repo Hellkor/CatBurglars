@@ -31,13 +31,13 @@ mFace(face){
 	if (mFace == "W") {
 		direction = 4;
 	}
-	TextureHandler textures;
+	//TextureHandler textures;
 	mSprite.setTexture(*texture);
 	mSprite.setTextureRect(sf::IntRect((direction-1) * 64, 0, 64, 64));
 	mSprite.setPosition((sf::Vector2f)mPosition);
-	textures.Initialize();
+	//textures.Initialize();
 
-	mHitboxSprite.setTexture(*textures.GetTexture(99));
+	//mHitboxSprite.setTexture(*textures.GetTexture(99));
 	
 
 	int width = 1;
@@ -118,7 +118,7 @@ mFace(face){
 		mConvex.setPoint(2, sf::Vector2f(conePos.x - 32 - range * 64, conePos.y - 32 - (width - 2) * 64));
 	}
 	
-	mConvex.setTexture(textures.GetTexture(99));
+	//mConvex.setTexture(textures.GetTexture(99));
 }
 
 secuCam::~secuCam(){

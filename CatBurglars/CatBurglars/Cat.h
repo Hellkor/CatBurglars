@@ -70,7 +70,7 @@ public:
 private:
 	void CompleteInteraction(GameObject *object);
 	float mSpeed;
-	sf::Sprite mSprite, mAbilitySprite, mThrowSprite;
+	sf::Sprite mSprite, mAbilitySprite, mThrowSprite, mRangeSprite;
 	int mID;
 	sf::Vector2i mPosition;
 	gridvector mCoord;
@@ -83,6 +83,7 @@ private:
 	sf::Vector2i newPos;
 	sf::Vector2i ThrownPos;
 	sf::Vector2i newThrownPos;
+	sf::Vector2i rangePos;
 	int ThrownDirection;
 	sf::Clock interactionClock;
 	sf::Time interactionTime;
@@ -98,14 +99,16 @@ private:
 	bool mScooterDistract = false;
 	bool mSocksCooldown = true;
 	bool mObjectThrown = false;
+	bool mScooterPrepare = false;
+	bool mSwitch = false;
 	Grid mGrid;
 
 
 	int direction = 0;
 
-	sf::Clock mAbilityClock;
-	sf::Time mAbilityTime;
-
+	sf::Clock mAbilityClock, mScooterClock, mDelay;
+	sf::Time mAbilityTime, mScooterTime;
+	int ScooterRange;
 	AnimationHandler mAnimationhandler;
 
 };
