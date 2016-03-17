@@ -428,6 +428,7 @@ void Level::update(float dt){
 									p1Controller.move(cat, &mWallTileLayer, &mEntities);
 
 									mPlayer1View.setCenter((sf::Vector2f)cat->GetPosition());
+									
 								}
 								if (cat->getPlayerIndex() == 2) {
 									l2->position.x = cat->GetPosition().x + 32;
@@ -438,7 +439,8 @@ void Level::update(float dt){
 
 									mPlayer2View.setCenter((sf::Vector2f)cat->GetPosition());
 								}
-
+								
+							
 								for each (Entity *entity in mEntities) {
 									if (!mEntities.empty()) {
 

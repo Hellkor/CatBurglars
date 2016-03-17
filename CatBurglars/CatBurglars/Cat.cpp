@@ -17,11 +17,11 @@ canPushCrate(true){
 
 	if (player == 1) {
 		mSoundHandler->initializeCat1(this);
-		mID = 3;
+		//mID = 3;
 	}
 	if (player == 2) {
 		mSoundHandler->initializeCat2(this);
-		mID = 4;
+		//mID = 4;
 	}
 	if (mID == 1){
 		mSpeed = 2;
@@ -447,73 +447,73 @@ void Cat::Collide(){
 
 
 
-void Cat::shadowDash(TileLayer *tileLayer, std::vector<Entity*> *Entities, int direc){
+void Cat::shadowDash(TileLayer *tileLayer, std::vector<Entity*> *Entities, int direc) {
 	int positiveNegative = 0;
 	int position = 0;
 	int positionY = 0;
 	int positionX = 0;
 	int corrPluY = -(mPosition.y % 64);
-	int corrPluX =  -(mPosition.x % 64);
-	int corrMinY =  (mPosition.y % 64);
-	int corrMinX =  (mPosition.x % 64);
+	int corrPluX = -(mPosition.x % 64);
+	int corrMinY = (mPosition.y % 64);
+	int corrMinX = (mPosition.x % 64);
 
 	std::cout << "DASH!" << std::endl;
-	if (!mCooldown  ){  //&& !mMoving
-	
+	if (!mCooldown && !mMoving){  //
+
 		if (direc == 1) {
 			positiveNegative = 1;
-			positionX = 1  ;
+			positionX = 1;
 
 		}
 		if (direc == 2) {
-			positiveNegative = -1 ;
-			positionX = -1  ;
+			positiveNegative = -1;
+			positionX = -1;
 		}
 		if (direc == 3) {
-			positiveNegative = 1  ;
+			positiveNegative = 1;
 			positionY = 1;
 		}
 		if (direc == 4) {
-			positiveNegative = -1 ;
+			positiveNegative = -1;
 			positionY = -1;
 		}
 
-	/*	std::cout << positionX << std::endl;
-		std::cout << positionY << std::endl;
-		if ((mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX), mCoord.y + (positionY)), tileLayer, Entities))) {
-			cout << "1st tile is passable" << endl;
-		}
-		if ((mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX*2), mCoord.y + (positionY*2)), tileLayer, Entities))) {
-			cout << "2st tile is passable" << endl;
-		}
-		if ((mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX*3), mCoord.y + (positionY*3)), tileLayer, Entities))) {
-			cout << "3st tile is passable" << endl;
-		}	
-		if ((mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX*4), mCoord.y + (positionY*4)), tileLayer, Entities))) {
-			cout << "4st tile is passable" << endl;
-		}*/
+		/*	std::cout << positionX << std::endl;
+			std::cout << positionY << std::endl;
+			if ((mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX), mCoord.y + (positionY)), tileLayer, Entities))) {
+				cout << "1st tile is passable" << endl;
+			}
+			if ((mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX*2), mCoord.y + (positionY*2)), tileLayer, Entities))) {
+				cout << "2st tile is passable" << endl;
+			}
+			if ((mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX*3), mCoord.y + (positionY*3)), tileLayer, Entities))) {
+				cout << "3st tile is passable" << endl;
+			}
+			if ((mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX*4), mCoord.y + (positionY*4)), tileLayer, Entities))) {
+				cout << "4st tile is passable" << endl;
+			}*/
 
-		if ((mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX), mCoord.y + (positionY)), tileLayer, Entities)) && (mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX*2), mCoord.y + (positionY*2)), tileLayer, Entities)) && (mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX*3), mCoord.y + (positionY*3)), tileLayer, Entities)) && (mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX*4), mCoord.y + (positionY*4)), tileLayer, Entities))) {
+		if ((mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX), mCoord.y + (positionY)), tileLayer, Entities)) && (mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX * 2), mCoord.y + (positionY * 2)), tileLayer, Entities)) && (mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX * 3), mCoord.y + (positionY * 3)), tileLayer, Entities)) && (mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX * 4), mCoord.y + (positionY * 4)), tileLayer, Entities))) {
 			std::cout << "4 Tile dash" << std::endl;
 			mSpeed = mSpeed * 4;
-			position += (256 * positiveNegative);				
+			position += (256 * positiveNegative);
 			positiveNegative *= 3;
 			mDashing = true;
 			mMoving = true;
 			mCooldown = true;
 			mAbilityClock.restart();
 		}
-		else if ((mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX), mCoord.y + (positionY)), tileLayer, Entities)) && (mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX*2), mCoord.y + (positionY*2)), tileLayer, Entities)) && (mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX*3), mCoord.y + (positionY*3)), tileLayer, Entities))) {
+		else if ((mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX), mCoord.y + (positionY)), tileLayer, Entities)) && (mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX * 2), mCoord.y + (positionY * 2)), tileLayer, Entities)) && (mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX * 3), mCoord.y + (positionY * 3)), tileLayer, Entities))) {
 			std::cout << "3 Tile dash" << std::endl;
 			mSpeed = mSpeed * 4;
-			position += (192 * positiveNegative );
+			position += (192 * positiveNegative);
 			positiveNegative *= 2;
 			mDashing = true;
 			mMoving = true;
 			mCooldown = true;
 			mAbilityClock.restart();
 		}
-		else if ((mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX), mCoord.y + (positionY)), tileLayer, Entities)) && (mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX*2), mCoord.y + (positionY*2)), tileLayer, Entities))) {
+		else if ((mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX), mCoord.y + (positionY)), tileLayer, Entities)) && (mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX * 2), mCoord.y + (positionY * 2)), tileLayer, Entities))) {
 			std::cout << "2 Tile dash" << std::endl;
 			mSpeed = mSpeed * 4;
 			position += (128 * positiveNegative);
@@ -529,65 +529,18 @@ void Cat::shadowDash(TileLayer *tileLayer, std::vector<Entity*> *Entities, int d
 
 		std::cout << position << std::endl;
 		std::cout << positiveNegative << std::endl;
-			if (direc == 1 || direc == 2) {
-				
-				newPos.x = mPosition.x + position;
-			
-				
-				/*
-			if (mPosition.x%64==!0)
-				{
+		if (direc == 1 || direc == 2) {
 
-				
-				if (mPosition.x*64 > (newPos.x+4*64)) {
-					mPosition.x += corrPluX;
-				}
-				if (mPosition.x*64 > (newPos.x+3*64) ) {
-					mPosition.x += corrPluX;
-				}
-				if (mPosition.x*64 > (newPos.x + 64*2)) {
-					mPosition.x += corrPluX;
-				}
-				if (mPosition.x*64 > (newPos.x + 64)) {
-					mPosition.x += corrPluX;
-				}
-
-				if (mPosition.x*64 < (newPos.x - 64 * 4)) {
-					mPosition.x += corrMinX;
-				}
-				if (mPosition.x*64 < (newPos.x - 64 * 3)) {
-					mPosition.x += corrMinX;
-				}
-				if (mPosition.x*64 < (newPos.x - 64 * 2)) {
-					mPosition.x += corrMinX;
-				}
-				if (mPosition.x*64 < (newPos.x - 64)) {
-					mPosition.x += corrMinX;
-				}
-			}*/
-
-				mCoord.x += positiveNegative ;
+			newPos.x = mPosition.x + position;
+			mCoord.x += positiveNegative;
 		}
-			
-	}
-			else {
-				if (mPosition.y % 64 == !0) {
-				if (newPos.y > mPosition.y + positionY)
-				{
-					mPosition.y += corrPluY;
-				}
-				if (newPos.y < mPosition.y + positionY)
-				{
-					mPosition.y += corrMinY;
-				}
-			}
+		else {
+
 			newPos.y = mPosition.y + position;
 			mCoord.y += positiveNegative;
-				}
-		
-			
-			}
-		
+		}
+	}
+}
 
 
 
