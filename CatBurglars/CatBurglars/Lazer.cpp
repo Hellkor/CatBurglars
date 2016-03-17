@@ -33,7 +33,7 @@ Lazer::Lazer(int channel, int channelRange, gridvector coords, sf::Texture *text
 		mSprite.setPosition((sf::Vector2f)mPosition);
 		textures.Initialize();
 
-		mHitboxSprite.setTexture(*textures.GetTexture(17));
+		mHitboxSprite.setTexture(*textures.GetTexture(18));
 
 
 		int width = 1;

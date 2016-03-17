@@ -710,6 +710,9 @@ void Level::generateLevel(string name){
 	inputFile >> input;
 	mMapSizeY = stoi(input);
 	cout << "Map height: " << mMapSizeY << endl;
+
+	Grid::setMapType(mLevelType);
+
 	//Bottom layer tiles
 	for (int y = 0; y < mMapSizeY; y++)
 	{
@@ -894,10 +897,10 @@ void Level::generateLevel(string name){
 		}
 		if (objectID == 10) {
 			if (script == "interval") {
-				mEntities.push_back(new Lazer(gridvector(xPos, yPos), textures.GetTexture(13), range, facing, hold));
+				mEntities.push_back(new Lazer(gridvector(xPos, yPos), textures.GetTexture(18), range, facing, hold));
 			}
 			if (script == "toggle") {
-				mEntities.push_back(new Lazer(channel, hold, gridvector(xPos, yPos), textures.GetTexture(13), range, facing));
+				mEntities.push_back(new Lazer(channel, hold, gridvector(xPos, yPos), textures.GetTexture(18), range, facing));
 			}
 		}
 	}

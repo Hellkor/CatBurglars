@@ -17,11 +17,11 @@ canPushCrate(true){
 
 	if (player == 1) {
 		mSoundHandler->initializeCat1(this);
-		mID = 3;
+		//mID = 3;
 	}
 	if (player == 2) {
 		mSoundHandler->initializeCat2(this);
-		mID = 4;
+		//mID = 4;
 	}
 	if (mID == 1){
 		mSpeed = 2;
