@@ -41,6 +41,7 @@ private:
 	MenuButton *Options;
 	MenuButton *Catopedia;
 	MenuButton *Exit;
+	MenuButton *ControlsButton;
 
 	MenuPage *page2;
 	MenuButton *ToggleFullscreen;
@@ -55,5 +56,37 @@ private:
 
 	sf::Texture menuBackground;
 	sf::Sprite menuBackgroundSprite;
+	sf::Texture socksPagesTexture;
+	sf::Sprite socksPageSprite;
+	sf::Texture scooterPagesTexture;
+	sf::Sprite scooterPageSprite;
+	sf::Texture snowPagesTexture;
+	sf::Sprite snowPageSprite;
+	sf::Texture shadowPagesTexture;
+	sf::Sprite shadowPageSprite;
+	sf::Texture douglasPageTexture;
+	sf::Sprite douglasPageSprite;
+	sf::Texture alexPageTexture;
+	sf::Sprite alexPageSprite;
+
+	sf::Texture catopediaStartTexture;
+	sf::Sprite catopediaStartSprite;
+
+	MenuPage *Controlpage;
+	MenuButton *BackControls;
+	sf::Texture controlsTexture;
+	sf::Sprite controlsPageSprite;
+
+
+	MenuPage *CatopediaPage;
+	MenuButton *SocksButton;
+	MenuButton *ScooterButton;
+	MenuButton *SnowButton;
+	MenuButton *ShadowButton;
+	MenuButton *CatopediaBack;
+	MenuButton *DouglasButton;
+	MenuButton *AlexButton;
+
+
 };
 
