@@ -382,9 +382,9 @@ void Level::update(float dt){
 											cout << "Socks is distracting" << endl;
 											guard->SetDistraction(socksPosition, 4, socksDirection);
 										}
-									}
-									if (socksMoved)
+										if (socksMoved)
 										guard->RemoveTemporaryWaits();
+									}
 									if (scooter) {
 										if (guard->getCoords().x <= scooterThrow.x + 3 && guard->getCoords().x >= scooterThrow.x - 3 &&
 											guard->getCoords().y <= scooterThrow.y + 3 && guard->getCoords().y >= scooterThrow.y - 3)

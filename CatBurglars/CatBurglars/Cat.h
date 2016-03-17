@@ -81,7 +81,9 @@ private:
 	sf::Sound mDashSound;
 
 	sf::Vector2i newPos;
-
+	sf::Vector2i ThrownPos;
+	sf::Vector2i newThrownPos;
+	int ThrownDirection;
 	sf::Clock interactionClock;
 	sf::Time interactionTime;
 	bool canMove = true;
@@ -95,6 +97,7 @@ private:
 	bool socksMoved = true;
 	bool mScooterDistract = false;
 	bool mSocksCooldown = true;
+	bool mObjectThrown = false;
 	Grid mGrid;
 
 
