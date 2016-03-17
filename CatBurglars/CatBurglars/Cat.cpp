@@ -371,6 +371,7 @@ void Cat::CompleteInteraction(GameObject *object) {
 
 //Returns position of sprite
 sf::Vector2i Cat::GetPosition(){
+	
 	return mPosition;
 }
 gridvector Cat::getCoords(){
@@ -445,24 +446,7 @@ void Cat::shadowDash(TileLayer *tileLayer, std::vector<Entity*> *Entities, int d
 		if ((mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX), mCoord.y + (positionY)), tileLayer, Entities)) && (mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX*2), mCoord.y + (positionY*2)), tileLayer, Entities)) && (mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX*3), mCoord.y + (positionY*3)), tileLayer, Entities)) && (mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX*4), mCoord.y + (positionY*4)), tileLayer, Entities))) {
 			std::cout << "4 Tile dash" << std::endl;
 			mSpeed = mSpeed * 4;
-			position += (256 * positiveNegative);
-	
-			
-			/*
-			if (newPos.x > mPosition.x) {
-			newPos.x += correctionPlusX;
-			}
-			if (newPos.x < mPosition.x) {
-			newPos.x += correctionMinusX;
-
-			if (newPos.y > mPosition.y) {
-			newPos.y += correctionPlusY;
-			}
-			if (newPos.y < mPosition.y) {
-			newPos.y += correctionMinusY;
-			}
-			*/
-					
+			position += (256 * positiveNegative);				
 			positiveNegative *= 3;
 			mDashing = true;
 			mMoving = true;
@@ -496,19 +480,46 @@ void Cat::shadowDash(TileLayer *tileLayer, std::vector<Entity*> *Entities, int d
 		std::cout << position << std::endl;
 		std::cout << positiveNegative << std::endl;
 			if (direc == 1 || direc == 2) {
-				if (mPosition.x % 64 == !0) {
-					if (newPos.x < mPosition.x + positionX)
-					{
-						mPosition.x += corrPluX;
-					}
-					if (newPos.x < mPosition.x + positionX)
-					{
-						mPosition.x += corrMinX;
-					}
+				
+				newPos.x = mPosition.x + position;
+			
+				
+				/*
+			if (mPosition.x%64==!0)
+				{
+
+				
+				if (mPosition.x*64 > (newPos.x+4*64)) {
+					mPosition.x += corrPluX;
 				}
-			newPos.x = mPosition.x + position;
-			mCoord.x += positiveNegative ;
+				if (mPosition.x*64 > (newPos.x+3*64) ) {
+					mPosition.x += corrPluX;
 				}
+				if (mPosition.x*64 > (newPos.x + 64*2)) {
+					mPosition.x += corrPluX;
+				}
+				if (mPosition.x*64 > (newPos.x + 64)) {
+					mPosition.x += corrPluX;
+				}
+
+				if (mPosition.x*64 < (newPos.x - 64 * 4)) {
+					mPosition.x += corrMinX;
+				}
+				if (mPosition.x*64 < (newPos.x - 64 * 3)) {
+					mPosition.x += corrMinX;
+				}
+				if (mPosition.x*64 < (newPos.x - 64 * 2)) {
+					mPosition.x += corrMinX;
+				}
+				if (mPosition.x*64 < (newPos.x - 64)) {
+					mPosition.x += corrMinX;
+				}
+			}*/
+
+				mCoord.x += positiveNegative ;
+		}
+			
+	}
 			else {
 				if (mPosition.y % 64 == !0) {
 				if (newPos.y > mPosition.y + positionY)
@@ -523,8 +534,10 @@ void Cat::shadowDash(TileLayer *tileLayer, std::vector<Entity*> *Entities, int d
 			newPos.y = mPosition.y + position;
 			mCoord.y += positiveNegative;
 				}
+		
+			
 			}
-		}
+		
 
 
 
