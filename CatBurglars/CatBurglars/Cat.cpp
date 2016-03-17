@@ -41,6 +41,7 @@ canPushCrate(true){
 		mSprite.setTexture(*texturehandler->GetTexture(16), true);
 		canPushCrate = false;
 		mAbilitySprite.setTexture(*texturehandler->GetTexture(50), true);
+		mAbilityTime = sf::seconds(5);
 	}
 	if (mID == 4){
 		mSpeed = 2;
@@ -90,7 +91,16 @@ int Cat::getID() {
 }
 
 void Cat::Update(float dt){
-	if (mAbilityClock.getElapsedTime() >= mAbilityTime && mCooldown) {
+	if (mID == 3) {
+		if (!mSocksCooldown && !mSocksDistract && socksMoved) {
+			mAbilityClock.restart();
+			mSocksCooldown = true;
+		}
+		else if (mAbilityClock.getElapsedTime() >= mAbilityTime && mCooldown && mSocksCooldown) {
+			mCooldown = false;
+		}
+	}
+	else if(mAbilityClock.getElapsedTime() >= mAbilityTime && mCooldown) {
 		mCooldown = false;
 	}
 
@@ -323,7 +333,7 @@ void Cat::useAbility(TileLayer *tileLayer, std::vector<Entity*> *Entities){
 	//Socks
 	if (mID == 3)
 	{
-		SocksDistract();
+		SocksDistract(tileLayer, Entities, direction);
 	}
 	if (mID == 4) 
 	{
@@ -526,10 +536,34 @@ bool Cat::snowHax(){
 
 // Socks \\
 
-void Cat::SocksDistract()
+void Cat::SocksDistract(TileLayer *tileLayer, std::vector<Entity*> *Entities, int direc)
 {
-	socksMoved = false;
-	mSocksDistract = true;
+	if (!mCooldown) {
+		if (direction == 1 && mGrid.isTilePassable(this, gridvector((mCoord.x + 1), mCoord.y), tileLayer, Entities)) {
+			socksMoved = false;
+			mSocksDistract = true;
+			mSocksCooldown = false;
+			mCooldown = true;
+		}
+		else if (direction == 2 && mGrid.isTilePassable(this, gridvector((mCoord.x - 1), mCoord.y), tileLayer, Entities)) {
+			socksMoved = false;
+			mSocksDistract = true;
+			mSocksCooldown = false;
+			mCooldown = true;
+		}
+		else if (direction == 3 && mGrid.isTilePassable(this, gridvector(mCoord.x, (mCoord.y + 1)), tileLayer, Entities)) {
+			socksMoved = false;
+			mSocksDistract = true;
+			mSocksCooldown = false;
+			mCooldown = true;
+		}
+		else if (direction == 4 && mGrid.isTilePassable(this, gridvector(mCoord.x, (mCoord.y - 1)), tileLayer, Entities)) {
+			socksMoved = false;
+			mSocksDistract = true;
+			mSocksCooldown = false;
+			mCooldown = true;
+		}
+	}
 }
 
 void Cat::SetSocksDistract(bool distract)
@@ -631,8 +665,6 @@ void Cat::ScooterThrow(TileLayer *tileLayer, std::vector<Entity*> *Entities, int
 				mAnimationhandler.playAnimation(4, 5, sf::milliseconds(1000 / 5));
 			}
 		}
-		//std::cout << position << std::endl;
-		std::cout << positiveNegative << std::endl;
 		if (direc == 1 || direc == 2) {
 			mThrow.x += positiveNegative;
 		}
@@ -643,8 +675,6 @@ void Cat::ScooterThrow(TileLayer *tileLayer, std::vector<Entity*> *Entities, int
 }
 
 gridvector Cat::getThrowPosition() {
-	cout <<"Cat position: " <<mCoord.x << " " << mCoord.y << endl;
-	cout <<"Throw thing: " <<mThrow.x << " " << mThrow.y << endl;
 	return mThrow;
 }
 

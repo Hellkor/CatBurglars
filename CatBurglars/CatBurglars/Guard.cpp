@@ -431,12 +431,37 @@ void Guard::interaction(Usable *usable) {
 
 }
 
-void Guard::SetDistraction(gridvector pos, int distractSeconds)
+void Guard::SetDistraction(gridvector pos, int distractSeconds, int direction)
 {
 	Command distractionCommand;
-	distractionCommand.xPos = pos.x;
-	distractionCommand.yPos = pos.y;
-	distractionCommand.direction = "N"; // for now
+	int X = pos.x;
+	int Y = pos.y;
+	string facing ="N";
+	if (direction == 1) {
+		cout << "Setting position + X" << endl;
+		X++;
+		facing = "W";
+	}
+	else if (direction == 2) {
+		cout << "Setting position - X" << endl;
+		X--;
+		facing = "E";
+	}
+	else if (direction == 3) {
+		cout << "Setting position + Y" << endl;
+		Y++;
+		facing = "N";
+	}
+	else if (direction == 4) {
+		cout << "Setting position - Y" << endl;
+		Y--;
+		facing = "S";
+	}
+	distractionCommand.xPos = X;
+	distractionCommand.yPos = Y;
+	if (direction != 0) {
+		distractionCommand.direction = facing; // for now
+	}
 	distractionCommand.temporary = true;
 	if (mCommandQueue[mQueuePos].temporary == true)
 		mCommandQueue.erase(mCommandQueue.begin() + mQueuePos);

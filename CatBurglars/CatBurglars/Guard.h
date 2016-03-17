@@ -47,7 +47,7 @@ public:
 
 	void interaction(Usable *usable);
 
-	void SetDistraction(gridvector pos, int distractSeconds);
+	void SetDistraction(gridvector pos, int distractSeconds, int direction);
 	void RemoveTemporaryWaits();
 
 private:

@@ -50,7 +50,7 @@ public:
 
 	bool snowHax();
 
-	void SocksDistract();
+	void SocksDistract(TileLayer *tileLayer, std::vector<Entity*> *Entities, int direc);
 	void SetSocksDistract(bool distract);
 	bool GetDistract() { return mSocksDistract; }
 	bool GetSocksMoved() { return socksMoved; }
@@ -94,6 +94,7 @@ private:
 	bool mCooldown = false;
 	bool socksMoved = true;
 	bool mScooterDistract = false;
+	bool mSocksCooldown = true;
 	Grid mGrid;
 
 

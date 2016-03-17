@@ -343,6 +343,7 @@ void Level::update(float dt){
 					bool scooter = false;
 					gridvector socksPosition;
 					gridvector scooterThrow;
+					int socksDirection;
 					for each (Entity *e in mEntities) {
 						if (!mEntities.empty()) {
 							e->Update(dt);
@@ -353,7 +354,7 @@ void Level::update(float dt){
 									{
 										socks = cat->GetDistract();
 										socksMoved = cat->GetSocksMoved();
-
+										socksDirection = cat->getDirection();
 										if (socks)
 										{
 											cout << "New cat position" << endl;
@@ -374,12 +375,12 @@ void Level::update(float dt){
 								if (Guard *guard = dynamic_cast<Guard*>(obj)) {
 									if (socks)
 									{
-										cout << guard->getCoords().x << "x " << socksPosition.x + 3 << " " << socksPosition.x - 3 << endl;
-										cout << guard->getCoords().y << "y " << socksPosition.y + 3 << " " << socksPosition.y - 3 << endl;
 										if (guard->getCoords().x <= socksPosition.x + 3 && guard->getCoords().x >= socksPosition.x - 3 &&
 											guard->getCoords().y <= socksPosition.y + 3 && guard->getCoords().y >= socksPosition.y - 3)
 										{
-											guard->SetDistraction(socksPosition, 4);
+											socks = false;
+											cout << "Socks is distracting" << endl;
+											guard->SetDistraction(socksPosition, 4, socksDirection);
 										}
 									}
 									if (socksMoved)
@@ -388,7 +389,7 @@ void Level::update(float dt){
 										if (guard->getCoords().x <= scooterThrow.x + 3 && guard->getCoords().x >= scooterThrow.x - 3 &&
 											guard->getCoords().y <= scooterThrow.y + 3 && guard->getCoords().y >= scooterThrow.y - 3)
 										{
-											guard->SetDistraction(scooterThrow, 4);
+											guard->SetDistraction(scooterThrow, 4, 0);
 										}
 									}
 									guard->AImovement(&mWallTileLayer, &mEntities, &pathfinder);
