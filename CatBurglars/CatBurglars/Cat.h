@@ -50,7 +50,7 @@ public:
 
 	bool snowHax();
 
-	void SocksDistract();
+	void SocksDistract(TileLayer *tileLayer, std::vector<Entity*> *Entities, int direc);
 	void SetSocksDistract(bool distract);
 	bool GetDistract() { return mSocksDistract; }
 	bool GetSocksMoved() { return socksMoved; }
@@ -70,7 +70,7 @@ public:
 private:
 	void CompleteInteraction(GameObject *object);
 	float mSpeed;
-	sf::Sprite mSprite, mAbilitySprite;
+	sf::Sprite mSprite, mAbilitySprite, mThrowSprite;
 	int mID;
 	sf::Vector2i mPosition;
 	gridvector mCoord;
@@ -94,6 +94,7 @@ private:
 	bool mCooldown = false;
 	bool socksMoved = true;
 	bool mScooterDistract = false;
+	bool mSocksCooldown = true;
 	Grid mGrid;
 
 

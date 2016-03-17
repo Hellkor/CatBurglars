@@ -6,7 +6,7 @@ static bool changeAllowed = true;
 static sf::Texture *texture;
 static TextureHandler *textureHandler;
 
-Tile::Tile(gridvector coords, int ID, int textureID, TextureHandler *textures)
+Tile::Tile(gridvector coords, int ID, int textureID, TextureHandler *textures,string leveltype)
 : Entity(), mID(ID){
 
 	mPosition.x = coords.x * width;
@@ -14,15 +14,30 @@ Tile::Tile(gridvector coords, int ID, int textureID, TextureHandler *textures)
 	mCoords = gridvector(mCoords.x, mCoords.y);
 
 	textureHandler = textures;
-	if (mID >= 1000) {
-		texture = textureHandler->GetTexture(1);
-		mSprite.setTexture(*texture, true);
-		mSprite.setTextureRect(sf::IntRect(((ID-1000) % 3) * width, floor((ID - 1000) / 3) * height, width, height));
+
+	if (leveltype == "Prison1") {
+		if (mID >= 1000) {
+			texture = textureHandler->GetTexture(1);
+			mSprite.setTexture(*texture, true);
+			mSprite.setTextureRect(sf::IntRect(((ID - 1000) % 3) * width, floor((ID - 1000) / 3) * height, width, height));
+		}
+		else {
+			texture = textureHandler->GetTexture(textureID);
+			mSprite.setTexture(*texture, true);
+			mSprite.setTextureRect(sf::IntRect((ID % 3) * width, floor(ID / 3) * height, width, height));
+		}
 	}
-	else {
-		texture = textureHandler->GetTexture(textureID);
-		mSprite.setTexture(*texture, true);
-		mSprite.setTextureRect(sf::IntRect((ID % 3) * width, floor(ID / 3) * height, width, height));
+	if (leveltype == "Museum") {
+		if (mID >= 1000) {
+			texture = textureHandler->GetTexture(3);
+			mSprite.setTexture(*texture, true);
+			mSprite.setTextureRect(sf::IntRect(((ID - 1000) % 3) * width, floor((ID - 1000) / 3) * height, width, height));
+		}
+		else {
+			texture = textureHandler->GetTexture(2);
+			mSprite.setTexture(*texture, true);
+			mSprite.setTextureRect(sf::IntRect((ID % 3) * width, floor(ID / 3) * height, width, height));
+		}
 	}
 }
 

@@ -68,6 +68,7 @@ private:
 	sf::Clock deathClock;
 
 	bool win = false;
+	int length(int x, int y);
 };
 
 

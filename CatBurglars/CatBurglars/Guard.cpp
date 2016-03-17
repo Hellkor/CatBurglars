@@ -4,7 +4,7 @@
 #include <stdio.h>
 string DIRECTORY = "Resources/AI/";
 
-Guard::Guard(TextureHandler *textures, gridvector position, int ID,string AIscript, SoundHandler *soundhandler , string directory) : GameObject(),
+Guard::Guard(TextureHandler *textures, gridvector position, int ID,string AIscript, SoundHandler *soundhandler , string directory,string leveltype) : GameObject(),
 mID(ID),
 mCoords(position),
 mSpeed(1),
@@ -13,7 +13,13 @@ mAnimationhandler(64, 128, &mSprite),
 mSoundHandler(soundhandler),
 mRange(3),
 mDirectory(directory){
-	mSprite.setTexture(*textures->GetTexture(5), true);
+	if (leveltype == "Prison1") {
+		mSprite.setTexture(*textures->GetTexture(5), true);
+	}
+	if (leveltype == "Museum") {
+		mSprite.setTexture(*textures->GetTexture(6), true);
+	}
+	
 	mSprite.setTextureRect(sf::IntRect(1*64, 3*128, 64, 128));
 	//Starting position
 	mPosition = sf::Vector2i(mCoords.x * 64, mCoords.y * 64);
@@ -425,12 +431,37 @@ void Guard::interaction(Usable *usable) {
 
 }
 
-void Guard::SetDistraction(gridvector pos, int distractSeconds)
+void Guard::SetDistraction(gridvector pos, int distractSeconds, int direction)
 {
 	Command distractionCommand;
-	distractionCommand.xPos = pos.x;
-	distractionCommand.yPos = pos.y;
-	distractionCommand.direction = "N"; // for now
+	int X = pos.x;
+	int Y = pos.y;
+	string facing ="N";
+	if (direction == 1) {
+		cout << "Setting position + X" << endl;
+		X++;
+		facing = "W";
+	}
+	else if (direction == 2) {
+		cout << "Setting position - X" << endl;
+		X--;
+		facing = "E";
+	}
+	else if (direction == 3) {
+		cout << "Setting position + Y" << endl;
+		Y++;
+		facing = "N";
+	}
+	else if (direction == 4) {
+		cout << "Setting position - Y" << endl;
+		Y--;
+		facing = "S";
+	}
+	distractionCommand.xPos = X;
+	distractionCommand.yPos = Y;
+	if (direction != 0) {
+		distractionCommand.direction = facing; // for now
+	}
 	distractionCommand.temporary = true;
 	if (mCommandQueue[mQueuePos].temporary == true)
 		mCommandQueue.erase(mCommandQueue.begin() + mQueuePos);

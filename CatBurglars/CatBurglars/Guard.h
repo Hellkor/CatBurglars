@@ -22,7 +22,7 @@ class Guard : public GameObject
 	typedef vector<Tile*> TileRow;
 	typedef vector<TileRow> TileLayer;
 public:
-	Guard(TextureHandler *textures, gridvector v, int channel,string AIscript, SoundHandler *soundhandler,string directory);
+	Guard(TextureHandler *textures, gridvector v, int channel,string AIscript, SoundHandler *soundhandler,string directory, string leveltype);
 	virtual ~Guard();
 
 	virtual void Render(sf::RenderWindow *mainWindow);
@@ -47,7 +47,7 @@ public:
 
 	void interaction(Usable *usable);
 
-	void SetDistraction(gridvector pos, int distractSeconds);
+	void SetDistraction(gridvector pos, int distractSeconds, int direction);
 	void RemoveTemporaryWaits();
 
 private:
