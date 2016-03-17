@@ -3,7 +3,7 @@
 
 
 
-Lazer::Lazer(int channel, int channelRange, gridvector coords, sf::Texture *texture, int range, string face) :
+Lazer::Lazer(int channel, int channelRange, gridvector coords, TextureHandler *texturehandler, int range, string face) :
 	mChannel(channel),
 		mCoords(coords),
 		isOn(true),
@@ -28,12 +28,11 @@ Lazer::Lazer(int channel, int channelRange, gridvector coords, sf::Texture *text
 		if (mFace == "W") {
 			direction = 4;
 		}
-		TextureHandler textures;
-		mSprite.setTexture(*texture);
+		mSprite.setTexture(*texturehandler->GetTexture(18));
 		mSprite.setPosition((sf::Vector2f)mPosition);
-		textures.Initialize();
+		
 
-		mHitboxSprite.setTexture(*textures.GetTexture(18));
+		mHitboxSprite.setTexture(*texturehandler->GetTexture(18));
 
 
 		int width = 1;
@@ -77,12 +76,12 @@ Lazer::Lazer(int channel, int channelRange, gridvector coords, sf::Texture *text
 		mLaserType = ChannelBound;
 }
 
-Lazer::Lazer(gridvector coords, sf::Texture *texture, int range, string face, float interval) : 
+Lazer::Lazer(gridvector coords, TextureHandler *texturehandler, int range, string face, float interval) :
 	mCoords(coords),
 	mFace(face){
 	mLaserType = Interval;
 
-	laserActiveTime = sf::seconds(interval);
+	laserActiveTime = sf::milliseconds(interval);
 
 	mPosition.x = mCoords.x * 64;
 	mPosition.y = mCoords.y * 64;
@@ -99,12 +98,12 @@ Lazer::Lazer(gridvector coords, sf::Texture *texture, int range, string face, fl
 	if (mFace == "W") {
 		direction = 4;
 	}
-	TextureHandler textures;
-	mSprite.setTexture(*texture);
+	
+	mSprite.setTexture(*texturehandler->GetTexture(18));
 	mSprite.setPosition((sf::Vector2f)mPosition);
-	textures.Initialize();
+	
 
-	mHitboxSprite.setTexture(*textures.GetTexture(17));
+	mHitboxSprite.setTexture(*texturehandler->GetTexture(18));
 
 
 	int width = 1;
@@ -170,7 +169,7 @@ void Lazer::Update(float dt) {
 
 		if (isOn) {
 
-			if (laserActiveClock.getElapsedTime().asSeconds() >= laserActiveTime.asSeconds()) {
+			if (laserActiveClock.getElapsedTime().asMilliseconds() >= laserActiveTime.asMilliseconds()) {
 				isOn = false;
 				laserActiveClock.restart();
 			}
@@ -178,7 +177,7 @@ void Lazer::Update(float dt) {
 		}
 		if (!isOn) {
 
-			if (laserActiveClock.getElapsedTime().asSeconds() >= laserActiveTime.asSeconds()) {
+			if (laserActiveClock.getElapsedTime().asMilliseconds() >= laserActiveTime.asMilliseconds()) {
 				isOn = true;
 				laserActiveClock.restart();
 			}

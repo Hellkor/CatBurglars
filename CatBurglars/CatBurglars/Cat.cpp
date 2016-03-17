@@ -400,7 +400,7 @@ void Cat::interaction(Usable *usable) {
 		}
 	}
 	if (Button *butt = dynamic_cast<Button*>(usable)) {
-		if (mCoord == butt->getCoords()) {
+		if (mCoord == butt->getCoords() && mID != 3) {
 			butt->Activate(sf::seconds(1));
 			mButtonPress = true;
 		}

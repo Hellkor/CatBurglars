@@ -31,9 +31,6 @@ mDirectory(directory){
 	loadAI(mAIfile);
 	
 
-	mConvex.setPointCount(3);
-	mConvex.setTexture(textures->GetTexture(99));
-
 	mHitboxSprite.setTexture(*textures->GetTexture(99));
 	mHitboxSprite.setPosition((sf::Vector2f)mPosition);
 	
@@ -81,10 +78,6 @@ void Guard::setVision(string face, TileLayer *tiles, std::vector<Entity*> *entit
 			width = 2;
 		}
 		sf::Vector2f conePos(mPosition.x + 32, mPosition.y + 32);
-		// define the points
-		mConvex.setPoint(0, sf::Vector2f(conePos.x, conePos.y));
-		mConvex.setPoint(1, sf::Vector2f(conePos.x - 32 - (width - 2) * 64, conePos.y - 32 - range * 64));
-		mConvex.setPoint(2, sf::Vector2f(conePos.x + 32 + (width - 2) * 64, conePos.y - 32 - range * 64));
 	}
 	if (mFace == "S") {
 		mSprite.setTextureRect(sf::IntRect(0 * 64, 2 * 128, 64, 128));
@@ -112,10 +105,6 @@ void Guard::setVision(string face, TileLayer *tiles, std::vector<Entity*> *entit
 
 		}
 		sf::Vector2f conePos(mPosition.x + 32, mPosition.y + 32);
-		// define the points
-		mConvex.setPoint(0, sf::Vector2f(conePos.x, conePos.y));
-		mConvex.setPoint(1, sf::Vector2f(conePos.x - 32 - (width - 2) * 64, conePos.y + 32 + range * 64));
-		mConvex.setPoint(2, sf::Vector2f(conePos.x + 32 + (width - 2) * 64, conePos.y + 32 + range * 64));
 
 	}
 	if (mFace == "E") {
@@ -144,10 +133,6 @@ void Guard::setVision(string face, TileLayer *tiles, std::vector<Entity*> *entit
 		}
 
 		sf::Vector2f conePos(mPosition.x + 32, mPosition.y + 32);
-		// define the points
-		mConvex.setPoint(0, sf::Vector2f(conePos.x, conePos.y));
-		mConvex.setPoint(1, sf::Vector2f(conePos.x + 32 + range * 64, conePos.y - 32 - (width - 2) * 64));
-		mConvex.setPoint(2, sf::Vector2f(conePos.x + 32 + range * 64, conePos.y + 32 + (width - 2) * 64));
 	}
 	if (mFace == "W") {
 		mSprite.setTextureRect(sf::IntRect(0 * 64, 1 * 128, 64, 128));
@@ -174,10 +159,6 @@ void Guard::setVision(string face, TileLayer *tiles, std::vector<Entity*> *entit
 			width = 2;
 		}
 		sf::Vector2f conePos(mPosition.x + 32, mPosition.y + 32);
-		// define the points
-		mConvex.setPoint(0, sf::Vector2f(conePos.x, conePos.y));
-		mConvex.setPoint(1, sf::Vector2f(conePos.x - 32 - range * 64, conePos.y + 32 + (width - 2) * 64));
-		mConvex.setPoint(2, sf::Vector2f(conePos.x - 32 - range * 64, conePos.y - 32 - (width - 2) * 64));
 	}
 	
 }
@@ -187,31 +168,15 @@ void Guard::UpdateConePos() {
 
 	if (mFace == "N") {
 		sf::Vector2f conePos(mPosition.x + 32, mPosition.y + 32);
-		// define the points
-		mConvex.setPoint(0, sf::Vector2f(conePos.x, conePos.y));
-		mConvex.setPoint(1, sf::Vector2f(conePos.x - 32 - (width - 2) * 64, conePos.y - 32 - range * 64));
-		mConvex.setPoint(2, sf::Vector2f(conePos.x + 32 + (width - 2) * 64, conePos.y - 32 - range * 64));
 	}
 	if (mFace == "S") {
 		sf::Vector2f conePos(mPosition.x + 32, mPosition.y + 32);
-		// define the points
-		mConvex.setPoint(0, sf::Vector2f(conePos.x, conePos.y));
-		mConvex.setPoint(1, sf::Vector2f(conePos.x - 32 - (width - 2) * 64, conePos.y + 32 + range * 64));
-		mConvex.setPoint(2, sf::Vector2f(conePos.x + 32 + (width - 2) * 64, conePos.y + 32 + range * 64));
 	}
 	if (mFace == "E") {
 		sf::Vector2f conePos(mPosition.x + 32, mPosition.y + 32);
-		// define the points
-		mConvex.setPoint(0, sf::Vector2f(conePos.x, conePos.y));
-		mConvex.setPoint(1, sf::Vector2f(conePos.x + 32 + range * 64, conePos.y - 32 - (width - 2) * 64));
-		mConvex.setPoint(2, sf::Vector2f(conePos.x + 32 + range * 64, conePos.y + 32 + (width - 2) * 64));
 	}
 	if (mFace == "W") {
 		sf::Vector2f conePos(mPosition.x + 32, mPosition.y + 32);
-		// define the points
-		mConvex.setPoint(0, sf::Vector2f(conePos.x, conePos.y));
-		mConvex.setPoint(1, sf::Vector2f(conePos.x - 32 - range * 64, conePos.y + 32 + (width - 2) * 64));
-		mConvex.setPoint(2, sf::Vector2f(conePos.x - 32 - range * 64, conePos.y - 32 - (width - 2) * 64));
 	}
 }
 Guard::~Guard(){
@@ -234,7 +199,7 @@ void Guard::Render(sf::RenderWindow *mainWindow){
 	mainWindow->draw(mSprite);
 
 
-//	mainWindow->draw(mConvex);
+
 
 	
 }
