@@ -28,6 +28,7 @@ Lazer::Lazer(int channel, int channelRange, gridvector coords, TextureHandler *t
 		if (mFace == "W") {
 			direction = 4;
 		}
+
 		mSprite.setTexture(*texturehandler->GetTexture(18));
 		mSprite.setPosition((sf::Vector2f)mPosition);
 		
@@ -101,7 +102,6 @@ Lazer::Lazer(gridvector coords, TextureHandler *texturehandler, int range, strin
 	
 	mSprite.setTexture(*texturehandler->GetTexture(18));
 	mSprite.setPosition((sf::Vector2f)mPosition);
-	
 
 	mHitboxSprite.setTexture(*texturehandler->GetTexture(18));
 

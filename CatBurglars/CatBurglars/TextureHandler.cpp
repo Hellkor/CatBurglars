@@ -6,7 +6,7 @@ std::string PORTRAITS_DIRECTORY = "Resources/Portraits/";
 static sf::Texture mTileTexture, mTileTexture2, mPropTileTexture,mMuseumProps, mSidebarTexture, mSelectorTexture, mSaveTexture, mShadow, mCrate, mButton, mDoor, mBars, mGuard,mGuardMuseum,mDouglas, mArea, mCamera, mComputer, mSnow,
 mLaserTexture,
 
-mSocksPortrait, mShadowPortrait, mScooterPortrait, mSnowPortrait, mAlexPortrait, mDouglasPortrait, mSocks, mScooter , mCoolDownDash;
+mSocksPortrait, mShadowPortrait, mScooterPortrait, mSnowPortrait, mAlexPortrait, mDouglasPortrait, mSocks, mScooter , mCoolDownDash, mThrowObject;
 
 TextureHandler::TextureHandler()
 {
@@ -45,7 +45,7 @@ void TextureHandler::Initialize()
 	mScooter.loadFromFile("Resources/scooter_spritesheet.png");
 	mPropTileTexture.loadFromFile("Resources/tileset_props.png");
 	mCoolDownDash.loadFromFile("Resources/cooldownTest.png");
-
+	mThrowObject.loadFromFile("Resources/glodlampa.png");
 	mLaserTexture.loadFromFile("Resources/laser.png");
 	mMuseumProps.loadFromFile("Resources/museum_props.png");
 }
@@ -89,6 +89,8 @@ sf::Texture* TextureHandler::GetTexture(int ID)
 		return &mScooter;
 	if (ID == 18)
 		return &mLaserTexture;
+	if (ID == 19)
+		return &mThrowObject;
 	if (ID == 25)
 		return &mSocksPortrait;
 	if (ID == 26)
