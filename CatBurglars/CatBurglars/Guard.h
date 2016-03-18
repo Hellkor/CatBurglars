@@ -8,7 +8,7 @@
 #include "Soundhandler.h"
 #include "Button.h"
 #include "Pathfinder.h"
-
+enum GuardType{Normal,Douglas};
 struct Command
 {
 	int xPos;
@@ -22,7 +22,8 @@ class Guard : public GameObject
 	typedef vector<Tile*> TileRow;
 	typedef vector<TileRow> TileLayer;
 public:
-	Guard(TextureHandler *textures, gridvector v, int channel,string AIscript, SoundHandler *soundhandler,string directory, string leveltype);
+	GuardType mGuardType;
+	Guard(TextureHandler *textures, gridvector v, int channel,string AIscript, SoundHandler *soundhandler,string directory, string leveltype,GuardType guardtype);
 	virtual ~Guard();
 
 	virtual void Render(sf::RenderWindow *mainWindow);
@@ -49,6 +50,8 @@ public:
 
 	void SetDistraction(gridvector pos, int distractSeconds, int direction);
 	void RemoveTemporaryWaits();
+
+	GuardType getGuardType();
 
 private:
 	float mSpeed;

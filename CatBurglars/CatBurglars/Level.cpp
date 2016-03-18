@@ -469,6 +469,13 @@ void Level::update(float dt){
 											}
 										}
 										if (Guard *guard = dynamic_cast<Guard*>(entity)) {
+											if (guard->getGuardType() == Douglas) {
+												if (douglasUpdateClock.getElapsedTime().asSeconds() >= douglasUpdateDelay.asSeconds()) {
+													guard->SetDistraction(cat->getCoords(), 3, 0);
+													douglasUpdateClock.restart();
+												}
+											}
+
 											if (guard->getIntersection(cat) && !(cat->getDashing())) {
 
 												if (!lost && cat->getID()!=3) {
@@ -873,7 +880,7 @@ void Level::generateLevel(string name){
 			mEntities.push_back(new Door(channel, gridvector(xPos, yPos), textures.GetTexture(15), &soundhandler));
 		}
 		if (objectID == 4){
-			mEntities.push_back(new Guard(&textures, gridvector(xPos, yPos), 1, script, &soundhandler,mFile,mLevelType));
+			mEntities.push_back(new Guard(&textures, gridvector(xPos, yPos), 1, script, &soundhandler,mFile,mLevelType,Douglas));
 		}
 		if (objectID == 6) {
 			mEntities.push_back(new secuCam(channel,hold, gridvector(xPos, yPos), &textures, range, facing));

@@ -4,7 +4,7 @@
 #include <stdio.h>
 string DIRECTORY = "Resources/AI/";
 
-Guard::Guard(TextureHandler *textures, gridvector position, int ID,string AIscript, SoundHandler *soundhandler , string directory,string leveltype) : GameObject(),
+Guard::Guard(TextureHandler *textures, gridvector position, int ID,string AIscript, SoundHandler *soundhandler , string directory,string leveltype,GuardType guardtype) : GameObject(),
 mID(ID),
 mCoords(position),
 mSpeed(1),
@@ -12,15 +12,30 @@ mAIfile(AIscript),
 mAnimationhandler(64, 128, &mSprite),
 mSoundHandler(soundhandler),
 mRange(3),
-mDirectory(directory){
+mDirectory(directory),
+mGuardType(guardtype){
 	if (leveltype == "Prison1") {
-		mSprite.setTexture(*textures->GetTexture(5), true);
+		if (mGuardType == Normal) {
+			mSprite.setTexture(*textures->GetTexture(5), true);
+		}
+		if (mGuardType == Douglas) {
+			mSprite.setTexture(*textures->GetTexture(7), true);
+		}
+		
 	}
 	if (leveltype == "Museum") {
-		mSprite.setTexture(*textures->GetTexture(6), true);
+		if (mGuardType == Normal) {
+			mSprite.setTexture(*textures->GetTexture(6), true);
+		}
+		if (mGuardType == Douglas) {
+			mSprite.setTexture(*textures->GetTexture(7), true);
+		}
+		
 	}
 	
-	mSprite.setTextureRect(sf::IntRect(1*64, 3*128, 64, 128));
+	mSprite.setTextureRect(sf::IntRect(1 * 64, 3 * 128, 64, 128));
+	
+	
 	//Starting position
 	mPosition = sf::Vector2i(mCoords.x * 64, mCoords.y * 64);
 	//Starting Command
@@ -30,6 +45,7 @@ mDirectory(directory){
 
 	loadAI(mAIfile);
 	
+	
 
 	mHitboxSprite.setTexture(*textures->GetTexture(99));
 	mHitboxSprite.setPosition((sf::Vector2f)mPosition);
@@ -38,6 +54,9 @@ mDirectory(directory){
 
 	mWalkSound.setBuffer(*mSoundHandler->getSound(1));
 
+}
+GuardType Guard::getGuardType() {
+	return mGuardType;
 }
 void Guard::setVision(string face, TileLayer *tiles, std::vector<Entity*> *entities) {
 	while (!mVision.empty()) {

@@ -69,6 +69,9 @@ private:
 
 	bool win = false;
 	int length(int x, int y);
+
+	sf::Clock douglasUpdateClock;
+	sf::Time douglasUpdateDelay = sf::seconds(3);
 };
 
 
