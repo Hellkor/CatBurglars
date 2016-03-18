@@ -73,8 +73,10 @@ void Cat::Render(sf::RenderWindow *mainWindow){
 	}
 	if (mScooterPrepare && ScooterRange != 0) {
 		cout << "Render range" << endl;
+		if (rangePos.x >= 0 && rangePos.y >= 0) {
 		mRangeSprite.setPosition((sf::Vector2f)rangePos);
-		mainWindow->draw(mRangeSprite);
+		}
+			mainWindow->draw(mRangeSprite);
 	}
 }
 
@@ -402,7 +404,7 @@ void Cat::useAbility(TileLayer *tileLayer, std::vector<Entity*> *Entities){
 	}
 	if (mID == 4) 
 	{
-		if (mScooterPrepare && mDelay.restart() > sf::milliseconds(250)) {
+		if (mScooterPrepare && mDelay.restart() > sf::milliseconds(250) && !mCooldown) {
 			mScooterPrepare = false;
 			cout << "FIRE" << endl;
 		}
@@ -412,6 +414,7 @@ void Cat::useAbility(TileLayer *tileLayer, std::vector<Entity*> *Entities){
 			mScooterClock.restart();
 			mScooterTime = sf::milliseconds(0);
 			ScooterRange = 0;
+			mSwitch = false;
 		}
 		 if(!mScooterPrepare)
 			ScooterThrow(tileLayer, Entities, direction);
@@ -690,7 +693,7 @@ void Cat::ScooterThrow(TileLayer *tileLayer, std::vector<Entity*> *Entities, int
 			mObjectThrown = true;
 			mAbilityClock.restart();
 		}
-		else if ((mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX), mCoord.y + (positionY)), tileLayer, Entities)) && (mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX * 2), mCoord.y + (positionY * 2)), tileLayer, Entities)) && (mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX * 3), mCoord.y + (positionY * 3)), tileLayer, Entities)) && (mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX * 4), mCoord.y + (positionY * 4)), tileLayer, Entities)) && (mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX * 5), mCoord.y + (positionY * 5)), tileLayer, Entities)) && (mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX * 6), mCoord.y + (positionY * 6)), tileLayer, Entities)) && ScooterRange == 5) {
+		else if ((mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX), mCoord.y + (positionY)), tileLayer, Entities)) && (mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX * 2), mCoord.y + (positionY * 2)), tileLayer, Entities)) && (mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX * 3), mCoord.y + (positionY * 3)), tileLayer, Entities)) && (mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX * 4), mCoord.y + (positionY * 4)), tileLayer, Entities)) && (mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX * 5), mCoord.y + (positionY * 5)), tileLayer, Entities)) && (mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX * 6), mCoord.y + (positionY * 6)), tileLayer, Entities)) && ScooterRange >= 5) {
 			std::cout << "6 Tile throw" << std::endl;
 			position += (384 * positiveNegative);
 			positiveNegative *= 6;
@@ -699,7 +702,7 @@ void Cat::ScooterThrow(TileLayer *tileLayer, std::vector<Entity*> *Entities, int
 			mObjectThrown = true;
 			mAbilityClock.restart();
 		}
-		else if ((mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX), mCoord.y + (positionY)), tileLayer, Entities)) && (mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX * 2), mCoord.y + (positionY * 2)), tileLayer, Entities)) && (mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX * 3), mCoord.y + (positionY * 3)), tileLayer, Entities)) && (mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX * 4), mCoord.y + (positionY * 4)), tileLayer, Entities)) && (mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX * 5), mCoord.y + (positionY * 5)), tileLayer, Entities)) && ScooterRange == 4) {
+		else if ((mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX), mCoord.y + (positionY)), tileLayer, Entities)) && (mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX * 2), mCoord.y + (positionY * 2)), tileLayer, Entities)) && (mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX * 3), mCoord.y + (positionY * 3)), tileLayer, Entities)) && (mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX * 4), mCoord.y + (positionY * 4)), tileLayer, Entities)) && (mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX * 5), mCoord.y + (positionY * 5)), tileLayer, Entities)) && ScooterRange >= 4) {
 			std::cout << "5 Tile throw" << std::endl;
 			position += (320 * positiveNegative);
 			positiveNegative *= 5;
@@ -708,7 +711,7 @@ void Cat::ScooterThrow(TileLayer *tileLayer, std::vector<Entity*> *Entities, int
 			mObjectThrown = true;
 			mAbilityClock.restart();
 		}
-		else if ((mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX), mCoord.y + (positionY)), tileLayer, Entities)) && (mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX * 2), mCoord.y + (positionY * 2)), tileLayer, Entities)) && (mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX * 3), mCoord.y + (positionY * 3)), tileLayer, Entities)) && (mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX * 4), mCoord.y + (positionY * 4)), tileLayer, Entities)) && ScooterRange == 3) {
+		else if ((mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX), mCoord.y + (positionY)), tileLayer, Entities)) && (mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX * 2), mCoord.y + (positionY * 2)), tileLayer, Entities)) && (mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX * 3), mCoord.y + (positionY * 3)), tileLayer, Entities)) && (mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX * 4), mCoord.y + (positionY * 4)), tileLayer, Entities)) && ScooterRange >= 3) {
 			std::cout << "4 Tile throw" << std::endl;
 			position += (256 * positiveNegative);
 			positiveNegative *= 4;
@@ -717,7 +720,7 @@ void Cat::ScooterThrow(TileLayer *tileLayer, std::vector<Entity*> *Entities, int
 			mObjectThrown = true;
 			mAbilityClock.restart();
 		}
-		else if ((mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX), mCoord.y + (positionY)), tileLayer, Entities)) && (mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX * 2), mCoord.y + (positionY * 2)), tileLayer, Entities)) && (mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX * 3), mCoord.y + (positionY * 3)), tileLayer, Entities)) && ScooterRange == 2) {
+		else if ((mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX), mCoord.y + (positionY)), tileLayer, Entities)) && (mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX * 2), mCoord.y + (positionY * 2)), tileLayer, Entities)) && (mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX * 3), mCoord.y + (positionY * 3)), tileLayer, Entities)) && ScooterRange >= 2) {
 			std::cout << "3 Tile throw" << std::endl;
 			position += (192 * positiveNegative);
 			positiveNegative *= 3;
@@ -726,7 +729,7 @@ void Cat::ScooterThrow(TileLayer *tileLayer, std::vector<Entity*> *Entities, int
 			mObjectThrown = true;
 			mAbilityClock.restart();
 		}
-		else if ((mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX), mCoord.y + (positionY)), tileLayer, Entities)) && (mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX * 2), mCoord.y + (positionY * 2)), tileLayer, Entities)) && ScooterRange == 1) {
+		else if ((mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX), mCoord.y + (positionY)), tileLayer, Entities)) && (mGrid.canCatDash(mCoord, gridvector(mCoord.x + (positionX * 2), mCoord.y + (positionY * 2)), tileLayer, Entities)) && ScooterRange >= 1) {
 			std::cout << "2 Tile throw" << std::endl;
 			position += (128 * positiveNegative);
 			positiveNegative *= 2;
