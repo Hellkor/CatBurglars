@@ -9,8 +9,8 @@ enum LaserType {Interval,ChannelBound};
 class Lazer : public Recievers {
 
 public:
-	Lazer(int channel, int channelRange, gridvector coords, sf::Texture *texture, int range, string direction);
-	Lazer(gridvector coords, sf::Texture *texture, int range, string direction, float interval);
+	Lazer(int channel, int channelRange, gridvector coords, TextureHandler *texturehandler, int range, string direction);
+	Lazer(gridvector coords, TextureHandler *texturehandler, int range, string direction, float interval);
 	virtual ~Lazer();
 	virtual void connectToChannel(int channelID);
 	virtual void Update(float dt);

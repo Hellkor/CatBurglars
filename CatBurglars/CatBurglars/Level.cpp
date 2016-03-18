@@ -878,7 +878,7 @@ void Level::generateLevel(string name){
 			mEntities.push_back(new Guard(&textures, gridvector(xPos, yPos), 1, script, &soundhandler,mFile,mLevelType));
 		}
 		if (objectID == 6) {
-			mEntities.push_back(new secuCam(channel,hold, gridvector(xPos, yPos), textures.GetTexture(13), range, facing));
+			mEntities.push_back(new secuCam(channel,hold, gridvector(xPos, yPos), &textures, range, facing));
 		}
 		if (objectID == 7) {
 			if (range == 0) {
@@ -899,10 +899,10 @@ void Level::generateLevel(string name){
 		}
 		if (objectID == 10) {
 			if (script == "interval") {
-				mEntities.push_back(new Lazer(gridvector(xPos, yPos), textures.GetTexture(18), range, facing, hold));
+				mEntities.push_back(new Lazer(gridvector(xPos, yPos), &textures, range, facing, hold));
 			}
 			if (script == "toggle") {
-				mEntities.push_back(new Lazer(channel, hold, gridvector(xPos, yPos), textures.GetTexture(18), range, facing));
+				mEntities.push_back(new Lazer(channel, hold, gridvector(xPos, yPos), &textures, range, facing));
 			}
 		}
 	}

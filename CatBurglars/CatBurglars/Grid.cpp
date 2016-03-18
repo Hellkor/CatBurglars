@@ -199,6 +199,15 @@ bool Grid::isTilePassable(GameObject *gameobject, gridvector position, TileLayer
 	default:
 		break;
 	}
+
+	if (position.x > -1 && position.y > -1 && position.x < mTiles[1].size() && position.y < mTiles.size()) {
+		if (mTiles[position.y][position.x]->GetID() > 0) {
+			return false;
+		}
+		else return true;
+
+	}
+	else return false;
 	
 	
 }

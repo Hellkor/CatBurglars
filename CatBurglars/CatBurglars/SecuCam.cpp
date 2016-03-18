@@ -3,7 +3,7 @@
 
 
 
-secuCam::secuCam(int channel, int channelRange, gridvector coords, sf::Texture *texture, int range, string face) :
+secuCam::secuCam(int channel, int channelRange, gridvector coords, TextureHandler *texturehandler, int range, string face) :
 mChannel(channel),
 mCoords(coords),
 isOn(true),
@@ -13,8 +13,6 @@ mFace(face){
 	for (int i = 0; i <= channelRange; i++) {
 		mChannels.push_back(mChannel + i);
 	}
-	// mConvex for visionrange visual effect
-	mConvex.setPointCount(3);
 
 	mPosition.x = mCoords.x * 64;
 	mPosition.y = mCoords.y * 64;
@@ -31,13 +29,13 @@ mFace(face){
 	if (mFace == "W") {
 		direction = 4;
 	}
-	TextureHandler textures;
-	mSprite.setTexture(*texture);
+	
+	mSprite.setTexture(*texturehandler->GetTexture(13));
 	mSprite.setTextureRect(sf::IntRect((direction-1) * 64, 0, 64, 64));
 	mSprite.setPosition((sf::Vector2f)mPosition);
-	textures.Initialize();
+	
 
-	mHitboxSprite.setTexture(*textures.GetTexture(99));
+	mHitboxSprite.setTexture(*texturehandler->GetTexture(99));
 	
 
 	int width = 1;
@@ -55,10 +53,6 @@ mFace(face){
 			width++;
 		}
 		sf::Vector2f conePos(mPosition.x + 32, mPosition.y + 32);
-		// define the points
-		mConvex.setPoint(0, sf::Vector2f(conePos.x, conePos.y));
-		mConvex.setPoint(1, sf::Vector2f(conePos.x - 32 - (width-2) * 64, conePos.y - 32 - range * 64));
-		mConvex.setPoint(2, sf::Vector2f(conePos.x + 32 + (width-2) * 64, conePos.y - 32 - range * 64));
 	}
 	if (mFace == "S"){
 		for (int i = 0; i <= range; i++){
@@ -74,10 +68,6 @@ mFace(face){
 
 		}
 		sf::Vector2f conePos(mPosition.x + 32, mPosition.y + 32);
-		// define the points
-		mConvex.setPoint(0, sf::Vector2f(conePos.x, conePos.y));
-		mConvex.setPoint(1, sf::Vector2f(conePos.x - 32 - (width - 2) * 64, conePos.y + 32 + range * 64));
-		mConvex.setPoint(2, sf::Vector2f(conePos.x + 32 + (width - 2) * 64, conePos.y + 32 + range * 64));
 
 	}
 	if (mFace == "E"){
@@ -94,10 +84,6 @@ mFace(face){
 		}
 
 		sf::Vector2f conePos(mPosition.x + 32, mPosition.y + 32);
-		// define the points
-		mConvex.setPoint(0, sf::Vector2f(conePos.x, conePos.y));
-		mConvex.setPoint(1, sf::Vector2f(conePos.x + 32 + range * 64, conePos.y - 32 -(width - 2) * 64));
-		mConvex.setPoint(2, sf::Vector2f(conePos.x + 32 + range * 64, conePos.y + 32 +(width - 2) * 64));
 	}
 	if (mFace == "W"){
 		for (int i = 0; i <= range; i++){
@@ -112,13 +98,8 @@ mFace(face){
 			width++;
 		}
 		sf::Vector2f conePos(mPosition.x + 32, mPosition.y + 32);
-		// define the points
-		mConvex.setPoint(0, sf::Vector2f(conePos.x, conePos.y));
-		mConvex.setPoint(1, sf::Vector2f(conePos.x - 32 - range * 64, conePos.y + 32 + (width - 2) * 64));
-		mConvex.setPoint(2, sf::Vector2f(conePos.x - 32 - range * 64, conePos.y - 32 - (width - 2) * 64));
 	}
 	
-	mConvex.setTexture(textures.GetTexture(99));
 }
 
 secuCam::~secuCam(){
@@ -181,11 +162,10 @@ void secuCam::Render(sf::RenderWindow *window){
 	window->draw(mSprite);
 	
 	if (isOn){
-		window->draw(mConvex);
 		for each (gridvector *v in mVision){
 			mHitboxSprite.setPosition(v->x * 64, v->y * 64);
 			
-			//window->draw(mHitboxSprite);
+			window->draw(mHitboxSprite);
 		}
 	}
 
