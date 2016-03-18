@@ -72,6 +72,9 @@ private:
 
 	sf::Clock douglasUpdateClock;
 	sf::Time douglasUpdateDelay = sf::seconds(3);
+
+
+	sf::Sound FailSound;
 };
 
 

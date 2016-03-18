@@ -7,6 +7,8 @@ static string FILENAME = "save.txt";
 static string LEVEL = "Level:";
 static string COLLECT = "Collectibles:";
 
+bool endGame = false;
+
 static std::vector<Level*> mLevels;
 
 static int mCurrentLevel;
@@ -47,8 +49,21 @@ void LevelManager::reloadLevel() {
 void LevelManager::loadLastSavedLevel() {
 	loadLevel(mLevelProgression);
 }
+void LevelManager::unloadLevel() {
+	mLevels[mCurrentLevel]->Clear();
+}
+bool LevelManager::returnToMainMenu() {
+	return endGame;
+}
+void LevelManager::resetEndGame() {
+	endGame = false;
+}
 // Byter level till nästa i listan. 
 void LevelManager::nextLevel(){
+	if (mCurrentLevel == mLevels.size()-1) {
+		mLevels[mCurrentLevel]->Clear();
+		endGame = true;
+	}
 	if (mCurrentLevel != mLevels.size()-1){
 		std::cout << "Changing to next level" << std::endl;
 		mLevels[mCurrentLevel]->Clear();

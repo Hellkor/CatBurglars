@@ -4,7 +4,7 @@
 #include <stdio.h>
 string DIRECTORY = "Resources/AI/";
 
-Guard::Guard(TextureHandler *textures, gridvector position, int ID,string AIscript, SoundHandler *soundhandler , string directory,string leveltype,GuardType guardtype) : GameObject(),
+Guard::Guard(TextureHandler *textures, gridvector position, int ID,string AIscript, SoundHandler *soundhandler , string directory,string leveltype,int guardtype) : GameObject(),
 mID(ID),
 mCoords(position),
 mSpeed(1),
@@ -12,8 +12,16 @@ mAIfile(AIscript),
 mAnimationhandler(64, 128, &mSprite),
 mSoundHandler(soundhandler),
 mRange(3),
-mDirectory(directory),
-mGuardType(guardtype){
+mDirectory(directory){
+
+	if (guardtype == 1) {
+		mGuardType = Normal;
+		mSpeed = 1;
+	}
+	if (guardtype == 2) {
+		mGuardType = Douglas;
+		mSpeed = 0.5;
+	}
 	if (leveltype == "Prison1") {
 		if (mGuardType == Normal) {
 			mSprite.setTexture(*textures->GetTexture(5), true);
