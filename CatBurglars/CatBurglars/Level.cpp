@@ -383,9 +383,9 @@ void Level::update(float dt){
 											cout << "Socks is distracting" << endl;
 											guard->SetDistraction(socksPosition, 4, socksDirection);
 										}
-										if (socksMoved)
-										guard->RemoveTemporaryWaits();
 									}
+									if (socksMoved)
+										guard->RemoveTemporaryWaits();
 									if (scooter) {
 										if (guard->getCoords().x <= scooterThrow.x + 3 && guard->getCoords().x >= scooterThrow.x - 3 &&
 											guard->getCoords().y <= scooterThrow.y + 3 && guard->getCoords().y >= scooterThrow.y - 3)
@@ -474,9 +474,12 @@ void Level::update(float dt){
 											}
 										}
 										if (Guard *guard = dynamic_cast<Guard*>(entity)) {
+
 											if (guard->getGuardType() == Douglas) {
 												if (douglasUpdateClock.getElapsedTime().asSeconds() >= douglasUpdateDelay.asSeconds()) {
-													guard->SetDistraction(cat->getCoords(), 3, 0);
+													if (cat->getPlayerIndex() == 1) {
+														guard->SetDistraction(cat->getCoords(), 3, 0);
+													}
 													douglasUpdateClock.restart();
 												}
 											}
@@ -597,6 +600,7 @@ void Level::load(){
 	switch (mType)
 	{
 	case Cutscene:
+
 		Clear();
 		moviehandler.PlayMovie(mMovieID);
 		break;
@@ -635,9 +639,11 @@ void Level::Clear(){
 	switch (mType)
 	{
 	case Cutscene:
+		soundhandler.stopMusic();
 		moviehandler.getMovie(mMovieID)->stop();
 		break;
 	case GameStage:
+		soundhandler.stopMusic();
 		soundhandler.Clear();
 		while (!mEntities.empty()) {
 			delete mEntities.back();

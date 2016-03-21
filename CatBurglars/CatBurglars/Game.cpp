@@ -80,7 +80,8 @@ Game::Game() {
 	SoundHandler::Initialize();
 	MovieHandler::Initialize();
 
-	Level *movie1 = new Level(1);
+	Level *prolog = new Level(1);
+	Level *Cutscene1 = new Level(3);
 	Level *Level1 = new Level("1_1");
 	Level *level2 = new Level("1_2");
 	Level *level3 = new Level("1_3");
@@ -96,9 +97,11 @@ Game::Game() {
 	Level *level24 = new Level("flee1");
 	Level *level25 = new Level("flee2");
 	Level *level26 = new Level("flee3");
+	Level *epilog = new Level(2);
 	
 	
-	LevelManager::addLevel(movie1);
+	LevelManager::addLevel(prolog);
+	LevelManager::addLevel(Cutscene1);
 	LevelManager::addLevel(Level1);
 	LevelManager::addLevel(level2);
 	LevelManager::addLevel(level3);
@@ -114,6 +117,7 @@ Game::Game() {
 	LevelManager::addLevel(level24);
 	LevelManager::addLevel(level25);
 	LevelManager::addLevel(level26);
+	LevelManager::addLevel(epilog);
 
 	//Level *leveltest = new Level("Pathfind_Test");
 
@@ -377,6 +381,8 @@ Game::Game() {
 	douglasPageSprite.setPosition(GuiView.getCenter());
 	alexPageSprite.setPosition(GuiView.getCenter());
 
+	
+
 }
 
 Game::~Game()
@@ -488,6 +494,7 @@ void Game::Update(float dt){
 					SPLASH_FADE_OUT = false;
 					
 					GameState = Menu;
+					mSoundHandler.startMusic("Menu");
 				}
 			}
 			
@@ -496,6 +503,7 @@ void Game::Update(float dt){
 
 			break;
 		case Menu:
+			
 			switch (menuState)
 			{
 			case MainMenu:
@@ -503,10 +511,13 @@ void Game::Update(float dt){
 
 				if (NewGame->isButtonPushed()) {
 					LevelManager::loadLevel(0);
+					mSoundHandler.stopMusic();
 					GameState = RunGame;
+					
 				}
 				if (Continue->isButtonPushed()) {
 					LevelManager::loadLastSavedLevel();
+					mSoundHandler.stopMusic();
 					GameState = RunGame;
 				}
 				if (Options->isButtonPushed()) {
@@ -623,6 +634,7 @@ void Game::Update(float dt){
 				GameState = Menu;
 				LevelManager::unloadLevel();
 				MainMenuSystem.setPage("Main");
+				mSoundHandler.startMusic("Menu");
 			}
 			break;
 

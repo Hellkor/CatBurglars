@@ -39,36 +39,57 @@ void SoundHandler::PlaySound(int ID)
 }
 
 void SoundHandler::startMusic(string ID){
-	if (ID == "1_1"||"1_2"){
-		mMusic.openFromFile("Resources/Music/level_1_1-2.ogg");
-		mMusic.setLoop(true);
-		mMusic.play();
-	}
-	else if (ID == "1_3") {
-		mMusic.openFromFile("Resources/Music/level_1_3.ogg");
-		mMusic.setLoop(true);
-		mMusic.play();
-	}
-	else if (ID == "1_4") {
-		mMusic.openFromFile("Resources/Music/level_1_4.ogg");
-		mMusic.setLoop(true);
-		mMusic.play();
-	}
-	else if (ID == "1_5") {
-		mMusic.openFromFile("Resources/Music/level_1_5.ogg");
-		mMusic.setLoop(true);
-		mMusic.play();
-	}
-	else if (ID == "1_6") {
-		mMusic.openFromFile("Resources/Music/level_1_6.ogg");
-		mMusic.setLoop(true);
-		mMusic.play();
-	}
-	else {
-		mMusic.openFromFile("Resources/Music/level_1_6.ogg");
-		mMusic.setLoop(true);
-		mMusic.play();
-	}
+		if (ID == "Menu") {
+			mMusic.openFromFile("Resources/Music/maintheme.ogg");
+			mMusic.setLoop(true);
+			mMusic.play();
+		}
+		else if (ID == "1_1" || ID == "1_2") {
+			mMusic.openFromFile("Resources/Music/level_1_1-2.ogg");
+			mMusic.setLoop(true);
+			mMusic.play();
+		}
+		else if (ID == "1_3") {
+			mMusic.openFromFile("Resources/Music/level_1_3.ogg");
+			mMusic.setLoop(true);
+			mMusic.play();
+		}
+		else if (ID == "1_4") {
+			mMusic.openFromFile("Resources/Music/level_1_4.ogg");
+			mMusic.setLoop(true);
+			mMusic.play();
+		}
+		else if (ID == "1_5") {
+			mMusic.openFromFile("Resources/Music/level_1_5.ogg");
+			mMusic.setLoop(true);
+			mMusic.play();
+		}
+		else if (ID == "1_6") {
+			mMusic.openFromFile("Resources/Music/level_1_6.ogg");
+			mMusic.setLoop(true);
+			mMusic.play();
+		}
+		else if (ID == "2_1") {
+			mMusic.openFromFile("Resources/Music/level_2_1.ogg");
+			mMusic.setLoop(true);
+			mMusic.play();
+		}
+		else if (ID == "2_2" || ID == "2_3") {
+			mMusic.openFromFile("Resources/Music/level_2_2.ogg");
+			mMusic.setLoop(true);
+			mMusic.play();
+		}
+		else if (ID == "flee1" || ID == "flee2" || ID == "flee3") {
+			mMusic.openFromFile("Resources/Music/level_2_3.ogg");
+			mMusic.setLoop(true);
+			mMusic.play();
+		}
+		else {
+			mMusic.openFromFile("Resources/Music/level_1_6.ogg");
+			mMusic.setLoop(true);
+			mMusic.play();
+		}
+	
 	
 }
 
