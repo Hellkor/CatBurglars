@@ -22,6 +22,7 @@ public:
 	sf::SoundBuffer* getSound(int ID);
 	int distanceSound(GameObject *gameobject);
 	float changeIndiVolume(float change);
+	void Clear();
 private:
 	int mMusicVolume = 100;
 	int mSoundVolume = 100;

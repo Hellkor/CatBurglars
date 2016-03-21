@@ -80,33 +80,40 @@ Game::Game() {
 	SoundHandler::Initialize();
 	MovieHandler::Initialize();
 
-	Level *Level0 = new Level("1_1");
-	Level *level1 = new Level("1_2");
-	Level *level2 = new Level("1_3");
-	Level *level3 = new Level("1_4");
-	Level *level4 = new Level("1_5");
-	Level *level5 = new Level("1_6");
+	Level *movie1 = new Level(1);
+	Level *Level1 = new Level("1_1");
+	Level *level2 = new Level("1_2");
+	Level *level3 = new Level("1_3");
+	Level *level4 = new Level("1_4");
+	Level *level5 = new Level("1_5");
+	Level *level6 = new Level("1_6");
+	Level *level7 = new Level("1_7");
+	Level *level8 = new Level("1_8");
+	Level *level9 = new Level("1_9");
 	Level *level21 = new Level("2_1");
 	Level *level22 = new Level("2_2");
 	Level *level23 = new Level("2_3");
 	Level *level24 = new Level("flee1");
-	Level *level25 = new Level("flee3");
+	Level *level25 = new Level("flee2");
+	Level *level26 = new Level("flee3");
 	
-	Level *movie1 = new Level(1);
-	Level *movie2 = new Level(1);
+	
 	LevelManager::addLevel(movie1);
-	LevelManager::addLevel(Level0);
-	LevelManager::addLevel(level1);
+	LevelManager::addLevel(Level1);
 	LevelManager::addLevel(level2);
 	LevelManager::addLevel(level3);
-	LevelManager::addLevel(level4); 
-	LevelManager::addLevel(level5);
+	LevelManager::addLevel(level4);
+	LevelManager::addLevel(level5); 
+	LevelManager::addLevel(level6);
+	LevelManager::addLevel(level7);
+	LevelManager::addLevel(level8);
+	LevelManager::addLevel(level9);
 	LevelManager::addLevel(level21);
 	LevelManager::addLevel(level22);
 	LevelManager::addLevel(level23);
 	LevelManager::addLevel(level24);
 	LevelManager::addLevel(level25);
-	LevelManager::addLevel(movie2);
+	LevelManager::addLevel(level26);
 
 	//Level *leveltest = new Level("Pathfind_Test");
 
@@ -573,7 +580,16 @@ void Game::Update(float dt){
 
 
 		case RunGame:
+
+
 			LevelManager::update(dt);
+
+			if (LevelManager::returnToMainMenu()) {
+				LevelManager::resetEndGame();
+				GameState = Menu;
+				menuState = MainMenu;
+				MainMenuSystem.setPage("Main");
+			}
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::N)){
 				LevelManager::nextLevel();
@@ -605,6 +621,7 @@ void Game::Update(float dt){
 			}
 			if (QuitButton->isButtonPushed()) {
 				GameState = Menu;
+				LevelManager::unloadLevel();
 				MainMenuSystem.setPage("Main");
 			}
 			break;

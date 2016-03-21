@@ -87,13 +87,14 @@ Level::Level(string level_directory) :
 	mFile(level_directory),
 	mLoaded(false)
 {
+	FailSound.setBuffer(*soundhandler.getSound(6));
 	mType = GameStage;
 	
 	// Initialize GUI View
 	guiView.setViewport(sf::FloatRect(0, 0, 1, 1));
 
 
-	deathDelay = sf::seconds(0.8);
+	deathDelay = sf::seconds(2.0);
 	
 
 	// FOV LIGHT ------------------------------------------------------------------------------------------------------------------------------------
@@ -375,8 +376,8 @@ void Level::update(float dt){
 								if (Guard *guard = dynamic_cast<Guard*>(obj)) {
 									if (socks)
 									{
-										if (guard->getCoords().x <= socksPosition.x + 3 && guard->getCoords().x >= socksPosition.x - 3 &&
-											guard->getCoords().y <= socksPosition.y + 3 && guard->getCoords().y >= socksPosition.y - 3)
+										if (guard->getCoords().x <= socksPosition.x + 5 && guard->getCoords().x >= socksPosition.x - 5 &&
+											guard->getCoords().y <= socksPosition.y + 5 && guard->getCoords().y >= socksPosition.y - 5)
 										{
 											socks = false;
 											cout << "Socks is distracting" << endl;
@@ -457,6 +458,7 @@ void Level::update(float dt){
 
 												if (!lost) {
 													lost = true;
+													
 													deathClock.restart();
 												}
 
@@ -466,6 +468,7 @@ void Level::update(float dt){
 											if (laser->getIntersection(cat)) {
 												if (!lost && cat->getID()) {
 													lost = true;
+													
 													deathClock.restart();
 												}
 											}
@@ -483,6 +486,8 @@ void Level::update(float dt){
 												if (!lost && cat->getID()!=3) {
 
 													lost = true;
+													
+													
 													deathClock.restart();
 
 												}
@@ -516,7 +521,10 @@ void Level::update(float dt){
 		
 				}	
 				if (lost && !IMMORTALITY_MODE) {
-
+					soundhandler.stopMusic();
+					if (!(FailSound.getStatus() == sf::Sound::Playing)) {
+						FailSound.play();
+					}
 					if (deathClock.getElapsedTime().asSeconds() >= deathDelay.asSeconds()) {
 
 					load();
@@ -589,6 +597,7 @@ void Level::load(){
 	switch (mType)
 	{
 	case Cutscene:
+		Clear();
 		moviehandler.PlayMovie(mMovieID);
 		break;
 	case GameStage:
@@ -599,8 +608,6 @@ void Level::load(){
 		lost = false;
 		lights.clear();
 		mLoaded = false;
-
-		Clear();
 
 		dialogManager.initialize(guiView);
 
@@ -631,6 +638,7 @@ void Level::Clear(){
 		moviehandler.getMovie(mMovieID)->stop();
 		break;
 	case GameStage:
+		soundhandler.Clear();
 		while (!mEntities.empty()) {
 			delete mEntities.back();
 			mEntities.pop_back();
@@ -882,7 +890,7 @@ void Level::generateLevel(string name){
 			mEntities.push_back(new Door(channel, gridvector(xPos, yPos), textures.GetTexture(15), &soundhandler));
 		}
 		if (objectID == 4){
-			mEntities.push_back(new Guard(&textures, gridvector(xPos, yPos), 1, script, &soundhandler,mFile,mLevelType,Douglas));
+			mEntities.push_back(new Guard(&textures, gridvector(xPos, yPos), 1, script, &soundhandler,mFile,mLevelType,channel));
 		}
 		if (objectID == 6) {
 			mEntities.push_back(new secuCam(channel,hold, gridvector(xPos, yPos), &textures, range, facing));

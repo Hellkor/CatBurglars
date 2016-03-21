@@ -47,10 +47,13 @@ canPushCrate(true){
 		mSpeed = 2;
 		mThrowSprite.setTexture(*texturehandler->GetTexture(19), true);
 		mThrowSprite.setTextureRect(sf::IntRect(0, 0, 64, 64));
+		mThrowSprite.setOrigin(mThrowSprite.getTexture()->getSize().x / 2, mThrowSprite.getTexture()->getSize().y / 2);
 		mSprite.setTexture(*texturehandler->GetTexture(17), true);
 		mAbilitySprite.setTexture(*texturehandler->GetTexture(50), true);
 		mAbilityTime = sf::seconds(15);
-		mRangeSprite.setTexture(*texturehandler->GetTexture(50));
+		mRangeSprite.setTexture(*texturehandler->GetTexture(19));
+		mRangeSprite.setOrigin(mRangeSprite.getTexture()->getSize().x / 2, mRangeSprite.getTexture()->getSize().y / 2);
+		mRangeSprite.setColor(sf::Color(255, 255, 255, 100));
 	}
 	
 	mSprite.setTextureRect(sf::IntRect(1*64, 1*64, 64, 64));
@@ -67,14 +70,14 @@ void Cat::Render(sf::RenderWindow *mainWindow){
 	mSprite.setPosition((sf::Vector2f)mPosition);
 	mainWindow->draw(mSprite);
 	if (mObjectThrown) {
-		mThrowSprite.setPosition((sf::Vector2f)ThrownPos);
+		mThrowSprite.setPosition(sf::Vector2f(ThrownPos.x +32,ThrownPos.y + 32));
 		mThrowSprite.rotate(5);
 		mainWindow->draw(mThrowSprite);
 	}
 	if (mScooterPrepare && ScooterRange != 0) {
 		cout << "Render range" << endl;
 		if (rangePos.x >= 0 && rangePos.y >= 0) {
-		mRangeSprite.setPosition((sf::Vector2f)rangePos);
+		mRangeSprite.setPosition(sf::Vector2f(rangePos.x + 32,rangePos.y+32));
 		}
 			mainWindow->draw(mRangeSprite);
 	}

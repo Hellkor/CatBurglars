@@ -25,6 +25,12 @@ public:
 	static void loadLastSavedLevel();
 
 	static void reloadLevel();
+
+	static void unloadLevel();
+
+	static bool returnToMainMenu();
+
+	static void resetEndGame();
 	
 private:
 	static void loadGame();

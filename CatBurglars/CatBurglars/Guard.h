@@ -23,7 +23,7 @@ class Guard : public GameObject
 	typedef vector<TileRow> TileLayer;
 public:
 	GuardType mGuardType;
-	Guard(TextureHandler *textures, gridvector v, int channel,string AIscript, SoundHandler *soundhandler,string directory, string leveltype,GuardType guardtype);
+	Guard(TextureHandler *textures, gridvector v, int channel,string AIscript, SoundHandler *soundhandler,string directory, string leveltype,int guardtype);
 	virtual ~Guard();
 
 	virtual void Render(sf::RenderWindow *mainWindow);

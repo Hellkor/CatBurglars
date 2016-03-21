@@ -1,7 +1,7 @@
 #include <iostream>
 #include "SoundHandler.h"
 
-static sf::SoundBuffer mVaktGårB, mShadowDashB, mSnowHaxB, mCratePushB, mDoorOpenB;
+static sf::SoundBuffer mVaktGårB, mShadowDashB, mSnowHaxB, mCratePushB, mDoorOpenB,mFailStinger;
 
 SoundHandler::SoundHandler()
 {
@@ -29,6 +29,8 @@ void SoundHandler::Initialize()
 
 	mDoorOpenB.loadFromFile("Resources/Sounds/door.wav");
 
+	mFailStinger.loadFromFile("Resources/Sounds/stinger_failure.ogg");
+
 }
 
 void SoundHandler::PlaySound(int ID)
@@ -42,26 +44,32 @@ void SoundHandler::startMusic(string ID){
 		mMusic.setLoop(true);
 		mMusic.play();
 	}
-	if (ID == "1_3") {
+	else if (ID == "1_3") {
 		mMusic.openFromFile("Resources/Music/level_1_3.ogg");
 		mMusic.setLoop(true);
 		mMusic.play();
 	}
-	if (ID == "1_4") {
+	else if (ID == "1_4") {
 		mMusic.openFromFile("Resources/Music/level_1_4.ogg");
 		mMusic.setLoop(true);
 		mMusic.play();
 	}
-	if (ID == "1_5") {
+	else if (ID == "1_5") {
 		mMusic.openFromFile("Resources/Music/level_1_5.ogg");
 		mMusic.setLoop(true);
 		mMusic.play();
 	}
-	if (ID == "1_6") {
+	else if (ID == "1_6") {
 		mMusic.openFromFile("Resources/Music/level_1_6.ogg");
 		mMusic.setLoop(true);
 		mMusic.play();
 	}
+	else {
+		mMusic.openFromFile("Resources/Music/level_1_6.ogg");
+		mMusic.setLoop(true);
+		mMusic.play();
+	}
+	
 }
 
 void SoundHandler::stopMusic() {
@@ -101,6 +109,13 @@ sf::SoundBuffer* SoundHandler::getSound(int ID) {
 	if (ID == 5) {
 		return &mDoorOpenB;
 	}
+	if (ID == 6) {
+		return &mFailStinger;
+	}
+}
+
+void SoundHandler::Clear() {
+	mCat2 = nullptr;
 }
 
 int SoundHandler::distanceSound(GameObject *gameobject) {
@@ -111,7 +126,7 @@ int SoundHandler::distanceSound(GameObject *gameobject) {
 	int y2 = 0;
 	int length;
 	//Check if not NULL
-	if (mCat2 != 0) {
+	if (mCat2 != nullptr) {
 		x2 = mCat2->getCoords().x - gameobject->getCoords().x;
 		y2 = mCat2->getCoords().y - gameobject->getCoords().y;
 		if (pythagoras(x, y) <= pythagoras(x2, y2)) {
