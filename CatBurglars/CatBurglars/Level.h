@@ -71,7 +71,7 @@ private:
 	int length(int x, int y);
 
 	sf::Clock douglasUpdateClock;
-	sf::Time douglasUpdateDelay = sf::seconds(3);
+	sf::Time douglasUpdateDelay = sf::seconds(1);
 
 
 	sf::Sound FailSound;

@@ -20,7 +20,7 @@ mDirectory(directory){
 	}
 	if (guardtype == 2) {
 		mGuardType = Douglas;
-		mSpeed = 0.5;
+		mSpeed = 1;
 	}
 	if (leveltype == "Prison1") {
 		if (mGuardType == Normal) {

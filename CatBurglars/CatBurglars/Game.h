@@ -87,6 +87,8 @@ private:
 	MenuButton *DouglasButton;
 	MenuButton *AlexButton;
 
+	SoundHandler mSoundHandler;
+
 
 };
 
