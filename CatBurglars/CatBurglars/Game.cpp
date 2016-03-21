@@ -79,6 +79,7 @@ Game::Game() {
 	TextureHandler::Initialize();
 	SoundHandler::Initialize();
 	MovieHandler::Initialize();
+	Level::setResolution(WINDOW_WIDTH, WINDOW_HEIGHT);
 
 	Level *prolog = new Level(1);
 	Level *Cutscene1 = new Level(3);
@@ -300,6 +301,9 @@ Game::Game() {
 	sf::Texture DouglasO;
 	sf::Texture DouglasN;
 
+	sf::Texture pediaBack;
+	sf::Texture pediaBackS;
+
 	SnowO.loadFromFile("Resources/Menu/SnowO.png");
 	SnowN.loadFromFile("Resources/Menu/SnowN.png");
 	ScooterO.loadFromFile("Resources/Menu/ScooterO.png");
@@ -312,12 +316,14 @@ Game::Game() {
 	AlexN.loadFromFile("Resources/Menu/AlexN.png");
 	DouglasO.loadFromFile("Resources/Menu/DouglasO.png");
 	DouglasN.loadFromFile("Resources/Menu/DouglasN.png");
+	pediaBack.loadFromFile("Resources/Menu/Back2O.png");
+	pediaBackS.loadFromFile("Resources/Menu/Back2N.png");
 
 	SnowButton->setTexture(&SnowO);
 	ScooterButton->setTexture(&ScooterO);
 	ShadowButton->setTexture(&ShadowO);
 	SocksButton->setTexture(&SocksO);
-	CatopediaBack->setTexture(&Back);
+	CatopediaBack->setTexture(&pediaBack);
 	DouglasButton->setTexture(&DouglasO);
 	AlexButton->setTexture(&AlexO);
 
@@ -325,7 +331,7 @@ Game::Game() {
 	ScooterButton->setTextureSelected(&ScooterN);
 	ShadowButton->setTextureSelected(&ShadowN);
 	SocksButton->setTextureSelected(&SocksN);
-	CatopediaBack->setTextureSelected(&BackS);
+	CatopediaBack->setTextureSelected(&pediaBackS);
 	DouglasButton->setTextureSelected(&DouglasN);
 	AlexButton->setTextureSelected(&AlexN);
 

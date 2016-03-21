@@ -57,7 +57,8 @@ HintManager hintManager("hints");
 Controller p1Controller = Controller(KeyboardOne);
 Controller p2Controller = Controller(KeyboardTwo);
 
-
+int RESOLUTION_X = 800;
+int RESOULTION_Y = 640;
 
 // LIGHT STRUCTURE FOR BOTH LIGHT AND FOV LIGHT
 struct Light
@@ -135,6 +136,7 @@ Level::Level(string level_directory) :
 	
 }
 
+
 Level::Level(int movieID) :
 mMovieID(movieID){
 	mType = Cutscene;
@@ -145,6 +147,10 @@ void Level::InitializeGuiView(sf::RenderWindow *window) {
 
 }
 
+void Level::setResolution(int width, int height) {
+	RESOLUTION_X = width;
+	RESOULTION_Y = height;
+}
 // Renderar level
 void Level::render(sf::RenderWindow *window){
 
@@ -161,12 +167,12 @@ void Level::render(sf::RenderWindow *window){
 		if (mLoaded) {
 
 
-			if (mPlayers > 1) {
+			/*if (mPlayers > 1) {
 				mPlayer1View.setSize(sf::Vector2f(window->getSize().x / 2, window->getSize().y));
 			}
 			else {
 				mPlayer1View.setSize(sf::Vector2f(window->getSize().x, window->getSize().y));
-			}
+			}*/
 			window->setView(mPlayer1View);
 			for (TileLayer::size_type y = 0; y < mBottomTileLayer.size(); y++)
 			{
@@ -222,7 +228,7 @@ void Level::render(sf::RenderWindow *window){
 
 
 			if (mPlayers == 2) {
-				mPlayer2View.setSize(sf::Vector2f(window->getSize().x / 2, window->getSize().y));
+				
 				window->setView(mPlayer2View);
 				for (TileLayer::size_type y = 0; y < mBottomTileLayer.size(); y++)
 				{
@@ -688,21 +694,24 @@ void Level::Clear(){
 }
 
 void Level::generateView(){
-
+	
 	if (mPlayers == 1){
 		//mPlayer1View.setSize(1024, 720);
+		mPlayer1View.setSize(sf::Vector2f(RESOLUTION_X, RESOULTION_Y));
 		mPlayer1View.setViewport(sf::FloatRect(0, 0, 1, 1));
-		mPlayer1View.zoom(2.5f);
+		mPlayer1View.zoom(0.9f);
 		
 		
 	}
 	else if (mPlayers == 2){
 		//mPlayer1View.setSize(512, 720);
+		mPlayer1View.setSize(sf::Vector2f(RESOLUTION_X /2, RESOULTION_Y));
 		mPlayer1View.setViewport(sf::FloatRect(0, 0, 0.5f, 1));
-		mPlayer1View.zoom(2.5f);
+		mPlayer1View.zoom(0.9f);
 		//mPlayer2View.setSize(512, 720);
+		mPlayer2View.setSize(sf::Vector2f(RESOLUTION_X /2, RESOULTION_Y));
 		mPlayer2View.setViewport(sf::FloatRect(0.5, 0, 0.5f, 1));
-		mPlayer2View.zoom(2.5f);
+		mPlayer2View.zoom(0.9f);
 
 
 	}

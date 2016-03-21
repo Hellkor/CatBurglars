@@ -27,7 +27,7 @@ public:
 
 	void InitializeGuiView(sf::RenderWindow *window);
 
-
+	static void setResolution(int x,int y);
 private:
 	StageType mType;
 

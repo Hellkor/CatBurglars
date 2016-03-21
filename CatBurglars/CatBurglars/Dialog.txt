@@ -1,20 +1,20 @@
-ID: 1
+ID: 0
 CHARACTER: SHADOW
-MOOD: HAPPY
+MOOD: NEUTRAL
 CHARACTER2: SNOW
-MOOD2: NEUTRAL
+MOOD2: CONFUSED
 WIN: FALSE
 Text(2): { Snow: This can't be called a bed, I must speak to the manager of this place this instant! }
 
-ID: 2
+ID: 1
 CHARACTER: SHADOW
-MOOD: HAPPY
+MOOD: NEUTRAL
 CHARACTER2: SNOW
 MOOD2: HAPPY
 WIN: FALSE
 Text(2): { Snow: Ah! Shadow is that you? It is you! I am so glad to see a familiar face in this dark forsaken place. }
 
-ID: 3
+ID: 2
 CHARACTER: SHADOW
 MOOD: NEUTRAL
 CHARACTER2: SNOW
@@ -22,7 +22,7 @@ MOOD2: HAPPY
 WIN: FALSE
 Text(1): { Shadow: Shhh, you've got to be quiet or they'll hear us. }
 
-ID: 4
+ID: 3
 CHARACTER: SHADOW
 MOOD: NEUTRAL
 CHARACTER2: SNOW
@@ -30,7 +30,7 @@ MOOD2: HAPPY
 WIN: FALSE
 Text(2): { Snow: Oh thank heavens you got me out of that filthy cell. I don't know if I could've lasted another minute in all that dirt. I'll need a warm clean bath to feel like myself again. Where are the others? }
 
-ID: 5
+ID: 4
 CHARACTER: SHADOW
 MOOD: NEUTRAL
 CHARACTER2: SNOW
@@ -38,15 +38,15 @@ MOOD2: NEUTRAL
 WIN: FALSE
 Text(1): { Shadow: You're the first I got to. I've found Alex and we've got to rescue her before they move her to that other prison. }
 
-ID: 6
+ID: 5
 CHARACTER: SHADOW
 MOOD: NEUTRAL
 CHARACTER2: SNOW
-MOOD2: NEUTRAL
+MOOD2: WORRIED
 WIN: FALSE
 Text(2): { Snow: Where are Scooter and Socks? }
 
-ID: 7
+ID 6
 CHARACTER: SHADOW
 MOOD: NEUTRAL
 CHARACTER2: SNOW
@@ -54,7 +54,7 @@ MOOD2: NEUTRAL
 WIN: FALSE
 Text(1): { Shadow: They're in another castle. }
 
-ID: 8
+ID: 7
 CHARACTER: SHADOW
 MOOD: NEUTRAL
 CHARACTER2: SNOW
@@ -62,54 +62,817 @@ MOOD2: CONFUSED
 WIN: FALSE
 Text(2): { Snow: Castle? Shadow, they don't put people in castles if they commit crimes. }
 
-ID: 9
+ID: 8
 CHARACTER: SHADOW
-MOOD: EMBARESSED
+MOOD: EMBARASSED 
 CHARACTER2: SNOW
 MOOD2: CONFUSED
 WIN: FALSE
 Text(1): { Shadow: Prison! Prison is what I meant. They're in another prison. A modern one further out on the countryside. }
 
+ID: 9
+CHARACTER: SHADOW
+MOOD: NEUTRAL
+CHARACTER2: SNOW
+MOOD2: WORRIED
+WIN: FALSE
+Text(2): { Snow: ...okay. We've got to hurry and save Socks soon. If I feel like this after only a couple of hours in this wretched place I can't imagine how frightened that little ball of fluff is. Poor little thing. }
+
 ID: 10
 CHARACTER: SHADOW
 MOOD: NEUTRAL
 CHARACTER2: SNOW
-MOOD2: NEUTRAL
-WIN: FALSE
-Text(2): { Snow: ….okay. We've got to hurry and save Socks soon. If I feel like this after only a couple of hours in this wretched place I can't imagine how frightened that little ball of fluff is. Poor little thing. }
-
-ID: 11
-CHARACTER: SHADOW
-MOOD: NEUTRAL
-CHARACTER2: SNOW
-MOOD2: NEUTRAL
+MOOD2: WORRIED
 WIN: TRUE 
 Text(1): { Shadow: The sooner we get Alex out of her cell the faster we'll get to both him and Scooter. Let's go. }
+
+ID: 11
+CHARACTER: ALEX
+MOOD: HAPPY
+CHARACTER2: SHADOW
+MOOD2: NEUTRAL
+WIN: FALSE
+Text(1): { Oh there you are, I was starting to wonder if you got caught but I guess I was worrying for nothing. Give me the key so we can get out from this dreadful place }
 
 ID: 12
 CHARACTER: ALEX
 MOOD: NEUTRAL
 CHARACTER2: SHADOW
 MOOD2: NEUTRAL
-Text(1): { Oh there you are, I was starting to wonder if you got caught but I guess I was worrying for nothing. Give me the key so we can get out from this dreadful place }
+WIN: FALSE
+Text(1): { Alex: There is no time to waste, that old dog might already be suspecting something. We must move this instant. }
 
 ID: 13
-CHARACTER: ALEX
-MOOD: NEUTRAL
-CHARACTER2: SHADOW
-MOOD2: NEUTRAL
-Text(1): { Alex: There is no time to waste, that old dog might already be suspecting something. We must move this instant. }
+CHARACTER: SHADOW
+MOOD: HAPPY
+CHARACTER2: SNOW
+MOOD2: HAPPY
+WIN: FALSE
+Text(1): { Shadow: Mjauuu. }
 
 ID: 14
 CHARACTER: SHADOW
 MOOD: HAPPY
 CHARACTER2: SNOW
 MOOD2: HAPPY
-Text(1): { Shadow: Mjauuu. }
+WIN: TRUE
+Text(2): { Snow: Maooo. }
 
 ID: 15
 CHARACTER: SHADOW
-MOOD: HAPPY
+MOOD: PANTING
+CHARACTER2: SNOW
+MOOD2: NEUTRAL
+WIN: FALSE
+Text(1): { Shadow: *pant pant* "Oh kitty litter. }
+
+
+ID: 16
+CHARACTER: SHADOW
+MOOD: PANTING
+CHARACTER2: SNOW
+MOOD2: WORRIED
+WIN: FALSE
+Text(2): { Snow: Shadow, are you okay? Why didn't you dash? You would have made it...... Oh, You look quite awful to be honest.  }
+
+
+ID: 17
+CHARACTER: SHADOW
+MOOD: NEUTRAL
+CHARACTER2: SNOW
+MOOD2: NEUTRAL
+WIN: FALSE
+Text(1): { Shadow: Well thank you Snow, so do you. I am just a bit tired that's all. }
+
+
+ID: 18
+CHARACTER: SHADOW
+MOOD: NEUTRAL
+CHARACTER2: SOCKS
+MOOD2: NEUTRAL
+WIN: FALSE
+Text(2): { Snow: I'll pretend I didn't hear that. To be serious though. You should go back to Alex and rest. You’re not a young kitten anymore you know.  }
+
+
+ID: 19
+CHARACTER: SHADOW
+MOOD: NEUTRAL
+CHARACTER2: SOCKS
+MOOD2: NEUTRAL
+WIN: FALSE
+Text(1): { Shadow: No. I'll find another way in. }
+
+
+ID: 20
+CHARACTER: SHADOW
+MOOD: NEUTRAL
+CHARACTER2: SNOW
+MOOD2: SIGH
+WIN: FALSE
+Text(2): { Snow: *sighs* As stubborn as ever I see.... }
+
+ID: 21
+CHARACTER: SHADOW
+MOOD: NEUTRAL
+CHARACTER2: SNOW
+MOOD2: NEUTRAL
+WIN: FALSE
+Text(1): { Shadow: Don't just stand there, go and find Socks and Scooter. I'll think of a way to distract them. We'll meet outside. }
+
+
+
+ID: 22
+CHARACTER: SHADOW
+MOOD: NEUTRAL
 CHARACTER2: SNOW
 MOOD2: HAPPY
-Text(2): { Snow: Maooo. }
+WIN: TRUE
+Text(1): { Snow: Okay, okay...see you later then. }
+
+ID: 23
+CHARACTER: DOUGLAS
+MOOD: NEUTRAL
+CHARACTER2: GUARD1
+MOOD2: 
+WIN: FALSE
+Text(1): { Douglas: The ones who escaped are probably going to come for their friends in here. I want everyone to be on high alert. I won't allow anyone else to escape and I want the ones who did found. Do you understand?  }
+
+
+ID: 24
+CHARACTER: DOUGLAS
+MOOD: NEUTRAL
+CHARACTER2: GUARD1
+MOOD2: 
+WIN: FALSE
+Text(2): { Guard 1: Yes sir. }
+
+
+ID: 25
+CHARACTER: DOUGLAS
+MOOD: NEUTRAL
+CHARACTER2: GUARD2
+MOOD2: 
+WIN: FALSE
+Text(2): { Guard 2: Sir, me and the guards have been talking. Is all this fuss really necessary? I mean we understand why we need to catch the owner, but the cats? It just seems a bit silly to be on the lookout for cats and putting them behind bars to us is all.  }
+
+
+
+
+
+ID: 26
+CHARACTER: DOUGLAS
+MOOD: ANGRY
+CHARACTER2: GUARD2
+MOOD2: 
+WIN: FALSE
+Text(1): { Douglas: So it's mutiny is it?! Listen here you little snot-nosed waste of air. No one is above the law. Not you, not you mother, not even your bloody pet goldfish at home. No one! They are criminals and will be behind bars so help me God! If you guards would stop looking at the wall and do your job they wouldn't have escaped in the first place. Dead or Alive, I want all of them. Now. Not tomorrow, not after breakfast. NOW! So move your lazy overpaid ass and find them damn you! } 
+
+
+
+ID: 27
+CHARACTER: DOUGLAS
+MOOD: ANGRY
+CHARACTER2: GUARD2
+MOOD2: 
+WIN: FALSE
+Text(2): { Guard 2: Y-yes sir! }
+
+
+ID: 28
+CHARACTER: DOUGLAS
+MOOD: NEUTRAL
+CHARACTER2: 
+MOOD2: 
+WIN: FALSE
+Text(1): { Douglas: Christ I need coffee... }
+
+
+
+ID: 29
+CHARACTER: DOUGLAS
+MOOD: NEUTRAL
+CHARACTER2: GUARD1
+MOOD2: 
+WIN: FALSE
+Text(2): { Guard 1: We-we're out of coffee sir. Will tea do? }
+
+
+ID: 30
+CHARACTER: DOUGLAS
+MOOD: ANGRY
+CHARACTER2: GUARD1
+MOOD2: 
+WIN: TRUE
+Text(1): { Douglas: ...Will tea do?...Will. Tea. Do?!...   }
+
+ID: 31
+CHARACTER: SOCKS
+MOOD: NEUTRAL
+CHARACTER2: SNOW
+MOOD2: NEUTRAL
+WIN: FALSE
+Text(1): { Socks: …Na, nana, nana. If you wanna be my lover, you gotta get with my friends.... Oh, hey Snow. }
+
+
+
+ID: 32
+CHARACTER: SOCKS
+MOOD: NEUTRAL
+CHARACTER2: SNOW
+MOOD2: WORRIED
+WIN: FALSE
+Text(2): { Snow: Socks! Are you okay? Are you hurt? Don't be scared, we're going to get you out of there. }
+
+
+
+ID: 33
+CHARACTER: SOCKS
+MOOD: HAPPY
+CHARACTER2: SNOW
+MOOD2: WORRIED
+WIN: FALSE
+Text(1): { Socks: Arrgh I'm not scared Snow! Awww man, this is so cool! I got my own prison cell.  Ha! Scooter will be so jealous that I have my own cell and room. That means I'm too dangerous for them to handle right?  }
+
+
+
+ID: 34
+CHARACTER: SOCKS
+MOOD: HAPPY
+CHARACTER2: SNOW 
+MOOD2: SIGH
+WIN: FALSE
+Text(2): { Snow: ...*sighs* Quite right dear. Now we've got to get you out of there before they come in here and see us. }
+
+
+
+ID: 35
+CHARACTER: SOCKS
+MOOD: NEUTRAL
+CHARACTER2: SNOW
+MOOD2: NEUTRAL
+WIN: FALSE
+Text(2): { Snow: Right. I’ll try to pry the lock open and you push it open from the inside. }
+
+
+
+ID: 36
+CHARACTER: SOCKS
+MOOD: HAPPY
+CHARACTER2: SNOW
+MOOD2: NEUTRAL
+WIN: FALSE
+Text(1): { Socks: Okay. I'll try. }
+
+
+
+ID: 37
+CHARACTER: SOCKS
+MOOD: NEUTRAL
+CHARACTER2: SNOW
+MOOD2: HAPPY
+WIN: FALSE
+Text(2): { Snow: No! Do, or do not. There is no try... }
+
+
+
+ID: 38
+CHARACTER: SOCKS
+MOOD: CONFUSED
+CHARACTER2: SNOW
+MOOD2: NEUTRAL
+WIN: FALSE
+Text(1): { Socks: What? }
+
+
+
+ID: 39
+CHARACTER: SOCKS
+MOOD: CONFUSED
+CHARACTER2: SNOW
+MOOD2: NEUTRAL
+WIN: TRUE
+Text(2): { Snow: Just do it! }
+
+
+END OF DIALOGUE
+
+
+SNOW AND SOCKS DIALOGUE
+
+
+ID: 40
+CHARACTER: SNOW
+MOOD: CONFUSED
+CHARACTER2: SOCKS
+MOOD2: NEUTRAL
+WIN: FALSE
+Text(1): { Snow: *sniff sniff* }
+
+
+ID: 41
+CHARACTER: SNOW
+MOOD: CONFUSED
+CHARACTER2: SNOW
+MOOD2: CONFUSED
+WIN: FALSE
+Text(2): { Socks: What is it Snow? A guard? }
+
+
+ID: 42
+CHARACTER: SNOW
+MOOD: NEUTRAL
+CHARACTER2: SOCKS
+MOOD2: CONFUSED
+WIN: FALSE
+Text(1): { Snow: No, something even more dangerous.... }
+
+ID: 43
+CHARACTER: SNOW
+MOOD: NEUTRAL
+CHARACTER2: SOCKS
+MOOD2: HAPPY
+WIN: FALSE
+Text(2): { Socks: *gasp* Cool! Let's check it out. }
+
+ID: 44
+CHARACTER: SNOW
+MOOD: ANGRY
+CHARACTER2: SOCKS
+MOOD2: HAPPY
+WIN: FALSE
+Text(1): { Snow: No! You stay here. }
+
+ID: 45
+CHARACTER: 
+MOOD: 
+CHARACTER2: SOCKS
+MOOD2: NEUTRAL
+WIN: FALSE
+Text(2): { Socks:  Aww... I never get to do anything...}
+
+
+ID: 46
+CHARACTER: SNOW
+MOOD: PIZZA
+CHARACTER2: SOCKS
+MOOD2: NEUTRAL
+WIN: FALSE
+Text(2): { Socks: Wow that was fast! What did you do? }
+
+ID: 47
+CHARACTER: SNOW
+MOOD: PIZZA
+CHARACTER2: SOCKS
+MOOD2: NEUTRAL
+WIN: FALSE
+Text(1): { Snow: Nothing. Let's go. }
+
+ID: 48
+CHARACTER: SNOW
+MOOD: PIZZA
+CHARACTER2: SOCKS
+MOOD2: PIZZA
+WIN: FALSE
+Text(2): { Socks: But wait Snow, what's that on your face? *sniff sniff* It smells like that thing Alex eats sometimes... pizz-ha? }
+
+ID: 49
+CHARACTER: SNOW
+MOOD: PIZZA
+CHARACTER2: SNOW
+MOOD2: CONFUSED
+WIN: FALSE
+Text(1): {Snow: I don't know what you are talking about Socks. }
+
+ID: 50
+CHARACTER: SNOW
+MOOD: PIZZA
+CHARACTER2: SOCKS
+MOOD2: CONFUSED
+WIN: FALSE
+Text(2): { Socks: But... }
+
+ID: 51
+CHARACTER: SNOW
+MOOD: ANGRY
+CHARACTER2: SNOW
+MOOD2: CONFUSED
+WIN: FALSE
+Text(1): { Snow: YOU.DID.NOT.SEE.ANYTHING.... right Socks? }
+
+ID: 52
+CHARACTER: SNOW
+MOOD: ANGRY
+CHARACTER2: SOCKS
+MOOD2: CRYING
+WIN: TRUE
+Text(2): { Socks: Snow, you're scaring me. }
+
+ID: 53
+CHARACTER: SNOW
+MOOD: ANGRY
+CHARACTER2: 
+MOOD2: 
+WIN: FALSE
+Text(1): { Snow: Calm down Socks. You look like you’re going to run ahead any second. }
+
+ID: 54
+CHARACTER: SNOW
+MOOD: ANGRY
+CHARACTER2: SOCKS
+MOOD2: CRYING
+WIN: FALSE
+Text(2): { Socks: I'm sorry. It was just that I saw Scooter and got so excited  }
+
+
+
+ID: 55
+CHARACTER: SNOW
+MOOD: NEUTRAL
+CHARACTER2: SCOOTER
+MOOD2: LAUGHING
+WIN: FALSE
+Text(2): { Scooter: ...And he just can't hide it... }
+
+
+ID: 56
+CHARACTER: SNOW
+MOOD: NEUTRAL
+CHARACTER2: SOCKS
+MOOD2: NEUTRAL
+WIN: FALSE
+Text(1): { Snow: It's all right dear. As long as you don’t do it. I just want you to be careful.You never know what’s around the corner in a place like this }
+
+
+ID: 57
+CHARACTER: SOCKS
+MOOD: NEUTRAL
+CHARACTER2: SCOOTER
+MOOD2: NEUTRAL
+WIN: FALSE
+Text(2): { Scooter: Don't listen to her, mate. It's not healthy to bottle up your feelings. It's like living in a prison. I just can't imagine that. }
+
+
+
+ID: 58
+CHARACTER: SOCKS
+MOOD: HAPPY
+CHARACTER2: SCOOTER
+MOOD2: NEUTRAL
+WIN: FALSE
+Text(2): { Socks: Haha, but Scooter, you ARE in prison. }
+
+
+
+ID: 59
+CHARACTER: SOCKS
+MOOD: HAPPY
+CHARACTER2: SCOOTER
+MOOD2: NEUTRAL
+WIN: TRUE
+Text(2): { Scooter: Yes thank you, I'm quite aware of that. It was kind of the cue for you to let me out. So pretty please let me out. This cell brings out too many awful memories. }
+
+ID: 60
+CHARACTER: ALEX
+MOOD: SMIRK
+CHARACTER2:
+MOOD2: 
+WIN: FALSE
+Text(1): { Alex: Ah....What a lovely night for stealing. No one suspects a thing and so it shall remain. They won't know what hit them before it's too late. Let's make this our biggest break in yet.  }
+
+ID: 61
+CHARACTER: SHADOW
+MOOD: NEUTRAL
+CHARACTER2:
+MOOD2: 
+WIN: FALSE
+Text(1): { Shadow: All right everyone. This is it. Remember, just stick to the plan and we'll all make it out with the "Cat-Eye". You all know what to do right?  }
+
+
+ID: 62
+CHARACTER: SNOW
+MOOD: NEUTRAL
+CHARACTER2: SOCKS
+MOOD2: HAPPY
+WIN: FALSE
+Text(1): { Snow: Yes. }
+
+
+ID: 63
+CHARACTER: SNOW
+MOOD: NEUTRAL
+CHARACTER2: SOCKS
+MOOD2: HAPPY
+WIN: FALSE
+Text(2): { Socks: Yep. }
+
+ID: 64
+CHARACTER: SNOW
+MOOD: NEUTRAL
+CHARACTER2: SCOOTER
+MOOD2: NEUTRAL 
+WIN: FALSE
+Text(2): { Scooter: Nope. }
+
+ID: 65
+CHARACTER: SNOW
+MOOD: ANGRY
+CHARACTER2: SCOOTER
+MOOD2: NEUTRAL
+WIN: FALSE
+Text(1): { Snow: Shut up Scooter. }
+
+
+ID: 66
+CHARACTER: SHADOW
+MOOD: NEUTRAL
+CHARACTER2:
+MOOD2: 
+WIN: TRUE
+Text(1): { Shadow: Good. Then let's split up like we planned and let's do this. Move out Cat Burglars. }
+
+ID: 67
+CHARACTER: SNOW
+MOOD: NEUTRAL
+CHARACTER2: SOCKS
+MOOD2: HAPPY
+WIN: FALSE
+Text(2): { Socks: We made it. I'll keep watch while you hack Snow. Over. }
+
+ID: 68
+CHARACTER: SNOW
+MOOD: SIGH
+CHARACTER2:
+MOOD2: 
+WIN: FALSE
+Text(1): { Snow: *keyboard pressing* Come on.... }
+
+ID: 69
+CHARACTER: SNOW
+MOOD: SIGH
+CHARACTER2: SHADOW
+MOOD2: NEUTRAL
+WIN: FALSE
+Text(2): { Shadow: How are the lasers coming along Snow? }
+
+ID: 70
+CHARACTER: SNOW
+MOOD: NEUTRAL
+CHARACTER2: SHADOW
+MOOD2: NEUTRAL
+WIN: FALSE
+Text(1): { Snow: I'm working on it. Just give me a minute. }
+
+ID: 71
+CHARACTER: SNOW
+MOOD: NEUTRAL
+CHARACTER2: SOCKS
+MOOD2: HAPPY
+WIN: FALSE
+Text(2): { Socks: The coast is clear at the moment. No bad guys. Over }
+
+ID: 72
+CHARACTER: SCOOTER
+MOOD: NEUTRAL
+CHARACTER2: SOCKS
+MOOD2: HAPPY 
+WIN: FALSE
+Text(1): { Scooter: Let's just charge the lasers }
+
+ID: 73
+CHARACTER: SCOOTER 
+MOOD: NEUTRAL
+CHARACTER2: SHADOW
+MOOD2: NEUTRAL
+WIN: FALSE
+Text(2): { Shadow: Wait, what? }
+
+ID: 74
+CHARACTER: SCOOTER
+MOOD: NEUTRAL
+CHARACTER2: SNOW
+MOOD2: CONFUSED
+WIN: FALSE
+Text(2) { Snow: What?!}
+
+ID: 75
+CHARACTER: SCOOTER
+MOOD: NEUTRAL
+CHARACTER2: SOCKS
+MOOD2: HAPPY
+WIN: FALSE
+Text(2) { Socks: YES! Over. }
+
+
+ID: 76
+CHARACTER: SCOOTER
+MOOD: LAUGHING
+CHARACTER2: SHADOW
+MOOD2: 
+WIN: FALSE
+Text(2) { Scooter: Yeah Shadow. You know the saying: Neither rain nor "snow" shall stop us.... }
+
+ID: 77
+CHARACTER: SCOOTER
+MOOD: LAUGHING
+CHARACTER2: SNOW
+MOOD2: ANGRY
+WIN: FALSE
+Text(2) { Snow: .... }
+
+ID: 78
+CHARACTER: SCOOTER
+MOOD: LAUGHING
+CHARACTER2: SOCKS
+MOOD2: HAPPY
+WIN: FALSE
+Text(2) { Socks: Hahaha! Over }
+
+ID: 79
+CHARACTER: SCOOTER
+MOOD: LAUGHING
+CHARACTER2: SNOW
+MOOD2: SIGH
+WIN: FALSE
+Text(2) { Snow: *sigh* Awful. Just awful... }
+
+ID: 80
+CHARACTER: SCOOTER
+MOOD: NEUTRAL
+CHARACTER2: SHADOW
+MOOD2: LAUGHING
+WIN: FALSE
+Text(2) { Shadow: *giggles* No Scooter. We'll wait for Snow to deactivate them. }
+
+ID: 81
+CHARACTER: SNOW
+MOOD: HAPPY
+CHARACTER2: SHADOW
+MOOD2: HAPPY
+WIN: FALSE
+Text(1) { Snow: There! That should do it. }
+
+ID: 82
+CHARACTER: SNOW
+MOOD: HAPPY
+CHARACTER2: SHADOW
+MOOD2: HAPPY
+WIN: TRUE
+Text(2) { Shadow: Good job. Let's move. }
+
+ID: 83
+CHARACTER: SNOW
+MOOD: CONFUSED
+CHARACTER2: SHADOW
+MOOD2: NEUTRAL
+WIN: FALSE	
+Text(1) { Snow: We’re stuck here. There’s a door we can’t open blocking our path.. }
+
+ID: 84
+CHARACTER: SNOW
+MOOD: CONFUSED
+CHARACTER2: SHADOW
+MOOD2: SURPRISED
+WIN: FALSE
+Text(2) { Shadow: Same for us. There’s a locked door next to us and a camera right in front of us. I can get past the camera, but Scooter can’t without being seen by it.  }
+
+ID: 85
+CHARACTER: SCOOTER
+MOOD: NEUTRAL
+CHARACTER2: SHADOW
+MOOD2: NEUTRAL
+WIN: FALSE
+Text(1) { Scooter: I know exactly what to do Shadow! Show the camera a picture of Snow in the morning. It’ll self destruct out of sheer pain. }
+
+ID: 86
+CHARACTER: SCOOTER
+MOOD: LAUGHING
+CHARACTER2: SOCKS
+MOOD2: LAUGHING
+WIN: FALSE
+Text(2) { Socks: HAHAHAHA! }
+
+ID: 87
+CHARACTER: SCOOTER
+MOOD: LAUGHING
+CHARACTER2: SNOW
+MOOD2: ANGRY
+WIN: FALSE
+Text(2) { Snow: You what?! I’ll destroy YOU, you tacky little.. }
+
+ID: 88
+CHARACTER: SCOOTER
+MOOD: LAUGHING
+CHARACTER2: SHADOW
+MOOD2: LAUGHING
+WIN: FALSE
+Text(2) { Shadow: *giggles* calm down and stay focused guys. }
+
+ID: 89
+CHARACTER: SCOOTER
+MOOD: NEUTRAL
+CHARACTER2: SHADOW
+MOOD2: HAPPY
+WIN: TRUE
+Text(2) { There should be a button past the camera to open both doors. I’ll dash and push it. Socks, you’ll go through the ventilation shaft into this room and go with Scooter through the door. Snow and I will continue down the corridor. }
+
+ID: 90
+CHARACTER: SOCKS
+MOOD: NEUTRAL
+CHARACTER2: SNOW
+MOOD2:  NEUTRAL
+WIN: FALSE
+Text(1) { Socks: There it is. Over. }
+
+ID: 91
+CHARACTER: SOCKS
+MOOD: NEUTRAL
+CHARACTER2: SNOW
+MOOD2: NEUTRAL
+WIN: FALSE
+Text(2) { Snow: Enough with the "over" already Socks! }
+
+
+ID: 92
+CHARACTER: SNOW
+MOOD: NEUTRAL
+CHARACTER2: SCOOTER
+MOOD2: LAUGHING
+WIN: FALSE
+Text(2) { Scooter: Don't worry love. He's completely over it now.......over. }
+
+
+ID: 93
+CHARACTER: SNOW
+MOOD: NEUTRAL
+CHARACTER2: SOCKS
+MOOD2: HAPPY
+WIN: FALSE
+Text(2) { Socks: hehehe *Muffled laughter* }
+
+ID: 94
+CHARACTER: SNOW
+MOOD: ANGRY
+CHARACTER2: SCOOTER
+MOOD2: NEUTRAL
+WIN: FALSE
+Text(1) { Snow: Scooter I swear I’ll! }
+
+
+ID: 95
+CHARACTER: SHADOW
+MOOD: NEUTRAL
+CHARACTER2: SCOOTER
+MOOD2: NEUTRAL
+WIN: FALSE
+Text(1) { Shadow: Guys. Stop faffing about. Stay focused. Scooter, you're the most nimble of us. Grab the "Cat-Eye", and be careful to not set off any alarms.  }
+
+ID: 96
+CHARACTER: SHADOW
+MOOD: NEUTRAL
+CHARACTER2: SCOOTER
+MOOD2: NEUTRAL
+WIN: FALSE
+Text(2) {Scooter: Yes ma'am. }
+
+ID: 97
+CHARACTER: 
+MOOD: 
+CHARACTER2: SCOOTER
+MOOD2: PANICKED
+WIN: FALSE
+Text(2) { Scooter: Jhfdjhjk aahhh!! What? What did I do? I am so sorry! }
+
+ID: 98
+CHARACTER: SNOW
+MOOD: CONFUSED
+CHARACTER2: SCOOTER
+MOOD2: PANICKED
+WIN: FALSE
+Text(1) { Snow: How is that possible? That can't happen. I turned them all off! }
+
+ID: 99
+CHARACTER: DOUGLAS
+MOOD: NEUTRAL
+CHARACTER2: SOCKS
+MOOD2: NEUTRAL
+WIN: FALSE
+Text(2) { Socks:Oh kitty-litter! }
+
+ID: 100
+CHARACTER: DOUGLAS
+MOOD: ANGRY
+CHARACTER2: SHADOW
+MOOD2: NEUTRAL
+WIN: FALSE
+Text(1) { Douglas: I knew something was up! I’ve got you now! }
+
+ID: 101
+CHARACTER: DOUGLAS
+MOOD: ANGRY
+CHARACTER2: SHADOW
+MOOD2: PANICKED
+WIN: TRUE
+Text(2) { Shadow: GRAB IT AND RUN! }
+
+
+
