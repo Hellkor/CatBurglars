@@ -89,12 +89,16 @@ Game::Game() {
 	Level *level4 = new Level("1_4");
 	Level *level5 = new Level("1_5");
 	Level *level6 = new Level("1_6");
+	Level *cutscene3 = new Level(6);
 	Level *level7 = new Level("1_7");
+	Level *cutscene4 = new Level(7);
 	Level *level8 = new Level("1_8");
 	Level *level9 = new Level("1_9");
 	Level *level21 = new Level("2_1");
 	Level *level22 = new Level("2_2");
+	Level *cutscene5 = new Level(8);
 	Level *level23 = new Level("2_3");
+	Level *cutscene6 = new Level(9);
 	Level *level24 = new Level("flee1");
 	Level *level25 = new Level("flee2");
 	Level *level26 = new Level("flee3");
@@ -109,12 +113,16 @@ Game::Game() {
 	LevelManager::addLevel(level4);
 	LevelManager::addLevel(level5); 
 	LevelManager::addLevel(level6);
+	LevelManager::addLevel(cutscene3);
 	LevelManager::addLevel(level7);
+	LevelManager::addLevel(cutscene4);
 	LevelManager::addLevel(level8);
 	LevelManager::addLevel(level9);
 	LevelManager::addLevel(level21);
 	LevelManager::addLevel(level22);
+	LevelManager::addLevel(cutscene5);
 	LevelManager::addLevel(level23);
+	LevelManager::addLevel(cutscene6);
 	LevelManager::addLevel(level24);
 	LevelManager::addLevel(level25);
 	LevelManager::addLevel(level26);
@@ -607,9 +615,11 @@ void Game::Update(float dt){
 				menuState = MainMenu;
 				MainMenuSystem.setPage("Main");
 			}
-
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::N)){
-				LevelManager::nextLevel();
+			if (nextLevelClock.getElapsedTime().asMilliseconds() >= nextLevelDelay.asMilliseconds()) {
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::N)) {
+					LevelManager::nextLevel();
+					nextLevelClock.restart();
+				}
 			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::M)){
 				LevelManager::loadLevel(0);

@@ -135,7 +135,6 @@ MOOD2: WORRIED
 WIN: FALSE
 Text(2): { Snow: Shadow, are you okay? Why didn't you dash? You would have made it...... Oh, You look quite awful to be honest.  }
 
-
 ID: 17
 CHARACTER: SHADOW
 MOOD: NEUTRAL
@@ -143,7 +142,6 @@ CHARACTER2: SNOW
 MOOD2: NEUTRAL
 WIN: FALSE
 Text(1): { Shadow: Well thank you Snow, so do you. I am just a bit tired that's all. }
-
 
 ID: 18
 CHARACTER: SHADOW
@@ -153,7 +151,6 @@ MOOD2: NEUTRAL
 WIN: FALSE
 Text(2): { Snow: I'll pretend I didn't hear that. To be serious though. You should go back to Alex and rest. You’re not a young kitten anymore you know.  }
 
-
 ID: 19
 CHARACTER: SHADOW
 MOOD: NEUTRAL
@@ -161,7 +158,6 @@ CHARACTER2: SOCKS
 MOOD2: NEUTRAL
 WIN: FALSE
 Text(1): { Shadow: No. I'll find another way in. }
-
 
 ID: 20
 CHARACTER: SHADOW
@@ -179,8 +175,6 @@ MOOD2: NEUTRAL
 WIN: FALSE
 Text(1): { Shadow: Don't just stand there, go and find Socks and Scooter. I'll think of a way to distract them. We'll meet outside. }
 
-
-
 ID: 22
 CHARACTER: SHADOW
 MOOD: NEUTRAL
@@ -197,7 +191,6 @@ MOOD2:
 WIN: FALSE
 Text(1): { Douglas: The ones who escaped are probably going to come for their friends in here. I want everyone to be on high alert. I won't allow anyone else to escape and I want the ones who did found. Do you understand?  }
 
-
 ID: 24
 CHARACTER: DOUGLAS
 MOOD: NEUTRAL
@@ -205,7 +198,6 @@ CHARACTER2: GUARD1
 MOOD2: 
 WIN: FALSE
 Text(2): { Guard 1: Yes sir. }
-
 
 ID: 25
 CHARACTER: DOUGLAS
@@ -215,10 +207,6 @@ MOOD2:
 WIN: FALSE
 Text(2): { Guard 2: Sir, me and the guards have been talking. Is all this fuss really necessary? I mean we understand why we need to catch the owner, but the cats? It just seems a bit silly to be on the lookout for cats and putting them behind bars to us is all.  }
 
-
-
-
-
 ID: 26
 CHARACTER: DOUGLAS
 MOOD: ANGRY
@@ -226,8 +214,6 @@ CHARACTER2: GUARD2
 MOOD2: 
 WIN: FALSE
 Text(1): { Douglas: So it's mutiny is it?! Listen here you little snot-nosed waste of air. No one is above the law. Not you, not you mother, not even your bloody pet goldfish at home. No one! They are criminals and will be behind bars so help me God! If you guards would stop looking at the wall and do your job they wouldn't have escaped in the first place. Dead or Alive, I want all of them. Now. Not tomorrow, not after breakfast. NOW! So move your lazy overpaid ass and find them damn you! } 
-
-
 
 ID: 27
 CHARACTER: DOUGLAS
@@ -237,7 +223,6 @@ MOOD2:
 WIN: FALSE
 Text(2): { Guard 2: Y-yes sir! }
 
-
 ID: 28
 CHARACTER: DOUGLAS
 MOOD: NEUTRAL
@@ -246,8 +231,6 @@ MOOD2:
 WIN: FALSE
 Text(1): { Douglas: Christ I need coffee... }
 
-
-
 ID: 29
 CHARACTER: DOUGLAS
 MOOD: NEUTRAL
@@ -255,7 +238,6 @@ CHARACTER2: GUARD1
 MOOD2: 
 WIN: FALSE
 Text(2): { Guard 1: We-we're out of coffee sir. Will tea do? }
-
 
 ID: 30
 CHARACTER: DOUGLAS
@@ -273,8 +255,6 @@ MOOD2: NEUTRAL
 WIN: FALSE
 Text(1): { Socks: …Na, nana, nana. If you wanna be my lover, you gotta get with my friends.... Oh, hey Snow. }
 
-
-
 ID: 32
 CHARACTER: SOCKS
 MOOD: NEUTRAL
@@ -283,17 +263,13 @@ MOOD2: WORRIED
 WIN: FALSE
 Text(2): { Snow: Socks! Are you okay? Are you hurt? Don't be scared, we're going to get you out of there. }
 
-
-
 ID: 33
 CHARACTER: SOCKS
 MOOD: HAPPY
 CHARACTER2: SNOW
-MOOD2: WORRIED
+MOOD2: NEUTRAL
 WIN: FALSE
 Text(1): { Socks: Arrgh I'm not scared Snow! Awww man, this is so cool! I got my own prison cell.  Ha! Scooter will be so jealous that I have my own cell and room. That means I'm too dangerous for them to handle right?  }
-
-
 
 ID: 34
 CHARACTER: SOCKS
@@ -303,8 +279,6 @@ MOOD2: SIGH
 WIN: FALSE
 Text(2): { Snow: ...*sighs* Quite right dear. Now we've got to get you out of there before they come in here and see us. }
 
-
-
 ID: 35
 CHARACTER: SOCKS
 MOOD: NEUTRAL
@@ -312,8 +286,6 @@ CHARACTER2: SNOW
 MOOD2: NEUTRAL
 WIN: FALSE
 Text(2): { Snow: Right. I’ll try to pry the lock open and you push it open from the inside. }
-
-
 
 ID: 36
 CHARACTER: SOCKS
@@ -323,8 +295,6 @@ MOOD2: NEUTRAL
 WIN: FALSE
 Text(1): { Socks: Okay. I'll try. }
 
-
-
 ID: 37
 CHARACTER: SOCKS
 MOOD: NEUTRAL
@@ -332,8 +302,6 @@ CHARACTER2: SNOW
 MOOD2: HAPPY
 WIN: FALSE
 Text(2): { Snow: No! Do, or do not. There is no try... }
-
-
 
 ID: 38
 CHARACTER: SOCKS
@@ -343,8 +311,6 @@ MOOD2: NEUTRAL
 WIN: FALSE
 Text(1): { Socks: What? }
 
-
-
 ID: 39
 CHARACTER: SOCKS
 MOOD: CONFUSED
@@ -352,13 +318,6 @@ CHARACTER2: SNOW
 MOOD2: NEUTRAL
 WIN: TRUE
 Text(2): { Snow: Just do it! }
-
-
-END OF DIALOGUE
-
-
-SNOW AND SOCKS DIALOGUE
-
 
 ID: 40
 CHARACTER: SNOW
@@ -368,7 +327,6 @@ MOOD2: NEUTRAL
 WIN: FALSE
 Text(1): { Snow: *sniff sniff* }
 
-
 ID: 41
 CHARACTER: SNOW
 MOOD: CONFUSED
@@ -376,7 +334,6 @@ CHARACTER2: SNOW
 MOOD2: CONFUSED
 WIN: FALSE
 Text(2): { Socks: What is it Snow? A guard? }
-
 
 ID: 42
 CHARACTER: SNOW
@@ -409,7 +366,6 @@ CHARACTER2: SOCKS
 MOOD2: NEUTRAL
 WIN: FALSE
 Text(2): { Socks:  Aww... I never get to do anything...}
-
 
 ID: 46
 CHARACTER: SNOW
@@ -483,8 +439,6 @@ MOOD2: CRYING
 WIN: FALSE
 Text(2): { Socks: I'm sorry. It was just that I saw Scooter and got so excited  }
 
-
-
 ID: 55
 CHARACTER: SNOW
 MOOD: NEUTRAL
@@ -492,7 +446,6 @@ CHARACTER2: SCOOTER
 MOOD2: LAUGHING
 WIN: FALSE
 Text(2): { Scooter: ...And he just can't hide it... }
-
 
 ID: 56
 CHARACTER: SNOW
@@ -502,7 +455,6 @@ MOOD2: NEUTRAL
 WIN: FALSE
 Text(1): { Snow: It's all right dear. As long as you don’t do it. I just want you to be careful.You never know what’s around the corner in a place like this }
 
-
 ID: 57
 CHARACTER: SOCKS
 MOOD: NEUTRAL
@@ -511,8 +463,6 @@ MOOD2: NEUTRAL
 WIN: FALSE
 Text(2): { Scooter: Don't listen to her, mate. It's not healthy to bottle up your feelings. It's like living in a prison. I just can't imagine that. }
 
-
-
 ID: 58
 CHARACTER: SOCKS
 MOOD: HAPPY
@@ -520,8 +470,6 @@ CHARACTER2: SCOOTER
 MOOD2: NEUTRAL
 WIN: FALSE
 Text(2): { Socks: Haha, but Scooter, you ARE in prison. }
-
-
 
 ID: 59
 CHARACTER: SOCKS
@@ -547,7 +495,6 @@ MOOD2:
 WIN: FALSE
 Text(1): { Shadow: All right everyone. This is it. Remember, just stick to the plan and we'll all make it out with the "Cat-Eye". You all know what to do right?  }
 
-
 ID: 62
 CHARACTER: SNOW
 MOOD: NEUTRAL
@@ -555,7 +502,6 @@ CHARACTER2: SOCKS
 MOOD2: HAPPY
 WIN: FALSE
 Text(1): { Snow: Yes. }
-
 
 ID: 63
 CHARACTER: SNOW
@@ -580,7 +526,6 @@ CHARACTER2: SCOOTER
 MOOD2: NEUTRAL
 WIN: FALSE
 Text(1): { Snow: Shut up Scooter. }
-
 
 ID: 66
 CHARACTER: SHADOW
@@ -661,7 +606,6 @@ CHARACTER2: SOCKS
 MOOD2: HAPPY
 WIN: FALSE
 Text(2) { Socks: YES! Over. }
-
 
 ID: 76
 CHARACTER: SCOOTER
@@ -791,7 +735,6 @@ MOOD2: NEUTRAL
 WIN: FALSE
 Text(2) { Snow: Enough with the "over" already Socks! }
 
-
 ID: 92
 CHARACTER: SNOW
 MOOD: NEUTRAL
@@ -799,7 +742,6 @@ CHARACTER2: SCOOTER
 MOOD2: LAUGHING
 WIN: FALSE
 Text(2) { Scooter: Don't worry love. He's completely over it now.......over. }
-
 
 ID: 93
 CHARACTER: SNOW
@@ -816,7 +758,6 @@ CHARACTER2: SCOOTER
 MOOD2: NEUTRAL
 WIN: FALSE
 Text(1) { Snow: Scooter I swear I’ll! }
-
 
 ID: 95
 CHARACTER: SHADOW
@@ -873,6 +814,3 @@ CHARACTER2: SHADOW
 MOOD2: PANICKED
 WIN: TRUE
 Text(2) { Shadow: GRAB IT AND RUN! }
-
-
-
