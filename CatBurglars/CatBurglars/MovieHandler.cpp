@@ -27,6 +27,7 @@ void MovieHandler::Initialize() {
 void MovieHandler::PlayMovie(int ID) {
 	if(ID == 1)
 		mProlog.play();
+	//mProlog.setScale(0.75, 0.75);   Potential fix for wrong size of video in fullscreen
 	if (ID == 2)
 		mEpilog.play();
 	if (ID == 3)
