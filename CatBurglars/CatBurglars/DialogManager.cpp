@@ -225,6 +225,7 @@ void DialogManager::render(sf::RenderWindow *window,sf::View view) {
 	
 }
 void DialogManager::startConversation(int ID,int dialogs,float time_in_seconds) {
+	cout << "conversation" << endl;
 	mCurrentConversationDialogID = ID;
 	mNumberOfDialogs = dialogs;
 }

@@ -89,6 +89,9 @@ private:
 
 	SoundHandler mSoundHandler;
 
+	sf::Clock nextLevelClock;
+	sf::Time nextLevelDelay = sf::milliseconds(300);
+
 
 };
 

@@ -5,7 +5,7 @@ Dialog::Dialog(TEXT text, int ID) :
 	mText(text),
 	mID(ID) {
 
-
+	mMood = NEUTRAL;
 	int word_per_row;
 	for (TEXT::size_type i = 0; i < mText.size(); i++) {
 		for (string::size_type j = 0; j < mText[i].size(); j++) {
