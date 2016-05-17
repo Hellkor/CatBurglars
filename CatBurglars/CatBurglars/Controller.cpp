@@ -128,6 +128,9 @@ void Controller::move(Cat *cat, TileLayer *tileLayer, std::vector<Entity*> *Enti
 		{
 			cat->useAbility(tileLayer, Entities);
 		}
+		else {
+			cat->mInteracting = false;
+		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 		{
 			cat->moveForward(tileLayer, Entities);
@@ -144,13 +147,13 @@ void Controller::move(Cat *cat, TileLayer *tileLayer, std::vector<Entity*> *Enti
 		{
 			cat->moveRight(tileLayer, Entities);
 		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+		/*if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 		{
 			cat->mInteracting = true;
 		}
 		else {
 			cat->mInteracting = false;
-		}
+		}*/
 		break;
 
 #pragma endregion
@@ -162,6 +165,9 @@ void Controller::move(Cat *cat, TileLayer *tileLayer, std::vector<Entity*> *Enti
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::RShift))
 		{
 			cat->useAbility(tileLayer, Entities);
+		}
+		else {
+			cat->mInteracting = false;
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 		{
@@ -179,13 +185,13 @@ void Controller::move(Cat *cat, TileLayer *tileLayer, std::vector<Entity*> *Enti
 		{
 			cat->moveRight(tileLayer, Entities);
 		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::RControl))
+		/*if (sf::Keyboard::isKeyPressed(sf::Keyboard::RControl))
 		{
 			cat->mInteracting = true;
 		}
 		else {
 			cat->mInteracting = false;
-		}
+		}*/
 		break;
 #pragma endregion
 
@@ -206,7 +212,10 @@ void Controller::move(Cat *cat, TileLayer *tileLayer, std::vector<Entity*> *Enti
 		{				//kolla knappN
 			cat->useAbility(tileLayer, Entities);
 		}
-		
+		else
+		{
+			cat->mInteracting = false;
+		}
 		
 		if (joyY > 20.f || joyDPY < -15.f)
 			{
@@ -224,14 +233,14 @@ void Controller::move(Cat *cat, TileLayer *tileLayer, std::vector<Entity*> *Enti
 			{
 				cat->moveRight(tileLayer, Entities);
 			}
-		if (sf::Joystick::isButtonPressed(0, 2))
+	/*	if (sf::Joystick::isButtonPressed(0, 2))
 		{
 			cat->mInteracting = true;
 		}
 		else
 		{
 			cat->mInteracting = false;
-		}
+		}*/
 		
 		break;
 	}
@@ -253,6 +262,10 @@ void Controller::move(Cat *cat, TileLayer *tileLayer, std::vector<Entity*> *Enti
 		{				//kolla knappN
 			cat->useAbility(tileLayer, Entities);
 		}
+		else
+		{
+			cat->mInteracting = false;
+		}
 		if (joyY1 > 20.f || joyDPY1 < -15.f)
 		{
 			cat->moveBackWards(tileLayer, Entities);
@@ -269,7 +282,7 @@ void Controller::move(Cat *cat, TileLayer *tileLayer, std::vector<Entity*> *Enti
 		{
 			cat->moveRight(tileLayer, Entities);
 		}
-		if (sf::Joystick::isButtonPressed(1, 2))
+		/*if (sf::Joystick::isButtonPressed(1, 2))
 		{
 			cat->mInteracting = true;
 		}
@@ -277,7 +290,7 @@ void Controller::move(Cat *cat, TileLayer *tileLayer, std::vector<Entity*> *Enti
 		{
 			cat->mInteracting = false;
 		}
-		
+		*/
 		break;
 	}
 
