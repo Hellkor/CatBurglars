@@ -407,6 +407,10 @@ void Cat::useAbility(TileLayer *tileLayer, std::vector<Entity*> *Entities){
 	{
 		shadowDash(tileLayer,Entities, direction);
 	}
+	if (mID == 2) 
+	{
+		mInteracting = true;
+	}
 	//Socks
 	if (mID == 3)
 	{
