@@ -124,7 +124,7 @@ void Controller::move(Cat *cat, TileLayer *tileLayer, std::vector<Entity*> *Enti
 		//Keyboard One (WASD)
 
 	case KeyboardOne:
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::E))
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 		{
 			cat->useAbility(tileLayer, Entities);
 		}

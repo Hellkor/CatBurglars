@@ -82,7 +82,7 @@ void MenuPage::UpdatedMenuNavigation() {
 			}
 
 		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)||sf::Joystick::isButtonPressed(0,0)) {
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)|| sf::Keyboard::isKeyPressed(sf::Keyboard::Return) ||sf::Joystick::isButtonPressed(0,0)) {
 			activateButton();
 			mDelayClock.restart();
 		}
