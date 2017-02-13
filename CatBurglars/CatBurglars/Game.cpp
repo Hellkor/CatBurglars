@@ -291,8 +291,8 @@ Game::Game() {
 	ShadowButton = new MenuButton();
 	ScooterButton = new MenuButton();
 	SocksButton = new MenuButton();
-	AlexButton = new MenuButton();
-	DouglasButton = new MenuButton();
+	//AlexButton = new MenuButton();
+	//DouglasButton = new MenuButton();
 	CatopediaBack = new MenuButton();
 
 	sf::Texture SnowO;
@@ -304,10 +304,10 @@ Game::Game() {
 	sf::Texture SocksO;
 	sf::Texture SocksN;
 
-	sf::Texture AlexO;
-	sf::Texture AlexN;
-	sf::Texture DouglasO;
-	sf::Texture DouglasN;
+	//sf::Texture AlexO;
+	//sf::Texture AlexN;
+	//sf::Texture DouglasO;
+	//sf::Texture DouglasN;
 
 	sf::Texture pediaBack;
 	sf::Texture pediaBackS;
@@ -320,10 +320,10 @@ Game::Game() {
 	ShadowN.loadFromFile("Resources/Menu/ShadowN.png");
 	SocksO.loadFromFile("Resources/Menu/SocksO.png");
 	SocksN.loadFromFile("Resources/Menu/SocksN.png");
-	AlexO.loadFromFile("Resources/Menu/AlexO.png");
+	/*AlexO.loadFromFile("Resources/Menu/AlexO.png");
 	AlexN.loadFromFile("Resources/Menu/AlexN.png");
 	DouglasO.loadFromFile("Resources/Menu/DouglasO.png");
-	DouglasN.loadFromFile("Resources/Menu/DouglasN.png");
+	DouglasN.loadFromFile("Resources/Menu/DouglasN.png");*/
 	pediaBack.loadFromFile("Resources/Menu/Back2O.png");
 	pediaBackS.loadFromFile("Resources/Menu/Back2N.png");
 
@@ -332,23 +332,23 @@ Game::Game() {
 	ShadowButton->setTexture(&ShadowO);
 	SocksButton->setTexture(&SocksO);
 	CatopediaBack->setTexture(&pediaBack);
-	DouglasButton->setTexture(&DouglasO);
-	AlexButton->setTexture(&AlexO);
+	/*DouglasButton->setTexture(&DouglasO);
+	AlexButton->setTexture(&AlexO);*/
 
 	SnowButton->setTextureSelected(&SnowN);
 	ScooterButton->setTextureSelected(&ScooterN);
 	ShadowButton->setTextureSelected(&ShadowN);
 	SocksButton->setTextureSelected(&SocksN);
 	CatopediaBack->setTextureSelected(&pediaBackS);
-	DouglasButton->setTextureSelected(&DouglasN);
-	AlexButton->setTextureSelected(&AlexN);
+	/*DouglasButton->setTextureSelected(&DouglasN);
+	AlexButton->setTextureSelected(&AlexN);*/
 
 	CatopediaPage->addMenuButton(SnowButton);
 	CatopediaPage->addMenuButton(ScooterButton);
 	CatopediaPage->addMenuButton(ShadowButton);
 	CatopediaPage->addMenuButton(SocksButton);
-	CatopediaPage->addMenuButton(AlexButton);
-	CatopediaPage->addMenuButton(DouglasButton);
+	/*CatopediaPage->addMenuButton(AlexButton);
+	CatopediaPage->addMenuButton(DouglasButton);*/
 	CatopediaPage->addMenuButton(CatopediaBack);
 
 	MainMenuSystem = MenuSystem();
@@ -368,32 +368,32 @@ Game::Game() {
 	snowPagesTexture.loadFromFile("Resources/Menu/Catopedia/Snow.png");
 	shadowPagesTexture.loadFromFile("Resources/Menu/Catopedia/Shadow.png");
 	catopediaStartTexture.loadFromFile("Resources/Menu/Catopedia/Start.png");
-	douglasPageTexture.loadFromFile("Resources/Menu/Catopedia/Douglas.png");
-	alexPageTexture.loadFromFile("Resources/Menu/Catopedia/Alex.png");
+	/*douglasPageTexture.loadFromFile("Resources/Menu/Catopedia/Douglas.png");
+	alexPageTexture.loadFromFile("Resources/Menu/Catopedia/Alex.png");*/
 
 	socksPageSprite.setTexture(socksPagesTexture);
 	scooterPageSprite.setTexture(scooterPagesTexture);
 	snowPageSprite.setTexture(snowPagesTexture);
 	shadowPageSprite.setTexture(shadowPagesTexture);
 	catopediaStartSprite.setTexture(catopediaStartTexture);
-	douglasPageSprite.setTexture(douglasPageTexture);
-	alexPageSprite.setTexture(alexPageTexture);
+	/*douglasPageSprite.setTexture(douglasPageTexture);
+	alexPageSprite.setTexture(alexPageTexture);*/
 
 	socksPageSprite.setOrigin(socksPagesTexture.getSize().x / 2, socksPagesTexture.getSize().y / 2);
 	snowPageSprite.setOrigin(snowPagesTexture.getSize().x / 2, snowPagesTexture.getSize().y / 2);
 	scooterPageSprite.setOrigin(scooterPagesTexture.getSize().x / 2, scooterPagesTexture.getSize().y / 2);
 	shadowPageSprite.setOrigin(shadowPagesTexture.getSize().x / 2, shadowPagesTexture.getSize().y / 2);
 	catopediaStartSprite.setOrigin(catopediaStartTexture.getSize().x / 2, catopediaStartTexture.getSize().y / 2);
-	douglasPageSprite.setOrigin(douglasPageTexture.getSize().x / 2, douglasPageTexture.getSize().y / 2);
-	alexPageSprite.setOrigin(alexPageTexture.getSize().x / 2, alexPageTexture.getSize().y / 2);
+	/*douglasPageSprite.setOrigin(douglasPageTexture.getSize().x / 2, douglasPageTexture.getSize().y / 2);
+	alexPageSprite.setOrigin(alexPageTexture.getSize().x / 2, alexPageTexture.getSize().y / 2);*/
 
 	socksPageSprite.setPosition(GuiView.getCenter());
 	scooterPageSprite.setPosition(GuiView.getCenter());
 	snowPageSprite.setPosition(GuiView.getCenter());
 	shadowPageSprite.setPosition(GuiView.getCenter());
-	catopediaStartSprite.setPosition(GuiView.getCenter());
+	catopediaStartSprite.setPosition(GuiView.getCenter());/*
 	douglasPageSprite.setPosition(GuiView.getCenter());
-	alexPageSprite.setPosition(GuiView.getCenter());
+	alexPageSprite.setPosition(GuiView.getCenter());*/
 
 	
 
@@ -579,12 +579,12 @@ void Game::Update(float dt){
 				if (SnowButton->isButtonPushed()) {
 					catopediaState = Snow;
 				}
-				if (AlexButton->isButtonPushed()) {
+				/*if (AlexButton->isButtonPushed()) {
 					catopediaState = Alex;
 				}
 				if (DouglasButton->isButtonPushed()) {
 					catopediaState = Douglas;
-				}
+				}*/
 				break;
 			case Controls:
 				MainMenuSystem.UpdateNavigation();
@@ -703,12 +703,12 @@ void Game::Render()
 			case Snow:
 				window->draw(snowPageSprite);
 				break;
-			case Alex:
+			/*case Alex:
 				window->draw(alexPageSprite);
 				break;
 			case Douglas:
 				window->draw(douglasPageSprite);
-				break;
+				break;*/
 			default:
 				break;
 			}
