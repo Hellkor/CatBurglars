@@ -54,8 +54,8 @@ DialogManager dialogManager("dialog", &textures,sf::Vector2f(1280,720));
 
 HintManager hintManager("hints");
 
-Controller p1Controller = Controller(KeyboardOne);
-Controller p2Controller = Controller(KeyboardTwo);
+Controller p1Controller;// = Controller(KeyboardOne);
+Controller p2Controller;// = Controller(KeyboardTwo);
 
 int RESOLUTION_X = 800;
 int RESOULTION_Y = 640;
@@ -88,6 +88,27 @@ Level::Level(string level_directory) :
 	mFile(level_directory),
 	mLoaded(false)
 {
+	bool k1 = false, k2 = false , j1 = false,j2 = false;
+
+	if (sf::Joystick::isConnected(0)) {
+		p1Controller = Controller(GamepadOne);
+		j1 = true;
+	}
+	else {
+		p1Controller = Controller(KeyboardOne);
+		k1 = true;
+	}
+	if (sf::Joystick::isConnected(1)) {
+		p2Controller = Controller(GamepadTwo);
+	}
+	else {
+		if (k1) {
+			p2Controller = Controller(KeyboardTwo);
+		}
+		else {
+			p2Controller = Controller(KeyboardOne);
+		}
+	}
 	FailSound.setBuffer(*soundhandler.getSound(6));
 	mType = GameStage;
 	

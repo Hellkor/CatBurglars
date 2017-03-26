@@ -13,6 +13,10 @@ C_TYPE(controllertype){
 	assignKeys();
 	
 }
+Controller::Controller() {
+	
+
+}
 
 Controller::~Controller(){
 

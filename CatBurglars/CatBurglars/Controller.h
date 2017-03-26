@@ -11,6 +11,7 @@ class Controller{
 
 public:
 	Controller(CONTROLLER_TYPE controllertype);
+	Controller();
 	~Controller();
 	
 	void move(Cat *cat, TileLayer *TileLayer, std::vector<Entity*> *Entities);

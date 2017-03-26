@@ -1,2 +1,2 @@
-Collectibles: 1
-Level: 21
+Collectibles: 0
+Level: 3

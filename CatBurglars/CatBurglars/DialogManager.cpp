@@ -212,7 +212,7 @@ void DialogManager::render(sf::RenderWindow *window,sf::View view) {
 		mSkipText.setPosition(sf::Vector2f((view.getCenter().x)   - (mSkipText.getCharacterSize()* (skipstring.size()/4)),
 										   (view.getCenter().y) + ((view.getSize().y/2)-mSkipText.getCharacterSize())));
 		mSkipText.setString(skipstring);
-		mSkipText.setColor(sf::Color::Red);
+		mSkipText.setOutlineColor(sf::Color::Red);
 		window->draw(mSkipText);
 		
 		

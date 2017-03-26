@@ -361,7 +361,6 @@ Game::Game() {
 
 	MainMenuSystem.setPage("Main");
 
-	
 
 	socksPagesTexture.loadFromFile("Resources/Menu/Catopedia/Socks.png");
 	scooterPagesTexture.loadFromFile("Resources/Menu/Catopedia/Scooter.png");

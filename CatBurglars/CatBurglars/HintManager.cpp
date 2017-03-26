@@ -6,7 +6,8 @@ HintManager::HintManager(string filename)
 	mFont.loadFromFile("Resources/Fonts/arial.ttf");
 	mText.setFont(mFont);
 	mText.setCharacterSize(24);
-	mText.setColor(sf::Color::Red);
+	//mText.setColor(sf::Color::Red);
+	mText.setOutlineColor(sf::Color::Red);
 	mText.setPosition(0, 700);
 	
 	ReadFile();

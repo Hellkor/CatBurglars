@@ -2,7 +2,7 @@
 
 2 { Hmm, this door is locked electronically }
 
-3 { Shadow can Dash past security cameras without triggering the alarm. Press E/Green to dash }
+3 { Shadow can Dash past security cameras without triggering the alarm. Press the interaction button to dash }
 
 4 { Snow can hack computers to turn of security cameras or open doors }
 
