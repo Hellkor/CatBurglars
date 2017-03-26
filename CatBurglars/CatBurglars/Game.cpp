@@ -614,6 +614,7 @@ void Game::Update(float dt){
 				menuState = MainMenu;
 				MainMenuSystem.setPage("Main");
 			}
+		    /* // Cheat
 			if (nextLevelClock.getElapsedTime().asMilliseconds() >= nextLevelDelay.asMilliseconds()) {
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::N)) {
 					LevelManager::nextLevel();
@@ -625,7 +626,7 @@ void Game::Update(float dt){
 			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::P)) {
 				LevelManager::nextLevel();
-			}
+			}*/
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
 				GameState = Pause;

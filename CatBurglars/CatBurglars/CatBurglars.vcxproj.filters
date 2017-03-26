@@ -243,15 +243,6 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="icon1.ico">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="C:\Users\Axel\Downloads\icon.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="icon2.ico">
-      <Filter>Resource Files</Filter>
-    </Image>
     <Image Include="C:\Users\Axel\Downloads\icon.ico">
       <Filter>Resource Files</Filter>
     </Image>
